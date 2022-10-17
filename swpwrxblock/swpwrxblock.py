@@ -668,7 +668,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_css_url("//fonts.googleapis.com/css?family=Lato")
         frag.add_css_url("//fonts.googleapis.com/css?family=Oswald")
 
-        frag.add_content('<base href="/testq_assets/" />')
+#         frag.add_content('<base href="/testq_assets/" />')
 
         # Following not found scrolling-nav.css, ng-sortable.css ng-scrollbar.css
         # frag.add_css(self.resource_string("css/scrolling-nav.css"))
