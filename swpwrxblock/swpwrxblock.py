@@ -992,9 +992,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_javascript(self.resource_string("static/js/src/swpwrxauthor.js"))
 
         if DEBUG: logger.info("SWPWRXBlock SWPWRXAuthor author_view v={a}".format(a=self.q_definition))
-        if DEBUG: logger.info("SWPWRXBlock SWPWRXAuthor author_view v1={a} v2={b} v3={c}".format(a=self.q1_definition,b=self.q2_definition,c=self.q3_definition))
-        if DEBUG: logger.info("SWPWRXBlock SWPWRXAuthor author_view v4={a} v5={b} v6={c}".format(a=self.q4_definition,b=self.q5_definition,c=self.q6_definition))
-        if DEBUG: logger.info("SWPWRXBlock SWPWRXAuthor author_view v7={a} v8={b} v9={c}".format(a=self.q7_definition,b=self.q8_definition,c=self.q9_definition))
+//        if DEBUG: logger.info("SWPWRXBlock SWPWRXAuthor author_view v1={a} v2={b} v3={c}".format(a=self.q1_definition,b=self.q2_definition,c=self.q3_definition))
+//        if DEBUG: logger.info("SWPWRXBlock SWPWRXAuthor author_view v4={a} v5={b} v6={c}".format(a=self.q4_definition,b=self.q5_definition,c=self.q6_definition))
+//        if DEBUG: logger.info("SWPWRXBlock SWPWRXAuthor author_view v7={a} v8={b} v9={c}".format(a=self.q7_definition,b=self.q8_definition,c=self.q9_definition))
 
         # tell author_view how many variants are defined
 //         if len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0 and len(self.q7_definition)>0 and len(self.q8_definition)>0 and len(self.q9_definition)>0:
@@ -1057,34 +1057,16 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         self.q_hint2 = data['hint2']
         self.q_hint3 = data['hint3']
 
-        self.q1_id = data['q1_id']
-        self.q1_label = data['q1_label']
-        self.q1_stimulus = data['q1_stimulus']
-        self.q1_definition = data['q1_definition']
-        self.q1_type = data['q1_qtype']
-        self.q1_display_math = data['q1_display_math']
-        self.q1_hint1 = data['q1_hint1']
-        self.q1_hint2 = data['q1_hint2']
-        self.q_id = data['id']
-        self.q_label = data['label']
-        self.q_stimulus = data['stimulus']
-        self.q_definition = data['definition']
-        self.q_type = data['qtype']
-        self.q_display_math = data['display_math']
-        self.q_hint1 = data['hint1']
-        self.q_hint2 = data['hint2']
-        self.q_hint3 = data['hint3']
-
-        self.q1_id = data['q1_id']
-        self.q1_label = data['q1_label']
-        self.q1_stimulus = data['q1_stimulus']
-        self.q1_definition = data['q1_definition']
-        self.q1_type = data['q1_qtype']
-        self.q1_display_math = data['q1_display_math']
-        self.q1_hint1 = data['q1_hint1']
-        self.q1_hint2 = data['q1_hint2']
-        self.q1_hint3 = data['q1_hint3']
-
+//         self.q1_id = data['q1_id']
+//         self.q1_label = data['q1_label']
+//         self.q1_stimulus = data['q1_stimulus']
+//         self.q1_definition = data['q1_definition']
+//         self.q1_type = data['q1_qtype']
+//         self.q1_display_math = data['q1_display_math']
+//         self.q1_hint1 = data['q1_hint1']
+//         self.q1_hint2 = data['q1_hint2']
+//         self.q1_hint3 = data['q1_hint3']
+// 
 //         self.q2_id = data['q2_id']
 //         self.q2_label = data['q2_label']
 //         self.q2_stimulus = data['q2_stimulus']
