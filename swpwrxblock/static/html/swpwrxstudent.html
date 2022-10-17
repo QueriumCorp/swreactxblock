@@ -1,158 +1,93 @@
-<div class="wrapper-comp-settings is-active editor-with-buttons">
+<div class="swpwrxblock_block" data-ng-strict-di>
+    <div class='stepwise_container'>
 
-  <!-- The default question -->
-  <ul class="list-input settings-list">
-    <h2>Question Options </h2>
-    <li class="field comp-setting-entry metadata_entry">
-      <div class="wrapper-comp-setting">
-        <label for="q_weight" class="label setting-label">Weight</label>
-        <input id='q_weight' type="text" name="q_weight" value="{self.q_weight}" class="input setting-input">
-      </div>
-      <span class="tip setting-help">The number of points the question is worth (default is 1 point).</span>
-    </li>
-    <li class="field comp-setting-entry metadata_entry">
-      <div class="wrapper-comp-setting">
-        <label for="q_max_attempts" class="label setting-label">Max Attempts</label>
-        <input id='q_max_attempts' type="text" name="q_max_attempts" value="{self.q_max_attempts}" class="input setting-input">
-      </div>
-      <span class="tip setting-help">Max attempts for this questions (-1 to use course default).</span>
-    </li>
-    <li class="field comp-setting-entry metadata_entry">
-      <div class="wrapper-comp-setting">
-        <label for="q_option_showme" class="label setting-label">Show Solution Available</label>
-        <input id='q_option_showme' type="text" name="q_option_showme" value="{self.q_option_showme}" class="input setting-input">
-      </div>
-      <span class="tip setting-help">Display Show Solution button if True.</span>
-    </li>
-    <li class="field comp-setting-entry metadata_entry">
-      <div class="wrapper-comp-setting">
-        <label for="q_option_hint" class="label setting-label">Show Hint Button</label>
-        <input id='q_option_hint' type="text" name="q_option_hint" value="{self.q_option_hint}" class="input setting-input">
-      </div>
-      <span class="tip setting-help">Display Get Hint button if True.</span>
-    </li>
-    <li class="field comp-setting-entry metadata_entry">
-      <div class="wrapper-comp-setting">
-        <label for="q_grade_showme_ded" class="label setting-label">Show Solution Deduction</label>
-        <input id='q_grade_showme_ded' type="text" name="q_grade_showme_ded" value="{self.q_grade_showme_ded}" class="input setting-input">
-      </div>
-      <span class="tip setting-help">Point deduction for using Show Solution.</span>
-    </li>
-    <li class="field comp-setting-entry metadata_entry">
-      <div class="wrapper-comp-setting">
-        <label for="q_grade_hints_count" class="label setting-label">Hints Before Deduction</label>
-        <input id='q_grade_hints_count' type="text" name="q_grade_hints_count" value="{self.q_grade_hints_count}" class="input setting-input">
-      </div>
-      <span class="tip setting-help">Number of hints before a points deduction.</span>
-    </li>
-    <li class="field comp-setting-entry metadata_entry">
-      <div class="wrapper-comp-setting">
-        <label for="q_grade_hints_ded" class="label setting-label">Excessive Hints Deduction</label>
-        <input id='q_grade_hints_ded' type="text" name="q_grade_hints_ded" value="{self.q_grade_hints_ded}" class="input setting-input">
-      </div>
-      <span class="tip setting-help">Point deduction for using more than &apos;Hints Before Deduction&apos; hints.</span>
-    </li>
-    <li class="field comp-setting-entry metadata_entry">
-      <div class="wrapper-comp-setting">
-        <label for="q_grade_errors_count" class="label setting-label">Errors Before Deduction</label>
-        <input id='q_grade_errors_count' type="text" name="q_grade_errors_count" value="{self.q_grade_errors_count}" class="input setting-input">
-      </div>
-      <span class="tip setting-help">Number of errors before a points deduction.</span>
-    </li>
-    <li class="field comp-setting-entry metadata_entry">
-      <div class="wrapper-comp-setting">
-        <label for="q_grade_errors_ded" class="label setting-label">Excessive Errors Deduction</label>
-        <input id='q_grade_errors_ded' type="text" name="q_grade_errors_ded" value="{self.q_grade_errors_ded}" class="input setting-input">
-      </div>
-      <span class="tip setting-help">Point deduction for having more than &apos;Errors Before Deduction&apos; errors.</span>
-    </li>
-    <li class="field comp-setting-entry metadata_entry">
-      <div class="wrapper-comp-setting">
-        <label for="q_grade_min_steps_count" class="label setting-label">Minimum Valid Steps</label>
-        <input id='q_grade_min_steps_count' type="text" name="q_grade_min_steps_count" value="{self.q_grade_min_steps_count}" class="input setting-input">
-      </div>
-      <span class="tip setting-help">Minimum number of valid steps before a points deduction.</span>
-    </li>
-    <li class="field comp-setting-entry metadata_entry">
-      <div class="wrapper-comp-setting">
-        <label for="q_grade_min_steps_ded" class="label setting-label">Minimum Valid Steps Deduction</label>
-        <input id='q_grade_min_steps_ded' type="text" name="q_grade_min_steps_ded" value="{self.q_grade_min_steps_ded}" class="input setting-input">
-      </div>
-      <span class="tip setting-help">Point deduction for having less than &apos;Minimum Valid Steps&apos; if there would otherwise be full credit.</span>
-    </li>
-    <h2>Base Question Specification</h2>
-    <li class="field comp-setting-entry metadata_entry">
-      <div class="wrapper-comp-setting">
-        <label for="id" class="label setting-label">Id</label>
-        <input id='id' type="text" name="id" value="{self.q_id}" class="input setting-input">
-      </div>
-      <span class="tip setting-help">The optional id for this question.</span>
-    </li>
-    <li class="field comp-setting-entry metadata_entry">
-      <div class="wrapper-comp-setting">
-        <label for="label" class="label setting-label">Label</label>
-        <input id='label' type="text" name="label" value="{self.q_label}" class="input setting-input">
-      </div>
-      <span class="tip setting-help">The optional label for this question.</span>
-    </li>
-    <li class="field comp-setting-entry metadata_entry">
-      <div class="wrapper-comp-setting">
-        <label for="stimulus" class="label setting-label">Stimulus</label>
-        <input id='stimulus' type="text" name="stimulus" value="{self.q_stimulus}" class="input setting-input">
-      </div>
-      <span class="tip setting-help">The stimulus tells the student what is expected of them for this question. HTML
-        and LaTeX are both supported.</span>
-    </li>
-    <li class="field comp-setting-entry metadata_entry">
-      <div class="wrapper-comp-setting">
-        <label for="definition" class="label setting-label">Definition</label>
-        <input id='definition' type="text" name="definition" value="{self.q_definition}" class="input setting-input">
-      </div>
-      <span class="tip setting-help">The StepWise definition of the math question.</span>
-    </li>
-    <li class="field comp-setting-entry metadata_entry">
-      <div class="wrapper-comp-setting">
-        <label for="qtype" class="label setting-label">Question Type</label>
-        <input id='qtype' type="text" name="qtype" value="{self.q_type}" class="input setting-input">
-      </div>
-      <span class="tip setting-help">The StepWise question type.</span>
-    </li>
-    <li class="field comp-setting-entry metadata_entry">
-      <div class="wrapper-comp-setting">
-        <label for="display_math" class="label setting-label">Display Math</label>
-        <input id='display_math' type="text" name="display_math" value="{self.q_display_math}" class="input setting-input">
-      </div>
-      <span class="tip setting-help">The LaTeX or MathML representation of the question. If left blank, StepWise will
-        automatically generate the display math for the question. For word problems where the math should not be
-        displayed to the student, you can enter and empty LaTeX (i.e., '\(\)' ).</span>
-    </li>
-    <li class="field comp-setting-entry metadata_entry">
-      <div class="wrapper-comp-setting">
-        <label for="hint1" class="label setting-label">First Hint</label>
-        <input id='hint1' type="text" name="hint1" value="{self.q_hint1}" class="input setting-input">
-      </div>
-      <div class="wrapper-comp-setting">
-        <label for="hint2" class="label setting-label">Second Hint</label>
-        <input id='hint2' type="text" name="hint2" value="{self.q_hint2}" class="input setting-input">
-      </div>
-      <div class="wrapper-comp-setting">
-        <label for="hint3" class="label setting-label">Third Hint</label>
-        <input id='hint3' type="text" name="hint3" value="{self.q_hint3}" class="input setting-input">
-      </div>
-      <span class="tip setting-help">These are question-specific hints used for word problems. Their primary use is to
-        help the student translate the word problem into math. You may provide up to three hints. The StepWise AI will
-        automatically generate math hints.</span>
-    </li>
-  </ul>
+        <div class='loading-box'>
+             <div class="loading-info">
+                 <span class="loading-val">Loading Data...</span>
+            </div>
+        </div>
 
-  <div class="xblock-actions">
-    <ul>
-      <li class="action-item">
-        <a href="#" class="button action-primary save-button">Save</a>
-      </li>
-      <li class="action-item">
-        <a href="#" class="button cancel-button">Cancel</a>
-      </li>
-    </ul>
-  </div>
+        <div class='question-info'>
+             <div class="grade-box">
+                 <span class="grade-val">(3.00/3.00 points)</span>
+            </div>
+
+            <div class="made-attempts-box">
+                <div class="made-attempts">
+                    <div>3 of 3 attempts</div>
+                </div>
+            </div>
+
+            <div class="min-steps-box">
+                <div class="min-steps">
+                    <div>33 minimum steps</div>
+                </div>
+            </div>
+
+            <div class="too-many-attempts-box">
+                <div class="too-many-attempts">
+                     <p class="too-many-attempts">You&apos;ve used all your attempts on this question.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class='click-to-begin-box'>
+            <div class="click-to-begin">
+                <p class="click-to-begin">Click the problem text below to solve this step-by-step question:</p>
+            </div>
+        </div>
+
+        <querium style='display: none;'></querium>
+
+        <div class='qq_preview0 preview_hidden'>
+            <h3 class="hd hd-3 problem-header">{self.q_label}</h3>
+            <div class='practice-problem'>
+                <p class='stimulus'>{self.q_stimulus}</p>
+                <p class='display-math'>{self.q_display_math}</p>
+            </div>
+        </div>
+        <div class='stepwise-retry'>
+           <button type="button" class="retry problem-action-btn btn-default btn-small" data-value="Retry">
+              <span class="icon fa fa-refresh" aria-hidden="false">
+                 <!-- :before css adds fontawsome icon -->
+              </span>
+              <span aria-hidden="false">Retry</span>
+           </button>
+           <div class='stepwise-retry-variants-box'>
+              <p class='stepwise-retry-variants'>(3 variants)</p>
+           </div>
+        </div>
+
+        <div class='question-stats preview_hidden'>
+            <div class="star-box preview_hidden">
+                <span class="star1 star-icon">☆</span>
+                <span class="star2 star-icon">☆</span>
+                <span class="star3 star-icon">☆</span>
+            </div>
+    
+            <div class="time-box">
+                <div class="step-icon elapsed-time"></div>
+                <span class="elapsed-time-count">33</span><span>s</span>
+            </div>
+    
+            <div class="error-count-box">
+                <div class="step-icon invalid-step"></div>
+                <span class="error-count">3</span>
+            </div>
+    
+            <div class="hint-count-box">
+                <div class="step-icon hint-request"></div>
+                <span class="hint-count">3</span>
+            </div>
+
+            <div class="used-showme">
+                <div>Used Show Solution</div>
+            </div>   
+        </div>
+
+        <div class="solution preview_hidden">
+        </div>
+    </div>
 </div>
+
+
