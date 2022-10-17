@@ -543,17 +543,46 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         if DEBUG: logger.info("SWPWRXBlock student_view() pick_variant selected q_index={i} question={q}".format(i=q_index,q=self.question))
 
+###
+# <!doctype html>
+# <html lang="en">
+#
+# <head>
+#   <meta charset="utf-8" />
+#   <link rel="shortcut icon" href="/favicon.ico" />
+#   <meta name="viewport" content="width=device-width,initial-scale=1" />
+#   <meta name="theme-color" content="#000000" />
+#   <meta name="description" content="Web site created using create-react-app" />
+#   <link rel="apple-touch-icon" href="logo192.png" />
+#   <link rel="manifest" href="/manifest.json" />
+#   <title>React App</title>
+#   <link href="/static/css/main.b870043f.chunk.css" rel="stylesheet">
+# </head>
+#
+# <body><noscript>You need to enable JavaScript to run this app.</noscript>
+#   <div id="root"></div>
+#   <script>!function (f) { function e(e) { for (var r, t, n = e[0], o = e[1], u = e[2], l = 0, a = []; l < n.length; l++)t = n[l], Object.prototype.hasOwnProperty.call(c, t) && c[t] && a.push(c[t][0]), c[t] = 0; for (r in o) Object.prototype.hasOwnProperty.call(o, r) && (f[r] = o[r]); for (s && s(e); a.length;)a.shift()(); return p.push.apply(p, u || []), i() } function i() { for (var e, r = 0; r < p.length; r++) { for (var t = p[r], n = !0, o = 1; o < t.length; o++) { var u = t[o]; 0 !== c[u] && (n = !1) } n && (p.splice(r--, 1), e = l(l.s = t[0])) } return e } var t = {}, c = { 1: 0 }, p = []; function l(e) { if (t[e]) return t[e].exports; var r = t[e] = { i: e, l: !1, exports: {} }; return f[e].call(r.exports, r, r.exports, l), r.l = !0, r.exports } l.m = f, l.c = t, l.d = function (e, r, t) { l.o(e, r) || Object.defineProperty(e, r, { enumerable: !0, get: t }) }, l.r = function (e) { "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e, "__esModule", { value: !0 }) }, l.t = function (r, e) { if (1 & e && (r = l(r)), 8 & e) return r; if (4 & e && "object" == typeof r && r && r.__esModule) return r; var t = Object.create(null); if (l.r(t), Object.defineProperty(t, "default", { enumerable: !0, value: r }), 2 & e && "string" != typeof r) for (var n in r) l.d(t, n, function (e) { return r[e] }.bind(null, n)); return t }, l.n = function (e) { var r = e && e.__esModule ? function () { return e.default } : function () { return e }; return l.d(r, "a", r), r }, l.o = function (e, r) { return Object.prototype.hasOwnProperty.call(e, r) }, l.p = "/"; var r = window["webpackJsonphello-react"] = window["webpackJsonphello-react"] || [], n = r.push.bind(r); r.push = e, r = r.slice(); for (var o = 0; o < r.length; o++)e(r[o]); var s = n; i() }([])</script>
+#   <script src="/static/js/1.e09179ed.chunk.js"></script>
+#   <script src="/static/js/main.0048466c.chunk.js"></script>
+# </body>
+#
+# </html>
+###
+
         html = self.resource_string("static/html/swpwrxstudent.html")
         frag = Fragment(html.format(self=self))
 
-        frag.add_css(self.resource_string("static/css/swpwrxstudent.css"))
+#         frag.add_css(self.resource_string("static/css/swpwrxstudent.css"))
+        frag.add_css(self.resource_string("static/css/main.b870043f.chunk.css"))
 
-        frag.add_css_url("//stepwise.querium.com/libs/mathquill/mathquill.css")
+#         frag.add_css_url("//stepwise.querium.com/libs/mathquill/mathquill.css")
         frag.add_css_url("//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css")
-        frag.add_css_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.9.css")
-        frag.add_css_url("//fonts.googleapis.com/css?family=Open+Sans:400,700")
-        frag.add_css_url("//fonts.googleapis.com/css?family=Lato")
-        frag.add_css_url("//fonts.googleapis.com/css?family=Oswald")
+#         frag.add_css_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.9.css")
+#         frag.add_css_url("//fonts.googleapis.com/css?family=Open+Sans:400,700")
+#         frag.add_css_url("//fonts.googleapis.com/css?family=Lato")
+#         frag.add_css_url("//fonts.googleapis.com/css?family=Oswald")
+
+        frag.add_content('<script>!function (f) { function e(e) { for (var r, t, n = e[0], o = e[1], u = e[2], l = 0, a = []; l < n.length; l++)t = n[l], Object.prototype.hasOwnProperty.call(c, t) && c[t] && a.push(c[t][0]), c[t] = 0; for (r in o) Object.prototype.hasOwnProperty.call(o, r) && (f[r] = o[r]); for (s && s(e); a.length;)a.shift()(); return p.push.apply(p, u || []), i() } function i() { for (var e, r = 0; r < p.length; r++) { for (var t = p[r], n = !0, o = 1; o < t.length; o++) { var u = t[o]; 0 !== c[u] && (n = !1) } n && (p.splice(r--, 1), e = l(l.s = t[0])) } return e } var t = {}, c = { 1: 0 }, p = []; function l(e) { if (t[e]) return t[e].exports; var r = t[e] = { i: e, l: !1, exports: {} }; return f[e].call(r.exports, r, r.exports, l), r.l = !0, r.exports } l.m = f, l.c = t, l.d = function (e, r, t) { l.o(e, r) || Object.defineProperty(e, r, { enumerable: !0, get: t }) }, l.r = function (e) { "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e, "__esModule", { value: !0 }) }, l.t = function (r, e) { if (1 & e && (r = l(r)), 8 & e) return r; if (4 & e && "object" == typeof r && r && r.__esModule) return r; var t = Object.create(null); if (l.r(t), Object.defineProperty(t, "default", { enumerable: !0, value: r }), 2 & e && "string" != typeof r) for (var n in r) l.d(t, n, function (e) { return r[e] }.bind(null, n)); return t }, l.n = function (e) { var r = e && e.__esModule ? function () { return e.default } : function () { return e }; return l.d(r, "a", r), r }, l.o = function (e, r) { return Object.prototype.hasOwnProperty.call(e, r) }, l.p = "/"; var r = window["webpackJsonphello-react"] = window["webpackJsonphello-react"] || [], n = r.push.bind(r); r.push = e, r = r.slice(); for (var o = 0; o < r.length; o++)e(r[o]); var s = n; i() }([])</script>')
 
         frag.add_content('<base href="/testq_assets/" />')
 
@@ -562,19 +591,24 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         # frag.add_css(self.resource_string("vendor/ng-sortable/dist/ng-sortable.css"))
         # frag.add_css(self.resource_string("vendor/ng-scrollbar/dist/ng-scrollbar.css"))
 
-        frag.add_css_url("//cdn.jsdelivr.net/gh/mlaursen/react-md@5.1.4/themes/react-md.teal-pink-200-light.min.css")
+#         frag.add_css_url("//cdn.jsdelivr.net/gh/mlaursen/react-md@5.1.4/themes/react-md.teal-pink-200-light.min.css")
 
-        frag.add_javascript_url("//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML")
-        frag.add_javascript_url("//stepwise.querium.com/libs/mathquill/mathquill.js")
-        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js")
-        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.min.js")
-        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js")
+#         frag.add_javascript_url("//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML")
+#         frag.add_javascript_url("//stepwise.querium.com/libs/mathquill/mathquill.js")
+#         frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js")
+#         frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.min.js")
+#         frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js")
 # jquery doesn't work here
 #         frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
-        frag.add_javascript_url("//www.gstatic.com/firebasejs/4.4.0/firebase.js")               # For qEval client-side logging
-        frag.add_javascript_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.9.js")    # 1.6.9.1 corrects a bug in hints looping
+#         frag.add_javascript_url("//www.gstatic.com/firebasejs/4.4.0/firebase.js")               # For qEval client-side logging
+#         frag.add_javascript_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.9.js")    # 1.6.9.1 corrects a bug in hints looping
 
-        frag.add_content('<script>querium.qEvalLogging = true;</script>')
+#         frag.add_content('<script>querium.qEvalLogging = true;</script>')
+
+        frag.add_javascript(self.resource_string("static/js/1.e09179ed.chunk.js"))
+        frag.add_javascript(self.resource_string("static/js/main.0048466c.chunk.js"))
+
+        frag.add_content('div id="root"></div>')
 
         frag.add_javascript(self.resource_string("static/js/src/swpwrxstudent.js"))
         if DEBUG: logger.info("SWPWRXBlock student_view() calling frag.initialize_js")
