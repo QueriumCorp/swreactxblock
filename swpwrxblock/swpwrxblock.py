@@ -668,7 +668,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_css_url("//fonts.googleapis.com/css?family=Lato")
         frag.add_css_url("//fonts.googleapis.com/css?family=Oswald")
 
-	frag.add_content('<base href="/testq_assets/" />')
+        frag.add_content('<base href="/testq_assets/" />')
 
         frag.add_css(self.resource_string("css/scrolling-nav.css"))
         frag.add_css(self.resource_string("vendor/ng-sortable/dist/ng-sortable.css"))
@@ -685,7 +685,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_javascript_url("//www.gstatic.com/firebasejs/4.4.0/firebase.js")               # For qEval client-side logging
         frag.add_javascript_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.9.js")    # 1.6.9.1 corrects a bug in hints looping
 
-	frag.add_content('<script>querium.qEvalLogging = true;</script>')
+        frag.add_content('<script>querium.qEvalLogging = true;</script>')
 
         frag.add_javascript(self.resource_string("static/js/src/swpwrxstudent.js"))
         if DEBUG: logger.info("SWPWRXBlock student_view() calling frag.initialize_js")
