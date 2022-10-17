@@ -670,7 +670,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         frag.add_content('<base href="/testq_assets/" />')
 
-        frag.add_css(self.resource_string("css/scrolling-nav.css"))
+        # Following not found scrolling-nav.css
+        # frag.add_css(self.resource_string("css/scrolling-nav.css"))
         frag.add_css(self.resource_string("vendor/ng-sortable/dist/ng-sortable.css"))
         frag.add_css(self.resource_string("vendor/ng-scrollbar/dist/ng-scrollbar.css"))
 
