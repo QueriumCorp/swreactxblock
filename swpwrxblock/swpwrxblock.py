@@ -664,12 +664,15 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_css_url("//stepwise.querium.com/libs/mathquill/mathquill.css")
         frag.add_css_url("//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css")
         frag.add_css_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.9.css")
+        frag.add_css_url("//fonts.googleapis.com/css?family=Open+Sans:400,700")
+        frag.add_css_url("//fonts.googleapis.com/css?family=Lato:300,900")
 
         frag.add_javascript_url("//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML")
         frag.add_javascript_url("//stepwise.querium.com/libs/mathquill/mathquill.js")
         frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js")
         frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.min.js")
         frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js")
+        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
         frag.add_javascript_url("//www.gstatic.com/firebasejs/4.4.0/firebase.js")               # For qEval client-side logging
         frag.add_javascript_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.9.js")    # 1.6.9.1 corrects a bug in hints looping
 
