@@ -119,97 +119,97 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     q_hint1 = String(help="SWPWR First Hint", default='', scope=Scope.content)
     q_hint2 = String(help="SWPWR Second Hint", default='', scope=Scope.content)
     q_hint3 = String(help="SWPWR Third Hint", default='', scope=Scope.content)
-//
-//    q1_id = String(help="SWPWR Question ID", default="", scope=Scope.content)
-//    q1_label = String(help="SWPWR Question Alternate 1", default="", scope=Scope.content)
-//    q1_stimulus = String(help="SWPWR Stimulus", default='', scope=Scope.content)
-//    q1_definition = String(help="SWPWR Definition", default='', scope=Scope.content)
-//    q1_type = String(help="SWPWR Type", default='gradeBasicAlgebra', scope=Scope.content)
-//    q1_display_math = String(help="SWPWR Display Math", default='\\(\\)', scope=Scope.content)
-//    q_grade_hints_ded = Integer(help="SWPWR Deduction for using extra Hints", default=-1, scope=Scope.content)
-//    q1_hint1 = String(help="SWPWR First Hint", default='', scope=Scope.content)
-//    q1_hint2 = String(help="SWPWR Second Hint", default='', scope=Scope.content)
-//    q1_hint3 = String(help="SWPWR Third Hint", default='', scope=Scope.content)
-//
-//    q2_id = String(help="Question ID", default="", scope=Scope.content)
-//    q2_label = String(help="Question Alternate 2", default="", scope=Scope.content)
-//    q2_stimulus = String(help="Stimulus", default='', scope=Scope.content)
-//    q2_definition = String(help="Definition", default='', scope=Scope.content)
-//    q2_type = String(help="Type", default='gradeBasicAlgebra', scope=Scope.content)
-//    q2_display_math = String(help="Display Math", default='\\(\\)', scope=Scope.content)
-//    q2_hint1 = String(help="First Hint", default='', scope=Scope.content)
-//    q2_hint2 = String(help="Second Hint", default='', scope=Scope.content)
-//    q2_hint3 = String(help="Third Hint", default='', scope=Scope.content)
-//
-//    q3_id = String(help="Question ID", default="", scope=Scope.content)
-//    q3_label = String(help="Question Alternate 3", default="", scope=Scope.content)
-//    q3_stimulus = String(help="Stimulus", default='', scope=Scope.content)
-//    q3_definition = String(help="Definition", default='', scope=Scope.content)
-//    q3_type = String(help="Type", default='gradeBasicAlgebra', scope=Scope.content)
-//    q3_display_math = String(help="Display Math", default='\\(\\)', scope=Scope.content)
-//    q3_hint1 = String(help="First Hint", default='', scope=Scope.content)
-//    q3_hint2 = String(help="Second Hint", default='', scope=Scope.content)
-//    q3_hint3 = String(help="Third Hint", default='', scope=Scope.content)
-//
-//    q4_id = String(help="Question ID", default="", scope=Scope.content)
-//    q4_label = String(help="Question Alternate 4", default="", scope=Scope.content)
-//    q4_stimulus = String(help="Stimulus", default='', scope=Scope.content)
-//    q4_definition = String(help="Definition", default='', scope=Scope.content)
-//    q4_type = String(help="Type", default='gradeBasicAlgebra', scope=Scope.content)
-//    q4_display_math = String(help="Display Math", default='\\(\\)', scope=Scope.content)
-//    q4_hint1 = String(help="First Hint", default='', scope=Scope.content)
-//    q4_hint2 = String(help="Second Hint", default='', scope=Scope.content)
-//    q4_hint3 = String(help="Third Hint", default='', scope=Scope.content)
-//
-//    q5_id = String(help="Question ID", default="", scope=Scope.content)
-//    q5_label = String(help="Question Alternate 5", default="", scope=Scope.content)
-//    q5_stimulus = String(help="Stimulus", default='', scope=Scope.content)
-//    q5_definition = String(help="Definition", default='', scope=Scope.content)
-//    q5_type = String(help="Type", default='gradeBasicAlgebra', scope=Scope.content)
-//    q5_display_math = String(help="Display Math", default='\\(\\)', scope=Scope.content)
-//    q5_hint1 = String(help="First Hint", default='', scope=Scope.content)
-//    q5_hint2 = String(help="Second Hint", default='', scope=Scope.content)
-//    q5_hint3 = String(help="Third Hint", default='', scope=Scope.content)
-//
-//    q6_id = String(help="Question ID", default="", scope=Scope.content)
-//    q6_label = String(help="Question Alternate 6", default="", scope=Scope.content)
-//    q6_stimulus = String(help="Stimulus", default='', scope=Scope.content)
-//    q6_definition = String(help="Definition", default='', scope=Scope.content)
-//    q6_type = String(help="Type", default='gradeBasicAlgebra', scope=Scope.content)
-//    q6_display_math = String(help="Display Math", default='\\(\\)', scope=Scope.content)
-//    q6_hint1 = String(help="First Hint", default='', scope=Scope.content)
-//    q6_hint2 = String(help="Second Hint", default='', scope=Scope.content)
-//    q6_hint3 = String(help="Third Hint", default='', scope=Scope.content)
-//
-//    q7_id = String(help="Question ID", default="", scope=Scope.content)
-//    q7_label = String(help="Question Alternate 7", default="", scope=Scope.content)
-//    q7_stimulus = String(help="Stimulus", default='', scope=Scope.content)
-//    q7_definition = String(help="Definition", default='', scope=Scope.content)
-//    q7_type = String(help="Type", default='gradeBasicAlgebra', scope=Scope.content)
-//    q7_display_math = String(help="Display Math", default='\\(\\)', scope=Scope.content)
-//    q7_hint1 = String(help="First Hint", default='', scope=Scope.content)
-//    q7_hint2 = String(help="Second Hint", default='', scope=Scope.content)
-//    q7_hint3 = String(help="Third Hint", default='', scope=Scope.content)
-//
-//    q8_id = String(help="Question ID", default="", scope=Scope.content)
-//    q8_label = String(help="Question Alternate 8", default="", scope=Scope.content)
-//    q8_stimulus = String(help="Stimulus", default='', scope=Scope.content)
-//    q8_definition = String(help="Definition", default='', scope=Scope.content)
-//    q8_type = String(help="Type", default='gradeBasicAlgebra', scope=Scope.content)
-//    q8_display_math = String(help="Display Math", default='\\(\\)', scope=Scope.content)
-//    q8_hint1 = String(help="First Hint", default='', scope=Scope.content)
-//    q8_hint2 = String(help="Second Hint", default='', scope=Scope.content)
-//    q8_hint3 = String(help="Third Hint", default='', scope=Scope.content)
-//
-//    q9_id = String(help="Question ID", default="", scope=Scope.content)
-//    q9_label = String(help="Question Alternate 9", default="", scope=Scope.content)
-//    q9_stimulus = String(help="Stimulus", default='', scope=Scope.content)
-//    q9_definition = String(help="Definition", default='', scope=Scope.content)
-//    q9_type = String(help="Type", default='gradeBasicAlgebra', scope=Scope.content)
-//    q9_display_math = String(help="Display Math", default='\\(\\)', scope=Scope.content)
-//    q9_hint1 = String(help="First Hint", default='', scope=Scope.content)
-//    q9_hint2 = String(help="Second Hint", default='', scope=Scope.content)
-//    q9_hint3 = String(help="Third Hint", default='', scope=Scope.content)
+#
+#    q1_id = String(help="SWPWR Question ID", default="", scope=Scope.content)
+#    q1_label = String(help="SWPWR Question Alternate 1", default="", scope=Scope.content)
+#    q1_stimulus = String(help="SWPWR Stimulus", default='', scope=Scope.content)
+#    q1_definition = String(help="SWPWR Definition", default='', scope=Scope.content)
+#    q1_type = String(help="SWPWR Type", default='gradeBasicAlgebra', scope=Scope.content)
+#    q1_display_math = String(help="SWPWR Display Math", default='\\(\\)', scope=Scope.content)
+#    q_grade_hints_ded = Integer(help="SWPWR Deduction for using extra Hints", default=-1, scope=Scope.content)
+#    q1_hint1 = String(help="SWPWR First Hint", default='', scope=Scope.content)
+#    q1_hint2 = String(help="SWPWR Second Hint", default='', scope=Scope.content)
+#    q1_hint3 = String(help="SWPWR Third Hint", default='', scope=Scope.content)
+#
+#    q2_id = String(help="Question ID", default="", scope=Scope.content)
+#    q2_label = String(help="Question Alternate 2", default="", scope=Scope.content)
+#    q2_stimulus = String(help="Stimulus", default='', scope=Scope.content)
+#    q2_definition = String(help="Definition", default='', scope=Scope.content)
+#    q2_type = String(help="Type", default='gradeBasicAlgebra', scope=Scope.content)
+#    q2_display_math = String(help="Display Math", default='\\(\\)', scope=Scope.content)
+#    q2_hint1 = String(help="First Hint", default='', scope=Scope.content)
+#    q2_hint2 = String(help="Second Hint", default='', scope=Scope.content)
+#    q2_hint3 = String(help="Third Hint", default='', scope=Scope.content)
+#
+#    q3_id = String(help="Question ID", default="", scope=Scope.content)
+#    q3_label = String(help="Question Alternate 3", default="", scope=Scope.content)
+#    q3_stimulus = String(help="Stimulus", default='', scope=Scope.content)
+#    q3_definition = String(help="Definition", default='', scope=Scope.content)
+#    q3_type = String(help="Type", default='gradeBasicAlgebra', scope=Scope.content)
+#    q3_display_math = String(help="Display Math", default='\\(\\)', scope=Scope.content)
+#    q3_hint1 = String(help="First Hint", default='', scope=Scope.content)
+#    q3_hint2 = String(help="Second Hint", default='', scope=Scope.content)
+#    q3_hint3 = String(help="Third Hint", default='', scope=Scope.content)
+#
+#    q4_id = String(help="Question ID", default="", scope=Scope.content)
+#    q4_label = String(help="Question Alternate 4", default="", scope=Scope.content)
+#    q4_stimulus = String(help="Stimulus", default='', scope=Scope.content)
+#    q4_definition = String(help="Definition", default='', scope=Scope.content)
+#    q4_type = String(help="Type", default='gradeBasicAlgebra', scope=Scope.content)
+#    q4_display_math = String(help="Display Math", default='\\(\\)', scope=Scope.content)
+#    q4_hint1 = String(help="First Hint", default='', scope=Scope.content)
+#    q4_hint2 = String(help="Second Hint", default='', scope=Scope.content)
+#    q4_hint3 = String(help="Third Hint", default='', scope=Scope.content)
+#
+#    q5_id = String(help="Question ID", default="", scope=Scope.content)
+#    q5_label = String(help="Question Alternate 5", default="", scope=Scope.content)
+#    q5_stimulus = String(help="Stimulus", default='', scope=Scope.content)
+#    q5_definition = String(help="Definition", default='', scope=Scope.content)
+#    q5_type = String(help="Type", default='gradeBasicAlgebra', scope=Scope.content)
+#    q5_display_math = String(help="Display Math", default='\\(\\)', scope=Scope.content)
+#    q5_hint1 = String(help="First Hint", default='', scope=Scope.content)
+#    q5_hint2 = String(help="Second Hint", default='', scope=Scope.content)
+#    q5_hint3 = String(help="Third Hint", default='', scope=Scope.content)
+#
+#    q6_id = String(help="Question ID", default="", scope=Scope.content)
+#    q6_label = String(help="Question Alternate 6", default="", scope=Scope.content)
+#    q6_stimulus = String(help="Stimulus", default='', scope=Scope.content)
+#    q6_definition = String(help="Definition", default='', scope=Scope.content)
+#    q6_type = String(help="Type", default='gradeBasicAlgebra', scope=Scope.content)
+#    q6_display_math = String(help="Display Math", default='\\(\\)', scope=Scope.content)
+#    q6_hint1 = String(help="First Hint", default='', scope=Scope.content)
+#    q6_hint2 = String(help="Second Hint", default='', scope=Scope.content)
+#    q6_hint3 = String(help="Third Hint", default='', scope=Scope.content)
+#
+#    q7_id = String(help="Question ID", default="", scope=Scope.content)
+#    q7_label = String(help="Question Alternate 7", default="", scope=Scope.content)
+#    q7_stimulus = String(help="Stimulus", default='', scope=Scope.content)
+#    q7_definition = String(help="Definition", default='', scope=Scope.content)
+#    q7_type = String(help="Type", default='gradeBasicAlgebra', scope=Scope.content)
+#    q7_display_math = String(help="Display Math", default='\\(\\)', scope=Scope.content)
+#    q7_hint1 = String(help="First Hint", default='', scope=Scope.content)
+#    q7_hint2 = String(help="Second Hint", default='', scope=Scope.content)
+#    q7_hint3 = String(help="Third Hint", default='', scope=Scope.content)
+#
+#    q8_id = String(help="Question ID", default="", scope=Scope.content)
+#    q8_label = String(help="Question Alternate 8", default="", scope=Scope.content)
+#    q8_stimulus = String(help="Stimulus", default='', scope=Scope.content)
+#    q8_definition = String(help="Definition", default='', scope=Scope.content)
+#    q8_type = String(help="Type", default='gradeBasicAlgebra', scope=Scope.content)
+#    q8_display_math = String(help="Display Math", default='\\(\\)', scope=Scope.content)
+#    q8_hint1 = String(help="First Hint", default='', scope=Scope.content)
+#    q8_hint2 = String(help="Second Hint", default='', scope=Scope.content)
+#    q8_hint3 = String(help="Third Hint", default='', scope=Scope.content)
+#
+#    q9_id = String(help="Question ID", default="", scope=Scope.content)
+#    q9_label = String(help="Question Alternate 9", default="", scope=Scope.content)
+#    q9_stimulus = String(help="Stimulus", default='', scope=Scope.content)
+#    q9_definition = String(help="Definition", default='', scope=Scope.content)
+#    q9_type = String(help="Type", default='gradeBasicAlgebra', scope=Scope.content)
+#    q9_display_math = String(help="Display Math", default='\\(\\)', scope=Scope.content)
+#    q9_hint1 = String(help="First Hint", default='', scope=Scope.content)
+#    q9_hint2 = String(help="Second Hint", default='', scope=Scope.content)
+#    q9_hint3 = String(help="Third Hint", default='', scope=Scope.content)
 
     # STUDENT'S QUESTION PERFORMANCE FIELDS
     xb_user_email = String(help="SWPWR The user's email addr", default="", scope=Scope.user_state)
@@ -622,29 +622,29 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         # Determine which stepwise variant to use
 
-//        self.variants_count = 0
+#        self.variants_count = 0
         self.variants_count = 1
 
-//         if len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0 and len(self.q7_definition)>0 and len(self.q8_definition)>0  and len(self.q9_definition)>0:
-//             self.variants_count = 10
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0 and len(self.q7_definition)>0 and len(self.q8_definition)>0:
-//             self.variants_count = 9
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0 and len(self.q7_definition)>0:
-//             self.variants_count = 8
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0:
-//             self.variants_count = 7
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0:
-//             self.variants_count = 6
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0:
-//             self.variants_count = 5
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0:
-//             self.variants_count = 4
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0:
-//             self.variants_count = 3
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0:
-//             self.variants_count = 2
-//         else:
-//             self.variants_count = 1
+#         if len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0 and len(self.q7_definition)>0 and len(self.q8_definition)>0  and len(self.q9_definition)>0:
+#             self.variants_count = 10
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0 and len(self.q7_definition)>0 and len(self.q8_definition)>0:
+#             self.variants_count = 9
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0 and len(self.q7_definition)>0:
+#             self.variants_count = 8
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0:
+#             self.variants_count = 7
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0:
+#             self.variants_count = 6
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0:
+#             self.variants_count = 5
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0:
+#             self.variants_count = 4
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0:
+#             self.variants_count = 3
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0:
+#             self.variants_count = 2
+#         else:
+#             self.variants_count = 1
 
         if DEBUG: logger.info("SWPWRXBlock student_view() self.variants_count={c}".format(c=self.variants_count))
         # Pick a variant at random, and make sure that it is one we haven't attempted before.
@@ -992,31 +992,31 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_javascript(self.resource_string("static/js/src/swpwrxauthor.js"))
 
         if DEBUG: logger.info("SWPWRXBlock SWPWRXAuthor author_view v={a}".format(a=self.q_definition))
-//        if DEBUG: logger.info("SWPWRXBlock SWPWRXAuthor author_view v1={a} v2={b} v3={c}".format(a=self.q1_definition,b=self.q2_definition,c=self.q3_definition))
-//        if DEBUG: logger.info("SWPWRXBlock SWPWRXAuthor author_view v4={a} v5={b} v6={c}".format(a=self.q4_definition,b=self.q5_definition,c=self.q6_definition))
-//        if DEBUG: logger.info("SWPWRXBlock SWPWRXAuthor author_view v7={a} v8={b} v9={c}".format(a=self.q7_definition,b=self.q8_definition,c=self.q9_definition))
+#        if DEBUG: logger.info("SWPWRXBlock SWPWRXAuthor author_view v1={a} v2={b} v3={c}".format(a=self.q1_definition,b=self.q2_definition,c=self.q3_definition))
+#        if DEBUG: logger.info("SWPWRXBlock SWPWRXAuthor author_view v4={a} v5={b} v6={c}".format(a=self.q4_definition,b=self.q5_definition,c=self.q6_definition))
+#        if DEBUG: logger.info("SWPWRXBlock SWPWRXAuthor author_view v7={a} v8={b} v9={c}".format(a=self.q7_definition,b=self.q8_definition,c=self.q9_definition))
 
         # tell author_view how many variants are defined
-//         if len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0 and len(self.q7_definition)>0 and len(self.q8_definition)>0 and len(self.q9_definition)>0:
-//             variants = 10
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0 and len(self.q7_definition)>0 and len(self.q8_definition)>0:
-//             variants = 9
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0 and len(self.q7_definition)>0:
-//             variants = 8
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0:
-//             variants = 7
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0:
-//             variants = 6
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0:
-//             variants = 5
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0:
-//             variants = 4
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0:
-//             variants = 3
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0:
-//             variants = 2
-//         else:
-//             variants = 1
+#         if len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0 and len(self.q7_definition)>0 and len(self.q8_definition)>0 and len(self.q9_definition)>0:
+#             variants = 10
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0 and len(self.q7_definition)>0 and len(self.q8_definition)>0:
+#             variants = 9
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0 and len(self.q7_definition)>0:
+#             variants = 8
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0:
+#             variants = 7
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0:
+#             variants = 6
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0:
+#             variants = 5
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0:
+#             variants = 4
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0:
+#             variants = 3
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0:
+#             variants = 2
+#         else:
+#             variants = 1
         variants = 1
 
         if DEBUG: logger.info("SWPWRXBlock SWPWRXAuthor author_view variants={a}".format(a=variants))
@@ -1057,117 +1057,117 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         self.q_hint2 = data['hint2']
         self.q_hint3 = data['hint3']
 
-//         self.q1_id = data['q1_id']
-//         self.q1_label = data['q1_label']
-//         self.q1_stimulus = data['q1_stimulus']
-//         self.q1_definition = data['q1_definition']
-//         self.q1_type = data['q1_qtype']
-//         self.q1_display_math = data['q1_display_math']
-//         self.q1_hint1 = data['q1_hint1']
-//         self.q1_hint2 = data['q1_hint2']
-//         self.q1_hint3 = data['q1_hint3']
-// 
-//         self.q2_id = data['q2_id']
-//         self.q2_label = data['q2_label']
-//         self.q2_stimulus = data['q2_stimulus']
-//         self.q2_definition = data['q2_definition']
-//         self.q2_type = data['q2_qtype']
-//         self.q2_display_math = data['q2_display_math']
-//         self.q2_hint1 = data['q2_hint1']
-//         self.q2_hint2 = data['q2_hint2']
-//         self.q2_hint3 = data['q2_hint3']
-// 
-//         self.q3_id = data['q3_id']
-//         self.q3_label = data['q3_label']
-//         self.q3_stimulus = data['q3_stimulus']
-//         self.q3_definition = data['q3_definition']
-//         self.q3_type = data['q3_qtype']
-//         self.q3_display_math = data['q3_display_math']
-//         self.q3_hint1 = data['q3_hint1']
-//         self.q3_hint2 = data['q3_hint2']
-//         self.q3_hint3 = data['q3_hint3']
-// 
-//         self.q4_id = data['q4_id']
-//         self.q4_label = data['q4_label']
-//         self.q4_stimulus = data['q4_stimulus']
-//         self.q4_definition = data['q4_definition']
-//         self.q4_type = data['q4_qtype']
-//         self.q4_display_math = data['q4_display_math']
-//         self.q4_hint1 = data['q4_hint1']
-//         self.q4_hint2 = data['q4_hint2']
-//         self.q4_hint3 = data['q4_hint3']
-// 
-//         self.q5_id = data['q5_id']
-//         self.q5_label = data['q5_label']
-//         self.q5_stimulus = data['q5_stimulus']
-//         self.q5_definition = data['q5_definition']
-//         self.q5_type = data['q5_qtype']
-//         self.q5_display_math = data['q5_display_math']
-//         self.q5_hint1 = data['q5_hint1']
-//         self.q5_hint2 = data['q5_hint2']
-//         self.q5_hint3 = data['q5_hint3']
-// 
-//         self.q6_id = data['q6_id']
-//         self.q6_label = data['q6_label']
-//         self.q6_stimulus = data['q6_stimulus']
-//         self.q6_definition = data['q6_definition']
-//         self.q6_type = data['q6_qtype']
-//         self.q6_display_math = data['q6_display_math']
-//         self.q6_hint1 = data['q6_hint1']
-//         self.q6_hint2 = data['q6_hint2']
-//         self.q6_hint3 = data['q6_hint3']
-// 
-//         self.q7_id = data['q7_id']
-//         self.q7_label = data['q7_label']
-//         self.q7_stimulus = data['q7_stimulus']
-//         self.q7_definition = data['q7_definition']
-//         self.q7_type = data['q7_qtype']
-//         self.q7_display_math = data['q7_display_math']
-//         self.q7_hint1 = data['q7_hint1']
-//         self.q7_hint2 = data['q7_hint2']
-//         self.q7_hint3 = data['q7_hint3']
-// 
-//         self.q8_id = data['q8_id']
-//         self.q8_label = data['q8_label']
-//         self.q8_stimulus = data['q8_stimulus']
-//         self.q8_definition = data['q8_definition']
-//         self.q8_type = data['q8_qtype']
-//         self.q8_display_math = data['q8_display_math']
-//         self.q8_hint1 = data['q8_hint1']
-//         self.q8_hint2 = data['q8_hint2']
-//         self.q8_hint3 = data['q8_hint3']
-// 
-//         self.q9_id = data['q9_id']
-//         self.q9_label = data['q9_label']
-//         self.q9_stimulus = data['q9_stimulus']
-//         self.q9_definition = data['q9_definition']
-//         self.q9_type = data['q9_qtype']
-//         self.q9_display_math = data['q9_display_math']
-//         self.q9_hint1 = data['q9_hint1']
-//         self.q9_hint2 = data['q9_hint2']
-//         self.q9_hint3 = data['q9_hint3']
-
-//         if len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0 and len(self.q7_definition)>0 and len(self.q8_definition)>0 and len(self.q9_definition)>0:
-//             self.display_name = "Step-by-Step Dynamic [10]"
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0 and len(self.q7_definition)>0 and len(self.q8_definition)>0:
-//             self.display_name = "Step-by-Step Dynamic [9]"
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0 and len(self.q7_definition)>0:
-//             self.display_name = "Step-by-Step Dynamic [8]"
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0:
-//             self.display_name = "Step-by-Step Dynamic [7]"
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0:
-//             self.display_name = "Step-by-Step Dynamic [6]"
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0:
-//             self.display_name = "Step-by-Step Dynamic [5]"
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0:
-//             self.display_name = "Step-by-Step Dynamic [4]"
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0:
-//             self.display_name = "Step-by-Step Dynamic [3]"
-//         elif len(self.q_definition)>0 and len(self.q1_definition)>0:
-//             self.display_name = "Step-by-Step Dynamic [2]"
-//         else:
-//             self.display_name = "Step-by-Step"
-        self.display_name = "Step-by-Step"
+#         self.q1_id = data['q1_id']
+#         self.q1_label = data['q1_label']
+#         self.q1_stimulus = data['q1_stimulus']
+#         self.q1_definition = data['q1_definition']
+#         self.q1_type = data['q1_qtype']
+#         self.q1_display_math = data['q1_display_math']
+#         self.q1_hint1 = data['q1_hint1']
+#         self.q1_hint2 = data['q1_hint2']
+#         self.q1_hint3 = data['q1_hint3']
+# 
+#         self.q2_id = data['q2_id']
+#         self.q2_label = data['q2_label']
+#         self.q2_stimulus = data['q2_stimulus']
+#         self.q2_definition = data['q2_definition']
+#         self.q2_type = data['q2_qtype']
+#         self.q2_display_math = data['q2_display_math']
+#         self.q2_hint1 = data['q2_hint1']
+#         self.q2_hint2 = data['q2_hint2']
+#         self.q2_hint3 = data['q2_hint3']
+# 
+#         self.q3_id = data['q3_id']
+#         self.q3_label = data['q3_label']
+#         self.q3_stimulus = data['q3_stimulus']
+#         self.q3_definition = data['q3_definition']
+#         self.q3_type = data['q3_qtype']
+#         self.q3_display_math = data['q3_display_math']
+#         self.q3_hint1 = data['q3_hint1']
+#         self.q3_hint2 = data['q3_hint2']
+#         self.q3_hint3 = data['q3_hint3']
+# 
+#         self.q4_id = data['q4_id']
+#         self.q4_label = data['q4_label']
+#         self.q4_stimulus = data['q4_stimulus']
+#         self.q4_definition = data['q4_definition']
+#         self.q4_type = data['q4_qtype']
+#         self.q4_display_math = data['q4_display_math']
+#         self.q4_hint1 = data['q4_hint1']
+#         self.q4_hint2 = data['q4_hint2']
+#         self.q4_hint3 = data['q4_hint3']
+# 
+#         self.q5_id = data['q5_id']
+#         self.q5_label = data['q5_label']
+#         self.q5_stimulus = data['q5_stimulus']
+#         self.q5_definition = data['q5_definition']
+#         self.q5_type = data['q5_qtype']
+#         self.q5_display_math = data['q5_display_math']
+#         self.q5_hint1 = data['q5_hint1']
+#         self.q5_hint2 = data['q5_hint2']
+#         self.q5_hint3 = data['q5_hint3']
+# 
+#         self.q6_id = data['q6_id']
+#         self.q6_label = data['q6_label']
+#         self.q6_stimulus = data['q6_stimulus']
+#         self.q6_definition = data['q6_definition']
+#         self.q6_type = data['q6_qtype']
+#         self.q6_display_math = data['q6_display_math']
+#         self.q6_hint1 = data['q6_hint1']
+#         self.q6_hint2 = data['q6_hint2']
+#         self.q6_hint3 = data['q6_hint3']
+# 
+#         self.q7_id = data['q7_id']
+#         self.q7_label = data['q7_label']
+#         self.q7_stimulus = data['q7_stimulus']
+#         self.q7_definition = data['q7_definition']
+#         self.q7_type = data['q7_qtype']
+#         self.q7_display_math = data['q7_display_math']
+#         self.q7_hint1 = data['q7_hint1']
+#         self.q7_hint2 = data['q7_hint2']
+#         self.q7_hint3 = data['q7_hint3']
+# 
+#         self.q8_id = data['q8_id']
+#         self.q8_label = data['q8_label']
+#         self.q8_stimulus = data['q8_stimulus']
+#         self.q8_definition = data['q8_definition']
+#         self.q8_type = data['q8_qtype']
+#         self.q8_display_math = data['q8_display_math']
+#         self.q8_hint1 = data['q8_hint1']
+#         self.q8_hint2 = data['q8_hint2']
+#         self.q8_hint3 = data['q8_hint3']
+# 
+#         self.q9_id = data['q9_id']
+#         self.q9_label = data['q9_label']
+#         self.q9_stimulus = data['q9_stimulus']
+#         self.q9_definition = data['q9_definition']
+#         self.q9_type = data['q9_qtype']
+#         self.q9_display_math = data['q9_display_math']
+#         self.q9_hint1 = data['q9_hint1']
+#         self.q9_hint2 = data['q9_hint2']
+#         self.q9_hint3 = data['q9_hint3']
+#
+#         if len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0 and len(self.q7_definition)>0 and len(self.q8_definition)>0 and len(self.q9_definition)>0:
+#             self.display_name = "Step-by-Step Dynamic [10]"
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0 and len(self.q7_definition)>0 and len(self.q8_definition)>0:
+#             self.display_name = "Step-by-Step Dynamic [9]"
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0 and len(self.q7_definition)>0:
+#             self.display_name = "Step-by-Step Dynamic [8]"
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0 and len(self.q6_definition)>0:
+#             self.display_name = "Step-by-Step Dynamic [7]"
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0 and len(self.q5_definition)>0:
+#             self.display_name = "Step-by-Step Dynamic [6]"
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0 and len(self.q4_definition)>0:
+#             self.display_name = "Step-by-Step Dynamic [5]"
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0 and len(self.q3_definition)>0:
+#             self.display_name = "Step-by-Step Dynamic [4]"
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0 and len(self.q2_definition)>0:
+#             self.display_name = "Step-by-Step Dynamic [3]"
+#         elif len(self.q_definition)>0 and len(self.q1_definition)>0:
+#             self.display_name = "Step-by-Step Dynamic [2]"
+#         else:
+#             self.display_name = "Step-by-Step"
+        self.display_name = "Step-by-Step POWER"
 
         # mcdaniel jul-2020: fix syntax error in print statement
         print(self.display_name)
@@ -1378,256 +1378,256 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         # Note: we won't set self.variants_attempted for this variant until they actually begin work on it (see start_attempt() below)
 
-//         if q_index==0:
-//             question = {
-//                 "q_id" : self.q_id,
-//                 "q_user" : self.xb_user_email,
-//                 "q_index" : 0,
-//                 "q_label" : self.q_label,
-//                 "q_stimulus" : self.q_stimulus,
-//                 "q_definition" : self.q_definition,
-//                 "q_type" :  self.q_type,
-//                 "q_display_math" :  self.q_display_math,
-//                 "q_hint1" :  self.q_hint1,
-//                 "q_hint2" :  self.q_hint2,
-//                 "q_hint3" :  self.q_hint3,
-//                 "q_weight" :  self.my_weight,
-//                 "q_max_attempts" : self.my_max_attempts,
-//                 "q_option_hint" : self.my_option_hint,
-//                 "q_option_showme" : self.my_option_showme,
-//                 "q_grade_showme_ded" : self.my_grade_showme_ded,
-//                 "q_grade_hints_count" : self.my_grade_hints_count,
-//                 "q_grade_hints_ded" : self.my_grade_hints_ded,
-//                 "q_grade_errors_count" : self.my_grade_errors_count,
-//                 "q_grade_errors_ded" : self.my_grade_errors_ded,
-//                 "q_grade_min_steps_count" : self.my_grade_min_steps_count,
-//                 "q_grade_min_steps_ded" : self.my_grade_min_steps_ded
-//             }
-//         elif q_index==1:
-//             question = {
-//                 "q_id" : self.q1_id,
-//                 "q_user" : self.xb_user_email,
-//                 "q_index" : 1,
-//                 "q_label" : self.q1_label,
-//                 "q_stimulus" : self.q1_stimulus,
-//                 "q_definition" : self.q1_definition,
-//                 "q_type" :  self.q1_type,
-//                 "q_display_math" :  self.q1_display_math,
-//                 "q_hint1" :  self.q1_hint1,
-//                 "q_hint2" :  self.q1_hint2,
-//                 "q_hint3" :  self.q1_hint3,
-//                 "q_weight" :  self.my_weight,
-//                 "q_max_attempts" : self.my_max_attempts,
-//                 "q_option_hint" : self.my_option_hint,
-//                 "q_option_showme" : self.my_option_showme,
-//                 "q_grade_showme_ded" : self.my_grade_showme_ded,
-//                 "q_grade_hints_count" : self.my_grade_hints_count,
-//                 "q_grade_hints_ded" : self.my_grade_hints_ded,
-//                 "q_grade_errors_count" : self.my_grade_errors_count,
-//                 "q_grade_errors_ded" : self.my_grade_errors_ded,
-//                 "q_grade_min_steps_count" : self.my_grade_min_steps_count,
-//                 "q_grade_min_steps_ded" : self.my_grade_min_steps_ded
-//             }
-//         elif q_index==2:
-//             question = {
-//                 "q_id" : self.q2_id,
-//                 "q_user" : self.xb_user_email,
-//                 "q_index" : 2,
-//                 "q_label" : self.q2_label,
-//                 "q_stimulus" : self.q2_stimulus,
-//                 "q_definition" : self.q2_definition,
-//                 "q_type" :  self.q2_type,
-//                 "q_display_math" :  self.q2_display_math,
-//                 "q_hint1" :  self.q2_hint1,
-//                 "q_hint2" :  self.q2_hint2,
-//                 "q_hint3" :  self.q2_hint3,
-//                 "q_weight" :  self.my_weight,
-//                 "q_max_attempts" : self.my_max_attempts,
-//                 "q_option_hint" : self.my_option_hint,
-//                 "q_option_showme" : self.my_option_showme,
-//                 "q_grade_showme_ded" : self.my_grade_showme_ded,
-//                 "q_grade_hints_count" : self.my_grade_hints_count,
-//                 "q_grade_hints_ded" : self.my_grade_hints_ded,
-//                 "q_grade_errors_count" : self.my_grade_errors_count,
-//                 "q_grade_errors_ded" : self.my_grade_errors_ded,
-//                 "q_grade_min_steps_count" : self.my_grade_min_steps_count,
-//                 "q_grade_min_steps_ded" : self.my_grade_min_steps_ded
-//             }
-//         elif q_index==3:
-//             question = {
-//                 "q_id" : self.q3_id,
-//                 "q_user" : self.xb_user_email,
-//                 "q_index" : 3,
-//                 "q_label" : self.q3_label,
-//                 "q_stimulus" : self.q3_stimulus,
-//                 "q_definition" : self.q3_definition,
-//                 "q_type" :  self.q3_type,
-//                 "q_display_math" :  self.q3_display_math,
-//                 "q_hint1" :  self.q3_hint1,
-//                 "q_hint2" :  self.q3_hint2,
-//                 "q_hint3" :  self.q3_hint3,
-//                 "q_weight" :  self.my_weight,
-//                 "q_max_attempts" : self.my_max_attempts,
-//                 "q_option_hint" : self.my_option_hint,
-//                 "q_option_showme" : self.my_option_showme,
-//                 "q_grade_showme_ded" : self.my_grade_showme_ded,
-//                 "q_grade_hints_count" : self.my_grade_hints_count,
-//                 "q_grade_hints_ded" : self.my_grade_hints_ded,
-//                 "q_grade_errors_count" : self.my_grade_errors_count,
-//                 "q_grade_errors_ded" : self.my_grade_errors_ded,
-//                 "q_grade_min_steps_count" : self.my_grade_min_steps_count,
-//                 "q_grade_min_steps_ded" : self.my_grade_min_steps_ded
-//             }
-//         elif q_index==4:
-//             question = {
-//                 "q_id" : self.q4_id,
-//                 "q_user" : self.xb_user_email,
-//                 "q_index" : 4,
-//                 "q_label" : self.q4_label,
-//                 "q_stimulus" : self.q4_stimulus,
-//                 "q_definition" : self.q4_definition,
-//                 "q_type" :  self.q4_type,
-//                 "q_display_math" :  self.q4_display_math,
-//                 "q_hint1" :  self.q4_hint1,
-//                 "q_hint2" :  self.q4_hint2,
-//                 "q_hint3" :  self.q4_hint3,
-//                 "q_weight" :  self.my_weight,
-//                 "q_max_attempts" : self.my_max_attempts,
-//                 "q_option_hint" : self.my_option_hint,
-//                 "q_option_showme" : self.my_option_showme,
-//                 "q_grade_showme_ded" : self.my_grade_showme_ded,
-//                 "q_grade_hints_count" : self.my_grade_hints_count,
-//                 "q_grade_hints_ded" : self.my_grade_hints_ded,
-//                 "q_grade_errors_count" : self.my_grade_errors_count,
-//                 "q_grade_errors_ded" : self.my_grade_errors_ded,
-//                 "q_grade_min_steps_count" : self.my_grade_min_steps_count,
-//                 "q_grade_min_steps_ded" : self.my_grade_min_steps_ded
-//             }
-//         elif q_index==5:
-//             question = {
-//                 "q_id" : self.q5_id,
-//                 "q_user" : self.xb_user_email,
-//                 "q_index" : 5,
-//                 "q_label" : self.q5_label,
-//                 "q_stimulus" : self.q5_stimulus,
-//                 "q_definition" : self.q5_definition,
-//                 "q_type" :  self.q5_type,
-//                 "q_display_math" :  self.q5_display_math,
-//                 "q_hint1" :  self.q5_hint1,
-//                 "q_hint2" :  self.q5_hint2,
-//                 "q_hint3" :  self.q5_hint3,
-//                 "q_weight" :  self.my_weight,
-//                 "q_max_attempts" : self.my_max_attempts,
-//                 "q_option_hint" : self.my_option_hint,
-//                 "q_option_showme" : self.my_option_showme,
-//                 "q_grade_showme_ded" : self.my_grade_showme_ded,
-//                 "q_grade_hints_count" : self.my_grade_hints_count,
-//                 "q_grade_hints_ded" : self.my_grade_hints_ded,
-//                 "q_grade_errors_count" : self.my_grade_errors_count,
-//                 "q_grade_errors_ded" : self.my_grade_errors_ded,
-//                 "q_grade_min_steps_count" : self.my_grade_min_steps_count,
-//                 "q_grade_min_steps_ded" : self.my_grade_min_steps_ded
-//             }
-//         elif q_index==6:
-//             question = {
-//                 "q_id" : self.q6_id,
-//                 "q_user" : self.xb_user_email,
-//                 "q_index" : 6,
-//                 "q_label" : self.q6_label,
-//                 "q_stimulus" : self.q6_stimulus,
-//                 "q_definition" : self.q6_definition,
-//                 "q_type" :  self.q6_type,
-//                 "q_display_math" :  self.q6_display_math,
-//                 "q_hint1" :  self.q6_hint1,
-//                 "q_hint2" :  self.q6_hint2,
-//                 "q_hint3" :  self.q6_hint3,
-//                 "q_weight" :  self.my_weight,
-//                 "q_max_attempts" : self.my_max_attempts,
-//                 "q_option_hint" : self.my_option_hint,
-//                 "q_option_showme" : self.my_option_showme,
-//                 "q_grade_showme_ded" : self.my_grade_showme_ded,
-//                 "q_grade_hints_count" : self.my_grade_hints_count,
-//                 "q_grade_hints_ded" : self.my_grade_hints_ded,
-//                 "q_grade_errors_count" : self.my_grade_errors_count,
-//                 "q_grade_errors_ded" : self.my_grade_errors_ded,
-//                 "q_grade_min_steps_count" : self.my_grade_min_steps_count,
-//                 "q_grade_min_steps_ded" : self.my_grade_min_steps_ded
-//             }
-//         elif q_index==7:
-//             question = {
-//                 "q_id" : self.q7_id,
-//                 "q_user" : self.xb_user_email,
-//                 "q_index" : 7,
-//                 "q_label" : self.q7_label,
-//                 "q_stimulus" : self.q7_stimulus,
-//                 "q_definition" : self.q7_definition,
-//                 "q_type" :  self.q7_type,
-//                 "q_display_math" :  self.q7_display_math,
-//                 "q_hint1" :  self.q7_hint1,
-//                 "q_hint2" :  self.q7_hint2,
-//                 "q_hint3" :  self.q7_hint3,
-//                 "q_weight" :  self.my_weight,
-//                 "q_max_attempts" : self.my_max_attempts,
-//                 "q_option_hint" : self.my_option_hint,
-//                 "q_option_showme" : self.my_option_showme,
-//                 "q_grade_showme_ded" : self.my_grade_showme_ded,
-//                 "q_grade_hints_count" : self.my_grade_hints_count,
-//                 "q_grade_hints_ded" : self.my_grade_hints_ded,
-//                 "q_grade_errors_count" : self.my_grade_errors_count,
-//                 "q_grade_errors_ded" : self.my_grade_errors_ded,
-//                 "q_grade_min_steps_count" : self.my_grade_min_steps_count,
-//                 "q_grade_min_steps_ded" : self.my_grade_min_steps_ded
-//             }
-//         elif q_index==8:
-//             question = {
-//                 "q_id" : self.q8_id,
-//                 "q_user" : self.xb_user_email,
-//                 "q_index" : 8,
-//                 "q_label" : self.q8_label,
-//                 "q_stimulus" : self.q8_stimulus,
-//                 "q_definition" : self.q8_definition,
-//                 "q_type" :  self.q8_type,
-//                 "q_display_math" :  self.q8_display_math,
-//                 "q_hint1" :  self.q8_hint1,
-//                 "q_hint2" :  self.q8_hint2,
-//                 "q_hint3" :  self.q8_hint3,
-//                 "q_weight" :  self.my_weight,
-//                 "q_max_attempts" : self.my_max_attempts,
-//                 "q_option_hint" : self.my_option_hint,
-//                 "q_option_showme" : self.my_option_showme,
-//                 "q_grade_showme_ded" : self.my_grade_showme_ded,
-//                 "q_grade_hints_count" : self.my_grade_hints_count,
-//                 "q_grade_hints_ded" : self.my_grade_hints_ded,
-//                 "q_grade_errors_count" : self.my_grade_errors_count,
-//                 "q_grade_errors_ded" : self.my_grade_errors_ded,
-//                 "q_grade_min_steps_count" : self.my_grade_min_steps_count,
-//                 "q_grade_min_steps_ded" : self.my_grade_min_steps_ded
-//             }
-//         else:
-//             question = {
-//                 "q_id" : self.q9_id,
-//                 "q_user" : self.xb_user_email,
-//                 "q_index" : 9,
-//                 "q_label" : self.q9_label,
-//                 "q_stimulus" : self.q9_stimulus,
-//                 "q_definition" : self.q9_definition,
-//                 "q_type" :  self.q9_type,
-//                 "q_display_math" :  self.q9_display_math,
-//                 "q_hint1" :  self.q9_hint1,
-//                 "q_hint2" :  self.q9_hint2,
-//                 "q_hint3" :  self.q9_hint3,
-//                 "q_weight" :  self.my_weight,
-//                 "q_max_attempts" : self.my_max_attempts,
-//                 "q_option_hint" : self.my_option_hint,
-//                 "q_option_showme" : self.my_option_showme,
-//                 "q_grade_showme_ded" : self.my_grade_showme_ded,
-//                 "q_grade_hints_count" : self.my_grade_hints_count,
-//                 "q_grade_hints_ded" : self.my_grade_hints_ded,
-//                 "q_grade_errors_count" : self.my_grade_errors_count,
-//                 "q_grade_errors_ded" : self.my_grade_errors_ded,
-//                 "q_grade_min_steps_count" : self.my_grade_min_steps_count,
-//                 "q_grade_min_steps_ded" : self.my_grade_min_steps_ded
-//             }
+#         if q_index==0:
+#               question = {
+#                   "q_id" : self.q_id,
+#                   "q_user" : self.xb_user_email,
+#                   "q_index" : 0,
+#                   "q_label" : self.q_label,
+#                   "q_stimulus" : self.q_stimulus,
+#                   "q_definition" : self.q_definition,
+#                   "q_type" :  self.q_type,
+#                   "q_display_math" :  self.q_display_math,
+#                   "q_hint1" :  self.q_hint1,
+#                   "q_hint2" :  self.q_hint2,
+#                   "q_hint3" :  self.q_hint3,
+#                   "q_weight" :  self.my_weight,
+#                   "q_max_attempts" : self.my_max_attempts,
+#                   "q_option_hint" : self.my_option_hint,
+#                   "q_option_showme" : self.my_option_showme,
+#                   "q_grade_showme_ded" : self.my_grade_showme_ded,
+#                   "q_grade_hints_count" : self.my_grade_hints_count,
+#                   "q_grade_hints_ded" : self.my_grade_hints_ded,
+#                   "q_grade_errors_count" : self.my_grade_errors_count,
+#                   "q_grade_errors_ded" : self.my_grade_errors_ded,
+#                   "q_grade_min_steps_count" : self.my_grade_min_steps_count,
+#                   "q_grade_min_steps_ded" : self.my_grade_min_steps_ded
+#               }
+#         elif q_index==1:
+#             question = {
+#                 "q_id" : self.q1_id,
+#                 "q_user" : self.xb_user_email,
+#                 "q_index" : 1,
+#                 "q_label" : self.q1_label,
+#                 "q_stimulus" : self.q1_stimulus,
+#                 "q_definition" : self.q1_definition,
+#                 "q_type" :  self.q1_type,
+#                 "q_display_math" :  self.q1_display_math,
+#                 "q_hint1" :  self.q1_hint1,
+#                 "q_hint2" :  self.q1_hint2,
+#                 "q_hint3" :  self.q1_hint3,
+#                 "q_weight" :  self.my_weight,
+#                 "q_max_attempts" : self.my_max_attempts,
+#                 "q_option_hint" : self.my_option_hint,
+#                 "q_option_showme" : self.my_option_showme,
+#                 "q_grade_showme_ded" : self.my_grade_showme_ded,
+#                 "q_grade_hints_count" : self.my_grade_hints_count,
+#                 "q_grade_hints_ded" : self.my_grade_hints_ded,
+#                 "q_grade_errors_count" : self.my_grade_errors_count,
+#                 "q_grade_errors_ded" : self.my_grade_errors_ded,
+#                 "q_grade_min_steps_count" : self.my_grade_min_steps_count,
+#                 "q_grade_min_steps_ded" : self.my_grade_min_steps_ded
+#             }
+#         elif q_index==2:
+#             question = {
+#                 "q_id" : self.q2_id,
+#                 "q_user" : self.xb_user_email,
+#                 "q_index" : 2,
+#                 "q_label" : self.q2_label,
+#                 "q_stimulus" : self.q2_stimulus,
+#                 "q_definition" : self.q2_definition,
+#                 "q_type" :  self.q2_type,
+#                 "q_display_math" :  self.q2_display_math,
+#                 "q_hint1" :  self.q2_hint1,
+#                 "q_hint2" :  self.q2_hint2,
+#                 "q_hint3" :  self.q2_hint3,
+#                 "q_weight" :  self.my_weight,
+#                 "q_max_attempts" : self.my_max_attempts,
+#                 "q_option_hint" : self.my_option_hint,
+#                 "q_option_showme" : self.my_option_showme,
+#                 "q_grade_showme_ded" : self.my_grade_showme_ded,
+#                 "q_grade_hints_count" : self.my_grade_hints_count,
+#                 "q_grade_hints_ded" : self.my_grade_hints_ded,
+#                 "q_grade_errors_count" : self.my_grade_errors_count,
+#                 "q_grade_errors_ded" : self.my_grade_errors_ded,
+#                 "q_grade_min_steps_count" : self.my_grade_min_steps_count,
+#                 "q_grade_min_steps_ded" : self.my_grade_min_steps_ded
+#             }
+#         elif q_index==3:
+#             question = {
+#                 "q_id" : self.q3_id,
+#                 "q_user" : self.xb_user_email,
+#                 "q_index" : 3,
+#                 "q_label" : self.q3_label,
+#                 "q_stimulus" : self.q3_stimulus,
+#                 "q_definition" : self.q3_definition,
+#                 "q_type" :  self.q3_type,
+#                 "q_display_math" :  self.q3_display_math,
+#                 "q_hint1" :  self.q3_hint1,
+#                 "q_hint2" :  self.q3_hint2,
+#                 "q_hint3" :  self.q3_hint3,
+#                 "q_weight" :  self.my_weight,
+#                 "q_max_attempts" : self.my_max_attempts,
+#                 "q_option_hint" : self.my_option_hint,
+#                 "q_option_showme" : self.my_option_showme,
+#                 "q_grade_showme_ded" : self.my_grade_showme_ded,
+#                 "q_grade_hints_count" : self.my_grade_hints_count,
+#                 "q_grade_hints_ded" : self.my_grade_hints_ded,
+#                 "q_grade_errors_count" : self.my_grade_errors_count,
+#                 "q_grade_errors_ded" : self.my_grade_errors_ded,
+#                 "q_grade_min_steps_count" : self.my_grade_min_steps_count,
+#                 "q_grade_min_steps_ded" : self.my_grade_min_steps_ded
+#             }
+#         elif q_index==4:
+#             question = {
+#                 "q_id" : self.q4_id,
+#                 "q_user" : self.xb_user_email,
+#                 "q_index" : 4,
+#                 "q_label" : self.q4_label,
+#                 "q_stimulus" : self.q4_stimulus,
+#                 "q_definition" : self.q4_definition,
+#                 "q_type" :  self.q4_type,
+#                 "q_display_math" :  self.q4_display_math,
+#                 "q_hint1" :  self.q4_hint1,
+#                 "q_hint2" :  self.q4_hint2,
+#                 "q_hint3" :  self.q4_hint3,
+#                 "q_weight" :  self.my_weight,
+#                 "q_max_attempts" : self.my_max_attempts,
+#                 "q_option_hint" : self.my_option_hint,
+#                 "q_option_showme" : self.my_option_showme,
+#                 "q_grade_showme_ded" : self.my_grade_showme_ded,
+#                 "q_grade_hints_count" : self.my_grade_hints_count,
+#                 "q_grade_hints_ded" : self.my_grade_hints_ded,
+#                 "q_grade_errors_count" : self.my_grade_errors_count,
+#                 "q_grade_errors_ded" : self.my_grade_errors_ded,
+#                 "q_grade_min_steps_count" : self.my_grade_min_steps_count,
+#                 "q_grade_min_steps_ded" : self.my_grade_min_steps_ded
+#             }
+#         elif q_index==5:
+#             question = {
+#                 "q_id" : self.q5_id,
+#                 "q_user" : self.xb_user_email,
+#                 "q_index" : 5,
+#                 "q_label" : self.q5_label,
+#                 "q_stimulus" : self.q5_stimulus,
+#                 "q_definition" : self.q5_definition,
+#                 "q_type" :  self.q5_type,
+#                 "q_display_math" :  self.q5_display_math,
+#                 "q_hint1" :  self.q5_hint1,
+#                 "q_hint2" :  self.q5_hint2,
+#                 "q_hint3" :  self.q5_hint3,
+#                 "q_weight" :  self.my_weight,
+#                 "q_max_attempts" : self.my_max_attempts,
+#                 "q_option_hint" : self.my_option_hint,
+#                 "q_option_showme" : self.my_option_showme,
+#                 "q_grade_showme_ded" : self.my_grade_showme_ded,
+#                 "q_grade_hints_count" : self.my_grade_hints_count,
+#                 "q_grade_hints_ded" : self.my_grade_hints_ded,
+#                 "q_grade_errors_count" : self.my_grade_errors_count,
+#                 "q_grade_errors_ded" : self.my_grade_errors_ded,
+#                 "q_grade_min_steps_count" : self.my_grade_min_steps_count,
+#                 "q_grade_min_steps_ded" : self.my_grade_min_steps_ded
+#             }
+#         elif q_index==6:
+#             question = {
+#                 "q_id" : self.q6_id,
+#                 "q_user" : self.xb_user_email,
+#                 "q_index" : 6,
+#                 "q_label" : self.q6_label,
+#                 "q_stimulus" : self.q6_stimulus,
+#                 "q_definition" : self.q6_definition,
+#                 "q_type" :  self.q6_type,
+#                 "q_display_math" :  self.q6_display_math,
+#                 "q_hint1" :  self.q6_hint1,
+#                 "q_hint2" :  self.q6_hint2,
+#                 "q_hint3" :  self.q6_hint3,
+#                 "q_weight" :  self.my_weight,
+#                 "q_max_attempts" : self.my_max_attempts,
+#                 "q_option_hint" : self.my_option_hint,
+#                 "q_option_showme" : self.my_option_showme,
+#                 "q_grade_showme_ded" : self.my_grade_showme_ded,
+#                 "q_grade_hints_count" : self.my_grade_hints_count,
+#                 "q_grade_hints_ded" : self.my_grade_hints_ded,
+#                 "q_grade_errors_count" : self.my_grade_errors_count,
+#                 "q_grade_errors_ded" : self.my_grade_errors_ded,
+#                 "q_grade_min_steps_count" : self.my_grade_min_steps_count,
+#                 "q_grade_min_steps_ded" : self.my_grade_min_steps_ded
+#             }
+#         elif q_index==7:
+#             question = {
+#                 "q_id" : self.q7_id,
+#                 "q_user" : self.xb_user_email,
+#                 "q_index" : 7,
+#                 "q_label" : self.q7_label,
+#                 "q_stimulus" : self.q7_stimulus,
+#                 "q_definition" : self.q7_definition,
+#                 "q_type" :  self.q7_type,
+#                 "q_display_math" :  self.q7_display_math,
+#                 "q_hint1" :  self.q7_hint1,
+#                 "q_hint2" :  self.q7_hint2,
+#                 "q_hint3" :  self.q7_hint3,
+#                 "q_weight" :  self.my_weight,
+#                 "q_max_attempts" : self.my_max_attempts,
+#                 "q_option_hint" : self.my_option_hint,
+#                 "q_option_showme" : self.my_option_showme,
+#                 "q_grade_showme_ded" : self.my_grade_showme_ded,
+#                 "q_grade_hints_count" : self.my_grade_hints_count,
+#                 "q_grade_hints_ded" : self.my_grade_hints_ded,
+#                 "q_grade_errors_count" : self.my_grade_errors_count,
+#                 "q_grade_errors_ded" : self.my_grade_errors_ded,
+#                 "q_grade_min_steps_count" : self.my_grade_min_steps_count,
+#                 "q_grade_min_steps_ded" : self.my_grade_min_steps_ded
+#             }
+#         elif q_index==8:
+#             question = {
+#                 "q_id" : self.q8_id,
+#                 "q_user" : self.xb_user_email,
+#                 "q_index" : 8,
+#                 "q_label" : self.q8_label,
+#                 "q_stimulus" : self.q8_stimulus,
+#                 "q_definition" : self.q8_definition,
+#                 "q_type" :  self.q8_type,
+#                 "q_display_math" :  self.q8_display_math,
+#                 "q_hint1" :  self.q8_hint1,
+#                 "q_hint2" :  self.q8_hint2,
+#                 "q_hint3" :  self.q8_hint3,
+#                 "q_weight" :  self.my_weight,
+#                 "q_max_attempts" : self.my_max_attempts,
+#                 "q_option_hint" : self.my_option_hint,
+#                 "q_option_showme" : self.my_option_showme,
+#                 "q_grade_showme_ded" : self.my_grade_showme_ded,
+#                 "q_grade_hints_count" : self.my_grade_hints_count,
+#                 "q_grade_hints_ded" : self.my_grade_hints_ded,
+#                 "q_grade_errors_count" : self.my_grade_errors_count,
+#                 "q_grade_errors_ded" : self.my_grade_errors_ded,
+#                 "q_grade_min_steps_count" : self.my_grade_min_steps_count,
+#                 "q_grade_min_steps_ded" : self.my_grade_min_steps_ded
+#             }
+#         else:
+#             question = {
+#                 "q_id" : self.q9_id,
+#                 "q_user" : self.xb_user_email,
+#                 "q_index" : 9,
+#                 "q_label" : self.q9_label,
+#                 "q_stimulus" : self.q9_stimulus,
+#                 "q_definition" : self.q9_definition,
+#                 "q_type" :  self.q9_type,
+#                 "q_display_math" :  self.q9_display_math,
+#                 "q_hint1" :  self.q9_hint1,
+#                 "q_hint2" :  self.q9_hint2,
+#                 "q_hint3" :  self.q9_hint3,
+#                 "q_weight" :  self.my_weight,
+#                 "q_max_attempts" : self.my_max_attempts,
+#                 "q_option_hint" : self.my_option_hint,
+#                 "q_option_showme" : self.my_option_showme,
+#                 "q_grade_showme_ded" : self.my_grade_showme_ded,
+#                 "q_grade_hints_count" : self.my_grade_hints_count,
+#                 "q_grade_hints_ded" : self.my_grade_hints_ded,
+#                 "q_grade_errors_count" : self.my_grade_errors_count,
+#                 "q_grade_errors_ded" : self.my_grade_errors_ded,
+#                 "q_grade_min_steps_count" : self.my_grade_min_steps_count,
+#                 "q_grade_min_steps_ded" : self.my_grade_min_steps_ded
+#             }
         question = {
             "q_id" : self.q_id,
             "q_user" : self.xb_user_email,
