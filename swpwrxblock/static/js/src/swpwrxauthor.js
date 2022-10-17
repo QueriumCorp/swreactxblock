@@ -3,6 +3,7 @@ function SWPWRXAuthor(runtime, element, questions) {
     var qu1 = $( "#variant1", element );
     var dm1 = $( ".display_math", qu1 );
 
+/*
     var qu2 = $( "#variant2", element );
     var dm2 = $( ".display_math", qu2 );
 
@@ -29,6 +30,7 @@ function SWPWRXAuthor(runtime, element, questions) {
 
     var qu10 = $( "#variant10", element );
     var dm10 = $( ".display_math", qu10 );
+*/
 
     console.info('SWPWRXAuthor questions',questions);
 
@@ -45,6 +47,7 @@ function SWPWRXAuthor(runtime, element, questions) {
             qu9.addClass("problem-empty");
             qu10.addClass("problem-empty");
             break;
+/*
         case 2:
             qu1.removeClass("problem-empty");
             qu2.removeClass("problem-empty");
@@ -153,6 +156,7 @@ function SWPWRXAuthor(runtime, element, questions) {
             qu9.removeClass("problem-empty");
             qu10.removeClass("problem-empty");
             break;
+*/
     }
 
     if( dm1.html()=="\\(\\)" ){
@@ -161,6 +165,7 @@ function SWPWRXAuthor(runtime, element, questions) {
         dm1.removeClass("problem-empty");
     }
 
+/*
     if( dm2.html()=="\\(\\)" ){
         dm2.addClass("problem-empty");
     }else{
@@ -214,6 +219,7 @@ function SWPWRXAuthor(runtime, element, questions) {
     }else{
         dm10.removeClass("problem-empty");
     }
+*/
 
 
     /* PAGE LOAD EVENT */
