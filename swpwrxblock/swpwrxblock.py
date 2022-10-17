@@ -665,10 +665,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_css_url("//stepwise.querium.com/libs/mathquill/mathquill.css")
         frag.add_css_url("//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css")
         frag.add_css_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.9.css")
-# Comment out new frags
-#         frag.add_css_url("//fonts.googleapis.com/css?family=Open+Sans:400,700")
-#         frag.add_css_url("//fonts.googleapis.com/css?family=Lato")
-#         frag.add_css_url("//fonts.googleapis.com/css?family=Oswald")
+        frag.add_css_url("//fonts.googleapis.com/css?family=Open+Sans:400,700")
+        frag.add_css_url("//fonts.googleapis.com/css?family=Lato")
+        frag.add_css_url("//fonts.googleapis.com/css?family=Oswald")
 
         frag.add_content('<base href="/testq_assets/" />')
 
