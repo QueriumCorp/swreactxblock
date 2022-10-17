@@ -1,8 +1,8 @@
 <div id="root"></div>
 
-    <!-- ### START OF STEPWISE STUFF ### -->
-    <!-- The following div holds the SW component off screen -->
-    <div id="swBackStage" style="position: fixed; left: -10000px">
+<!-- ### START OF STEPWISE STUFF ### -->
+<!-- The following div holds the SW component off screen -->
+<div id="swBackStage" style="position: fixed; left: -10000px">
       <!-- when the student navs to the StepWise page to work the problem, we reparent
       the #swClient into the page -->
       <div id="swClient" style="position: relative; flex-grow:2;">
@@ -18,11 +18,10 @@
           ></querium>
       </div>
     </div>
-</div>
 
     <!-- Just hiding the test page widgets so I don't have to spend time
     detangling them -->
-<div id="swClientControls" style="display: none">
+    <div id="swClientControls" style="display: none">
       <p>
         Your question will be running on version 1.6.8.1 of the StepWise Client
         (1.6.6 + Firebase + log button fixes).
@@ -49,8 +48,8 @@
         <li>https://stepwiseai03.querium.com/webMathematica/api/</li>
         <li>https://stepwiseai04.querium.com/webMathematica/api/</li>
       </ul>
-</div>
-<script type="text/javascript">
+    </div>
+    <script type="text/javascript">
       var qqUser =
         localStorage.getItem("name") == null ||
         localStorage.getItem("name").length === 0
@@ -160,9 +159,9 @@
         });
         return result;
       }
-</script>
+    </script>
 
-<script type="text/javascript">
+    <script type="text/javascript">
       var callbacks = {
         success: celebrate,
         status: updateProgress,
@@ -205,18 +204,18 @@
         success: celebrate,
       };
       querium.options = options;
-</script>
-<div class="swpwrxblock_block" data-ng-strict-di>
-    <div class='stepwise_container'>
+    </script>
+    <div class="swpwrxblock_block" data-ng-strict-di>
+      <div class='stepwise_container'>
 
         <div class='loading-box'>
-             <div class="loading-info">
+            <div class="loading-info">
                  <span class="loading-val">Loading Data...</span>
             </div>
         </div>
 
         <div class='question-info'>
-             <div class="grade-box">
+            <div class="grade-box">
                  <span class="grade-val">(3.00/3.00 points)</span>
             </div>
 
@@ -297,5 +296,3 @@
         </div>
     </div>
 </div>
-
-
