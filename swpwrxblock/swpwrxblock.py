@@ -605,8 +605,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
 #         frag.add_content('<script>querium.qEvalLogging = true;</script>')
 
-        frag.add_content('<div id="root"></div>')
-        frag.add_content('<H2>SWPWRXBLOCK GOES HERE 0831</H2>')
+        frag.add_content('<div id="root"><h2>SWPWRXBLOCK H2</h2></div>')
+        frag.add_content('<H2>SWPWRXBLOCK GOES HERE 0840</H2>')
 
         frag.add_javascript(self.resource_string("static/js/1.e09179ed.chunk.js"))
         frag.add_javascript(self.resource_string("static/js/main.0048466c.chunk.js"))
