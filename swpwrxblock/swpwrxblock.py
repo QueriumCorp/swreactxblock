@@ -627,6 +627,12 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_javascript(self.resource_string("static/js/src/swpwrxstudent.js"))
         frag.add_resource('<base href="/testq_assets/"/>','text/html','head')		# Needed so react code can find its pages. Don't do earlier or impacts relative pathnames of resources
 
+        # Replace these in the HTML with the calls below
+        # <script src="/static/js/1.72c79b30.chunk.js"></script>
+        # <script src="/static/js/main.e04ca138.chunk.js"></script>
+        frag.add_javascript(self.resource_string("static/js/1.72c79b30.chunk.js"))
+        frag.add_javascript(self.resource_string("static/js/main.e04ca138.chunk.js"))
+
         if DEBUG: logger.info("SWPWRXBlock student_view() head={e}".format(e=frag.head_html))
         if DEBUG: logger.info("SWPWRXBlock student_view() body={e}".format(e=frag.body_html))
         if DEBUG: logger.info("SWPWRXBlock student_view() foot={e}".format(e=frag.foot_html))
