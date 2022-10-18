@@ -543,73 +543,86 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         if DEBUG: logger.info("SWPWRXBlock student_view() pick_variant selected q_index={i} question={q}".format(i=q_index,q=self.question))
 
+### HEAD ASSETS
+# <meta charset="utf-8"/>
+# <link rel="icon" href="/favicon.ico"/>
+# <meta name="viewport" content="width=device-width,initial-scale=1"/>
+# <meta name="theme-color" content="#000000"/>
+# <meta name="description" content="Web site created using create-react-app"/>
+# <link rel="apple-touch-icon" href="/logo192.png"/>
+# <link rel="manifest" href="/manifest.json"/>
+# <title>Querium StepWise Power</title>
+# <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+# <script src="https://stepwise.querium.com/libs/mathquill/mathquill.js"></script>
+# <link rel="stylesheet" id="options_typography_Open+Sans:400,700-css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" media="all"/>
+# <link rel="stylesheet" id="options_typography_Lato:300,900-css" href="https://fonts.googleapis.com/css?family=Lato:300,900" media="all"/>
+# <base href="/testq_assets/"/>
+# <link href="css/scrolling-nav.css" rel="stylesheet"/>
+# <!--[if lt IE 9]>
+#       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+#       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+#     <![endif]-->
+# <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+# <script type="text/x-mathjax-config">MathJax.Hub.Config({ messageStyle: 'none', skipStartupTypeset: true, showMathMenu: true, tex2jax: { preview: 'none' }, asciimath2jax: { delimiters: [['`','`'],['``','``']], preview: "none" }, AsciiMath: {displaystyle: false} }); MathJax.Hub.Register.LoadHook("[MathJax]/extensions/asciimath2jax.js",function () { var AM = MathJax.Extension.asciimath2jax, CREATEPATTERNS = AM.createPatterns; AM.createPatterns = function () { var result = CREATEPATTERNS.call(this); this.match['``'].mode = ";mode=display"; return result; }; }); MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready",function () { var AM = MathJax.InputJax.AsciiMath; AM.postfilterHooks.Add(function (data) { if (data.script.type.match(/;mode=display/)) {data.math.root.display = "block"} return data; }); });</script>
+# <link rel="stylesheet" media="screen" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
+# <script type="text/javascript">function getInternetExplorerVersion(){var e=-1;if("Microsoft Internet Explorer"==navigator.appName){var r=navigator.userAgent;null!=new RegExp("MSIE ([0-9]{1,}[.0-9]{0,})").exec(r)&&(e=parseFloat(RegExp.$1))}return e}var ieVer=getInternetExplorerVersion();2<ieVer&&ieVer<10&&(alert("Sorry, you are using an obsolete version of Internet Explorer. Querium has been designed for the secure, modern web.  Querium joins Microsoft in encouraging you to upgrade to Internet Explorer 10 or 11."),window.open("http://blogs.msdn.com/b/ie/archive/2014/08/07/stay-up-to-date-with-internet-explorer.aspx","_self"))</script>
+# <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"/>
+# <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet"/>
+# <link rel="stylesheet" href="vendor/ng-sortable/dist/ng-sortable.css"/>
+# <link rel="stylesheet" href="vendor/ng-scrollbar/dist/ng-scrollbar.css"/>
+# <link rel="stylesheet" href="https://stepwise.querium.com/libs/mathquill/mathquill.css"/>
+# <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mlaursen/react-md@5.1.4/themes/react-md.teal-pink-200-light.min.css"/>
+# <link rel="stylesheet" href="https://stepwise.querium.com/client/querium-stepwise-1.6.8.css"/>
+# <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+# <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+# <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.min.js"></script>
+# <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+# <script type="text/javascript" src="https://stepwise.querium.com/client/querium-stepwise-1.6.8.1-jira.js"></script>
+# <script>querium.qEvalLogging=!0</script>
+# <link href="/static/css/1.7f8b3af7.chunk.css" rel="stylesheet">
+# <link href="/static/css/main.b870043f.chunk.css" rel="stylesheet">
 ###
-# <!doctype html>
-# <html lang="en">
-#
-# <head>
-#   <meta charset="utf-8" />
-#   <link rel="shortcut icon" href="/favicon.ico" />
-#   <meta name="viewport" content="width=device-width,initial-scale=1" />
-#   <meta name="theme-color" content="#000000" />
-#   <meta name="description" content="Web site created using create-react-app" />
-#   <link rel="apple-touch-icon" href="logo192.png" />
-#   <link rel="manifest" href="/manifest.json" />
-#   <title>React App</title>
-#   <link href="/static/css/main.b870043f.chunk.css" rel="stylesheet">
-# </head>
-#
-# <body><noscript>You need to enable JavaScript to run this app.</noscript>
-#   <div id="root"></div>
-#   <script>!function (f) { function e(e) { for (var r, t, n = e[0], o = e[1], u = e[2], l = 0, a = []; l < n.length; l++)t = n[l], Object.prototype.hasOwnProperty.call(c, t) && c[t] && a.push(c[t][0]), c[t] = 0; for (r in o) Object.prototype.hasOwnProperty.call(o, r) && (f[r] = o[r]); for (s && s(e); a.length;)a.shift()(); return p.push.apply(p, u || []), i() } function i() { for (var e, r = 0; r < p.length; r++) { for (var t = p[r], n = !0, o = 1; o < t.length; o++) { var u = t[o]; 0 !== c[u] && (n = !1) } n && (p.splice(r--, 1), e = l(l.s = t[0])) } return e } var t = {}, c = { 1: 0 }, p = []; function l(e) { if (t[e]) return t[e].exports; var r = t[e] = { i: e, l: !1, exports: {} }; return f[e].call(r.exports, r, r.exports, l), r.l = !0, r.exports } l.m = f, l.c = t, l.d = function (e, r, t) { l.o(e, r) || Object.defineProperty(e, r, { enumerable: !0, get: t }) }, l.r = function (e) { "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e, "__esModule", { value: !0 }) }, l.t = function (r, e) { if (1 & e && (r = l(r)), 8 & e) return r; if (4 & e && "object" == typeof r && r && r.__esModule) return r; var t = Object.create(null); if (l.r(t), Object.defineProperty(t, "default", { enumerable: !0, value: r }), 2 & e && "string" != typeof r) for (var n in r) l.d(t, n, function (e) { return r[e] }.bind(null, n)); return t }, l.n = function (e) { var r = e && e.__esModule ? function () { return e.default } : function () { return e }; return l.d(r, "a", r), r }, l.o = function (e, r) { return Object.prototype.hasOwnProperty.call(e, r) }, l.p = "/"; var r = window["webpackJsonphello-react"] = window["webpackJsonphello-react"] || [], n = r.push.bind(r); r.push = e, r = r.slice(); for (var o = 0; o < r.length; o++)e(r[o]); var s = n; i() }([])</script>
-#   <script src="/static/js/1.e09179ed.chunk.js"></script>
-#   <script src="/static/js/main.0048466c.chunk.js"></script>
-# </body>
-#
-# </html>
-###
+
+# Build content programatticaly that looks like the above HTML
 
         html = self.resource_string("static/html/swpwrxstudent.html")
         frag = Fragment(html.format(self=self))
+        frag.add_content('<meta charset="utf-8"/>')
+        frag.add_content('<link rel="icon" href="/favicon.ico"/>')
+        frag.add_content('<meta name="viewport" content="width=device-width,initial-scale=1"/>')
+        frag.add_content('<meta name="theme-color" content="#000000"/>')
+        frag.add_content('<link rel="apple-touch-icon" href="/logo192.png"/>')
+        frag.add_content('<link rel="manifest" href="/manifest.json"/>')
+        frag.add_content('<title>Querium StepWise Power</title>')
 
-#         frag.add_css(self.resource_string("static/css/swpwrxstudent.css"))
-        frag.add_css(self.resource_string("static/css/main.b870043f.chunk.css"))
-
-#         frag.add_css_url("//stepwise.querium.com/libs/mathquill/mathquill.css")
+        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
+        frag.add_javascript_url("//stepwise.querium.com/libs/mathquill/mathquill.js")
+        frag.add_css_url("//fonts.googleapis.com/css?family=Open+Sans:400,700")
+        frag.add_css_url("//fonts.googleapis.com/css?family=Oswald")
+        frag.add_content('<base href="/testq_assets/"/>')
+        frag.add_javascript_url("//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML")
+        frag.add_content('<script type="text/x-mathjax-config">MathJax.Hub.Config({ messageStyle: 'none', skipStartupTypeset: true, showMathMenu: true, tex2jax: { preview: 'none' }, asciimath2jax: { delimiters: [['`','`'],['``','``']], preview: "none" }, AsciiMath: {displaystyle: false} }); MathJax.Hub.Register.LoadHook("[MathJax]/extensions/asciimath2jax.js",function () { var AM = MathJax.Extension.asciimath2jax, CREATEPATTERNS = AM.createPatterns; AM.createPatterns = function () { var result = CREATEPATTERNS.call(this); this.match['``'].mode = ";mode=display"; return result; }; }); MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready",function () { var AM = MathJax.InputJax.AsciiMath; AM.postfilterHooks.Add(function (data) { if (data.script.type.match(/;mode=display/)) {data.math.root.display = "block"} return data; }); });</script>')
+        frag.add_content('<script type="text/javascript">function getInternetExplorerVersion(){var e=-1;if("Microsoft Internet Explorer"==navigator.appName){var r=navigator.userAgent;null!=new RegExp("MSIE ([0-9]{1,}[.0-9]{0,})").exec(r)&&(e=parseFloat(RegExp.$1))}return e}var ieVer=getInternetExplorerVersion();2<ieVer&&ieVer<10&&(alert("Sorry, you are using an obsolete version of Internet Explorer. Querium has been designed for the secure, modern web.  Querium joins Microsoft in encouraging you to upgrade to Internet Explorer 10 or 11."),window.open("http://blogs.msdn.com/b/ie/archive/2014/08/07/stay-up-to-date-with-internet-explorer.aspx","_self"))</script>')
         frag.add_css_url("//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css")
-#         frag.add_css_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.9.css")
-#         frag.add_css_url("//fonts.googleapis.com/css?family=Open+Sans:400,700")
-#         frag.add_css_url("//fonts.googleapis.com/css?family=Lato")
-#         frag.add_css_url("//fonts.googleapis.com/css?family=Oswald")
 
-        frag.add_content('<script>!function (f) { function e(e) { for (var r, t, n = e[0], o = e[1], u = e[2], l = 0, a = []; l < n.length; l++)t = n[l], Object.prototype.hasOwnProperty.call(c, t) && c[t] && a.push(c[t][0]), c[t] = 0; for (r in o) Object.prototype.hasOwnProperty.call(o, r) && (f[r] = o[r]); for (s && s(e); a.length;)a.shift()(); return p.push.apply(p, u || []), i() } function i() { for (var e, r = 0; r < p.length; r++) { for (var t = p[r], n = !0, o = 1; o < t.length; o++) { var u = t[o]; 0 !== c[u] && (n = !1) } n && (p.splice(r--, 1), e = l(l.s = t[0])) } return e } var t = {}, c = { 1: 0 }, p = []; function l(e) { if (t[e]) return t[e].exports; var r = t[e] = { i: e, l: !1, exports: {} }; return f[e].call(r.exports, r, r.exports, l), r.l = !0, r.exports } l.m = f, l.c = t, l.d = function (e, r, t) { l.o(e, r) || Object.defineProperty(e, r, { enumerable: !0, get: t }) }, l.r = function (e) { "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e, "__esModule", { value: !0 }) }, l.t = function (r, e) { if (1 & e && (r = l(r)), 8 & e) return r; if (4 & e && "object" == typeof r && r && r.__esModule) return r; var t = Object.create(null); if (l.r(t), Object.defineProperty(t, "default", { enumerable: !0, value: r }), 2 & e && "string" != typeof r) for (var n in r) l.d(t, n, function (e) { return r[e] }.bind(null, n)); return t }, l.n = function (e) { var r = e && e.__esModule ? function () { return e.default } : function () { return e }; return l.d(r, "a", r), r }, l.o = function (e, r) { return Object.prototype.hasOwnProperty.call(e, r) }, l.p = "/"; var r = window["webpackJsonphello-react"] = window["webpackJsonphello-react"] || [], n = r.push.bind(r); r.push = e, r = r.slice(); for (var o = 0; o < r.length; o++)e(r[o]); var s = n; i() }([])</script>')
+        frag.add_css_url("//fonts.googleapis.com/css?family=Lato")
+        frag.add_css_url("//fonts.googleapis.com/css?family=Oswald")
+        frag.add_css(self.resource_string("css/scrolling-nav.css"))
+        frag.add_css(self.resource_string("vendor/ng-sortable/dist/ng-sortable.css"))
+        frag.add_css(self.resource_string("vendor/ng-scrollbar/dist/ng-scrollbar.css"))
+        frag.add_css_url("//stepwise.querium.com/libs/mathquill/mathquill.css")
+        frag.add_css_url("//cdn.jsdelivr.net/gh/mlaursen/react-md@5.1.4/themes/react-md.teal-pink-200-light.min.css")
+        frag.add_css_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.8.css")
+        frag.add_javascript_url("//www.gstatic.com/firebasejs/4.4.0/firebase.js")               # For qEval client-side logging
+        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js")
+        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.min.js")
+        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js")
+        frag.add_javascript_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.8.1-jira.js")
+        frag.add_content('<script>querium.qEvalLogging=!0</script>')
 
-        frag.add_content('<base href="/testq_assets/" />')
-
-        # Following not found scrolling-nav.css, ng-sortable.css ng-scrollbar.css
-        # frag.add_css(self.resource_string("css/scrolling-nav.css"))
-        # frag.add_css(self.resource_string("vendor/ng-sortable/dist/ng-sortable.css"))
-        # frag.add_css(self.resource_string("vendor/ng-scrollbar/dist/ng-scrollbar.css"))
-
-#         frag.add_css_url("//cdn.jsdelivr.net/gh/mlaursen/react-md@5.1.4/themes/react-md.teal-pink-200-light.min.css")
-
-#         frag.add_javascript_url("//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML")
-#         frag.add_javascript_url("//stepwise.querium.com/libs/mathquill/mathquill.js")
-#         frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js")
-#         frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.min.js")
-#         frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js")
-# jquery doesn't work here
-#         frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
-#         frag.add_javascript_url("//www.gstatic.com/firebasejs/4.4.0/firebase.js")               # For qEval client-side logging
-#         frag.add_javascript_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.9.js")    # 1.6.9.1 corrects a bug in hints looping
-
-#         frag.add_content('<script>querium.qEvalLogging = true;</script>')
-
-        frag.add_content('<div id="root"><h2>SWPWRXBLOCK H2</h2></div>')
-        frag.add_content('<H2>SWPWRXBLOCK GOES HERE 0840</H2>')
-
-        frag.add_javascript(self.resource_string("static/js/1.e09179ed.chunk.js"))
-        frag.add_javascript(self.resource_string("static/js/main.0048466c.chunk.js"))
+        frag.add_css(self.resource_string("static/css/swpwrxstudent.css"))
+        frag.add_css(self.resource_string("static/css/1.7f8b3af7.chunk.css"))
+        frag.add_css(self.resource_string("static/css/main.b870043f.chunk.css"))
 
         frag.add_javascript(self.resource_string("static/js/src/swpwrxstudent.js"))
         if DEBUG: logger.info("SWPWRXBlock student_view() calling frag.initialize_js")
