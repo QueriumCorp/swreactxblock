@@ -633,9 +633,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_javascript(self.resource_string("static/js/1.72c79b30.chunk.js"))
         frag.add_javascript(self.resource_string("static/js/main.e04ca138.chunk.js"))
 
-        if DEBUG: logger.info("SWPWRXBlock student_view() head={e}".format(e=frag.head_html))
-        if DEBUG: logger.info("SWPWRXBlock student_view() body={e}".format(e=frag.body_html))
-        if DEBUG: logger.info("SWPWRXBlock student_view() foot={e}".format(e=frag.foot_html))
+        if DEBUG: logger.info("SWPWRXBlock student_view() head={e}".format(e=frag.head_html.text))
+        if DEBUG: logger.info("SWPWRXBlock student_view() body={e}".format(e=frag.body_html.text))
+        if DEBUG: logger.info("SWPWRXBlock student_view() foot={e}".format(e=frag.foot_html.text))
         if DEBUG: logger.info("SWPWRXBlock student_view() calling frag.initialize_js")
         frag.initialize_js('SWPWRXStudent', {})
         return frag
