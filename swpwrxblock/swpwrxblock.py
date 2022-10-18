@@ -608,9 +608,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         frag.add_css_url("//fonts.googleapis.com/css?family=Lato")
         frag.add_css_url("//fonts.googleapis.com/css?family=Oswald")
-#NOTFOUND        frag.add_css(self.resource_string("css/scrolling-nav.css"))
-        frag.add_css(self.resource_string("vendor/ng-sortable/dist/ng-sortable.css"))
-        frag.add_css(self.resource_string("vendor/ng-scrollbar/dist/ng-scrollbar.css"))
+#NOTFOUND1        frag.add_css(self.resource_string("css/scrolling-nav.css"))
+#NOTFOUND1        frag.add_css(self.resource_string("vendor/ng-sortable/dist/ng-sortable.css"))
+#NOTFOUND1        frag.add_css(self.resource_string("vendor/ng-scrollbar/dist/ng-scrollbar.css"))
         frag.add_css_url("//stepwise.querium.com/libs/mathquill/mathquill.css")
         frag.add_css_url("//cdn.jsdelivr.net/gh/mlaursen/react-md@5.1.4/themes/react-md.teal-pink-200-light.min.css")
         frag.add_css_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.8.css")
