@@ -605,10 +605,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
 #         frag.add_content('<script>querium.qEvalLogging = true;</script>')
 
+        frag.add_content('<div id="root"></div>')
+        frag.add_content('<H2>SWPWRXBLOCK GOES HERE</H2>')
+
         frag.add_javascript(self.resource_string("static/js/1.e09179ed.chunk.js"))
         frag.add_javascript(self.resource_string("static/js/main.0048466c.chunk.js"))
-
-        frag.add_content('<div id="root"></div>')
 
         frag.add_javascript(self.resource_string("static/js/src/swpwrxstudent.js"))
         if DEBUG: logger.info("SWPWRXBlock student_view() calling frag.initialize_js")
