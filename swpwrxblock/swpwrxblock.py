@@ -580,6 +580,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 # <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
 # <script type="text/javascript" src="https://stepwise.querium.com/client/querium-stepwise-1.6.8.1-jira.js"></script>
 # <script>querium.qEvalLogging=!0</script>
+### Added these for development use
+# <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+# <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 # <link href="/static/css/1.7f8b3af7.chunk.css" rel="stylesheet">
 # <link href="/static/css/main.b870043f.chunk.css" rel="stylesheet">
 ###
@@ -622,6 +625,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js")
         frag.add_javascript_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.8.1-jira.js")
         frag.add_content('<script>querium.qEvalLogging=!0</script>')
+
+# <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+        frag.add_javascript_url("//unpkg.com/react@18/umd/react.development.js")
+# <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+        frag.add_javascript_url("//unpkg.com/react-dom@18/umd/react-dom.development.js")
 
         frag.add_css(self.resource_string("static/css/swpwrxstudent.css"))
         frag.add_css(self.resource_string("static/css/1.7f8b3af7.chunk.css"))
