@@ -607,8 +607,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         frag.add_css_url("//fonts.googleapis.com/css?family=Lato")
         frag.add_css_url("//fonts.googleapis.com/css?family=Oswald")
+#                 Bootstrap CSS
 #NOTFOUND1        frag.add_css(self.resource_string("css/scrolling-nav.css"))
+#                 Angular CSS
 #NOTFOUND1        frag.add_css(self.resource_string("vendor/ng-sortable/dist/ng-sortable.css"))
+#                 Angular CSS
 #NOTFOUND1        frag.add_css(self.resource_string("vendor/ng-scrollbar/dist/ng-scrollbar.css"))
         frag.add_css_url("//stepwise.querium.com/libs/mathquill/mathquill.css")
         frag.add_css_url("//cdn.jsdelivr.net/gh/mlaursen/react-md@5.1.4/themes/react-md.teal-pink-200-light.min.css")
@@ -632,6 +635,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         # <script src="/static/js/main.e04ca138.chunk.js"></script>
         frag.add_javascript(self.resource_string("static/js/1.72c79b30.chunk.js"))
         frag.add_javascript(self.resource_string("static/js/main.e04ca138.chunk.js"))
+
+        frag.add_resource('<script>const myroot = ReactDOM.createRoot( document.getElementById('root')); const myelement = <h1>Hello, world</h1>; myroot.render(myelement);</script>','text/html','body')
 
         # if DEBUG: logger.info("SWPWRXBlock student_view() head={e}".format(e=frag.head_html()))
         # if DEBUG: logger.info("SWPWRXBlock student_view() body={e}".format(e=frag.body_html()))
