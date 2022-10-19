@@ -596,7 +596,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_resource('<meta name="viewport" content="width=device-width,initial-scale=1"/>','text/html','head')
         frag.add_resource('<meta name="theme-color" content="#000000"/>','text/html','head')
         frag.add_resource('<link rel="apple-touch-icon" href="/logo192.png"/>','text/html','head')
-        frag.add_resource('<link rel="manifest" href="/manifest.json"/>','text/html','head')
+#HIDEME        frag.add_resource('<link rel="manifest" href="/manifest.json"/>','text/html','head')
         frag.add_resource('<title>Querium StepWise Power</title>','text/html','head')
 
 #HIDEME        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
