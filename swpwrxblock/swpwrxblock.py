@@ -596,7 +596,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_resource('<link rel="manifest" href="/manifest.json"/>','text/html','head')
         frag.add_resource('<title>Querium StepWise Power</title>','text/html','head')
 
-        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
+#HIDEME        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
         frag.add_javascript_url("//stepwise.querium.com/libs/mathquill/mathquill.js")
         frag.add_css_url("//fonts.googleapis.com/css?family=Open+Sans:400,700")
         frag.add_css_url("//fonts.googleapis.com/css?family=Oswald")
