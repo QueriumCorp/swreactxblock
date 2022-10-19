@@ -636,7 +636,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_javascript(self.resource_string("static/js/1.72c79b30.chunk.js"))
         frag.add_javascript(self.resource_string("static/js/main.e04ca138.chunk.js"))
 
-        frag.add_resource('<script>const myroot = ReactDOM.createRoot( document.getElementById('root')); const myelement = <h1>Hello, world</h1>; myroot.render(myelement);</script>','text/html','body')
+        frag.add_resource('<script>const myroot = ReactDOM.createRoot( document.getElementById(\'root\')); const myelement = <h1>Hello, world</h1>; myroot.render(myelement);</script>','text/html','body')
 
         if DEBUG: logger.info("SWPWRXBlock student_view() head={e}".format(e=frag.head_html()))
         if DEBUG: logger.info("SWPWRXBlock student_view() body={e}".format(e=frag.body_html()))
