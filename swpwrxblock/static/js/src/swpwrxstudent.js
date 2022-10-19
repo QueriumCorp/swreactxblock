@@ -4,6 +4,8 @@
  */
 function SWPWRXStudent(runtime, element) {
 
+    import * as ReactDOM from 'react-dom';
+
     console.info("SWPWRXStudent start");
 
     // const root = ReactDOM.createRoot(element);  // or maybe in a child div of element
