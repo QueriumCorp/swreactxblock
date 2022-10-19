@@ -6,8 +6,15 @@ function SWPWRXStudent(runtime, element) {
 
     console.info("SWPWRXStudent start");
 
-    const root = ReactDOM.createRoot(element);  // or maybe in a child div of element
-    root.render(<h1>Hello, world!</h1>);
+    // const root = ReactDOM.createRoot(element);  // or maybe in a child div of element
+    // root.render(<h1>Hello, world!</h1>);
+
+    const root = ReactDOM.createRoot( document.getElementById('KAFroot'));
+    console.info("KAF KAFroot=",root);
+    const element = '<h1>Hello, world</h1>';
+    console.info("KAF element=",element);
+    root.render(element);
+    console.info("KAF back from render");
 
     var handlerUrlGetData = runtime.handlerUrl(element, 'get_data');
 
