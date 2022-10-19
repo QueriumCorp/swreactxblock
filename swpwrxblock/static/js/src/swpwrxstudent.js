@@ -5,7 +5,7 @@
 function SWPWRXStudent(runtime, element) {
 
     console.info("SWPWRXStudent start");
-    console.info("SWPWRXStudent element".element);
+    console.info("SWPWRXStudent element",element);
 
     var handlerUrlGetData = runtime.handlerUrl(element, 'get_data');
 
