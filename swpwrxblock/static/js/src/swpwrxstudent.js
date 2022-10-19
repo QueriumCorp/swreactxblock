@@ -5,6 +5,10 @@
 function SWPWRXStudent(runtime, element) {
 
     console.info("SWPWRXStudent start");
+
+    const root = ReactDOM.createRoot(element);  // or maybe in a child div of element
+    root.render(<h1>Hello, world!</h1>);
+
     var handlerUrlGetData = runtime.handlerUrl(element, 'get_data');
 
     console.info("SWPWRXStudent calling get_data at ",handlerUrlGetData);
