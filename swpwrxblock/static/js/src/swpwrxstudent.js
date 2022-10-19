@@ -6,10 +6,6 @@ function SWPWRXStudent(runtime, element) {
 
     console.info("SWPWRXStudent start");
 
-    import * as ReactDOM from 'react-dom';
-
-    console.info("SWPWRXStudent after import");
-
     // const root = ReactDOM.createRoot(element);  // or maybe in a child div of element
     // root.render(<h1>Hello, world!</h1>);
 
@@ -20,10 +16,18 @@ function SWPWRXStudent(runtime, element) {
     // root.render(element);
     // console.info("KAF back from render");
 
-    const e = React.createElement;
+    // const e = React.createElement;
+    // const root = ReactDOM.createRoot(element);
+    // root.render(e('div', null, 'Hello KAFWorld'));
 
-    const root = ReactDOM.createRoot(element);
-    root.render(e('div', null, 'Hello KAFWorld'));
+    class Hello extends React.Component {
+      render() {
+        return React.createElement('div', null, `Hello ${this.props.toWhat}`);
+      }
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('KAFroot'));
+    root.render(React.createElement(Hello, {toWhat: 'World'}, null));
 
     console.info("KAF back from render");
 
