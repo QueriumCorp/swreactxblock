@@ -9,3 +9,312 @@
       </div>
     </div>
 
+    <!-- Just hiding the test page widgets so I don't have to spend time
+    detangling them -->
+    <div id="swClientControls" style="display: none">
+      <p>
+        Your question will be running on version 1.6.8.1 of the StepWise Client
+        (1.6.6 + Firebase + log button fixes).
+      </p>
+
+      <p></p>
+      <p>
+        <label for="author">Author:</label>
+        <input id="author" />&nbsp;
+        <button onclick="saveTest()">Save Author Name</button>
+      </p>
+      <p>
+        <label for="server">StepWiseAI Server:</label>
+        <input id="server" style="width: 400px" />&nbsp;
+        <button onclick="setServer()">Set</button>
+      </p>
+      <ul>
+        <li>https://stepwisedev.querium.com/webMathematica/api/</li>
+        <li>https://stepwise.querium.com/webMathematica/api/</li>
+        <li>https://stepwiseai.querium.com/webMathematica/api/</li>
+        <li>https://stepwiseai00.querium.com/webMathematica/api/</li>
+        <li>https://stepwiseai01.querium.com/webMathematica/api/</li>
+        <li>https://stepwiseai02.querium.com/webMathematica/api/</li>
+        <li>https://stepwiseai03.querium.com/webMathematica/api/</li>
+        <li>https://stepwiseai04.querium.com/webMathematica/api/</li>
+      </ul>
+    </div>
+    <script type="text/javascript">
+      var qqUser =
+        localStorage.getItem("name") == null ||
+        localStorage.getItem("name").length === 0
+          ? "SW4WP User"
+          : localStorage.getItem("name");
+      var server =
+        localStorage.getItem("server") == null ||
+        localStorage.getItem("server").length === 0
+          ? "https://stepwise.querium.com/webMathematica/api/"
+          : localStorage.getItem("server");
+      var questionList = [];
+      var urlParams = getJsonFromUrl(true);
+      var problemID = urlParams.assignment_id;
+      var theProblem = false;
+
+      window.onload = function () {
+        document.getElementById("author").value = qqUser;
+        document.getElementById("server").value = server;
+        querium.serverURL = server;
+      };
+
+      document.getElementById("author").onblur = function (e) {
+        var author = document.getElementById("author").value;
+        if (author.length > 2) {
+          localStorage.setItem("name", author);
+        }
+      };
+      document.getElementById("author").onkeypress = function (e) {
+        var event = e || window.event;
+        var charCode = event.which || event.keyCode;
+
+        if (charCode == "13") {
+          var author = document.getElementById("author").value;
+          if (author.length > 2) {
+            localStorage.setItem("name", author);
+          }
+          return false;
+        }
+      };
+      document.getElementById("server").onblur = function (e) {
+        var server = document.getElementById("server").value;
+        localStorage.setItem("server", server);
+        querium.serverURL = server;
+      };
+      document.getElementById("server").onkeypress = function (e) {
+        var event = e || window.event;
+        var charCode = event.which || event.keyCode;
+
+        if (charCode == "13") {
+          var server = document.getElementById("server").value;
+          localStorage.setItem("server", server);
+          querium.serverURL = server;
+          return false;
+        }
+      };
+
+      function saveTest() {
+        var author = document.getElementById("author").value;
+        if (author.length > 2) {
+          localStorage.setItem("name", author);
+          var state = querium.saveState("querium");
+          state.problemDef = state.problemDef.replace(/^"(.+(?="$))"$/, "$1");
+          /* testRef.push({
+                      problemID: problemID,
+                      author: author,
+                      log: JSON.stringify(state)
+                  }); 
+                  alert('Test saved');
+      */
+          alert("Name saved");
+        } else {
+          alert("Who am I?  Why am I here?");
+        }
+      }
+
+      function setServer() {
+        var server = document.getElementById("server").value;
+        localStorage.setItem("server", server);
+        querium.serverURL = server;
+        alert("Server changed to " + server);
+      }
+
+      function getJsonFromUrl(hashBased) {
+        var query;
+        if (hashBased) {
+          var pos = location.href.indexOf("?");
+          if (pos == -1) return [];
+          query = location.href.substr(pos + 1);
+        } else {
+          query = location.search.substr(1);
+        }
+        var result = {};
+        query.split("&").forEach(function (part) {
+          if (!part) return;
+          var item = part.split("=");
+          var key = item[0];
+          var from = key.indexOf("[");
+          if (from == -1) result[key] = decodeURIComponent(item[1]);
+          else {
+            var to = key.indexOf("]");
+            var index = key.substring(from + 1, to);
+            key = key.substring(0, from);
+            if (!result[key]) result[key] = [];
+            if (!index) result[key].push(item[1]);
+            else result[key][index] = item[1];
+          }
+        });
+        return result;
+      }
+    </script>
+
+    <script type="text/javascript">
+      var callbacks = {
+        success: celebrate,
+        status: updateProgress,
+      };
+
+      var options = {
+        hideMenu: true,
+        scribbles: false,
+      };
+
+      function saveProgress() {
+        console.dir(querium.saveState());
+      }
+
+      function celebrate(stats) {
+        console.log("celebrating victory in webApp");
+        console.dir(stats);
+        alert("Victory is OURS!");
+        var btnElement = document.querySelector("#endOfSW");
+        console.log("btnElement = ", btnElement);
+        var classValues = btnElement.classList;
+        console.log("classValues = ", classValues);
+        btnElement.classList.remove(
+          "ui-disabled"
+        ); /* Enable next question button after StepWise */
+        setCorrect(); /* This counts as a correct question */
+        updateCorrect(); /* increase the number of stars */
+        showCorrect(); /* Update the stars right now */
+      }
+
+      function updateProgress(stats) {
+        console.log("updatingProgress in webApp");
+        console.dir(stats);
+      }
+
+      querium.appID = "SW4WPapp";
+      querium.student = qqUser;
+      console.log("querium.student = " + querium.student);
+      // querium.callbacks = {
+      //   success: celebrate,
+      // };
+      querium.options = options;
+    </script>
+
+    <script>
+      window.swpwr_onSubmit = (solution) =>{
+        console.info(solution);
+      };
+
+      window.swpwr_problem = {
+        label: "the problem label",
+        description: "a desc",
+        class: "sampleWord",
+        stimulus: `A mountain bike is on sale for $399. Its regular price is $650. 
+          What is the difference between the regular price and the sale price?`,
+        stepsMnemonic: "POWER",
+        steps: [
+          // {
+          //   label: "TEST",
+          //   mnemonicIndex: 1,
+          //   instruction: "Test Page",
+          //   longInstruction: `This is a page to test components during development`,
+          //   type: "TEST",
+          //   valid: 0,
+          // },
+          {
+            label: "Prepare",
+            mnemonicIndex: 0,
+            instruction: "Read the Problem",
+            longInstruction: `Take two deep breaths. Read the word problem carefully. What is the 
+            problem about? What does it ask you to find?`,
+            type: "READ",
+            valid: 1,
+          },
+          {
+            label: "Prepare",
+            mnemonicIndex: 0,
+            instruction: "Identify Important Information",
+            longInstruction: `Identify the key facts in the word problem below. Select 
+            these important pieces of text. This will allow you to quickly paste helpful 
+            snippets as you work the problem.`,
+            type: "TAG",
+            valid: 0,
+          },
+          {
+            label: "Prepare",
+            mnemonicIndex: 0,
+            instruction: "What kind of problem is this?",
+            longInstruction: `Discuss what type of problem you think this is. (Not graded)`,
+            type: "DIAGRAMANALYZE",
+            valid: 0,
+          },
+          {
+            label: "Organize",
+            mnemonicIndex: 1,
+            instruction: "What type of problem is this?",
+            longInstruction: `Select the problem type that best describes this problme`,
+            type: "DIAGRAMSELECT",
+            valid: 0,
+          },
+          {
+            label: "Organize",
+            mnemonicIndex: 1,
+            instruction: "Fill in the Diagram",
+            longInstruction: `Fill in each amount in the diagram with information from the problem. 
+            You can click in each box and type the information using your keyboard, 
+            or you can drag and drop the important information that you selected 
+            earlier. If an amount is unknown, enter 'unknown'.`,
+            type: "DIAGRAMMER",
+            valid: 0,
+          },
+          // Alan's figma shows this as out of scope
+          // {
+          //   label: "Organize",
+          //   mnemonicIndex: 1,
+          //   instruction: "Setup the Equation",
+          //   longInstruction: `Take your diagram and transform it into a math equation.`,
+          //   type: "EQUATIONATOR",
+          //   valid: 0,
+          // },
+          {
+            label: "Work the Problem",
+            mnemonicIndex: 2,
+            instruction: "Solve the equation",
+            longInstruction: `Take your diagram and transform it into a math equation.`,
+            type: "STEPWISE",
+            swlabel: "QUES-6011 YOY",
+            // eslint-disable-next-line
+            description:
+              "Solve by addition, fool.  \\begin{array}{c}7x-2y=3 \\\\4x+5y=3.25\\end{array}", // eslint-disable-line
+            definition: "SolveFor[7x-2y=3 && 4x+5y=3.25, {x,y}, EliminationMethod]",
+            mathml: "\\(\\)",
+            swtype: "gradeBasicAlgebra",
+            hint1: "",
+            hint2: "",
+            hint3: "",
+            valid: 0,
+          },
+          {
+            label: "Explain",
+            mnemonicIndex: 3,
+            instruction: "Identify the Number and the Label ",
+            longInstruction: `What is the number and what is its label ?`,
+            type: "IDENTIFIER",
+            valid: 0,
+          },
+          {
+            label: "Explain",
+            mnemonicIndex: 3,
+            instruction: "Explain your Answer",
+            longInstruction: `Answer the original question in plain language.`,
+            type: "EXPLAINER",
+            valid: 0,
+          },
+          {
+            label: "Review",
+            mnemonicIndex: 4,
+            instruction: "Does your answer make sense?",
+            longInstruction: `Discuss if your answer seems reasonable.`,
+            type: "REVIEWER",
+            valid: 0,
+          },
+        ],
+      };
+
+    </script>
