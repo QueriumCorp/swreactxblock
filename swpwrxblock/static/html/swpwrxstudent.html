@@ -6,18 +6,27 @@
       <!-- when the s navs to the StepWise page to work the problem, we reparent
       the #swClient into the page -->
       <div id="swClient" style="position: relative; flex-grow:2;">
+          <querium
+            id="kafquerium01"
+            label="QUES-6011"
+            description="Solve by addition.  \(\begin{array}{c}7x-2y=3 \\4x+5y=3.25\end{array}\)"
+            definition="SolveFor[7x-2y=3 && 4x+5y=3.25, {x,y}, EliminationMethod]"
+            mathml="\(\)"
+            type="gradeBasicAlgebra"
+            hint1=""
+            hint2=""
+            hint3=""
+          ></querium>
       </div>
     </div>
 
-    <!-- Just hiding the test page widgets so I don't have to spend time
-    detangling them -->
+    <!-- Just hiding the test page widgets so I don't have to spend time detangling them -->
     <div id="swClientControls" style="display: none">
       <p>
         Your question will be running on version 1.6.8.1 of the StepWise Client
         (1.6.6 + Firebase + log button fixes).
       </p>
 
-      <p></p>
       <p>
         <label for="author">Author:</label>
         <input id="author" />&nbsp;
@@ -29,14 +38,14 @@
         <button onclick="setServer()">Set</button>
       </p>
       <ul>
-        <li>https://stepwisedev.querium.com/webMathematica/api/</li>
-        <li>https://stepwise.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai00.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai01.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai02.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai03.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai04.querium.com/webMathematica/api/</li>
+        <li id="kaf1">https://stepwisedev.querium.com/webMathematica/api/</li>
+        <li id="kaf2">https://stepwise.querium.com/webMathematica/api/</li>
+        <li id="kaf3">https://stepwiseai.querium.com/webMathematica/api/</li>
+        <li id="kaf4">https://stepwiseai00.querium.com/webMathematica/api/</li>
+        <li id="kaf5">https://stepwiseai01.querium.com/webMathematica/api/</li>
+        <li id="kaf6">https://stepwiseai02.querium.com/webMathematica/api/</li>
+        <li id="kaf7">https://stepwiseai03.querium.com/webMathematica/api/</li>
+        <li id="kaf8">https://stepwiseai04.querium.com/webMathematica/api/</li>
       </ul>
     </div>
     <script type="text/javascript">
@@ -56,8 +65,8 @@
       var theProblem = false;
 
       window.onload = function () {
-        DoCuMeNt.getElementById("author").value = qqUser;
-        dOcUmEnT.getElementById("server").value = server;
+        document.getElementById("author").value = qqUser;
+        document.getElementById("server").value = server;
         querium.serverURL = server;
       };
 
