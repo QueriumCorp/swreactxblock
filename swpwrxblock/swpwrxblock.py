@@ -76,7 +76,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     has_score = True       # tells the xblock to not ignore the grade event
     show_in_read_only_mode = True # tells the xblock to let the instructor view the student's work (lms/djangoapps/courseware/masquerade.py)
 
-    MAX_VARIANTS = 11	   # This code handles 1 variant
+    MAX_VARIANTS = 1	   # This code handles 1 variant
 
     # Fields are defined on the class.  You can access them in your code as
     # self.<fieldname>.
@@ -545,46 +545,161 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if DEBUG: logger.info("SWPWRXBlock student_view() pick_variant selected q_index={i} question={q}".format(i=q_index,q=self.question))
 
 ### HEAD ASSETS
-# <meta charset="utf-8"/>
-# <link rel="icon" href="/favicon.ico"/>
-# <meta name="viewport" content="width=device-width,initial-scale=1"/>
-# <meta name="theme-color" content="#000000"/>
-# <meta name="description" content="Web site created using create-react-app"/>
-# <link rel="apple-touch-icon" href="/logo192.png"/>
-# <link rel="manifest" href="/manifest.json"/>
-# <title>Querium StepWise Power</title>
-# <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-# <script src="https://stepwise.querium.com/libs/mathquill/mathquill.js"></script>
-# <link rel="stylesheet" id="options_typography_Open+Sans:400,700-css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" media="all"/>
-# <link rel="stylesheet" id="options_typography_Lato:300,900-css" href="https://fonts.googleapis.com/css?family=Lato:300,900" media="all"/>
-# <base href="/testq_assets/"/>
-# <link href="css/scrolling-nav.css" rel="stylesheet"/>
-# <!--[if lt IE 9]>
+# <head>
+#     <meta charset="utf-8" />
+#     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+#     <meta name="viewport" content="width=device-width, initial-scale=1" />
+#     <meta name="theme-color" content="#000000" />
+#     <meta
+#       name="description"
+#       content="Web site created using create-react-app"
+#     />
+#     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+#     <!--
+#       manifest.json provides metadata used when your web app is installed on a
+#       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+#     -->
+#     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+#     <!--
+#       Notice the use of %PUBLIC_URL% in the tags above.
+#       It will be replaced with the URL of the `public` folder during the build.
+#       Only files inside the `public` folder can be referenced from the HTML.
+# 
+#       Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+#       work correctly both with client-side routing and a non-root public URL.
+#       Learn how to configure a non-root public URL by running `npm run build`.
+#     -->
+#     <title>Querium StepWise Power</title>
+# 
+#     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+#     <script src="https://stepwise.querium.com/libs/mathquill/mathquill.js"></script>
+# 
+#     <!-- #### START OF STEPWISE STUFF #### -->
+#     <link
+#       rel="stylesheet"
+#       id="options_typography_Open+Sans:400,700-css"
+#       href="https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+#       type="text/css"
+#       media="all"
+#     />
+#     <link
+#       rel="stylesheet"
+#       id="options_typography_Lato:300,900-css"
+#       href="https://fonts.googleapis.com/css?family=Lato:300,900"
+#       type="text/css"
+#       media="all"
+#     />
+# 
+#     <base href="/testq_assets/" />
+#     <!-- Custom CSS -->
+#     <link href="css/scrolling-nav.css" rel="stylesheet" />
+# 
+#     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+#     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+#     <!--[if lt IE 9]>
 #       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 #       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 #     <![endif]-->
-# <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
-# <script type="text/x-mathjax-config">MathJax.Hub.Config({ messageStyle: 'none', skipStartupTypeset: true, showMathMenu: true, tex2jax: { preview: 'none' }, asciimath2jax: { delimiters: [['`','`'],['``','``']], preview: "none" }, AsciiMath: {displaystyle: false} }); MathJax.Hub.Register.LoadHook("[MathJax]/extensions/asciimath2jax.js",function () { var AM = MathJax.Extension.asciimath2jax, CREATEPATTERNS = AM.createPatterns; AM.createPatterns = function () { var result = CREATEPATTERNS.call(this); this.match['``'].mode = ";mode=display"; return result; }; }); MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready",function () { var AM = MathJax.InputJax.AsciiMath; AM.postfilterHooks.Add(function (data) { if (data.script.type.match(/;mode=display/)) {data.math.root.display = "block"} return data; }); });</script>
-# <link rel="stylesheet" media="screen" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
-# <script type="text/javascript">function getInternetExplorerVersion(){var e=-1;if("Microsoft Internet Explorer"==navigator.appName){var r=navigator.userAgent;null!=new RegExp("MSIE ([0-9]{1,}[.0-9]{0,})").exec(r)&&(e=parseFloat(RegExp.$1))}return e}var ieVer=getInternetExplorerVersion();2<ieVer&&ieVer<10&&(alert("Sorry, you are using an obsolete version of Internet Explorer. Querium has been designed for the secure, modern web.  Querium joins Microsoft in encouraging you to upgrade to Internet Explorer 10 or 11."),window.open("http://blogs.msdn.com/b/ie/archive/2014/08/07/stay-up-to-date-with-internet-explorer.aspx","_self"))</script>
-# <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"/>
-# <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet"/>
-# <link rel="stylesheet" href="vendor/ng-sortable/dist/ng-sortable.css"/>
-# <link rel="stylesheet" href="vendor/ng-scrollbar/dist/ng-scrollbar.css"/>
-# <link rel="stylesheet" href="https://stepwise.querium.com/libs/mathquill/mathquill.css"/>
-# <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mlaursen/react-md@5.1.4/themes/react-md.teal-pink-200-light.min.css"/>
-# <link rel="stylesheet" href="https://stepwise.querium.com/client/querium-stepwise-1.6.8.css"/>
-# <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
-# <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-# <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.min.js"></script>
-# <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
-# <script type="text/javascript" src="https://stepwise.querium.com/client/querium-stepwise-1.6.8.1-jira.js"></script>
-# <script>querium.qEvalLogging=!0</script>
-### Added these for development use
-# <script crossorigin src="https://unpkg.com/react@16.4.2/umd/react.development.js"></script>
-# <script crossorigin src="https://unpkg.com/react-dom@16.4.2/umd/react-dom.development.js"></script>
-# <link href="/static/css/1.7f8b3af7.chunk.css" rel="stylesheet">
-# <link href="/static/css/main.b870043f.chunk.css" rel="stylesheet">
+# 
+#     <!-- MathJax is required as is support for Latex, MathML and ASCIIMath -->
+#     <script
+#       type="text/javascript"
+#       async
+#       src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+#     ></script>
+#     <script type="text/x-mathjax-config">
+#       MathJax.Hub.Config({ messageStyle: 'none', skipStartupTypeset: true, showMathMenu: true, tex2jax: { preview: 'none' }, asciimath2jax: { delimiters: [['`','`'],['``','``']], preview: "none" }, AsciiMath: {displaystyle: false} }); MathJax.Hub.Register.LoadHook("[MathJax]/extensions/asciimath2jax.js",function () { var AM = MathJax.Extension.asciimath2jax, CREATEPATTERNS = AM.createPatterns; AM.createPatterns = function () { var result = CREATEPATTERNS.call(this); this.match['``'].mode = ";mode=display"; return result; }; }); MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready",function () { var AM = MathJax.InputJax.AsciiMath; AM.postfilterHooks.Add(function (data) { if (data.script.type.match(/;mode=display/)) {data.math.root.display = "block"} return data; }); });
+#     </script>
+# 
+#     <link
+#       rel="stylesheet"
+#       type="text/css"
+#       media="screen"
+#       href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
+#     />
+# 
+#     <script type="text/javascript">
+#       function getInternetExplorerVersion() {
+#         // Returns the version of Internet Explorer or a -1 (indicating the use of another browser).
+#         var rv = -1; // Return value assumes failure.
+#         if (navigator.appName == "Microsoft Internet Explorer") {
+#           var ua = navigator.userAgent;
+#           var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+#           if (re.exec(ua) != null) {
+#             rv = parseFloat(RegExp.$1);
+#           }
+#         }
+#         return rv;
+#       }
+# 
+#       var ieVer = getInternetExplorerVersion();
+#       if (ieVer > 2 && ieVer < 10) {
+#         alert(
+#           "Sorry, you are using an obsolete version of Internet Explorer. Querium has been designed for the secure, modern web.  Querium joins Microsoft in encouraging you to upgrade to Internet Explorer 10 or 11."
+#         );
+#         window.open(
+#           "http://blogs.msdn.com/b/ie/archive/2014/08/07/stay-up-to-date-with-internet-explorer.aspx",
+#           "_self"
+#         );
+#       }
+#     </script>
+# 
+#     <!-- Loads the Lato font used by default in the StepWise UI. Can be     -->
+#     <!-- overridden with a cascaded style sheet                             -->
+#     <link
+#       href="https://fonts.googleapis.com/css?family=Lato"
+#       rel="stylesheet"
+#     />
+#     <link
+#       href="https://fonts.googleapis.com/css?family=Oswald"
+#       rel="stylesheet"
+#     />
+# 
+#     <!-- REQUIRED CSS files for Querium StepWise Client                     -->
+#     <link
+#       rel="stylesheet"
+#       type="text/css"
+#       href="vendor/ng-sortable/dist/ng-sortable.css"
+#     />
+#     <link
+#       rel="stylesheet"
+#       type="text/css"
+#       href="vendor/ng-scrollbar/dist/ng-scrollbar.css"
+#     />
+#     <link
+#       rel="stylesheet"
+#       type="text/css"
+#       href="https://stepwise.querium.com/libs/mathquill/mathquill.css"
+#     />
+#     <!-- REQUIRED for the chip components -->
+#     <link
+#       rel="stylesheet"
+#       href="https://cdn.jsdelivr.net/gh/mlaursen/react-md@5.1.4/themes/react-md.teal-pink-200-light.min.css"
+#     />
+#     <link
+#       rel="stylesheet"
+#       type="text/css"
+#       href="https://stepwise.querium.com/client/querium-stepwise-1.6.8.css"
+#     />
+# 
+#     <!-- REQUIRED Javascript files for Querium StepWise Client -->
+#     <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+#     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+#     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.min.js"></script>
+#     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+# 
+#     <script
+#       type="text/javascript"
+#       src="https://stepwise.querium.com/client/querium-stepwise-1.6.8.1-jira.js"
+#     ></script>
+# 
+#     <!-- Set this to true to enable logging -->
+#     <script>
+#       querium.qEvalLogging = true;
+#     </script>
+# 
+#     <!-- #### END OF STEPWISE STUFF #### -->
+#   </head>
 ###
 
 # Build content programatticaly that looks like the above HTML
@@ -596,27 +711,31 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_resource('<meta name="viewport" content="width=device-width,initial-scale=1"/>','text/html','head')
         frag.add_resource('<meta name="theme-color" content="#000000"/>','text/html','head')
         frag.add_resource('<link rel="apple-touch-icon" href="/logo192.png"/>','text/html','head')
-#HIDEME        frag.add_resource('<link rel="manifest" href="/manifest.json"/>','text/html','head')
+# File is in /public
+        frag.add_resource('<link rel="manifest" href="/public/manifest.json"/>','text/html','head')
         frag.add_resource('<title>Querium StepWise Power</title>','text/html','head')
 
+# Apparently jQuery already loaded
 #HIDEME        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
         frag.add_javascript_url("//stepwise.querium.com/libs/mathquill/mathquill.js")
         frag.add_css_url("//fonts.googleapis.com/css?family=Open+Sans:400,700")
-        frag.add_css_url("//fonts.googleapis.com/css?family=Oswald")
+        frag.add_css_url("//fonts.googleapis.com/css?family=Lato:300,900")
+#                Bootstrap CSS
+#NOTFOUND        frag.add_css(self.resource_string("css/scrolling-nav.css"))
         frag.add_javascript_url("//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML")
         frag.add_resource('<script type="text/x-mathjax-config">MathJax.Hub.Config({ messageStyle: \'none\', skipStartupTypeset: true, showMathMenu: true, tex2jax: { preview: \'none\' }, asciimath2jax: { delimiters: [[\'`\',\'`\'],[\'``\',\'``\']], preview: "none" }, AsciiMath: {displaystyle: false} }); MathJax.Hub.Register.LoadHook("[MathJax]/extensions/asciimath2jax.js",function () { var AM = MathJax.Extension.asciimath2jax, CREATEPATTERNS = AM.createPatterns; AM.createPatterns = function () { var result = CREATEPATTERNS.call(this); this.match[\'``\'].mode = ";mode=display"; return result; }; }); MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready",function () { var AM = MathJax.InputJax.AsciiMath; AM.postfilterHooks.Add(function (data) { if (data.script.type.match(/;mode=display/)) {data.math.root.display = "block"} return data; }); });</script>','text/html','head')
-        frag.add_resource('<script type="text/javascript">function getInternetExplorerVersion(){var e=-1;if("Microsoft Internet Explorer"==navigator.appName){var r=navigator.userAgent;null!=new RegExp("MSIE ([0-9]{1,}[.0-9]{0,})").exec(r)&&(e=parseFloat(RegExp.$1))}return e}var ieVer=getInternetExplorerVersion();2<ieVer&&ieVer<10&&(alert("Sorry, you are using an obsolete version of Internet Explorer. Querium has been designed for the secure, modern web.  Querium joins Microsoft in encouraging you to upgrade to Internet Explorer 10 or 11."),window.open("http://blogs.msdn.com/b/ie/archive/2014/08/07/stay-up-to-date-with-internet-explorer.aspx","_self"))</script>','text/html','head')
         frag.add_css_url("//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css")
+# Don't include this for now.  Just running on iPads
+#         frag.add_resource('<script type="text/javascript">function getInternetExplorerVersion(){var e=-1;if("Microsoft Internet Explorer"==navigator.appName){var r=navigator.userAgent;null!=new RegExp("MSIE ([0-9]{1,}[.0-9]{0,})").exec(r)&&(e=parseFloat(RegExp.$1))}return e}var ieVer=getInternetExplorerVersion();2<ieVer&&ieVer<10&&(alert("Sorry, you are using an obsolete version of Internet Explorer. Querium has been designed for the secure, modern web.  Querium joins Microsoft in encouraging you to upgrade to Internet Explorer 10 or 11."),window.open("http://blogs.msdn.com/b/ie/archive/2014/08/07/stay-up-to-date-with-internet-explorer.aspx","_self"))</script>','text/html','head')
 
         frag.add_css_url("//fonts.googleapis.com/css?family=Lato")
         frag.add_css_url("//fonts.googleapis.com/css?family=Oswald")
-#                 Bootstrap CSS
-#NOTFOUND1        frag.add_css(self.resource_string("css/scrolling-nav.css"))
 #                 Angular CSS
-#NOTFOUND1        frag.add_css(self.resource_string("vendor/ng-sortable/dist/ng-sortable.css"))
+#NOTFOUND        frag.add_css(self.resource_string("vendor/ng-sortable/dist/ng-sortable.css"))
 #                 Angular CSS
-#NOTFOUND1        frag.add_css(self.resource_string("vendor/ng-scrollbar/dist/ng-scrollbar.css"))
+#NOTFOUND        frag.add_css(self.resource_string("vendor/ng-scrollbar/dist/ng-scrollbar.css"))
         frag.add_css_url("//stepwise.querium.com/libs/mathquill/mathquill.css")
+# <!-- REQUIRED for the chip components -->
         frag.add_css_url("//cdn.jsdelivr.net/gh/mlaursen/react-md@5.1.4/themes/react-md.teal-pink-200-light.min.css")
         frag.add_css_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.8.css")
         frag.add_javascript_url("//www.gstatic.com/firebasejs/4.4.0/firebase.js")               # For qEval client-side logging
@@ -624,31 +743,39 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.min.js")
         frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js")
         frag.add_javascript_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.8.1-jira.js")
-        frag.add_content('<script>querium.qEvalLogging=!0</script>')
-
-# <script crossorigin src="https://unpkg.com/react@16.4.2/umd/react.development.js"></script>
-        frag.add_javascript_url("//unpkg.com/react@16.4.2/umd/react.development.js")
-# <script crossorigin src="https://unpkg.com/react-dom@16.4.2/umd/react-dom.development.js"></script>
-        frag.add_javascript_url("//unpkg.com/react-dom@16.4.2/umd/react-dom.development.js")
 
         frag.add_css(self.resource_string("static/css/swpwrxstudent.css"))
-        frag.add_css(self.resource_string("static/css/1.7f8b3af7.chunk.css"))
-        frag.add_css(self.resource_string("static/css/main.b870043f.chunk.css"))
-
         frag.add_javascript(self.resource_string("static/js/src/swpwrxstudent.js"))
+
+        frag.add_content('<script>querium.qEvalLogging=!0</script>')
+
+# Now we can finally add the React app bundle assets
+
+        frag.add_css(self.resource_string("static/css/main.b870043f.chunk.css"))
+        frag.add_css(self.resource_string("static/css/1.7f8b3af7.chunk.css"))
+
         frag.add_resource('<base href="/testq_assets/"/>','text/html','head')		# Needed so react code can find its pages. Don't do earlier or impacts relative pathnames of resources
 
-        # Replace these in the HTML with the calls below
-        # <script src="/static/js/1.72c79b30.chunk.js"></script>
-        # <script src="/static/js/main.e04ca138.chunk.js"></script>
-        frag.add_javascript(self.resource_string("static/js/1.72c79b30.chunk.js"))
-        frag.add_javascript(self.resource_string("static/js/main.e04ca138.chunk.js"))
 
-        # Put this inside swpwrxstudent.html
-        # frag.add_resource('<script>const root = ReactDOM.createRoot( document.getElementById(\'root\')); const element = <h1>Hello, world</h1>; root.render(element);</script>','text/html','body')
+        # Load up the React app bundle js, and wrap it as needed.
+        bundle_string = self.resource_string("/static/js/main.e04ca138.chunk.js")
+        if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string={e}".format(e=bundle_string))
+        # Wrap the bundle js in a jQuery function so it runs after the DOM finishes loading, to emulate the 'defer' action of a <script> tag in the React index.html
+        mid_string = '$(function() {'+bundle_string
+        if DEBUG: logger.info("SWPWRXBlock student_view() mid_string={e}".format(e=mid_string))
+        # Remove this comment string if it exists //# sourceMappingURL=main.e04ca138.chunk.js.map
+        # Can't just append the following to the string if there is a sourceMappingURL comment after the code
+        import re
+        mid_string = mid_string.re('//# sourceMappingURL=main\.[a-z0-9]+\.chunk\.js\.map','')   # Get rid of comment
+        if DEBUG: logger.info("SWPWRXBlock student_view() final_string1={e}".format(e=final_string))
+        # Add jQuery function ending.
+        final_string = mid_string+'});'  # Adds final '});'
+        if DEBUG: logger.info("SWPWRXBlock student_view() final_string2={e}".format(e=final_string))
+        frag.add_resource(final_string,'application/javascript','foot')
 
         if DEBUG: logger.info("SWPWRXBlock student_view() head={e}".format(e=frag.head_html()))
         if DEBUG: logger.info("SWPWRXBlock student_view() body={e}".format(e=frag.body_html()))
+        if DEBUG: logger.info("SWPWRXBlock student_view() foot={e}".format(e=frag.foot_html()))
         if DEBUG: logger.info("SWPWRXBlock student_view() calling frag.initialize_js")
         frag.initialize_js('SWPWRXStudent', {})
         return frag
