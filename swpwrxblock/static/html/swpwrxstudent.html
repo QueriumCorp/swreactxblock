@@ -19,8 +19,7 @@
       </div>
     </div>
 
-    <!-- Just hiding the test page widgets so I don't have to spend time
-    detangling them -->
+    <!-- Just hiding the test page widgets so I don't have to spend time detangling them -->
     <div id="swClientControls" style="display: none">
       <p>
         Your question will be running on version 1.6.8.1 of the StepWise Client
@@ -38,16 +37,6 @@
         <input id="server" style="width: 400px" />&nbsp;
         <button onclick="setServer()">Set</button>
       </p>
-      <ul>
-        <li>https://stepwisedev.querium.com/webMathematica/api/</li>
-        <li>https://stepwise.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai00.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai01.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai02.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai03.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai04.querium.com/webMathematica/api/</li>
-      </ul>
     </div>
     <script type="text/javascript">
       var qqUser =
@@ -58,7 +47,7 @@
       var server =
         localStorage.getItem("server") == null ||
         localStorage.getItem("server").length === 0
-          ? "https://stepwise.querium.com/webMathematica/api/"
+          ? "https://stepwiseai03.querium.com/webMathematica/api/"
           : localStorage.getItem("server");
       var questionList = [];
       var urlParams = getJsonFromUrl(true);
@@ -112,13 +101,6 @@
           localStorage.setItem("name", author);
           var state = querium.saveState("querium");
           state.problemDef = state.problemDef.replace(/^"(.+(?="$))"$/, "$1");
-          /* testRef.push({
-                      problemID: problemID,
-                      author: author,
-                      log: JSON.stringify(state)
-                  });
-                  alert('Test saved');
-      */
           alert("Name saved");
         } else {
           alert("Who am I?  Why am I here?");
@@ -205,4 +187,3 @@
       // };
       querium.options = options;
     </script>
-
