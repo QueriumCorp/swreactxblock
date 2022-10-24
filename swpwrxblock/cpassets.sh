@@ -1,7 +1,13 @@
 #!/bin/bash
+#
+# Full pathnames to the swpwr build and public directories
 b=~/src/swpwr/build
 p=~/src/swpwr/public
+
+# Which precache manifest to copy
 c=precache-manifest.8c5268b68a90c8397a5eb1681f40011c.js
+
+# Which asset javascript files to copy
 js1=1.72c79b30.chunk.js
 js2=main.e04ca138.chunk.js.map
 js3=runtime~main.229c360f.js.map
@@ -9,6 +15,7 @@ js4=1.72c79b30.chunk.js.map
 js5=main.e04ca138.chunk.js
 js6=runtime~main.229c360f.js
 #
+# Which asset css files to copy
 cs1=1.7f8b3af7.chunk.css
 cs2=1.7f8b3af7.chunk.css.map
 cs3=main.b870043f.chunk.css
