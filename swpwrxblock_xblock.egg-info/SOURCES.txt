@@ -24,6 +24,7 @@ swpwrxblock/static/css/swpwrxstudent.css
 swpwrxblock/static/css/swpwrxstudio.css
 swpwrxblock/static/html/swpwrxauthor.html
 swpwrxblock/static/html/swpwrxstudent.html
+swpwrxblock/static/html/swpwrxstudent.html-last
 swpwrxblock/static/html/swpwrxstudent.html-save
 swpwrxblock/static/html/swpwrxstudio.html
 swpwrxblock/static/js/1.72c79b30.chunk.js
