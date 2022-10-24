@@ -4,8 +4,8 @@ swpwrxblock/static/js/.*.swp
 swpwrxblock/__init__.pyc
 swpwrxblock/swpwrxblock.pyc
 swpwrxblock/static/html/swpwrxstudent-*.html
+swpwrxblock/static/html/swpwrxstudent.html-*
 swpwrxblock/public/head
 swpwrxblock/public/index-expanded.html
 swpwrxblock/public/index.html-orig
 swpwrxblock/public/index.html-save
-

@@ -760,17 +760,20 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         # Load up the React app bundle js, and wrap it as needed.
         bundle_string = self.resource_string("/static/js/main.e04ca138.chunk.js")
-        if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string={e}".format(e=bundle_string))
+        if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string head={e}".format(e=bundle_string[0:100]))
+        if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string tail={e}".format(e=bundle_string[len(bundle_string)-100:]))
         # Wrap the bundle js in a jQuery function so it runs after the DOM finishes loading, to emulate the 'defer' action of a <script> tag in the React index.html
         mid_string = '$(function() {'+bundle_string
-        if DEBUG: logger.info("SWPWRXBlock student_view() mid_string={e}".format(e=mid_string))
+        if DEBUG: logger.info("SWPWRXBlock student_view() mid_string head={e}".format(e=mid_string[0:100]))
+        if DEBUG: logger.info("SWPWRXBlock student_view() mid_string tail={e}".format(e=mid_string[len(mid_string)-100:]))
         # Remove this comment string if it exists //# sourceMappingURL=main.e04ca138.chunk.js.map
         # Can't just append the following to the string if there is a sourceMappingURL comment after the code
         mid_string = re.sub('//# sourceMappingURL=main\.[a-z0-9]+\.chunk\.js\.map','',mid_string)   # Get rid of sourceMappingURL comment
-        if DEBUG: logger.info("SWPWRXBlock student_view() mid_string post sub={e}".format(e=mid_string))
+        if DEBUG: logger.info("SWPWRXBlock student_view() mid_string post sub tail={e}".format(e=mid_string[len(mid_string)-100:]))
         # Add jQuery function ending.
         final_string = mid_string+'});'  # Adds final '});'
-        if DEBUG: logger.info("SWPWRXBlock student_view() final_string={e}".format(e=final_string))
+        if DEBUG: logger.info("SWPWRXBlock student_view() final_string head={e}".format(e=final_string[0:100]))
+        if DEBUG: logger.info("SWPWRXBlock student_view() final_string tail={e}".format(e=final_string[len(final_string)-100:]))
         frag.add_resource(final_string,'application/javascript','foot')
 
         if DEBUG: logger.info("SWPWRXBlock student_view() head={e}".format(e=frag.head_html()))
