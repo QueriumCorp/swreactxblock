@@ -767,10 +767,10 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         # Remove this comment string if it exists //# sourceMappingURL=main.e04ca138.chunk.js.map
         # Can't just append the following to the string if there is a sourceMappingURL comment after the code
         mid_string = re.sub('//# sourceMappingURL=main\.[a-z0-9]+\.chunk\.js\.map','',mid_string)   # Get rid of sourceMappingURL comment
-        if DEBUG: logger.info("SWPWRXBlock student_view() final_string1={e}".format(e=final_string))
+        if DEBUG: logger.info("SWPWRXBlock student_view() mid_string post sub={e}".format(e=mid_string))
         # Add jQuery function ending.
         final_string = mid_string+'});'  # Adds final '});'
-        if DEBUG: logger.info("SWPWRXBlock student_view() final_string2={e}".format(e=final_string))
+        if DEBUG: logger.info("SWPWRXBlock student_view() final_string={e}".format(e=final_string))
         frag.add_resource(final_string,'application/javascript','foot')
 
         if DEBUG: logger.info("SWPWRXBlock student_view() head={e}".format(e=frag.head_html()))
