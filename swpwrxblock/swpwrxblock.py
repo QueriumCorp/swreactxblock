@@ -29,6 +29,7 @@ logic there.
 import pkg_resources
 import random
 import json
+import re
 from logging import getLogger
 
 # Django Stuff
@@ -765,8 +766,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if DEBUG: logger.info("SWPWRXBlock student_view() mid_string={e}".format(e=mid_string))
         # Remove this comment string if it exists //# sourceMappingURL=main.e04ca138.chunk.js.map
         # Can't just append the following to the string if there is a sourceMappingURL comment after the code
-        import re
-        mid_string = mid_string.re('//# sourceMappingURL=main\.[a-z0-9]+\.chunk\.js\.map','')   # Get rid of comment
+        mid_string = re.sub('//# sourceMappingURL=main\.[a-z0-9]+\.chunk\.js\.map','',mid_string)   # Get rid of sourceMappingURL comment
         if DEBUG: logger.info("SWPWRXBlock student_view() final_string1={e}".format(e=final_string))
         # Add jQuery function ending.
         final_string = mid_string+'});'  # Adds final '});'
