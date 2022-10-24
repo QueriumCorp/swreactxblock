@@ -195,6 +195,7 @@ function SWPWRXStudent(runtime, element) {
                 // display_math = $('.display-math', preview_element)[0];
                 // display_math.classList.add("preview_hidden");
         
+                console.log('set_preview_element question.q_index',question.q_index);
                 switch( question.q_index ){
                     case 0:
                         preview_element = $('.qq_preview0', element)[0];
