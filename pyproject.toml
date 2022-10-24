@@ -1,0 +1,23 @@
+[tool.black]
+line-length = 120
+include = ['\.pyi?$','\.svg$']
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+#------------------------------------------------------------------------------
+# PyPi meta data
+#------------------------------------------------------------------------------
+[project]
+name = "swpwrxblock"
+version = "0.0.1"
