@@ -39,6 +39,7 @@ swpwrxblock/static/js/main.e04ca138.chunk.js
 swpwrxblock/static/js/main.e04ca138.chunk.js.map
 swpwrxblock/static/js/runtime~main.229c360f.js
 swpwrxblock/static/js/runtime~main.229c360f.js.map
+swpwrxblock/static/js/src/swpwr_question.js
 swpwrxblock/static/js/src/swpwrxauthor.js
 swpwrxblock/static/js/src/swpwrxstudent.js
 swpwrxblock/static/js/src/swpwrxstudio.js
