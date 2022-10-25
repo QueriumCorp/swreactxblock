@@ -764,7 +764,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         bundle_string = self.resource_string("/static/js/app_tiny.js")
 
         # Add a sample static problem for swpwr to run
-        frag.add_javascript(self.resource_string("static/js/src/swpwr_question.js")
+        frag.add_javascript(self.resource_string("static/js/src/swpwr_question.js"))
 
         if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string head={e}".format(e=bundle_string[0:100]))
         if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string tail={e}".format(e=bundle_string[len(bundle_string)-100:]))
