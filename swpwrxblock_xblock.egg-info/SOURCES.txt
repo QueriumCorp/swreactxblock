@@ -42,6 +42,7 @@ swpwrxblock/static/js/runtime~main.229c360f.js.map
 swpwrxblock/static/js/src/swpwr_question.js
 swpwrxblock/static/js/src/swpwrxauthor.js
 swpwrxblock/static/js/src/swpwrxstudent.js
+swpwrxblock/static/js/src/swpwrxstudent.js-all
 swpwrxblock/static/js/src/swpwrxstudio.js
 swpwrxblock_xblock.egg-info/PKG-INFO
 swpwrxblock_xblock.egg-info/SOURCES.txt

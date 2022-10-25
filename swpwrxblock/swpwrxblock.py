@@ -718,7 +718,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
 # Apparently jQuery already loaded
 #HIDEME        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
-        frag.add_javascript_url("//stepwise.querium.com/libs/mathquill/mathquill.js")
+#HIDEME        frag.add_javascript_url("//stepwise.querium.com/libs/mathquill/mathquill.js")
         frag.add_css_url("//fonts.googleapis.com/css?family=Open+Sans:400,700")
         frag.add_css_url("//fonts.googleapis.com/css?family=Lato:300,900")
 #                Bootstrap CSS
@@ -785,7 +785,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if DEBUG: logger.info("SWPWRXBlock student_view() head={e}".format(e=frag.head_html()))
         if DEBUG: logger.info("SWPWRXBlock student_view() body={e}".format(e=frag.body_html()))
         if DEBUG: logger.info("SWPWRXBlock student_view() foot={e}".format(e=frag.foot_html()))
-        if DEBUG: logger.info("SWPWRXBlock student_view() calling frag.initialize_jsFAKE")
+        if DEBUG: logger.info("SWPWRXBlock student_view() calling frag.initialize_js")
         frag.initialize_js('SWPWRXStudentFAKE', {})  # Call the FAKE entry point for now
         return frag
 
