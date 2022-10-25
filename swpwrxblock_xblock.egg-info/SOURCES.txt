@@ -17,6 +17,7 @@ swpwrxblock/public/service-worker.js
 swpwrxblock/static/README.txt
 swpwrxblock/static/css/1.7f8b3af7.chunk.css
 swpwrxblock/static/css/1.7f8b3af7.chunk.css.map
+swpwrxblock/static/css/app_tiny.css
 swpwrxblock/static/css/main.b870043f.chunk.css
 swpwrxblock/static/css/main.b870043f.chunk.css.map
 swpwrxblock/static/css/swpwrxauthor.css
@@ -31,6 +32,7 @@ swpwrxblock/static/js/1.72c79b30.chunk.js
 swpwrxblock/static/js/1.72c79b30.chunk.js.map
 swpwrxblock/static/js/1.e09179ed.chunk.js
 swpwrxblock/static/js/1.e09179ed.chunk.js.map
+swpwrxblock/static/js/app_tiny.js
 swpwrxblock/static/js/main.0048466c.chunk.js
 swpwrxblock/static/js/main.0048466c.chunk.js.map
 swpwrxblock/static/js/main.e04ca138.chunk.js

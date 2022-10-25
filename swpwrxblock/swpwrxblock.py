@@ -713,7 +713,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_resource('<meta name="theme-color" content="#000000"/>','text/html','head')
         frag.add_resource('<link rel="apple-touch-icon" href="/logo192.png"/>','text/html','head')
 # File is in /public
-        frag.add_resource('<link rel="manifest" href="/public/manifest.json"/>','text/html','head')
+#HIDEME        frag.add_resource('<link rel="manifest" href="/public/manifest.json"/>','text/html','head')
         frag.add_resource('<title>Querium StepWise Power</title>','text/html','head')
 
 # Apparently jQuery already loaded
@@ -723,9 +723,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_css_url("//fonts.googleapis.com/css?family=Lato:300,900")
 #                Bootstrap CSS
 #NOTFOUND        frag.add_css(self.resource_string("css/scrolling-nav.css"))
-        frag.add_javascript_url("//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML")
-        frag.add_resource('<script type="text/x-mathjax-config">MathJax.Hub.Config({ messageStyle: \'none\', skipStartupTypeset: true, showMathMenu: true, tex2jax: { preview: \'none\' }, asciimath2jax: { delimiters: [[\'`\',\'`\'],[\'``\',\'``\']], preview: "none" }, AsciiMath: {displaystyle: false} }); MathJax.Hub.Register.LoadHook("[MathJax]/extensions/asciimath2jax.js",function () { var AM = MathJax.Extension.asciimath2jax, CREATEPATTERNS = AM.createPatterns; AM.createPatterns = function () { var result = CREATEPATTERNS.call(this); this.match[\'``\'].mode = ";mode=display"; return result; }; }); MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready",function () { var AM = MathJax.InputJax.AsciiMath; AM.postfilterHooks.Add(function (data) { if (data.script.type.match(/;mode=display/)) {data.math.root.display = "block"} return data; }); });</script>','text/html','head')
-        frag.add_css_url("//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css")
+#NOTYET        frag.add_javascript_url("//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML")
+#NOTYET        frag.add_resource('<script type="text/x-mathjax-config">MathJax.Hub.Config({ messageStyle: \'none\', skipStartupTypeset: true, showMathMenu: true, tex2jax: { preview: \'none\' }, asciimath2jax: { delimiters: [[\'`\',\'`\'],[\'``\',\'``\']], preview: "none" }, AsciiMath: {displaystyle: false} }); MathJax.Hub.Register.LoadHook("[MathJax]/extensions/asciimath2jax.js",function () { var AM = MathJax.Extension.asciimath2jax, CREATEPATTERNS = AM.createPatterns; AM.createPatterns = function () { var result = CREATEPATTERNS.call(this); this.match[\'``\'].mode = ";mode=display"; return result; }; }); MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready",function () { var AM = MathJax.InputJax.AsciiMath; AM.postfilterHooks.Add(function (data) { if (data.script.type.match(/;mode=display/)) {data.math.root.display = "block"} return data; }); });</script>','text/html','head')
+#NOTYET        frag.add_css_url("//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css")
 # Don't include this for now.  Just running on iPads
 #         frag.add_resource('<script type="text/javascript">function getInternetExplorerVersion(){var e=-1;if("Microsoft Internet Explorer"==navigator.appName){var r=navigator.userAgent;null!=new RegExp("MSIE ([0-9]{1,}[.0-9]{0,})").exec(r)&&(e=parseFloat(RegExp.$1))}return e}var ieVer=getInternetExplorerVersion();2<ieVer&&ieVer<10&&(alert("Sorry, you are using an obsolete version of Internet Explorer. Querium has been designed for the secure, modern web.  Querium joins Microsoft in encouraging you to upgrade to Internet Explorer 10 or 11."),window.open("http://blogs.msdn.com/b/ie/archive/2014/08/07/stay-up-to-date-with-internet-explorer.aspx","_self"))</script>','text/html','head')
 
@@ -735,31 +735,34 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 #NOTFOUND        frag.add_css(self.resource_string("vendor/ng-sortable/dist/ng-sortable.css"))
 #                 Angular CSS
 #NOTFOUND        frag.add_css(self.resource_string("vendor/ng-scrollbar/dist/ng-scrollbar.css"))
-        frag.add_css_url("//stepwise.querium.com/libs/mathquill/mathquill.css")
+#NOTYET        frag.add_css_url("//stepwise.querium.com/libs/mathquill/mathquill.css")
 # <!-- REQUIRED for the chip components -->
         frag.add_css_url("//cdn.jsdelivr.net/gh/mlaursen/react-md@5.1.4/themes/react-md.teal-pink-200-light.min.css")
-        frag.add_css_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.8.css")
-        frag.add_javascript_url("//www.gstatic.com/firebasejs/4.4.0/firebase.js")               # For qEval client-side logging
-        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js")
-        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.min.js")
-        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js")
-        frag.add_javascript_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.8.1-jira.js")
+#NOTYET        frag.add_css_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.8.css")
+#NOTYET        frag.add_javascript_url("//www.gstatic.com/firebasejs/4.4.0/firebase.js")               # For qEval client-side logging
+#NOTYET        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js")
+#NOTYET        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.min.js")
+#NOTYET        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js")
+#NOTYET        frag.add_javascript_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.8.1-jira.js")
 
-        frag.add_css(self.resource_string("static/css/swpwrxstudent.css"))
+#NOTYET        frag.add_css(self.resource_string("static/css/swpwrxstudent.css"))
         frag.add_javascript(self.resource_string("static/js/src/swpwrxstudent.js"))
 
         frag.add_content('<script>querium.qEvalLogging=!0</script>')
 
 # Now we can finally add the React app bundle assets
 
-        frag.add_css(self.resource_string("static/css/main.b870043f.chunk.css"))
-        frag.add_css(self.resource_string("static/css/1.7f8b3af7.chunk.css"))
+        # frag.add_css(self.resource_string("static/css/main.b870043f.chunk.css"))
+        # frag.add_css(self.resource_string("static/css/1.7f8b3af7.chunk.css"))
+        frag.add_css(self.resource_string("static/css/app_tiny.css"))
 
         frag.add_resource('<base href="/testq_assets/"/>','text/html','head')		# Needed so react code can find its pages. Don't do earlier or impacts relative pathnames of resources
 
 
         # Load up the React app bundle js, and wrap it as needed.
-        bundle_string = self.resource_string("/static/js/main.e04ca138.chunk.js")
+        # bundle_string = self.resource_string("/static/js/main.e04ca138.chunk.js")
+        bundle_string = self.resource_string("/static/js/app_tiny.js")
+
         if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string head={e}".format(e=bundle_string[0:100]))
         if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string tail={e}".format(e=bundle_string[len(bundle_string)-100:]))
         # Wrap the bundle js in a jQuery function so it runs after the DOM finishes loading, to emulate the 'defer' action of a <script> tag in the React index.html
@@ -779,8 +782,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if DEBUG: logger.info("SWPWRXBlock student_view() head={e}".format(e=frag.head_html()))
         if DEBUG: logger.info("SWPWRXBlock student_view() body={e}".format(e=frag.body_html()))
         if DEBUG: logger.info("SWPWRXBlock student_view() foot={e}".format(e=frag.foot_html()))
-        if DEBUG: logger.info("SWPWRXBlock student_view() calling frag.initialize_js")
-        frag.initialize_js('SWPWRXStudent', {})
+        if DEBUG: logger.info("SWPWRXBlock student_view() calling frag.initialize_jsFAKE")
+        frag.initialize_js('SWPWRXStudentFAKE', {})  # Call the FAKE entry point for now
         return frag
 
 
