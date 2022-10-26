@@ -23,7 +23,7 @@ def package_data(pkg, roots):
 
 setup(
     name='swpwrxblock-xblock',
-    version='0.5.4',
+    version='0.6.0',
     description='swpwrxblock XBlock',   # TODO: write a better description.
     license='UNKNOWN',          # TODO: choose a license: 'AGPL v3' and 'Apache 2.0' are popular.
     packages=[
@@ -37,6 +37,6 @@ setup(
             'swpwrxblock = swpwrxblock:SWPWRXBlock',
         ]
     },
-    package_data=package_data("swpwrxblock", ["swpwrxblock/static/media","swpwrxblock/static","static", "public", "static/media", "media"]),
+    package_data=package_data("swpwrxblock", ["swpwrxblock/static/media","swpwrxblock/static","static", "public", "public/assets", "public/assets/js", "public/assets/css", "static/media", "media"]),
     include_package_data=True,
 )

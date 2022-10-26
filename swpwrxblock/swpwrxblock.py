@@ -546,30 +546,22 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if DEBUG: logger.info("SWPWRXBlock student_view() pick_variant selected q_index={i} question={q}".format(i=q_index,q=self.question))
 
 ### HEAD ASSETS
-# <head>
+#   <head>
 #     <meta charset="utf-8" />
-#     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+#     <link rel="icon" href="/favicon.ico" />
 #     <meta name="viewport" content="width=device-width, initial-scale=1" />
 #     <meta name="theme-color" content="#000000" />
 #     <meta
 #       name="description"
 #       content="Web site created using create-react-app"
 #     />
-#     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+#     <link rel="apple-touch-icon" href="/logo192.png" />
 #     <!--
 #       manifest.json provides metadata used when your web app is installed on a
 #       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
 #     -->
-#     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-#     <!--
-#       Notice the use of %PUBLIC_URL% in the tags above.
-#       It will be replaced with the URL of the `public` folder during the build.
-#       Only files inside the `public` folder can be referenced from the HTML.
+#     <link rel="manifest" href="/manifest.json" />
 # 
-#       Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-#       work correctly both with client-side routing and a non-root public URL.
-#       Learn how to configure a non-root public URL by running `npm run build`.
-#     -->
 #     <title>Querium StepWise Power</title>
 # 
 #     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -591,11 +583,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 #       media="all"
 #     />
 # 
-#     <base href="/testq_assets/" />
-#     <!-- Custom CSS -->
-#     <link href="css/scrolling-nav.css" rel="stylesheet" />
-# 
-#     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+#         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 #     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 #     <!--[if lt IE 9]>
 #       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -660,16 +648,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 #     <link
 #       rel="stylesheet"
 #       type="text/css"
-#       href="vendor/ng-sortable/dist/ng-sortable.css"
-#     />
-#     <link
-#       rel="stylesheet"
-#       type="text/css"
-#       href="vendor/ng-scrollbar/dist/ng-scrollbar.css"
-#     />
-#     <link
-#       rel="stylesheet"
-#       type="text/css"
 #       href="https://stepwise.querium.com/libs/mathquill/mathquill.css"
 #     />
 #     <!-- REQUIRED for the chip components -->
@@ -711,22 +689,28 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_resource('<link rel="icon" href="/favicon.ico"/>','text/html','head')
         frag.add_resource('<meta name="viewport" content="width=device-width,initial-scale=1"/>','text/html','head')
         frag.add_resource('<meta name="theme-color" content="#000000"/>','text/html','head')
+        frag.add_resource('<meta name="description" content="Web site created using create-react-app" />','text/html','head')
         frag.add_resource('<link rel="apple-touch-icon" href="/logo192.png"/>','text/html','head')
-# File is in /public
-#HIDEME        frag.add_resource('<link rel="manifest" href="/public/manifest.json"/>','text/html','head')
+        frag.add_resource('<link rel="manifest" href="/manifest.json"/>','text/html','head')
         frag.add_resource('<title>Querium StepWise Power</title>','text/html','head')
 
 # Apparently jQuery already loaded
 #HIDEME        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
-#HIDEME        frag.add_javascript_url("//stepwise.querium.com/libs/mathquill/mathquill.js")
+        frag.add_javascript_url("//stepwise.querium.com/libs/mathquill/mathquill.js")
         frag.add_css_url("//fonts.googleapis.com/css?family=Open+Sans:400,700")
         frag.add_css_url("//fonts.googleapis.com/css?family=Lato:300,900")
+#NOTYET         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+#NOTYET     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+#NOTYET     <!--[if lt IE 9]>
+#NOTYET       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+#NOTYET       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+#NOTYET     <![endif]-->
 #                Bootstrap CSS
 #NOTFOUND        frag.add_css(self.resource_string("css/scrolling-nav.css"))
-#NOTYET        frag.add_javascript_url("//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML")
-#NOTYET        frag.add_resource('<script type="text/x-mathjax-config">MathJax.Hub.Config({ messageStyle: \'none\', skipStartupTypeset: true, showMathMenu: true, tex2jax: { preview: \'none\' }, asciimath2jax: { delimiters: [[\'`\',\'`\'],[\'``\',\'``\']], preview: "none" }, AsciiMath: {displaystyle: false} }); MathJax.Hub.Register.LoadHook("[MathJax]/extensions/asciimath2jax.js",function () { var AM = MathJax.Extension.asciimath2jax, CREATEPATTERNS = AM.createPatterns; AM.createPatterns = function () { var result = CREATEPATTERNS.call(this); this.match[\'``\'].mode = ";mode=display"; return result; }; }); MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready",function () { var AM = MathJax.InputJax.AsciiMath; AM.postfilterHooks.Add(function (data) { if (data.script.type.match(/;mode=display/)) {data.math.root.display = "block"} return data; }); });</script>','text/html','head')
-#NOTYET        frag.add_css_url("//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css")
-# Don't include this for now.  Just running on iPads
+        frag.add_javascript_url("//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML")
+        frag.add_resource('<script type="text/x-mathjax-config">MathJax.Hub.Config({ messageStyle: \'none\', skipStartupTypeset: true, showMathMenu: true, tex2jax: { preview: \'none\' }, asciimath2jax: { delimiters: [[\'`\',\'`\'],[\'``\',\'``\']], preview: "none" }, AsciiMath: {displaystyle: false} }); MathJax.Hub.Register.LoadHook("[MathJax]/extensions/asciimath2jax.js",function () { var AM = MathJax.Extension.asciimath2jax, CREATEPATTERNS = AM.createPatterns; AM.createPatterns = function () { var result = CREATEPATTERNS.call(this); this.match[\'``\'].mode = ";mode=display"; return result; }; }); MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready",function () { var AM = MathJax.InputJax.AsciiMath; AM.postfilterHooks.Add(function (data) { if (data.script.type.match(/;mode=display/)) {data.math.root.display = "block"} return data; }); });</script>','text/html','head')
+        frag.add_css_url("//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css")
+#NOTYET Don't include this for now.  Just running on iPads
 #         frag.add_resource('<script type="text/javascript">function getInternetExplorerVersion(){var e=-1;if("Microsoft Internet Explorer"==navigator.appName){var r=navigator.userAgent;null!=new RegExp("MSIE ([0-9]{1,}[.0-9]{0,})").exec(r)&&(e=parseFloat(RegExp.$1))}return e}var ieVer=getInternetExplorerVersion();2<ieVer&&ieVer<10&&(alert("Sorry, you are using an obsolete version of Internet Explorer. Querium has been designed for the secure, modern web.  Querium joins Microsoft in encouraging you to upgrade to Internet Explorer 10 or 11."),window.open("http://blogs.msdn.com/b/ie/archive/2014/08/07/stay-up-to-date-with-internet-explorer.aspx","_self"))</script>','text/html','head')
 
         frag.add_css_url("//fonts.googleapis.com/css?family=Lato")
@@ -735,17 +719,17 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 #NOTFOUND        frag.add_css(self.resource_string("vendor/ng-sortable/dist/ng-sortable.css"))
 #                 Angular CSS
 #NOTFOUND        frag.add_css(self.resource_string("vendor/ng-scrollbar/dist/ng-scrollbar.css"))
-#NOTYET        frag.add_css_url("//stepwise.querium.com/libs/mathquill/mathquill.css")
-# <!-- REQUIRED for the chip components -->
+        frag.add_css_url("//stepwise.querium.com/libs/mathquill/mathquill.css")
+        # <!-- REQUIRED for the chip components -->
         frag.add_css_url("//cdn.jsdelivr.net/gh/mlaursen/react-md@5.1.4/themes/react-md.teal-pink-200-light.min.css")
-#NOTYET        frag.add_css_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.8.css")
-#NOTYET        frag.add_javascript_url("//www.gstatic.com/firebasejs/4.4.0/firebase.js")               # For qEval client-side logging
-#NOTYET        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js")
-#NOTYET        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.min.js")
-#NOTYET        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js")
-#NOTYET        frag.add_javascript_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.8.1-jira.js")
+        frag.add_css_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.8.css")
+        frag.add_javascript_url("//www.gstatic.com/firebasejs/4.4.0/firebase.js")               # For qEval client-side logging
+        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js")
+        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.min.js")
+        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js")
+        frag.add_javascript_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.8.1-jira.js")
 
-#NOTYET        frag.add_css(self.resource_string("static/css/swpwrxstudent.css"))
+        frag.add_css(self.resource_string("static/css/swpwrxstudent.css"))
         frag.add_javascript(self.resource_string("static/js/src/swpwrxstudent.js"))
 
         frag.add_content('<script>querium.qEvalLogging=!0</script>')
@@ -754,17 +738,16 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         # frag.add_css(self.resource_string("static/css/main.b870043f.chunk.css"))
         # frag.add_css(self.resource_string("static/css/1.7f8b3af7.chunk.css"))
-        frag.add_css(self.resource_string("static/css/app_tiny.css"))
+        frag.add_css(self.resource_string("public/assets/app.css"))
 
         frag.add_resource('<base href="/testq_assets/"/>','text/html','head')		# Needed so react code can find its pages. Don't do earlier or impacts relative pathnames of resources
 
 
         # Load up the React app bundle js, and wrap it as needed.
-        # bundle_string = self.resource_string("/static/js/main.e04ca138.chunk.js")
-        bundle_string = self.resource_string("/static/js/app_tiny.js")
+        bundle_string = self.resource_string("public/assets/app.js")
 
-        # Add a sample static problem for swpwr to run
-        frag.add_javascript(self.resource_string("static/js/src/swpwr_question.js"))
+#NOTNEEDED        # Add a sample static problem for swpwr to run
+#NOTNEEDED        frag.add_javascript(self.resource_string("static/js/src/swpwr_question.js"))
 
         if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string head={e}".format(e=bundle_string[0:100]))
         if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string tail={e}".format(e=bundle_string[len(bundle_string)-100:]))
@@ -774,8 +757,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if DEBUG: logger.info("SWPWRXBlock student_view() mid_string tail={e}".format(e=mid_string[len(mid_string)-100:]))
         # Remove this comment string if it exists //# sourceMappingURL=main.e04ca138.chunk.js.map
         # Can't just append the following to the string if there is a sourceMappingURL comment after the code
-        mid_string = re.sub('//# sourceMappingURL=main\.[a-z0-9]+\.chunk\.js\.map','',mid_string)   # Get rid of sourceMappingURL comment
-        if DEBUG: logger.info("SWPWRXBlock student_view() mid_string post sub tail={e}".format(e=mid_string[len(mid_string)-100:]))
+        # Don't need the re.sub with esbuilt assets
+        # mid_string = re.sub('//# sourceMappingURL=main\.[a-z0-9]+\.chunk\.js\.map','',mid_string)   # Get rid of sourceMappingURL comment
+        # if DEBUG: logger.info("SWPWRXBlock student_view() mid_string post sub tail={e}".format(e=mid_string[len(mid_string)-100:]))
         # Add jQuery function ending.
         final_string = mid_string+'});'  # Adds final '});'
         if DEBUG: logger.info("SWPWRXBlock student_view() final_string head={e}".format(e=final_string[0:100]))
@@ -786,7 +770,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if DEBUG: logger.info("SWPWRXBlock student_view() body={e}".format(e=frag.body_html()))
         if DEBUG: logger.info("SWPWRXBlock student_view() foot={e}".format(e=frag.foot_html()))
         if DEBUG: logger.info("SWPWRXBlock student_view() calling frag.initialize_js")
-        frag.initialize_js('SWPWRXStudentFAKE', {})  # Call the FAKE entry point for now
+        frag.initialize_js('SWPWRXStudent', {})  # Call the entry point
         return frag
 
 

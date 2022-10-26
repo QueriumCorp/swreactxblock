@@ -1,9 +1,8 @@
-include swpwrxblock/public/asset-manifest.json
 include swpwrxblock/public/index.html
 include swpwrxblock/public/favicon.ico
 include swpwrxblock/public/logo192.png
 include swpwrxblock/public/logo512.png
 include swpwrxblock/public/manifest.json
-include swpwrxblock/public/precache-manifest.*.js
 include swpwrxblock/public/robots.txt
-include swpwrxblock/public/service-worker.js
+include swpwrxblock/public/assets/app.js
+include swpwrxblock/public/assets/app.css
