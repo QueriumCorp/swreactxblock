@@ -742,6 +742,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         frag.add_resource('<base href="/testq_assets/"/>','text/html','head')		# Needed so react code can find its pages. Don't do earlier or impacts relative pathnames of resources
 
+        frag.add_javascript(self.resource_string("static/js/src/script1.js"))
+        frag.add_javascript(self.resource_string("static/js/src/script2.js"))
 
         # Load up the React app bundle js, and wrap it as needed.
         bundle_string = self.resource_string("public/assets/app.js")

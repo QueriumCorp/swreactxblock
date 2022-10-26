@@ -6,3 +6,5 @@ include swpwrxblock/public/manifest.json
 include swpwrxblock/public/robots.txt
 include swpwrxblock/public/assets/app.js
 include swpwrxblock/public/assets/app.css
+include swpwrxblock/static/js/src/script1.js
+include swpwrxblock/static/js/src/script2.js
