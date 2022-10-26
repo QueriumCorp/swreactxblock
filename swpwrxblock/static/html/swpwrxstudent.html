@@ -13,148 +13,6 @@
       </div>
     </div>
 
-    <!-- Just hiding the test page widgets so I don't have to spend time
-    detangling them -->
-    <div id="swClientControls" style="display: none">
-      <p>
-        Your question will be running on version 1.6.8.1 of the StepWise Client
-        (1.6.6 + Firebase + log button fixes).
-      </p>
-
-      <p></p>
-      <p>
-        <label for="author">Author:</label>
-        <input id="author" />&nbsp;
-        <button onclick="saveTest()">Save Author Name</button>
-      </p>
-      <p>
-        <label for="server">StepWiseAI Server:</label>
-        <input id="server" style="width: 400px" />&nbsp;
-        <button onclick="setServer()">Set</button>
-      </p>
-      <ul>
-        <li>https://stepwisedev.querium.com/webMathematica/api/</li>
-        <li>https://stepwise.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai00.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai01.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai02.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai03.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai04.querium.com/webMathematica/api/</li>
-      </ul>
-    </div>
-    <script type="text/javascript">
-      var qqUser =
-        localStorage.getItem("name") == null ||
-        localStorage.getItem("name").length === 0
-          ? "SW4WP User"
-          : localStorage.getItem("name");
-      var server =
-        localStorage.getItem("server") == null ||
-        localStorage.getItem("server").length === 0
-          ? "https://stepwise.querium.com/webMathematica/api/"
-          : localStorage.getItem("server");
-      var questionList = [];
-      var urlParams = getJsonFromUrl(true);
-      var problemID = urlParams.assignment_id;
-      var theProblem = false;
-
-      window.onload = function () {
-        document.getElementById("author").value = qqUser;
-        document.getElementById("server").value = server;
-        querium.serverURL = server;
-      };
-
-      document.getElementById("author").onblur = function (e) {
-        var author = document.getElementById("author").value;
-        if (author.length > 2) {
-          localStorage.setItem("name", author);
-        }
-      };
-      document.getElementById("author").onkeypress = function (e) {
-        var event = e || window.event;
-        var charCode = event.which || event.keyCode;
-
-        if (charCode == "13") {
-          var author = document.getElementById("author").value;
-          if (author.length > 2) {
-            localStorage.setItem("name", author);
-          }
-          return false;
-        }
-      };
-      document.getElementById("server").onblur = function (e) {
-        var server = document.getElementById("server").value;
-        localStorage.setItem("server", server);
-        querium.serverURL = server;
-      };
-      document.getElementById("server").onkeypress = function (e) {
-        var event = e || window.event;
-        var charCode = event.which || event.keyCode;
-
-        if (charCode == "13") {
-          var server = document.getElementById("server").value;
-          localStorage.setItem("server", server);
-          querium.serverURL = server;
-          return false;
-        }
-      };
-
-      function saveTest() {
-        var author = document.getElementById("author").value;
-        if (author.length > 2) {
-          localStorage.setItem("name", author);
-          var state = querium.saveState("querium");
-          state.problemDef = state.problemDef.replace(/^"(.+(?="$))"$/, "$1");
-          /* testRef.push({
-                      problemID: problemID,
-                      author: author,
-                      log: JSON.stringify(state)
-                  }); 
-                  alert('Test saved');
-      */
-          alert("Name saved");
-        } else {
-          alert("Who am I?  Why am I here?");
-        }
-      }
-
-      function setServer() {
-        var server = document.getElementById("server").value;
-        localStorage.setItem("server", server);
-        querium.serverURL = server;
-        alert("Server changed to " + server);
-      }
-
-      function getJsonFromUrl(hashBased) {
-        var query;
-        if (hashBased) {
-          var pos = location.href.indexOf("?");
-          if (pos == -1) return [];
-          query = location.href.substr(pos + 1);
-        } else {
-          query = location.search.substr(1);
-        }
-        var result = {};
-        query.split("&").forEach(function (part) {
-          if (!part) return;
-          var item = part.split("=");
-          var key = item[0];
-          var from = key.indexOf("[");
-          if (from == -1) result[key] = decodeURIComponent(item[1]);
-          else {
-            var to = key.indexOf("]");
-            var index = key.substring(from + 1, to);
-            key = key.substring(0, from);
-            if (!result[key]) result[key] = [];
-            if (!index) result[key].push(item[1]);
-            else result[key][index] = item[1];
-          }
-        });
-        return result;
-      }
-    </script>
-
     <script type="text/javascript">
       var callbacks = {
         success: celebrate,
@@ -170,33 +28,14 @@
         console.dir(querium.saveState());
       }
 
-      function celebrate(stats) {
-        console.log("celebrating victory in webApp");
-        console.dir(stats);
-        alert("Victory is OURS!");
-        var btnElement = document.querySelector("#endOfSW");
-        console.log("btnElement = ", btnElement);
-        var classValues = btnElement.classList;
-        console.log("classValues = ", classValues);
-        btnElement.classList.remove(
-          "ui-disabled"
-        ); /* Enable next question button after StepWise */
-        setCorrect(); /* This counts as a correct question */
-        updateCorrect(); /* increase the number of stars */
-        showCorrect(); /* Update the stars right now */
-      }
-
       function updateProgress(stats) {
         console.log("updatingProgress in webApp");
         console.dir(stats);
       }
 
       querium.appID = "SW4WPapp";
-      querium.student = qqUser;
+      querium.student = "SW4WPuser";
       console.log("querium.student = " + querium.student);
-      // querium.callbacks = {
-      //   success: celebrate,
-      // };
       querium.options = options;
     </script>
 
