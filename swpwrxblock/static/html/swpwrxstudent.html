@@ -5,15 +5,13 @@
     <!-- ### START OF STEPWISE STUFF ### -->
     <!-- The following div holds the SW component off screen -->
     <div id="swBackStage" style="position: fixed; left: -10000px">
-      <!-- when the s navs to the StepWise page to work the problem, we reparent
-      the #swClient into the page -->
+      <!-- when the s navs to the StepWise page to work the problem, we reparent the #swClient into the page -->
       <div id="swClient" style="position: relative; flex-grow:2;">
-          <querium></querium>
-        </div>
+        <querium></querium>
       </div>
     </div>
 
-    <script type="text/javascript">
+    <script>
       var callbacks = {
         success: celebrate,
         status: updateProgress,
