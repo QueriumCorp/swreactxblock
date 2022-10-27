@@ -1,7 +1,8 @@
       // Final callback to submit SWPWR React app results
 
       window.swpwr_onSubmit = (solution) =>{
-        console.info("swpwr_onSubmit",solution);
+        console.info("swpwr_onSubmit solution",solution);
+        console.info("swpwr_onSubmit solution string",JSON.stringify(solution))
         $.ajax({
           type: "POST",
           url: handlerUrlSwpwrResults,

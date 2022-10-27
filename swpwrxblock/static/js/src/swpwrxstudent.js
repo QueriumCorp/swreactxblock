@@ -100,8 +100,6 @@ function SWPWRXStudent(runtime, element) {
             console.info("SWPWRXStudent handlerUrlStart",handlerUrlStart);
             var handlerUrlRetry = runtime.handlerUrl(element, 'retry');
             console.info("SWPWRXStudent handlerUrlRetry",handlerUrlRetry);
-            var handlerUrlPower = runtime.handlerUrl(element, 'save_grade_power');
-            console.info("SWPWRXStudent handlerUrlPower",handlerUrlPower);
 
             // Get Primary Element Handles
             var swpwrxblock_block = $('.swpwrxblock_block', element)[0];
