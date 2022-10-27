@@ -10,8 +10,10 @@ function SWPWRXStudent(runtime, element) {
 
     console.info("SWPWRXStudent window.swpwr_problem",window.swpwr_problem);
     window.swpwr_problem.description = "an updated new desc";
-    window.swpwr_problem.stimulus: `A red mountain bike is on sale for $399. Its regular price is $650. 
+    window.swpwr_problem.stimulus = `A red mountain bike is on sale for $399. Its regular price is $650. 
           What is the difference between the regular price and the sale price?`;
+    console.info("SWPWRXStudent window.swpwr_problem.steps[5]",window.swpwr_problem.steps[5]);
+    window.swpwr_problem.description = "an updated new desc";
     window.swpwr_problem.steps[5].swlabel = "QUES-6011 KAF";
     console.info("SWPWRXStudent window.swpwr_problem modified",window.swpwr_problem);
 
