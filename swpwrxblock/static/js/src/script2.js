@@ -2,7 +2,7 @@
         console.info("swpwr_onSubmit",solution);
       };
 
-      # Template problem.  The Xblock code in swpwrxstudent.js will fill in values in this object.
+      // Template problem.  The Xblock code in swpwrxstudent.js will fill in values in this object.
 
       window.swpwr_problem = {
         label: "the problem label",
