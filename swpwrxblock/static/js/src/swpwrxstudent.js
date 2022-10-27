@@ -70,8 +70,10 @@ function SWPWRXStudent(runtime, element) {
             console.info("SWPWRXStudent question.q_swpwr_string",question.q_swpwr_string);
             window.swpwr_problem.stimulus = question.q_swpwr_string;
             console.info("SWPWRXStudent window.swpwr_problem.stimulus",window.swpwr_problem.stimulus);
+            console.info("SWPWRXStudent question",question);
+
             // StepWise problem data goes in swpwr_problem.steps[SWPHASE]
-            console.info("SWPWRXStudent window.swpwr_problem.steps[SWPHASE]",window.swpwr_problem.steps[SWPHASE]);
+            console.info("SWPWRXStudent window.swpwr_problem.steps[SWPHASE] original",window.swpwr_problem.steps[SWPHASE]);
             window.swpwr_problem.steps[SWPHASE].swlabel = question.q_label;
             window.swpwr_problem.steps[SWPHASE].description = question.q_stimulus;
             window.swpwr_problem.steps[SWPHASE].definition = question.q_definition;
@@ -79,6 +81,7 @@ function SWPWRXStudent(runtime, element) {
             window.swpwr_problem.steps[SWPHASE].hint1 = question.q_hint1;
             window.swpwr_problem.steps[SWPHASE].hint2 = question.q_hint2;
             window.swpwr_problem.steps[SWPHASE].hint3 = question.q_hint3;
+            console.info("SWPWRXStudent window.swpwr_problem.steps[SWPHASE] modified",window.swpwr_problem.steps[SWPHASE]);
 
             console.info("SWPWRXStudent window.swpwr_problem modified",window.swpwr_problem);
         

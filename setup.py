@@ -23,7 +23,7 @@ def package_data(pkg, roots):
 
 setup(
     name='swpwrxblock-xblock',
-    version='0.8.1',
+    version='0.8.2',
     description='swpwrxblock XBlock',   # TODO: write a better description.
     license='UNKNOWN',          # TODO: choose a license: 'AGPL v3' and 'Apache 2.0' are popular.
     packages=[
