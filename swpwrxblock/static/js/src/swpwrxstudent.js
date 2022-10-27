@@ -8,9 +8,12 @@ function SWPWRXStudent(runtime, element) {
     console.info("SWPWRXStudent start");
     console.info("SWPWRXStudent element",element);
 
+    console.info("SWPWRXStudent window.swpwr_problem",window.swpwr_problem);
+
     var handlerUrlGetData = runtime.handlerUrl(element, 'get_data');
 
     console.info("SWPWRXStudent calling get_data at ",handlerUrlGetData);
+
 
     get_data_data = {}		// don't need to sent any data to get_data
         
@@ -70,6 +73,8 @@ function SWPWRXStudent(runtime, element) {
             console.info("SWPWRXStudent handlerUrlStart",handlerUrlStart);
             var handlerUrlRetry = runtime.handlerUrl(element, 'retry');
             console.info("SWPWRXStudent handlerUrlRetry",handlerUrlRetry);
+            var handlerUrlPower = runtime.handlerUrl(element, 'save_grade_power');
+            console.info("SWPWRXStudent handlerUrlPower",handlerUrlPower);
 
             // Get Primary Element Handles
             var swpwrxblock_block = $('.swpwrxblock_block', element)[0];
@@ -174,9 +179,9 @@ function SWPWRXStudent(runtime, element) {
                 $('.retry').prop('disabled', true);			// Don't let them click Retry
                 // $('.retry').onclick = retryClicked;
                 $('.retry').click(function() {
-                  console.info('empty eset button clicked');
+                  console.info('empty reset button clicked');
                 });
-                console.info('disabled eset button');
+                console.info('disabled reset button');
             }
         
             // Init preview mode
@@ -391,7 +396,8 @@ function SWPWRXStudent(runtime, element) {
                     mathml: question.q_display_math,
                     hint1: question.q_hint1,
                     hint2: question.q_hint2,
-                    hint3: question.q_hint3
+                    hint3: question.q_hint3,
+                    swpwr_string: question.q_swpwr_string
                 };
             
                 preview_element.classList.add("preview_hidden");

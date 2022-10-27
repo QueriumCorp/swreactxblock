@@ -1,5 +1,5 @@
       window.swpwr_onSubmit = (solution) =>{
-        console.info(solution);
+        console.info("swpwr_onSubmit",solution);
       };
 
       window.swpwr_problem = {
