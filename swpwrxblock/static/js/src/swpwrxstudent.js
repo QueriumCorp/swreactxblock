@@ -8,19 +8,11 @@ function SWPWRXStudent(runtime, element) {
     console.info("SWPWRXStudent start");
     console.info("SWPWRXStudent element",element);
 
-    console.info("SWPWRXStudent window.swpwr_problem",window.swpwr_problem);
-    window.swpwr_problem.description = "an updated new desc";
-    window.swpwr_problem.stimulus = `A red mountain bike is on sale for $399. Its regular price is $650. 
-          What is the difference between the regular price and the sale price?`;
-    console.info("SWPWRXStudent window.swpwr_problem.steps[5]",window.swpwr_problem.steps[5]);
-    window.swpwr_problem.description = "an updated new desc";
-    window.swpwr_problem.steps[5].swlabel = "QUES-6011 KAF";
-    console.info("SWPWRXStudent window.swpwr_problem modified",window.swpwr_problem);
-
     var handlerUrlGetData = runtime.handlerUrl(element, 'get_data');
 
     console.info("SWPWRXStudent calling get_data at ",handlerUrlGetData);
 
+    const SWPHASE = 5;   # Which element of the POWER steps array in window.swpwr_problem contains the StepWise UI?
 
     get_data_data = {}		// don't need to sent any data to get_data
         
@@ -52,6 +44,7 @@ function SWPWRXStudent(runtime, element) {
             var weight = question.q_weight;
             var min_steps = question.q_grade_min_steps_count;
             var min_steps_ded = question.q_grade_min_steps_ded;
+            var swpwr_string = question.swpwr_string;
         
             console.info("SWPWRXStudent question",question);
             // console.info("SWPWRXStudent enable_showme",enable_showme);
@@ -64,6 +57,24 @@ function SWPWRXStudent(runtime, element) {
             console.info("SWPWRXStudent min steps",min_steps);
             console.info("SWPWRXStudent min steps dec",min_steps_ded);
             console.info("SWPWRXStudent grade",grade);
+        
+            # Replace the stepwise-related fields in the SWPR React problem with the StepWise values from the Xblock attributes
+
+            console.info("SWPWRXStudent window.swpwr_problem original",window.swpwr_problem);
+            # window.swpwr_problem.stimulus = `A blue mountain bike is on sale for $399. Its regular price is $650.
+            #       What is the difference between the regular price and the sale price?`;
+            window.swprw_problem.stimulus = question.q_swpwr_string;
+            # StepWise problem data goes in swproblem_steps[SWPHASE]
+            console.info("SWPWRXStudent window.swpwr_problem.steps[SWPHASE]",window.swpwr_problem.steps[SWPHASE]);
+            window.swpwr_problem.steps[SWPHASE].swlabel = question.q_label;
+            window.swpwr_problem.steps[SWPHASE].description = question.q_stimulus;
+            window.swpwr_problem.steps[SWPHASE].definition = question.q_definition;
+            window.swpwr_problem.steps[SWPHASE].swtype = question.q_type;
+            window.swpwr_problem.steps[SWPHASE].hint1 = question.q_hint1;
+            window.swpwr_problem.steps[SWPHASE].hint2 = question.q_hint2;
+            window.swpwr_problem.steps[SWPHASE].hint3 = question.q_hint3;
+
+            console.info("SWPWRXStudent window.swpwr_problem modified",window.swpwr_problem);
         
             if (typeof enable_showme === 'undefined') {
                 // console.info("enable_showme is undefined");
