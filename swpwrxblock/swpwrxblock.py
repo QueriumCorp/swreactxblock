@@ -693,7 +693,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_resource('<meta name="theme-color" content="#000000"/>','text/html','head')
         frag.add_resource('<meta name="description" content="Web site created using create-react-app" />','text/html','head')
         frag.add_resource('<link rel="apple-touch-icon" href="/logo192.png"/>','text/html','head')
-        frag.add_resource('<link rel="manifest" href="/public/manifest.json"/>','text/html','head')
+#NOTYET        frag.add_resource('<link rel="manifest" href="/public/manifest.json"/>','text/html','head')
         frag.add_resource('<title>Querium StepWise Power</title>','text/html','head')
 
 # Apparently jQuery already loaded
