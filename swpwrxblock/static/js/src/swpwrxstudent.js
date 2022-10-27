@@ -9,6 +9,8 @@ function SWPWRXStudent(runtime, element) {
     console.info("SWPWRXStudent element",element);
 
     console.info("SWPWRXStudent window.swpwr_problem",window.swpwr_problem);
+    window.swpwr_problem.desc = "a new desc";
+    console.info("SWPWRXStudent window.swpwr_problem 2",window.swpwr_problem);
 
     var handlerUrlGetData = runtime.handlerUrl(element, 'get_data');
 
