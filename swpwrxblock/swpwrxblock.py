@@ -121,11 +121,13 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     q_hint1 = String(help="SWPWR First Hint", default='', scope=Scope.content)
     q_hint2 = String(help="SWPWR Second Hint", default='', scope=Scope.content)
     q_hint3 = String(help="SWPWR Third Hint", default='', scope=Scope.content)
+    q_swpwr_string = String(help="SWPWR SWPWR String", default='', scope=Scope.content)
     # STUDENT'S QUESTION PERFORMANCE FIELDS
+    swpwr_result = Dict(help="SWPWR The student's SWPWR Solution structure", default={}, scope=Scope.user_state)
     xb_user_email = String(help="SWPWR The user's email addr", default="", scope=Scope.user_state)
     grade = Float(help="SWPWR The student's grade", default=-1, scope=Scope.user_state)
-    solution = Dict(help="SWPWR The student's last solution", default={}, scope=Scope.user_state)
-    question = Dict(help="SWPWR The student's current question", default={}, scope=Scope.user_state)
+    solution = Dict(help="SWPWR The student's last stepwise solution", default={}, scope=Scope.user_state)
+    question = Dict(help="SWPWR The student's current stepwise question", default={}, scope=Scope.user_state)
     # count_attempts keeps track of the number of attempts of this question by this student so we can
     # compare to course.max_attempts which is inherited as an per-question setting or a course-wide setting.
     count_attempts = Integer(help="SWPWR Counted number of questions attempts", default=0, scope=Scope.user_state)
@@ -830,6 +832,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if DEBUG: logger.info("SWPWRXBlock save_grade() initial self={a}".format(a=self))
         if DEBUG: logger.info("SWPWRXBlock save_grade() initial data={a}".format(a=data))
 
+        try: swpwr_result = self.swpwr_result
+        except (NameError,AttributeError) as e:
+             if DEBUG: logger.info('SWPWRXBlock save_grade() self.swpwr_result was not defined: {e}'.format(e=e))
+             swpwr_result = {}
+
         try: q_weight = self.q_weight
         except (NameError,AttributeError) as e:
              if DEBUG: logger.info('SWPWRXBlock save_grade() self.q_weight was not defined: {e}'.format(e=e))
@@ -1129,6 +1136,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         self.q_hint1 = data['hint1']
         self.q_hint2 = data['hint2']
         self.q_hint3 = data['hint3']
+        self.q_swpwr_string = data['swpwr_string']
 
         self.display_name = "Step-by-Step POWER"
 
@@ -1353,6 +1361,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             "q_hint1" :  self.q_hint1,
             "q_hint2" :  self.q_hint2,
             "q_hint3" :  self.q_hint3,
+            "q_swpwr_string" : self.q_swpwr_string,
             "q_weight" :  self.my_weight,
             "q_max_attempts" : self.my_max_attempts,
             "q_option_hint" : self.my_option_hint,
@@ -1363,7 +1372,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             "q_grade_errors_count" : self.my_grade_errors_count,
             "q_grade_errors_ded" : self.my_grade_errors_ded,
             "q_grade_min_steps_count" : self.my_grade_min_steps_count,
-            "q_grade_min_steps_ded" : self.my_grade_min_steps_ded
+            "q_grade_min_steps_ded" : self.my_grade_min_steps_ded,
         }
 
         if DEBUG: logger.info("SWPWRXBlock pick_variant() returned question q_index={i} question={q}".format(i=question['q_index'],q=question))
