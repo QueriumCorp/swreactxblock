@@ -12,7 +12,7 @@ function SWPWRXStudent(runtime, element) {
 
     console.info("SWPWRXStudent calling get_data at ",handlerUrlGetData);
 
-    const SWPHASE = 5;   # Which element of the POWER steps array in window.swpwr_problem contains the StepWise UI?
+    const SWPHASE = 5;          // Which element of the POWER steps array in window.swpwr_problem contains the StepWise UI?
 
     get_data_data = {}		// don't need to sent any data to get_data
         
@@ -58,13 +58,13 @@ function SWPWRXStudent(runtime, element) {
             console.info("SWPWRXStudent min steps dec",min_steps_ded);
             console.info("SWPWRXStudent grade",grade);
         
-            # Replace the stepwise-related fields in the SWPR React problem with the StepWise values from the Xblock attributes
+            // Replace the stepwise-related fields in the SWPR React problem with the StepWise values from the Xblock attributes
 
             console.info("SWPWRXStudent window.swpwr_problem original",window.swpwr_problem);
-            # window.swpwr_problem.stimulus = `A blue mountain bike is on sale for $399. Its regular price is $650.
-            #       What is the difference between the regular price and the sale price?`;
+            // window.swpwr_problem.stimulus = `A blue mountain bike is on sale for $399. Its regular price is $650.
+            //       What is the difference between the regular price and the sale price?`;
             window.swprw_problem.stimulus = question.q_swpwr_string;
-            # StepWise problem data goes in swproblem_steps[SWPHASE]
+            // StepWise problem data goes in swproblem_steps[SWPHASE]
             console.info("SWPWRXStudent window.swpwr_problem.steps[SWPHASE]",window.swpwr_problem.steps[SWPHASE]);
             window.swpwr_problem.steps[SWPHASE].swlabel = question.q_label;
             window.swpwr_problem.steps[SWPHASE].description = question.q_stimulus;
