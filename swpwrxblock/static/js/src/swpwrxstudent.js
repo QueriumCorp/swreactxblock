@@ -63,7 +63,7 @@ function SWPWRXStudent(runtime, element) {
             console.info("SWPWRXStudent window.swpwr_problem original",window.swpwr_problem);
             // window.swpwr_problem.stimulus = `A blue mountain bike is on sale for $399. Its regular price is $650.
             //       What is the difference between the regular price and the sale price?`;
-            window.swprw_problem.stimulus = question.q_swpwr_string;
+            window.swpwr_problem.stimulus = question.q_swpwr_string;
             // StepWise problem data goes in swproblem_steps[SWPHASE]
             console.info("SWPWRXStudent window.swpwr_problem.steps[SWPHASE]",window.swpwr_problem.steps[SWPHASE]);
             window.swpwr_problem.steps[SWPHASE].swlabel = question.q_label;
