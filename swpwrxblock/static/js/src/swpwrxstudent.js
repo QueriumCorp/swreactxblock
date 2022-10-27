@@ -3,12 +3,16 @@
  *        Disble Hint and ShowMe buttons if options are set.
  */
 
+var handlerUrlSwpwrResults;  // Define this globally where it can be found by the React swpwr onSubmit code
+
 function SWPWRXStudent(runtime, element) {
 
     console.info("SWPWRXStudent start");
     console.info("SWPWRXStudent element",element);
 
     var handlerUrlGetData = runtime.handlerUrl(element, 'get_data');
+
+    handlerUrlSwpwrResults = runtime.handlerUrl(element, 'save_swpwr_results');   // Leave a handlerUrl for the SWPWR onSubmit callback
 
     console.info("SWPWRXStudent calling get_data at ",handlerUrlGetData);
 
@@ -58,13 +62,13 @@ function SWPWRXStudent(runtime, element) {
             console.info("SWPWRXStudent min steps dec",min_steps_ded);
             console.info("SWPWRXStudent grade",grade);
         
-            // Replace the stepwise-related fields in the SWPR React problem with the StepWise values from the Xblock attributes
+            // Replace the stepwise-related fields in the SWPR React problem template with the StepWise values from the Xblock attributes
 
             console.info("SWPWRXStudent window.swpwr_problem original",window.swpwr_problem);
             // window.swpwr_problem.stimulus = `A blue mountain bike is on sale for $399. Its regular price is $650.
             //       What is the difference between the regular price and the sale price?`;
             window.swpwr_problem.stimulus = question.q_swpwr_string;
-            // StepWise problem data goes in swproblem_steps[SWPHASE]
+            // StepWise problem data goes in swpwr_problem.steps[SWPHASE]
             console.info("SWPWRXStudent window.swpwr_problem.steps[SWPHASE]",window.swpwr_problem.steps[SWPHASE]);
             window.swpwr_problem.steps[SWPHASE].swlabel = question.q_label;
             window.swpwr_problem.steps[SWPHASE].description = question.q_stimulus;

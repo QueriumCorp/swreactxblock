@@ -123,7 +123,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     q_hint3 = String(help="SWPWR Third Hint", default='', scope=Scope.content)
     q_swpwr_string = String(help="SWPWR SWPWR String", default='', scope=Scope.content)
     # STUDENT'S QUESTION PERFORMANCE FIELDS
-    swpwr_result = Dict(help="SWPWR The student's SWPWR Solution structure", default={}, scope=Scope.user_state)
+    swpwr_results = String(help="SWPWR The student's SWPWR Solution structure", default={}, scope=Scope.user_state)
     xb_user_email = String(help="SWPWR The user's email addr", default="", scope=Scope.user_state)
     grade = Float(help="SWPWR The student's grade", default=-1, scope=Scope.user_state)
     solution = Dict(help="SWPWR The student's last stepwise solution", default={}, scope=Scope.user_state)
@@ -832,10 +832,10 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if DEBUG: logger.info("SWPWRXBlock save_grade() initial self={a}".format(a=self))
         if DEBUG: logger.info("SWPWRXBlock save_grade() initial data={a}".format(a=data))
 
-        try: swpwr_result = self.swpwr_result
+        try: swpwr_results = self.swpwr_results
         except (NameError,AttributeError) as e:
-             if DEBUG: logger.info('SWPWRXBlock save_grade() self.swpwr_result was not defined: {e}'.format(e=e))
-             swpwr_result = {}
+             if DEBUG: logger.info('SWPWRXBlock save_grade() self.swpwr_results was not defined: {e}'.format(e=e))
+             swpwr_results = {}
 
         try: q_weight = self.q_weight
         except (NameError,AttributeError) as e:
@@ -1144,6 +1144,13 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         print(self.display_name)
         return {'result': 'success'}
 
+
+# SWPWR RESULTS: Save the final results of the SWPWR React app as a stringified structure
+    @XBlock.json_handler
+    def save_swpwr_results(self, data, suffix=''):
+        if DEBUG: logger.info('SWPWRXBlock save_swpwr_results() data',data)
+        self.swpwr_results = data
+        return {'result': 'success'}
 
     # Do necessary overrides from ScorableXBlockMixin
     def has_submitted_answer(self):

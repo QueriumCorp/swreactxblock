@@ -1,5 +1,13 @@
+      // Final callback to submit SWPWR React app results
+
       window.swpwr_onSubmit = (solution) =>{
         console.info("swpwr_onSubmit",solution);
+        $.ajax({
+          type: "POST",
+          url: handlerUrlSwpwrResults,
+          data: JSON.stringify(solution),
+          success: null
+      });
       };
 
       // Template problem.  The Xblock code in swpwrxstudent.js will fill in values in this object.
