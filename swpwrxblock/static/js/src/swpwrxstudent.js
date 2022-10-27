@@ -108,11 +108,11 @@ function SWPWRXStudent(runtime, element) {
             // Get Active Preview Element Handles
             var preview_element;
         
-            preview_element = set_preview_element();
+            // preview_element = set_preview_element();
         
             // Show the active question preview
-            preview_element.classList.remove("preview_hidden");
-            preview_element.onclick = previewClicked;
+            // preview_element.classList.remove("preview_hidden");
+            // preview_element.onclick = previewClicked;
         
             // Get Statistics Element Handles
             var question_stats = $('.question-stats', swpwrxblock_block)[0];
@@ -186,7 +186,7 @@ function SWPWRXStudent(runtime, element) {
                           question_obj = JSON.parse(data);
                           question = question_obj.question;
                           console.info("SWPWRXstudent retry POST response question",question);
-                          preview_element = set_preview_element();
+                          // preview_element = set_preview_element();
                           console.info("SWPWRXstudent retry POST new preview_element",preview_element);
                       }
                   });
