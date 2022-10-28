@@ -744,7 +744,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         frag.add_resource('<base href="/testq_assets/"/>','text/html','head')		# Needed so react code can find its pages. Don't do earlier or impacts relative pathnames of resources
 
-        frag.add_javascript(self.resource_string("static/js/src/swpwr_question.js"))    # Template SWPWR problem to work
+        frag.add_javascript(self.resource_string("static/js/src/swpwr_problem.js"))     # Template SWPWR problem to work. We will update it.
         frag.add_javascript(self.resource_string("static/js/src/final_callback.js"))    # Final submit callback code
 
         # Load up the React app bundle js, and wrap it as needed.
