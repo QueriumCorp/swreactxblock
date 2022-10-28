@@ -3,7 +3,7 @@
       window.swpwr_onSubmit = (solution) =>{
         console.info("swpwr_onSubmit solution",solution);
         var solution_string = JSON.stringify(solution);
-        console.info("swpwr_onSubmit solution string",solution_string));
+        console.info("swpwr_onSubmit solution string",solution_string);
         $.ajax({
           type: "POST",
           url: handlerUrlSwpwrResults,
