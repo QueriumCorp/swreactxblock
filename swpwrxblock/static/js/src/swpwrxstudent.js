@@ -742,9 +742,9 @@ function SWPWRXStudent(runtime, element) {
             $(function ($) {
             });
 
-            // wrap element as core.js may pass a raw element or an wrapped one
-            angular.bootstrap($(element), ['querium-stepwise']);
-            MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+            // // wrap element as core.js may pass a raw element or an wrapped one
+            // angular.bootstrap($(element), ['querium-stepwise']);
+            // MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
        } //end of success block
     });
     console.info("SWPWRXStudent end");
