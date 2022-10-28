@@ -2,18 +2,16 @@
 
       window.swpwr_onSubmit = (solution) =>{
         console.info("swpwr_onSubmit solution",solution);
-        console.info("swpwr_onSubmit solution string",JSON.stringify(solution));
+        var solution_string = JSON.stringify(solution);
+        console.info("swpwr_onSubmit solution string",solution_string));
         $.ajax({
           type: "POST",
           url: handlerUrlSwpwrResults,
-          data: JSON.stringify(solution),
+          data: solution_string;
           success: function (data,msg) {
             console.info("swpwr_onSubmit solution POST success");
             console.info("swpwr_onSubmit solution POST data",data);
-            console.info("swpwr_onSubmit solution POST POST",msg);
-
-            var data_obj = JSON.parse(data);
-            console.info("swpwr_onSubmit solution POST data_obj",data_obj);
+            console.info("swpwr_onSubmit solution POST ",msg);
           },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
             console.info("swpwr_onSubmit solution POST error textStatus=",textStatus," errorThrown=",errorThrown);

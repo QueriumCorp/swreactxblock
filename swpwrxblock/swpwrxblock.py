@@ -1148,7 +1148,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 # SWPWR RESULTS: Save the final results of the SWPWR React app as a stringified structure
     @XBlock.json_handler
     def save_swpwr_results(self, data, suffix=''):
-        if DEBUG: logger.info('SWPWRXBlock save_swpwr_results() data',data)
+        if DEBUG: logger.info("SWPWRXBlock save_swpwr_results() data={d}".format(d=data))
         self.swpwr_results = data
         return {'result': 'success'}
 
