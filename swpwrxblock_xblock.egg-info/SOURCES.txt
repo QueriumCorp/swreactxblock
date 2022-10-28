@@ -23,7 +23,7 @@ swpwrxblock/static/html/swpwrxstudent.html-save
 swpwrxblock/static/html/swpwrxstudio.html
 swpwrxblock/static/js/runtime~main.229c360f.js
 swpwrxblock/static/js/src/final_callback.js
-swpwrxblock/static/js/src/swpwr_question.js
+swpwrxblock/static/js/src/swpwr_problem.js
 swpwrxblock/static/js/src/swpwrxauthor.js
 swpwrxblock/static/js/src/swpwrxstudent.js
 swpwrxblock/static/js/src/swpwrxstudent.js-all
