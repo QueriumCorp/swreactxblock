@@ -43,8 +43,8 @@ function SWPWRXStudent(runtime, element) {
             var count_attempts = data_obj.count_attempts;
             var variants_count = data_obj.variants_count;
             var max_attempts = data_obj.max_attempts;
-            var enable_showme = question.q_option_showme;
-            var enable_hint = question.q_option_hint;
+            // var enable_showme = question.q_option_showme;
+            // var enable_hint = question.q_option_hint;
             var weight = question.q_weight;
             var min_steps = question.q_grade_min_steps_count;
             var min_steps_ded = question.q_grade_min_steps_ded;
@@ -85,131 +85,131 @@ function SWPWRXStudent(runtime, element) {
 
             console.info("SWPWRXStudent window.swpwr_problem modified",window.swpwr_problem);
 
-            if (typeof enable_showme === 'undefined') {
-                // console.info("enable_showme is undefined");
-                enable_showme = true;
-            };
-            if (typeof enable_hint === 'undefined') {
-                // console.info("enable_hint is undefined");
-                enable_hint = true;
-            };
+            // if (typeof enable_showme === 'undefined') {
+            //     // console.info("enable_showme is undefined");
+            //     enable_showme = true;
+            // };
+            // if (typeof enable_hint === 'undefined') {
+            //     // console.info("enable_hint is undefined");
+            //     enable_hint = true;
+            // };
 
-            var handlerUrl = runtime.handlerUrl(element, 'save_grade');
-            console.info("SWPWRXStudent handlerUrl",handlerUrl);
-            var handlerUrlStart = runtime.handlerUrl(element, 'start_attempt');
-            console.info("SWPWRXStudent handlerUrlStart",handlerUrlStart);
-            var handlerUrlRetry = runtime.handlerUrl(element, 'retry');
-            console.info("SWPWRXStudent handlerUrlRetry",handlerUrlRetry);
+            // var handlerUrl = runtime.handlerUrl(element, 'save_grade');
+            // console.info("SWPWRXStudent handlerUrl",handlerUrl);
+            // var handlerUrlStart = runtime.handlerUrl(element, 'start_attempt');
+            // console.info("SWPWRXStudent handlerUrlStart",handlerUrlStart);
+            // var handlerUrlRetry = runtime.handlerUrl(element, 'retry');
+            // console.info("SWPWRXStudent handlerUrlRetry",handlerUrlRetry);
 
-            // Get Primary Element Handles
-            var swpwrxblock_block = $('.swpwrxblock_block', element)[0];
-            var stepwise_element = $('querium', element)[0];
+            // // Get Primary Element Handles
+            // var swpwrxblock_block = $('.swpwrxblock_block', element)[0];
+            // var stepwise_element = $('querium', element)[0];
 
-            // Get Active Preview Element Handles
-            var preview_element;
+            // // Get Active Preview Element Handles
+            // var preview_element;
 
-            preview_element = set_preview_element();
+            // preview_element = set_preview_element();
 
-            // Show the active question preview
-            preview_element.classList.remove("preview_hidden");
-            preview_element.onclick = previewClicked;
+            // // Show the active question preview
+            // preview_element.classList.remove("preview_hidden");
+            // preview_element.onclick = previewClicked;
 
-            // Get Statistics Element Handles
-            var question_stats = $('.question-stats', swpwrxblock_block)[0];
-            var star_box = $('.star-box', swpwrxblock_block)[0];
-            var star1 = $('.star1', swpwrxblock_block)[0];
-            var star2 = $('.star2', swpwrxblock_block)[0];
-            var star3 = $('.star3', swpwrxblock_block)[0];
-            var elapsed_time_count = $('.elapsed-time-count', swpwrxblock_block)[0];
-            var grade_val = $('.grade-val', swpwrxblock_block)[0];
-            var error_count = $('.error-count', swpwrxblock_block)[0];
-            var hint_count = $('.hint-count', swpwrxblock_block)[0];
-            var used_showme = $('.used-showme', swpwrxblock_block)[0];
+            // // Get Statistics Element Handles
+            // var question_stats = $('.question-stats', swpwrxblock_block)[0];
+            // var star_box = $('.star-box', swpwrxblock_block)[0];
+            // var star1 = $('.star1', swpwrxblock_block)[0];
+            // var star2 = $('.star2', swpwrxblock_block)[0];
+            // var star3 = $('.star3', swpwrxblock_block)[0];
+            // var elapsed_time_count = $('.elapsed-time-count', swpwrxblock_block)[0];
+            // var grade_val = $('.grade-val', swpwrxblock_block)[0];
+            // var error_count = $('.error-count', swpwrxblock_block)[0];
+            // var hint_count = $('.hint-count', swpwrxblock_block)[0];
+            // var used_showme = $('.used-showme', swpwrxblock_block)[0];
 
-            // Get Top Element Handles
-            var made_attempts = $('.made-attempts', swpwrxblock_block)[0];
-            var min_steps_element = $('.min-steps', swpwrxblock_block)[0];
-            // var variants_left = $('.variants-left', swpwrxblock_block)[0];
-            // var click_to_begin = $('.click-to-begin', swpwrxblock_block)[0];
-            // var question_info = $('.question-info', swpwrxblock_block)[0];
-            // var too_many_attempts = $('.too-many-attempts', swpwrxblock_block)[0];
+            // // Get Top Element Handles
+            // var made_attempts = $('.made-attempts', swpwrxblock_block)[0];
+            // var min_steps_element = $('.min-steps', swpwrxblock_block)[0];
+            // // var variants_left = $('.variants-left', swpwrxblock_block)[0];
+            // // var click_to_begin = $('.click-to-begin', swpwrxblock_block)[0];
+            // // var question_info = $('.question-info', swpwrxblock_block)[0];
+            // // var too_many_attempts = $('.too-many-attempts', swpwrxblock_block)[0];
 
-            // Get Solution Element Handles
-            var solution_element = $('.solution', element)[0];
+            // // Get Solution Element Handles
+            // var solution_element = $('.solution', element)[0];
 
-            // Get Retry Button Handles
-            // var retry_button = $('.stepwise-retry', swpwrxblock_block)[0];
-            var retry_button_variants = $('.stepwise-retry-variants', swpwrxblock_block)[0];
+            // // Get Retry Button Handles
+            // // var retry_button = $('.stepwise-retry', swpwrxblock_block)[0];
+            // var retry_button_variants = $('.stepwise-retry-variants', swpwrxblock_block)[0];
 
-            // Overall StepWise UI Handles
-            // var xblock_student_view = $('.xblock-student_view', swpwrxblock_block)[0];
+            // // Overall StepWise UI Handles
+            // // var xblock_student_view = $('.xblock-student_view', swpwrxblock_block)[0];
 
 
-            retry_data = {
-                q_index: question.q_index
-            }
+            // retry_data = {
+            //     q_index: question.q_index
+            // }
 
-            console.info("retry JSON data",JSON.stringify(retry_data));
+            // console.info("retry JSON data",JSON.stringify(retry_data));
 
-            // Don't allow clicks on the info at the top above the question stimulus
-            $('.question-info').onclick = null;
-            $('.click-to-begin').onclick = null;
-            $('.click-to-begin-box').onclick = null;
-            $('.click-to-begin').prop('disabled', true);
-            $('.click-to-begin-box').prop('disabled', true);
+            // // Don't allow clicks on the info at the top above the question stimulus
+            // $('.question-info').onclick = null;
+            // $('.click-to-begin').onclick = null;
+            // $('.click-to-begin-box').onclick = null;
+            // $('.click-to-begin').prop('disabled', true);
+            // $('.click-to-begin-box').prop('disabled', true);
 
-            $('.loading-box').hide();	// Done loading data
-            $('.question-info').show();	// Show question info box now that loading is done
+            // $('.loading-box').hide();	// Done loading data
+            // $('.question-info').show();	// Show question info box now that loading is done
 
-            if (max_attempts == -1 || count_attempts < max_attempts) {
-                $('.click-to-begin').show();
-                $('.xblock-student_view').onclick = null;		// Can't click on the UI
-                $('.too-many-attempts').hide();
-                $('.too-many-attempts').onclick = null;
-                // Show the active question preview
-                preview_element.classList.remove("preview_hidden");
-                preview_element.onclick = previewClicked;
-                console.info('preview_element',preview_element);
-                console.info('setting retry click function');
-                $('.retry').prop('disabled', false);			// Let them click Retry
-                // $('.retry').onclick = retryClicked;
-                $('.retry').click(function() {
-                  console.info('retry button clicked');
-                  console.info("retry JSON data",JSON.stringify(retry_data));
-                  $.ajax({
-                      type: "POST",
-                      url: handlerUrlRetry,
-                      data: JSON.stringify(retry_data),
-                      success: function (data) {
-                          console.info("SWPWRXstudent retry POST success");
-                          console.info("SWPWRXstudent retry POST data",data);
-                          question_obj = JSON.parse(data);
-                          question = question_obj.question;
-                          console.info("SWPWRXstudent retry POST response question",question);
-                          preview_element = set_preview_element();
-                          console.info("SWPWRXstudent retry POST new preview_element",preview_element);
-                      }
-                  });
-                  console.info("retry button click ended");
-                });
-                console.info('enabled retry button');
-            } else {
-                $('.click-to-begin').hide();
-                $('.too-many-attempts').show();
-                $('.too-many-attempts').onclick = null;
-                preview_element.classList.add("preview_hidden");	// Don't show another preview
-                preview_element.onclick = null;				// Don't let them click again
-                console.info('preview_element',preview_element);
-                console.info('setting retry click function');
-                $('.retry').prop('disabled', true);			// Don't let them click Retry
-                // $('.retry').onclick = retryClicked;
-                $('.retry').click(function() {
-                  console.info('empty reset button clicked');
-                });
-                console.info('disabled reset button');
-            }
+            // if (max_attempts == -1 || count_attempts < max_attempts) {
+            //     $('.click-to-begin').show();
+            //     $('.xblock-student_view').onclick = null;		// Can't click on the UI
+            //     $('.too-many-attempts').hide();
+            //     $('.too-many-attempts').onclick = null;
+            //     // Show the active question preview
+            //     preview_element.classList.remove("preview_hidden");
+            //     preview_element.onclick = previewClicked;
+            //     console.info('preview_element',preview_element);
+            //     console.info('setting retry click function');
+            //     $('.retry').prop('disabled', false);			// Let them click Retry
+            //     // $('.retry').onclick = retryClicked;
+            //     $('.retry').click(function() {
+            //       console.info('retry button clicked');
+            //       console.info("retry JSON data",JSON.stringify(retry_data));
+            //       $.ajax({
+            //           type: "POST",
+            //           url: handlerUrlRetry,
+            //           data: JSON.stringify(retry_data),
+            //           success: function (data) {
+            //               console.info("SWPWRXstudent retry POST success");
+            //               console.info("SWPWRXstudent retry POST data",data);
+            //               question_obj = JSON.parse(data);
+            //               question = question_obj.question;
+            //               console.info("SWPWRXstudent retry POST response question",question);
+            //               preview_element = set_preview_element();
+            //               console.info("SWPWRXstudent retry POST new preview_element",preview_element);
+            //           }
+            //       });
+            //       console.info("retry button click ended");
+            //     });
+            //     console.info('enabled retry button');
+            // } else {
+            //     $('.click-to-begin').hide();
+            //     $('.too-many-attempts').show();
+            //     $('.too-many-attempts').onclick = null;
+            //     preview_element.classList.add("preview_hidden");	// Don't show another preview
+            //     preview_element.onclick = null;				// Don't let them click again
+            //     console.info('preview_element',preview_element);
+            //     console.info('setting retry click function');
+            //     $('.retry').prop('disabled', true);			// Don't let them click Retry
+            //     // $('.retry').onclick = retryClicked;
+            //     $('.retry').click(function() {
+            //       console.info('empty reset button clicked');
+            //     });
+            //     console.info('disabled reset button');
+            // }
 
-            // Init preview mode
+            // // Init preview mode
             // updateStats();
             // updateSolution();
             // updateTopInfo();
@@ -733,10 +733,10 @@ function SWPWRXStudent(runtime, element) {
             //     return goods;
             // }
 
-            // set student id
-            var sId = ( question.q_user.length>1 ? question.q_user : "UnknownStudent");
+            // // set student id
+            // var sId = ( question.q_user.length>1 ? question.q_user : "UnknownStudent");
 
-            // console.info( sId );
+            // // console.info( sId );
 
             /* PAGE LOAD EVENT */
             $(function ($) {
