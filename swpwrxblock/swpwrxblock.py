@@ -1149,7 +1149,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     @XBlock.json_handler
     def save_swpwr_results(self, data, suffix=''):
         if DEBUG: logger.info("SWPWRXBlock save_swpwr_results() data={d}".format(d=data))
-        self.swpwr_results = data
+        self.swpwr_results = JSON.stringify(data)
+        if DEBUG: logger.info("SWPWRXBlock save_swpwr_results() self.swpwr_results={r}".format(r=self.swpwr_results))
         return {'result': 'success'}
 
     # Do necessary overrides from ScorableXBlockMixin
