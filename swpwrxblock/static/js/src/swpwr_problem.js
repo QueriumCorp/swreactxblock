@@ -20,7 +20,7 @@
             label: "Prepare",
             mnemonicIndex: 0,
             instruction: "Read the Problem",
-            longInstruction: `Take two deep breaths. Read the word problem carefully. What is the 
+            longInstruction: `Take two deep breaths. Read the word problem carefully. Think about these two questions: What is the 
             problem about? What does it ask you to find?`,
             type: "READ",
             valid: 1,
