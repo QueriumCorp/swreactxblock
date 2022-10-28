@@ -83,6 +83,9 @@ function SWPWRXStudent(runtime, element) {
             window.swpwr_problem.steps[SWPHASE].hint3 = question.q_hint3;
             console.info("SWPWRXStudent window.swpwr_problem.steps[SWPHASE] modified",window.swpwr_problem.steps[SWPHASE]);
 
+            console.info("SWPWRXStudent defaultSolution=",defaultSolution);   // grabbed from swpwr React code
+            console.info("SWPWRXStudent defaultSolution.diagramAnalysis=",defaultSolution.diagramAnalysis);
+
             console.info("SWPWRXStudent window.swpwr_problem modified",window.swpwr_problem);
 
             // if (typeof enable_showme === 'undefined') {
