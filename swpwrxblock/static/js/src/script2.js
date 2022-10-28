@@ -7,7 +7,7 @@
         $.ajax({
           type: "POST",
           url: handlerUrlSwpwrResults,
-          data: solution_string;
+          data: solution_string,
           success: function (data,msg) {
             console.info("swpwr_onSubmit solution POST success");
             console.info("swpwr_onSubmit solution POST data",data);
