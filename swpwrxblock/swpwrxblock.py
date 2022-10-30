@@ -121,7 +121,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     q_hint1 = String(help="SWPWR First Hint", default='', scope=Scope.content)
     q_hint2 = String(help="SWPWR Second Hint", default='', scope=Scope.content)
     q_hint3 = String(help="SWPWR Third Hint", default='', scope=Scope.content)
-    q_swpwr_string = String(help="SWPWR SWPWR String", default='', scope=Scope.content)
+    q_swpwr_problem = String(help="SWPWR SWPWR Problem", default='', scope=Scope.content)
     # STUDENT'S QUESTION PERFORMANCE FIELDS
     swpwr_results = String(help="SWPWR The student's SWPWR Solution structure", default={}, scope=Scope.user_state)
     xb_user_email = String(help="SWPWR The user's email addr", default="", scope=Scope.user_state)
@@ -1136,7 +1136,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         self.q_hint1 = data['hint1']
         self.q_hint2 = data['hint2']
         self.q_hint3 = data['hint3']
-        self.q_swpwr_string = data['swpwr_string']
+        self.q_swpwr_problem = data['swpwr_problem']
 
         self.display_name = "Step-by-Step POWER"
 
@@ -1369,7 +1369,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             "q_hint1" :  self.q_hint1,
             "q_hint2" :  self.q_hint2,
             "q_hint3" :  self.q_hint3,
-            "q_swpwr_string" : self.q_swpwr_string,
+            "q_swpwr_problem" : self.q_swpwr_problem,
             "q_weight" :  self.my_weight,
             "q_max_attempts" : self.my_max_attempts,
             "q_option_hint" : self.my_option_hint,

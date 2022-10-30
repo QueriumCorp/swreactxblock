@@ -48,7 +48,7 @@ function SWPWRXStudent(runtime, element) {
             var weight = question.q_weight;
             var min_steps = question.q_grade_min_steps_count;
             var min_steps_ded = question.q_grade_min_steps_ded;
-            var swpwr_string = question.swpwr_string;
+            var swpwr_problem = question.swpwr_problem;
 
             console.info("SWPWRXStudent question",question);
             // console.info("SWPWRXStudent enable_showme",enable_showme);
@@ -67,8 +67,8 @@ function SWPWRXStudent(runtime, element) {
             console.info("SWPWRXStudent window.swpwr_problem original",window.swpwr_problem);
             // window.swpwr_problem.stimulus = `A blue mountain bike is on sale for $399. Its regular price is $650.
             //       What is the difference between the regular price and the sale price?`;
-            console.info("SWPWRXStudent question.q_swpwr_string",question.q_swpwr_string);
-            window.swpwr_problem.stimulus = question.q_swpwr_string;
+            console.info("SWPWRXStudent question.q_swpwr_problem",question.q_swpwr_problem);
+            window.swpwr_problem.stimulus = question.q_swpwr_problem;
             console.info("SWPWRXStudent window.swpwr_problem.stimulus",window.swpwr_problem.stimulus);
             console.info("SWPWRXStudent question",question);
 
@@ -422,7 +422,7 @@ function SWPWRXStudent(runtime, element) {
                 //     hint1: question.q_hint1,
                 //     hint2: question.q_hint2,
                 //     hint3: question.q_hint3,
-                //     swpwr_string: question.q_swpwr_string
+                //     swpwr_problem: question.q_swpwr_problem
                 // };
 
                 // preview_element.classList.add("preview_hidden");
