@@ -860,8 +860,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         swpwr_problem['steps'][SWPHASE]['hint3'] = self.q_hint3
         # Emit the Python dict into the HTML as Javascript object
         json_string = json.dumps(swpwr_problem,separators=(',', ':'))
-        javascript_string = '      window.swpwr_problem = `'+json_string+'`;'
-        if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem final json={j}".format(j=javascript_string))
+        javascript_string = '      window.swpwr_problem = '+json_string+';'
+        if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem final javascript={j}".format(j=javascript_string))
         frag.add_javascript(javascript_string)     # SWPWR problem to work.
 
         frag.add_javascript(self.resource_string("static/js/src/final_callback.js"))    # Final submit callback code
