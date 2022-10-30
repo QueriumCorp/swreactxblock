@@ -745,7 +745,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_resource('<base href="/testq_assets/"/>','text/html','head')		# Needed so react code can find its pages. Don't do earlier or impacts relative pathnames of resources
 
         # The swpwr problem template as a Python dict
-        swpwr_template_dict = dict(
+        swpwr_problem = dict(
             label = "the problem label",
             description = "a desc",
             my_class = "sampleWord",
@@ -843,7 +843,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         SWPHASE = 5	# Which element of the phase array is the StepWise question?
         # StepWise problem data goes in swpwr_problem['steps'][SWPHASE]
         # console.info("SWPWRXStudent window.swpwr_problem.steps[SWPHASE] original",window.swpwr_problem.steps[SWPHASE]);
-        if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem original json={j}".format(j=json_dumps(swpwr_problem,separators=(',',':'))))
+        if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem original json={j}".format(j=json.dumps(swpwr_problem,separators=(',',':'))))
         # window.swpwr_problem.steps[SWPHASE].swlabel = question.q_label;
         swpwr_problem['stimulus'] = self.q_stimulus
         # window.swpwr_problem.steps[SWPHASE].description = question.q_stimulus;
@@ -868,9 +868,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         # Load up the React app bundle js, and wrap it as needed.
         bundle_string = self.resource_string("public/assets/app.js")
-
-#NOTNEEDED        # Add a sample static problem for swpwr to run
-#NOTNEEDED        frag.add_javascript(self.resource_string("static/js/src/swpwr_question.js"))
 
         if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string head={e}".format(e=bundle_string[0:100]))
         if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string tail={e}".format(e=bundle_string[len(bundle_string)-100:]))
