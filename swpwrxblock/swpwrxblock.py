@@ -845,9 +845,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         # console.info("SWPWRXStudent window.swpwr_problem.steps[SWPHASE] original",window.swpwr_problem.steps[SWPHASE]);
         if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem original json={j}".format(j=json.dumps(swpwr_problem,separators=(',',':'))))
         # window.swpwr_problem.steps[SWPHASE].swlabel = question.q_label;
-        swpwr_problem['stimulus'] = self.q_stimulus
+        swpwr_problem['stimulus'] = self.q_swpwr_problem
         # window.swpwr_problem.steps[SWPHASE].description = question.q_stimulus;
-        swpwr_problem['steps'][SWPHASE]['description'] = self.q_definition
+        swpwr_problem['steps'][SWPHASE]['description'] = self.q_stimulus
         # window.swpwr_problem.steps[SWPHASE].definition = question.q_definition;
         swpwr_problem['steps'][SWPHASE]['definition'] = self.q_definition
         # window.swpwr_problem.steps[SWPHASE].swtype = question.q_type;
