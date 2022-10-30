@@ -16,7 +16,8 @@ function SWPWRXStudent(runtime, element) {
 
     console.info("SWPWRXStudent calling get_data at ",handlerUrlGetData);
 
-    const SWPHASE = 5;          // Which element of the POWER steps array in window.swpwr_problem contains the StepWise UI?
+    // Now we do the question manipulation in swpwrxblock.py
+    // const SWPHASE = 5;          // Which element of the POWER steps array in window.swpwr_problem contains the StepWise UI?
 
     get_data_data = {}		// don't need to sent any data to get_data
 
@@ -72,16 +73,17 @@ function SWPWRXStudent(runtime, element) {
             console.info("SWPWRXStudent window.swpwr_problem.stimulus",window.swpwr_problem.stimulus);
             console.info("SWPWRXStudent question",question);
 
-            // StepWise problem data goes in swpwr_problem.steps[SWPHASE]
-            console.info("SWPWRXStudent window.swpwr_problem.steps[SWPHASE] original",window.swpwr_problem.steps[SWPHASE]);
-            window.swpwr_problem.steps[SWPHASE].swlabel = question.q_label;
-            window.swpwr_problem.steps[SWPHASE].description = question.q_stimulus;
-            window.swpwr_problem.steps[SWPHASE].definition = question.q_definition;
-            window.swpwr_problem.steps[SWPHASE].swtype = question.q_type;
-            window.swpwr_problem.steps[SWPHASE].hint1 = question.q_hint1;
-            window.swpwr_problem.steps[SWPHASE].hint2 = question.q_hint2;
-            window.swpwr_problem.steps[SWPHASE].hint3 = question.q_hint3;
-            console.info("SWPWRXStudent window.swpwr_problem.steps[SWPHASE] modified",window.swpwr_problem.steps[SWPHASE]);
+            // Now we do this manipulation in swpwrxblock.py
+            // // StepWise problem data goes in swpwr_problem.steps[SWPHASE]
+            // console.info("SWPWRXStudent window.swpwr_problem.steps[SWPHASE] original",window.swpwr_problem.steps[SWPHASE]);
+            // window.swpwr_problem.steps[SWPHASE].swlabel = question.q_label;
+            // window.swpwr_problem.steps[SWPHASE].description = question.q_stimulus;
+            // window.swpwr_problem.steps[SWPHASE].definition = question.q_definition;
+            // window.swpwr_problem.steps[SWPHASE].swtype = question.q_type;
+            // window.swpwr_problem.steps[SWPHASE].hint1 = question.q_hint1;
+            // window.swpwr_problem.steps[SWPHASE].hint2 = question.q_hint2;
+            // window.swpwr_problem.steps[SWPHASE].hint3 = question.q_hint3;
+            // console.info("SWPWRXStudent window.swpwr_problem.steps[SWPHASE] modified",window.swpwr_problem.steps[SWPHASE]);
 
             console.info("SWPWRXStudent window.swpwr_problem modified",window.swpwr_problem);
 

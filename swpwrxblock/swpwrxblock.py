@@ -744,7 +744,126 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         frag.add_resource('<base href="/testq_assets/"/>','text/html','head')		# Needed so react code can find its pages. Don't do earlier or impacts relative pathnames of resources
 
-        frag.add_javascript(self.resource_string("static/js/src/swpwr_problem.js"))     # Template SWPWR problem to work. We will update it.
+        # The swpwr problem template as a Python dict
+        swpwr_template_dict = dict(
+            label = "the problem label",
+            description = "a desc",
+            my_class = "sampleWord",
+            stimulus = 'A mountain bike is on sale for $399. Its regular price is $650.  What is the difference between the regular price and the sale price?',
+            stepsMnemonic = "POWER",
+            steps = [
+              dict(
+                label = "Prepare",
+                mnemonicIndex = 0,
+                instruction = "Read the Problem",
+                longInstruction = 'Take two deep breaths. Read the word problem carefully. Think about these two questions: What is the problem about? What does it ask you to find?',
+                type =  "READ",
+                valid = 1
+              ),
+              dict(
+                label = "Prepare",
+                mnemonicIndex =  0,
+                instruction = "Identify Important Information",
+                longInstruction = 'Identify the key facts in the word problem below. Select these important pieces of text. This will allow you to quickly paste helpful snippets as you work the problem.',
+                type = "TAG",
+                valid = 0
+              ),
+              dict(
+                label = "Prepare",
+                mnemonicIndex  = 0,
+                instruction = "What kind of problem is this?",
+                longInstruction = 'Discuss what type of problem you think this is. (Not graded)',
+                type = "DIAGRAMANALYZE",
+                valid = 0
+              ),
+              dict(
+                label = "Organize",
+                mnemonicIndex = 1,
+                instruction = "What type of problem is this?",
+                longInstruction = 'Select the problem type that best describes this problme',
+                type =  "DIAGRAMSELECT",
+                valid = 0
+              ),
+              dict(
+                label = "Organize",
+                mnemonicIndex = 1,
+                instruction = "Fill in the Diagram",
+                longInstruction = "Fill in each amount in the diagram with information from the problem. You can click in each box and type the information using your keyboard or you can drag and drop the important information that you selected earlier. If an amount is unknown, enter 'unknown'.",
+                type = "DIAGRAMMER",
+                valid = 0
+              ),
+              dict(
+                label = "Work the Problem",
+                mnemonicIndex = 2,
+                instruction = "Solve the equation",
+                longInstruction = "Take your diagram and transform it into a math equation.",
+                type = "STEPWISE",
+                swlabel = "QUES-6011 YOY",
+                description = "Solve by addition, fool.  \\begin{array}{c}7x-2y=3 \\\\4x+5y=3.25\\end{array}",
+                definition = "SolveFor[7x-2y=3 && 4x+5y=3.25, {x,y}, EliminationMethod]",
+                mathml = "\\(\\)",
+                swtype = "gradeBasicAlgebra",
+                hint1 = "",
+                hint2 = "",
+                hint3 = "",
+                valid = 0
+              ),
+              dict(
+                label = "Explain",
+                mnemonicIndex = 3,
+                instruction = "Identify the Number and the Label ",
+                longInstruction = 'What is the number and what is its label ?',
+                type = "IDENTIFIER",
+                valid = 0
+              ),
+              dict(
+                label = "Explain",
+                mnemonicIndex = 3,
+                instruction = "Explain your Answer",
+                longInstruction = 'Answer the original question in plain language.',
+                type = "EXPLAINER",
+                valid = 0
+              ),
+              dict(
+                label = "Review",
+                mnemonicIndex = 4,
+                instruction = "Does your answer make sense?",
+                longInstruction = 'Discuss if your answer seems reasonable.',
+                type = "REVIEWER",
+                valid = 0
+              )
+            ]
+          )
+
+
+        # We now modify the problem template here, and pass it in already modified for this particular question.
+        # frag.add_javascript(self.resource_string("static/js/src/swpwr_problem.js"))     # Template SWPWR problem to work. We will update it.
+
+        # Manipulate the Dict
+        SWPHASE = 5	# Which element of the phase array is the StepWise question?
+        # StepWise problem data goes in swpwr_problem['steps'][SWPHASE]
+        # console.info("SWPWRXStudent window.swpwr_problem.steps[SWPHASE] original",window.swpwr_problem.steps[SWPHASE]);
+        if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem original json={j}".format(j=json_dumps(swpwr_problem,separators=(',',':'))))
+        # window.swpwr_problem.steps[SWPHASE].swlabel = question.q_label;
+        swpwr_problem['stimulus'] = self.q_stimulus
+        # window.swpwr_problem.steps[SWPHASE].description = question.q_stimulus;
+        swpwr_problem['steps'][SWPHASE]['description'] = self.q_definition
+        # window.swpwr_problem.steps[SWPHASE].definition = question.q_definition;
+        swpwr_problem['steps'][SWPHASE]['definition'] = self.q_definition
+        # window.swpwr_problem.steps[SWPHASE].swtype = question.q_type;
+        swpwr_problem['steps'][SWPHASE]['swtype'] = self.q_type
+        # window.swpwr_problem.steps[SWPHASE].hint1 = question.q_hint1;
+        swpwr_problem['steps'][SWPHASE]['hint1'] = self.q_hint1
+        # window.swpwr_problem.steps[SWPHASE].hint2 = question.q_hint2;
+        swpwr_problem['steps'][SWPHASE]['hint2'] = self.q_hint2
+        # window.swpwr_problem.steps[SWPHASE].hint3 = question.q_hint3;
+        swpwr_problem['steps'][SWPHASE]['hint3'] = self.q_hint3
+        # Emit the Python dict into the HTML as Javascript object
+        json_string = json.dumps(swpwr_problem,separators=(',', ':')))
+        js_string = '      window.swpwr_problem = `'+js_string+'`;`
+        if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem final json={j}".format(j=js_string))
+        frag.add_javascript(js_string)     # SWPWR problem to work.
+
         frag.add_javascript(self.resource_string("static/js/src/final_callback.js"))    # Final submit callback code
 
         # Load up the React app bundle js, and wrap it as needed.
