@@ -19,6 +19,9 @@ function SWPWRXStudent(runtime, element) {
     // Now we do the question manipulation in swpwrxblock.py
     // const SWPHASE = 5;          // Which element of the POWER steps array in window.swpwr_problem contains the StepWise UI?
 
+    $('.swpwrReact').show();        // Hide React app root div
+    $('.problem-complete').hide();  // Don't show the 'problem is complete' message
+
     get_data_data = {}		// don't need to sent any data to get_data
 
     $.ajax({
@@ -34,8 +37,6 @@ function SWPWRXStudent(runtime, element) {
             console.info("SWPWRXstudent GET data",data);
             console.info("SWPWRXstudent GET msg",msg);
 
-            $('.swpwrReact').hide();        // Hide React app root div
-            $('.problem-complete').hide();  // Don't show the 'problem is complete' message
             var data_obj = JSON.parse(data);
             console.info("SWPWRXstudent GET data_obj",data_obj);
 
@@ -733,7 +734,5 @@ function SWPWRXStudent(runtime, element) {
 
        } //end of success block
     });
-    $('.swpwrReact').show();        // React app root div
-    $('.problem-complete').hide();  // Don't show the 'problem is complete' message
     console.info("SWPWRXStudent end");
 }
