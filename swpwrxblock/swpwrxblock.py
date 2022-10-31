@@ -780,7 +780,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 label = "Organize",
                 mnemonicIndex = 1,
                 instruction = "What type of problem is this?",
-                longInstruction = 'Select the problem type that best describes this problme',
+                longInstruction = 'Select the problem type that best describes this problem',
                 type =  "DIAGRAMSELECT",
                 valid = 0
               ),

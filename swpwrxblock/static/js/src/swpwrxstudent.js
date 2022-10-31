@@ -34,6 +34,8 @@ function SWPWRXStudent(runtime, element) {
             console.info("SWPWRXstudent GET data",data);
             console.info("SWPWRXstudent GET msg",msg);
 
+            $('.swpwrReact').hide();        // Hide React app root div
+            $('.problem-complete').hide();  // Don't show the 'problem is complete' message
             var data_obj = JSON.parse(data);
             console.info("SWPWRXstudent GET data_obj",data_obj);
 
@@ -64,28 +66,6 @@ function SWPWRXStudent(runtime, element) {
             console.info("SWPWRXStudent grade",grade);
 
             // Replace the stepwise-related fields in the SWPR React problem template with the StepWise values from the Xblock attributes
-
-            console.info("SWPWRXStudent window.swpwr_problem original",window.swpwr_problem);
-            // window.swpwr_problem.stimulus = `A blue mountain bike is on sale for $399. Its regular price is $650.
-            //       What is the difference between the regular price and the sale price?`;
-            console.info("SWPWRXStudent question.q_swpwr_problem",question.q_swpwr_problem);
-            window.swpwr_problem.stimulus = question.q_swpwr_problem;
-            console.info("SWPWRXStudent window.swpwr_problem.stimulus",window.swpwr_problem.stimulus);
-            console.info("SWPWRXStudent question",question);
-
-            // Now we do this manipulation in swpwrxblock.py
-            // // StepWise problem data goes in swpwr_problem.steps[SWPHASE]
-            // console.info("SWPWRXStudent window.swpwr_problem.steps[SWPHASE] original",window.swpwr_problem.steps[SWPHASE]);
-            // window.swpwr_problem.steps[SWPHASE].swlabel = question.q_label;
-            // window.swpwr_problem.steps[SWPHASE].description = question.q_stimulus;
-            // window.swpwr_problem.steps[SWPHASE].definition = question.q_definition;
-            // window.swpwr_problem.steps[SWPHASE].swtype = question.q_type;
-            // window.swpwr_problem.steps[SWPHASE].hint1 = question.q_hint1;
-            // window.swpwr_problem.steps[SWPHASE].hint2 = question.q_hint2;
-            // window.swpwr_problem.steps[SWPHASE].hint3 = question.q_hint3;
-            // console.info("SWPWRXStudent window.swpwr_problem.steps[SWPHASE] modified",window.swpwr_problem.steps[SWPHASE]);
-
-            console.info("SWPWRXStudent window.swpwr_problem modified",window.swpwr_problem);
 
             // if (typeof enable_showme === 'undefined') {
             //     // console.info("enable_showme is undefined");
@@ -747,10 +727,13 @@ function SWPWRXStudent(runtime, element) {
             // // wrap element as core.js may pass a raw element or an wrapped one
             // angular.bootstrap($(element), ['querium-stepwise']);
             // MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+
+            $('.question-info').show(); // Show question info box now that loading is done
+            $('.loading-box').hide();   // Done loading data
+
        } //end of success block
     });
+    $('.swpwrReact').show();        // React app root div
+    $('.problem-complete').hide();  // Don't show the 'problem is complete' message
     console.info("SWPWRXStudent end");
-    // $('.loading-box').show();        // Show loading box while we wait
-    // $('.question-info').hide();      // Don't show question info box while we wait
-    // $('.click-to-begin-box').hide(); // Don't show click to begin msg box while we wait
 }
