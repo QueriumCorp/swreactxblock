@@ -789,7 +789,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_resource('<base href="/testq_assets/"/>','text/html','head')		# Needed so react code can find its pages. Don't do earlier or impacts relative pathnames of resources
 
         # The swpwr problem template as a Python dict
-        swpwr_problem = dict(
+        swpwr_problem_template = dict(
             label = "the problem label",
             description = "a desc",
             my_class = "sampleWord",
@@ -898,25 +898,25 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         EXPPHASE2  = 7	# Explain (2 of 2)
         REVPHASE1  = 8	# Review (1 of 1)
 
-        # StepWise problem data goes in swpwr_problem['steps'][WORKPHASE1]
-        if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem original json={j}".format(j=json.dumps(swpwr_problem,separators=(',',':'))))
-        swpwr_problem['stimulus'] = self.q_swpwr_problem
-        swpwr_problem['steps'][PREPPHASE2].correct = self.q_swpwr_prepare_2_correct
-        swpwr_problem['steps'][PREPPHASE3].correct = self.q_swpwr_prepare_3_correct
-        swpwr_problem['steps'][ORGPHASE1].correct = self.q_swpwr_organize_1_schema_name
-        swpwr_problem['steps'][WORKPHASE1]['description'] = self.q_stimulus
-        swpwr_problem['steps'][WORKPHASE1]['definition'] = self.q_definition
-        swpwr_problem['steps'][WORKPHASE1]['swtype'] = self.q_type
-        swpwr_problem['steps'][WORKPHASE1]['hint1'] = self.q_hint1
-        swpwr_problem['steps'][WORKPHASE1]['hint2'] = self.q_hint2
-        swpwr_problem['steps'][WORKPHASE1]['hint3'] = self.q_hint3
-        swpwr_problem['steps'][EXPPHASE2].correct = self.q_swpwr_explain_2_correct
-        swpwr_problem['steps'][REVPHASE1].correct = self.q_swpwr_review_1_correct
+        # StepWise problem data goes in swpwr_problem_template['steps'][WORKPHASE1]
+        if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template original json={j}".format(j=json.dumps(swpwr_problem_template,separators=(',',':'))))
+        swpwr_problem_template['stimulus'] = self.q_swpwr_problem
+        swpwr_problem_template['steps'][PREPPHASE2]['correct'] = self.q_swpwr_prepare_2_correct
+        swpwr_problem_template['steps'][PREPPHASE3]['correct'] = self.q_swpwr_prepare_3_correct
+        swpwr_problem_template['steps'][ORGPHASE1]['correct'] = self.q_swpwr_organize_1_schema_name
+        swpwr_problem_template['steps'][WORKPHASE1]['description'] = self.q_stimulus
+        swpwr_problem_template['steps'][WORKPHASE1]['definition'] = self.q_definition
+        swpwr_problem_template['steps'][WORKPHASE1]['swtype'] = self.q_type
+        swpwr_problem_template['steps'][WORKPHASE1]['hint1'] = self.q_hint1
+        swpwr_problem_template['steps'][WORKPHASE1]['hint2'] = self.q_hint2
+        swpwr_problem_template['steps'][WORKPHASE1]['hint3'] = self.q_hint3
+        swpwr_problem_template['steps'][EXPPHASE2]['correct'] = self.q_swpwr_explain_2_correct
+        swpwr_problem_template['steps'][REVPHASE1]['correct'] = self.q_swpwr_review_1_correct
 
         # Emit the Python dict into the HTML as Javascript object
-        json_string = json.dumps(swpwr_problem,separators=(',', ':'))
-        javascript_string = '      window.swpwr_problem = '+json_string+';'
-        if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem final javascript={j}".format(j=javascript_string))
+        json_string = json.dumps(swpwr_problem_template,separators=(',', ':'))
+        javascript_string = '      window.swpwr_problem_template = '+json_string+';'
+        if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template final javascript={j}".format(j=javascript_string))
         frag.add_javascript(javascript_string)     # SWPWR problem to work.
 
         frag.add_javascript(self.resource_string("static/js/src/final_callback.js"))    # Final submit callback code
