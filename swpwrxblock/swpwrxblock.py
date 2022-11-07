@@ -766,6 +766,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 instruction = "Identify Important Information",
                 longInstruction = 'Identify the key facts in the word problem below. Select these important pieces of text. This will allow you to quickly paste helpful snippets as you work the problem.',
                 type = "TAG",
+                correct = 2,
                 valid = 0
               ),
               dict(
@@ -774,6 +775,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 instruction = "What kind of problem is this?",
                 longInstruction = 'Discuss what type of problem you think this is. (Not graded)',
                 type = "DIAGRAMANALYZE",
+                correct = 20,
                 valid = 0
               ),
               dict(
@@ -782,6 +784,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 instruction = "What type of problem is this?",
                 longInstruction = 'Select the problem type that best describes this problem',
                 type =  "DIAGRAMSELECT",
+                correct = "EQUALGROUPS",   # "COMBINE", "MULTIPLYTIMES", "EQUALGROUPS", "CHANGE"
                 valid = 0
               ),
               dict(
@@ -798,8 +801,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 instruction = "Solve the equation",
                 longInstruction = "Take your diagram and transform it into a math equation.",
                 type = "STEPWISE",
-                swlabel = "QUES-6011 YOY",
-                description = "Solve by addition, fool.  \\begin{array}{c}7x-2y=3 \\\\4x+5y=3.25\\end{array}",
+                swlabel = "QUES-6011X",
+                description = "Solve by addition, foolish defaultProblem.  \\begin{array}{c}7x-2y=3 \\\\4x+5y=3.25\\end{array}",
                 definition = "SolveFor[7x-2y=3 && 4x+5y=3.25, {x,y}, EliminationMethod]",
                 mathml = "\\(\\)",
                 swtype = "gradeBasicAlgebra",
@@ -822,6 +825,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 instruction = "Explain your Answer",
                 longInstruction = 'Answer the original question in plain language.',
                 type = "EXPLAINER",
+                correct = 20,
                 valid = 0
               ),
               dict(
@@ -830,6 +834,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 instruction = "Does your answer make sense?",
                 longInstruction = 'Discuss if your answer seems reasonable.',
                 type = "REVIEWER",
+                correct = 20,
                 valid = 0
               )
             ]
