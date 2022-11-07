@@ -828,7 +828,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 instruction = "What type of problem is this?",
                 longInstruction = 'Select the problem type that best describes this problem',
                 type =  "DIAGRAMSELECT",
-                correct = "EQUALGROUPS",   # "COMBINE", "MULTIPLYTIMES", "EQUALGROUPS", "CHANGE"
+                correct = "COMBINE",   # "COMBINE", "MULTIPLYTIMES", "EQUALGROUPS", "CHANGE"
                 valid = 0
               ),
               dict(
