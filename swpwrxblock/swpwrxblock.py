@@ -1536,6 +1536,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             "q_hint2" :  self.q_hint2,
             "q_hint3" :  self.q_hint3,
             "q_swpwr_problem" : self.q_swpwr_problem,
+            "q_swpwr_prepare_2_correct": self.q_swpwr_prepare_2_correct
+            "q_swpwr_prepare_3_correct": self.q_swpwr_prepare_3_correct
+            "q_swpwr_organize_1_schema_name": self.q_swpwr_organize_1_schema_name
+            "q_swpwr_explain_2_correct": self.q_swpwr_explain_2_correct
+            "q_swpwr_review_1_correct": self.q_swpwr_review_1_correct
             "q_weight" :  self.my_weight,
             "q_max_attempts" : self.my_max_attempts,
             "q_option_hint" : self.my_option_hint,
