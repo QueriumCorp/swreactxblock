@@ -125,7 +125,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     # New on Nov 7, 2022
     q_swpwr_prepare_2_correct = Integer(help='SWPWR Prepare 2 Min Length', default=0, scope=Scope.content)
     q_swpwr_prepare_3_correct = Integer(help='SWPWR Prepare 3 Min Length', default=0, scope=Scope.content)
-    q_swpwr_organize_1_schema_name = String(help='SWPWR Organize 1 Schema Name', default='COMBINE', scope=Scope.content)
+    q_swpwr_organize_1_schema_name = String(help='SWPWR Organize 1 Schema Name one of COMBINE, MULTIPLYTIMES, EQUALGROUPS, CHANGE', default='COMBINE', scope=Scope.content)
     q_swpwr_explain_2_correct = Integer(help='SWPWR Explain 2 Min Length', default=0, scope=Scope.content)
     q_swpwr_review_1_correct = Integer(help='SWPWR Review 1 Min Length', default=0, scope=Scope.content)
     # STUDENT'S QUESTION PERFORMANCE FIELDS
