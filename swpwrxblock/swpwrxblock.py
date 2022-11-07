@@ -1303,6 +1303,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         self.q_hint2 = data['hint2']
         self.q_hint3 = data['hint3']
         self.q_swpwr_problem = data['swpwr_problem']
+        self.q_swpwr_prepare_2_correct = data['swpwr_prepare_2_correct']
+        self.q_swpwr_prepare_3_correct = data['swpwr_prepare_3_correct']
+        self.q_swpwr_organize_1_schema_name = data['swpwr_organize_1_schema_name']
+        self.q_swpwr_explain_2_correct = data['swpwr_explain_2_correct']
+        self.q_swpwr_review_1_correct = data['swpwr_review_1_correct']
 
         self.display_name = "Step-by-Step POWER"
 
