@@ -900,7 +900,10 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         # StepWise problem data goes in swpwr_problem_template['steps'][WORKPHASE1]
         if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template original json={j}".format(j=json.dumps(swpwr_problem_template,separators=(',',':'))))
+        if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template template before stimulus={s}".format(s=swpwr_problem_template['stimulus']))
+        if DEBUG: logger.info("SWPWRXBlock student_view() self.q_swpwr_problem={s}".format(s=self.q_swpwr_problem))
         swpwr_problem_template['stimulus'] = self.q_swpwr_problem
+        if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template template after stimulus={s}".format(s=swpwr_problem_template['stimulus']))
         swpwr_problem_template['steps'][PREPPHASE2]['correct'] = self.q_swpwr_prepare_2_correct
         swpwr_problem_template['steps'][PREPPHASE3]['correct'] = self.q_swpwr_prepare_3_correct
         swpwr_problem_template['steps'][ORGPHASE1]['correct'] = self.q_swpwr_organize_1_schema_name
