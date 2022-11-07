@@ -1098,7 +1098,7 @@
             }
             return dispatcher.useContext(Context, unstable_observedBits);
           }
-          function useState16(initialState3) {
+          function useState18(initialState3) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState3);
           }
@@ -1389,7 +1389,7 @@
           exports.useMemo = useMemo20;
           exports.useReducer = useReducer4;
           exports.useRef = useRef14;
-          exports.useState = useState16;
+          exports.useState = useState18;
           exports.version = ReactVersion;
         })();
       }
@@ -21430,6 +21430,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       these important pieces of text. This will allow you to quickly paste helpful 
       snippets as you work the problem.`,
         type: "TAG",
+        correct: 2,
         valid: 0
       },
       {
@@ -21438,6 +21439,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         instruction: "What kind of problem is this?",
         longInstruction: `Discuss what type of problem you think this is. (Not graded)`,
         type: "DIAGRAMANALYZE",
+        correct: 20,
         valid: 0
       },
       {
@@ -21446,6 +21448,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         instruction: "What type of problem is this?",
         longInstruction: `Select the problem type that best describes this problme`,
         type: "DIAGRAMSELECT",
+        correct: "EQUALGROUPS",
         valid: 0
       },
       {
@@ -21466,7 +21469,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         longInstruction: `Take your diagram and transform it into a math equation.`,
         type: "STEPWISE",
         swlabel: "QUES-6011X",
-        description: "Solve by addition, fool.  \\begin{array}{c}7x-2y=3 \\\\4x+5y=3.25\\end{array}",
+        description: "Solve by addition, foolish defaultProblem.  \\(\\begin{array}{c}7x-2y=3 \\\\4x+5y=3.25\\end{array}\\)",
         definition: "SolveFor[7x-2y=3 && 4x+5y=3.25, {x,y}, EliminationMethod]",
         mathml: "\\(\\)",
         swtype: "gradeBasicAlgebra",
@@ -21489,6 +21492,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         instruction: "Explain your Answer",
         longInstruction: `Answer the original question in plain language.`,
         type: "EXPLAINER",
+        correct: 20,
         valid: 0
       },
       {
@@ -21497,6 +21501,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         instruction: "Does your answer make sense?",
         longInstruction: `Discuss if your answer seems reasonable.`,
         type: "REVIEWER",
+        correct: 20,
         valid: 0
       }
     ]
@@ -21505,7 +21510,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   // src/utils/defaultSolution.js
   var defaultSolution = {
     tags: [],
-    diagramAnalysis: "This is just some long text so I can test more easily!",
+    diagramAnalysis: "",
     selectedDiagram: null,
     diagram: {
       change: {
@@ -21536,14 +21541,19 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       label: ""
     },
     explanation: "",
-    rationalization: ""
+    rationalization: "",
+    timeStamps: []
   };
 
   // src/reducer.js
+  var timeStamps = defaultProblem.steps.map((element) => {
+    return { step: element.type, timestamp: 0 };
+  });
+  timeStamps.unshift({ step: "BEGIN", timestamp: Date.now() });
   var blankWork = {
     _lastUpdated: null,
     problem: { ...defaultProblem },
-    solution: { ...defaultSolution }
+    solution: { ...defaultSolution, timeStamps }
   };
   var workReducer = (work, action) => {
     console.info("reducer", action);
@@ -21552,6 +21562,17 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     switch (action.type) {
       case "init": {
         return blankWork;
+      }
+      case "markTime": {
+        let idx = newProduct.solution.timeStamps.findIndex(
+          (x) => x.step === action.payload.contentType
+        );
+        newProduct.solution.timeStamps[idx] = {
+          step: action.payload.contentType,
+          timestamp: action.payload.timeStamp
+        };
+        console.info(newProduct);
+        return newProduct;
       }
       case "addTag": {
         if (newProduct.solution.tags.find((tag) => tag === action.payload)) {
@@ -21665,7 +21686,98 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   var reducer_default = workReducer;
 
   // src/components/powerTitle/powerTitle.js
+  var import_react4 = __toESM(require_react());
+
+  // node_modules/react-icons/lib/esm/iconBase.js
+  var import_react3 = __toESM(require_react());
+
+  // node_modules/react-icons/lib/esm/iconContext.js
   var import_react2 = __toESM(require_react());
+  var DefaultContext = {
+    color: void 0,
+    size: void 0,
+    className: void 0,
+    style: void 0,
+    attr: void 0
+  };
+  var IconContext = import_react2.default.createContext && import_react2.default.createContext(DefaultContext);
+
+  // node_modules/react-icons/lib/esm/iconBase.js
+  var __assign = function() {
+    __assign = Object.assign || function(t) {
+      for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s)
+          if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+      }
+      return t;
+    };
+    return __assign.apply(this, arguments);
+  };
+  var __rest = function(s, e) {
+    var t = {};
+    for (var p in s)
+      if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+      for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+        if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+          t[p[i]] = s[p[i]];
+      }
+    return t;
+  };
+  function Tree2Element(tree) {
+    return tree && tree.map(function(node, i) {
+      return import_react3.default.createElement(node.tag, __assign({
+        key: i
+      }, node.attr), Tree2Element(node.child));
+    });
+  }
+  function GenIcon(data) {
+    return function(props) {
+      return import_react3.default.createElement(IconBase, __assign({
+        attr: __assign({}, data.attr)
+      }, props), Tree2Element(data.child));
+    };
+  }
+  function IconBase(props) {
+    var elem = function(conf) {
+      var attr = props.attr, size2 = props.size, title = props.title, svgProps = __rest(props, ["attr", "size", "title"]);
+      var computedSize = size2 || conf.size || "1em";
+      var className;
+      if (conf.className)
+        className = conf.className;
+      if (props.className)
+        className = (className ? className + " " : "") + props.className;
+      return import_react3.default.createElement("svg", __assign({
+        stroke: "currentColor",
+        fill: "currentColor",
+        strokeWidth: "0"
+      }, conf.attr, attr, svgProps, {
+        className,
+        style: __assign(__assign({
+          color: props.color || conf.color
+        }, conf.style), props.style),
+        height: computedSize,
+        width: computedSize,
+        xmlns: "http://www.w3.org/2000/svg"
+      }), title && import_react3.default.createElement("title", null, title), props.children);
+    };
+    return IconContext !== void 0 ? import_react3.default.createElement(IconContext.Consumer, null, function(conf) {
+      return elem(conf);
+    }) : elem(DefaultContext);
+  }
+
+  // node_modules/react-icons/fi/index.esm.js
+  function FiMaximize2(props) {
+    return GenIcon({ "tag": "svg", "attr": { "viewBox": "0 0 24 24", "fill": "none", "stroke": "currentColor", "strokeWidth": "2", "strokeLinecap": "round", "strokeLinejoin": "round" }, "child": [{ "tag": "polyline", "attr": { "points": "15 3 21 3 21 9" } }, { "tag": "polyline", "attr": { "points": "9 21 3 21 3 15" } }, { "tag": "line", "attr": { "x1": "21", "y1": "3", "x2": "14", "y2": "10" } }, { "tag": "line", "attr": { "x1": "3", "y1": "21", "x2": "10", "y2": "14" } }] })(props);
+  }
+  function FiMinimize2(props) {
+    return GenIcon({ "tag": "svg", "attr": { "viewBox": "0 0 24 24", "fill": "none", "stroke": "currentColor", "strokeWidth": "2", "strokeLinecap": "round", "strokeLinejoin": "round" }, "child": [{ "tag": "polyline", "attr": { "points": "4 14 10 14 10 20" } }, { "tag": "polyline", "attr": { "points": "20 10 14 10 14 4" } }, { "tag": "line", "attr": { "x1": "14", "y1": "10", "x2": "21", "y2": "3" } }, { "tag": "line", "attr": { "x1": "3", "y1": "21", "x2": "10", "y2": "14" } }] })(props);
+  }
+
+  // src/components/powerTitle/powerTitle.js
   function PowerTitle(props) {
     const problem = props.problem;
     const { activeStep } = useWizard();
@@ -21674,21 +21786,28 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     const instructions = problem.steps[activeStep].instruction;
     const longInstruction = problem.steps[activeStep].longInstruction;
     const mnemonicIndex = problem.steps[activeStep].mnemonicIndex;
-    return /* @__PURE__ */ import_react2.default.createElement("div", {
+    const handleMaximize = () => {
+      props.setMaximized(!props.maximized);
+    };
+    return /* @__PURE__ */ import_react4.default.createElement("div", {
       className: "powerTitle"
-    }, /* @__PURE__ */ import_react2.default.createElement("div", {
+    }, /* @__PURE__ */ import_react4.default.createElement("div", {
       className: "titleText"
-    }, title.split("").map(function(char, index) {
-      return /* @__PURE__ */ import_react2.default.createElement("span", {
+    }, /* @__PURE__ */ import_react4.default.createElement("div", null, title.split("").map(function(char, index) {
+      return /* @__PURE__ */ import_react4.default.createElement("span", {
         "aria-hidden": "true",
         key: index,
         className: index === mnemonicIndex ? "powerTitleCurrentLetter" : ""
       }, char);
-    })), /* @__PURE__ */ import_react2.default.createElement("div", {
+    })), props.maximized ? /* @__PURE__ */ import_react4.default.createElement("div", {
+      onClick: handleMaximize
+    }, /* @__PURE__ */ import_react4.default.createElement(FiMinimize2, null)) : /* @__PURE__ */ import_react4.default.createElement("div", {
+      onClick: handleMaximize
+    }, /* @__PURE__ */ import_react4.default.createElement(FiMaximize2, null))), /* @__PURE__ */ import_react4.default.createElement("div", {
       className: "subTitle"
-    }, subTitle), /* @__PURE__ */ import_react2.default.createElement("p", {
+    }, subTitle), /* @__PURE__ */ import_react4.default.createElement("p", {
       className: "instructions"
-    }, instructions), /* @__PURE__ */ import_react2.default.createElement("p", {
+    }, instructions), /* @__PURE__ */ import_react4.default.createElement("p", {
       className: "longInstruction"
     }, longInstruction));
   }
@@ -21698,10 +21817,10 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   var import_react101 = __toESM(require_react());
 
   // src/stepViews/readView/readView.js
-  var import_react4 = __toESM(require_react());
+  var import_react6 = __toESM(require_react());
 
   // src/components/stimulator/stimulator.js
-  var import_react3 = __toESM(require_react());
+  var import_react5 = __toESM(require_react());
   function Stimulator(props) {
     const enabled = props.enabled || false;
     const text = props.text;
@@ -21716,7 +21835,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         }
       }
     }
-    return /* @__PURE__ */ import_react3.default.createElement("div", {
+    return /* @__PURE__ */ import_react5.default.createElement("div", {
       onMouseUp: createTag,
       onTouchEnd: createTag,
       className: `stimulator ${enabled ? "taggable" : ""}`
@@ -21726,9 +21845,17 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // src/stepViews/readView/readView.js
   function ReadView(props) {
-    return /* @__PURE__ */ import_react4.default.createElement("div", {
+    const onChange = props.onChange;
+    const { handleStep } = useWizard();
+    handleStep(() => {
+      onChange({
+        type: "markTime",
+        payload: { contentType: props.contentType, timeStamp: Date.now() }
+      });
+    });
+    return /* @__PURE__ */ import_react6.default.createElement("div", {
       className: "Read"
-    }, /* @__PURE__ */ import_react4.default.createElement(stimulator_default, {
+    }, /* @__PURE__ */ import_react6.default.createElement(stimulator_default, {
       text: props.stimulus,
       enabled: false
     }));
@@ -21736,19 +21863,19 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   var readView_default = ReadView;
 
   // src/stepViews/tagView/tagView.js
-  var import_react21 = __toESM(require_react());
+  var import_react23 = __toESM(require_react());
 
   // src/components/chipster/chipster.js
-  var import_react20 = __toESM(require_react());
+  var import_react22 = __toESM(require_react());
 
   // node_modules/@react-md/chip/es/Chip.js
   var import_jsx_runtime8 = __toESM(require_jsx_runtime());
-  var import_react17 = __toESM(require_react());
+  var import_react19 = __toESM(require_react());
   var import_classnames7 = __toESM(require_classnames());
 
   // node_modules/@react-md/chip/node_modules/@react-md/icon/es/FontIcon.js
   var import_jsx_runtime = __toESM(require_jsx_runtime());
-  var import_react8 = __toESM(require_react());
+  var import_react10 = __toESM(require_react());
   var import_classnames = __toESM(require_classnames());
 
   // node_modules/@react-md/chip/node_modules/@react-md/utils/es/applyRef.js
@@ -21799,18 +21926,18 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/@react-md/chip/node_modules/@react-md/utils/es/useRefCache.js
-  var import_react5 = __toESM(require_react());
+  var import_react7 = __toESM(require_react());
   function useRefCache(cacheable) {
-    var ref = (0, import_react5.useRef)(cacheable);
-    (0, import_react5.useEffect)(function() {
+    var ref = (0, import_react7.useRef)(cacheable);
+    (0, import_react7.useEffect)(function() {
       ref.current = cacheable;
     });
     return ref;
   }
 
   // node_modules/@react-md/chip/node_modules/@react-md/utils/es/useIsomorphicLayoutEffect.js
-  var import_react6 = __toESM(require_react());
-  var useIsomorphicLayoutEffect = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined" ? import_react6.useLayoutEffect : import_react6.useEffect;
+  var import_react8 = __toESM(require_react());
+  var useIsomorphicLayoutEffect = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined" ? import_react8.useLayoutEffect : import_react8.useEffect;
 
   // node_modules/@juggle/resize-observer/lib/utils/resizeObservers.js
   var resizeObservers = [];
@@ -22369,10 +22496,10 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }();
 
   // node_modules/@react-md/chip/node_modules/@react-md/utils/es/useEnsuredRef.js
-  var import_react7 = __toESM(require_react());
+  var import_react9 = __toESM(require_react());
   function useEnsuredRef(propRef) {
-    var ref = (0, import_react7.useRef)(null);
-    var refHandler = (0, import_react7.useCallback)(function(instance) {
+    var ref = (0, import_react9.useRef)(null);
+    var refHandler = (0, import_react9.useCallback)(function(instance) {
       applyRef(instance, propRef);
       ref.current = instance;
     }, [propRef]);
@@ -22409,45 +22536,6 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/@react-md/chip/node_modules/@react-md/icon/es/FontIcon.js
-  var __assign = function() {
-    __assign = Object.assign || function(t) {
-      for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s)
-          if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-      }
-      return t;
-    };
-    return __assign.apply(this, arguments);
-  };
-  var __rest = function(s, e) {
-    var t = {};
-    for (var p in s)
-      if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-      for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-        if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-          t[p[i]] = s[p[i]];
-      }
-    return t;
-  };
-  var block = bem("rmd-icon");
-  var FontIcon = (0, import_react8.forwardRef)(function FontIcon2(_a, ref) {
-    var className = _a.className, children = _a.children, _b = _a["aria-hidden"], ariaHidden = _b === void 0 ? true : _b, _c = _a.dense, dense = _c === void 0 ? false : _c, _d = _a.iconClassName, iconClassName = _d === void 0 ? "material-icons" : _d, _e = _a.forceSize, forceSize = _e === void 0 ? false : _e, _f = _a.forceFontSize, forceFontSize = _f === void 0 ? false : _f, props = __rest(_a, ["className", "children", "aria-hidden", "dense", "iconClassName", "forceSize", "forceFontSize"]);
-    return (0, import_jsx_runtime.jsx)("i", __assign({}, props, { "aria-hidden": ariaHidden, ref, className: (0, import_classnames.default)(block({
-      font: true,
-      dense,
-      "forced-font": forceFontSize,
-      "forced-size": forceSize
-    }), iconClassName, className) }, { children }));
-  });
-
-  // node_modules/@react-md/chip/node_modules/@react-md/icon/es/TextIconSpacing.js
-  var import_jsx_runtime2 = __toESM(require_jsx_runtime());
-  var import_react9 = __toESM(require_react());
-  var import_classnames2 = __toESM(require_classnames());
   var __assign2 = function() {
     __assign2 = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -22460,6 +22548,45 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     };
     return __assign2.apply(this, arguments);
   };
+  var __rest2 = function(s, e) {
+    var t = {};
+    for (var p in s)
+      if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+      for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+        if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+          t[p[i]] = s[p[i]];
+      }
+    return t;
+  };
+  var block = bem("rmd-icon");
+  var FontIcon = (0, import_react10.forwardRef)(function FontIcon2(_a, ref) {
+    var className = _a.className, children = _a.children, _b = _a["aria-hidden"], ariaHidden = _b === void 0 ? true : _b, _c = _a.dense, dense = _c === void 0 ? false : _c, _d = _a.iconClassName, iconClassName = _d === void 0 ? "material-icons" : _d, _e = _a.forceSize, forceSize = _e === void 0 ? false : _e, _f = _a.forceFontSize, forceFontSize = _f === void 0 ? false : _f, props = __rest2(_a, ["className", "children", "aria-hidden", "dense", "iconClassName", "forceSize", "forceFontSize"]);
+    return (0, import_jsx_runtime.jsx)("i", __assign2({}, props, { "aria-hidden": ariaHidden, ref, className: (0, import_classnames.default)(block({
+      font: true,
+      dense,
+      "forced-font": forceFontSize,
+      "forced-size": forceSize
+    }), iconClassName, className) }, { children }));
+  });
+
+  // node_modules/@react-md/chip/node_modules/@react-md/icon/es/TextIconSpacing.js
+  var import_jsx_runtime2 = __toESM(require_jsx_runtime());
+  var import_react11 = __toESM(require_react());
+  var import_classnames2 = __toESM(require_classnames());
+  var __assign3 = function() {
+    __assign3 = Object.assign || function(t) {
+      for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s)
+          if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+      }
+      return t;
+    };
+    return __assign3.apply(this, arguments);
+  };
   function TextIconSpacing(_a) {
     var _b;
     var className = _a.className, propIcon = _a.icon, _c = _a.children, children = _c === void 0 ? null : _c, _d = _a.stacked, stacked = _d === void 0 ? false : _d, _e = _a.iconAfter, iconAfter = _e === void 0 ? false : _e, _f = _a.flexReverse, flexReverse = _f === void 0 ? false : _f, _g = _a.forceIconWrap, forceIconWrap = _g === void 0 ? false : _g, _h = _a.beforeClassName, beforeClassName = _h === void 0 ? "rmd-icon--before" : _h, _j = _a.afterClassName, afterClassName = _j === void 0 ? "rmd-icon--after" : _j, _k = _a.aboveClassName, aboveClassName = _k === void 0 ? "rmd-icon--above" : _k, _l = _a.belowClassName, belowClassName = _l === void 0 ? "rmd-icon--below" : _l;
@@ -22470,13 +22597,13 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     var baseClassName = (0, import_classnames2.default)((_b = {}, _b[beforeClassName] = !stacked && !isAfter, _b[afterClassName] = !stacked && isAfter, _b[aboveClassName] = stacked && !isAfter, _b[belowClassName] = stacked && isAfter, _b), className);
     var iconEl = propIcon;
     var content = children;
-    if (!forceIconWrap && (0, import_react9.isValidElement)(propIcon)) {
-      var icon = import_react9.Children.only(propIcon);
-      iconEl = (0, import_react9.cloneElement)(icon, {
+    if (!forceIconWrap && (0, import_react11.isValidElement)(propIcon)) {
+      var icon = import_react11.Children.only(propIcon);
+      iconEl = (0, import_react11.cloneElement)(icon, {
         className: (0, import_classnames2.default)(baseClassName, icon.props.className)
       });
     } else if (propIcon) {
-      iconEl = (0, import_jsx_runtime2.jsx)("span", __assign2({ className: (0, import_classnames2.default)("rmd-text-icon-spacing", baseClassName) }, { children: propIcon }));
+      iconEl = (0, import_jsx_runtime2.jsx)("span", __assign3({ className: (0, import_classnames2.default)("rmd-text-icon-spacing", baseClassName) }, { children: propIcon }));
     }
     if (iconEl) {
       content = (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [!iconAfter && iconEl, children, iconAfter && iconEl] });
@@ -22486,7 +22613,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // node_modules/@react-md/chip/node_modules/@react-md/icon/es/IconProvider.js
   var import_jsx_runtime3 = __toESM(require_jsx_runtime());
-  var import_react10 = __toESM(require_react());
+  var import_react12 = __toESM(require_react());
   var DEFAULT_ICONS = {
     back: (0, import_jsx_runtime3.jsx)(FontIcon, { children: "keyboard_arrow_left" }),
     checkbox: (0, import_jsx_runtime3.jsx)(FontIcon, { children: "check_box" }),
@@ -22502,10 +22629,10 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     selected: (0, import_jsx_runtime3.jsx)(FontIcon, { children: "check" }),
     sort: (0, import_jsx_runtime3.jsx)(FontIcon, { children: "arrow_upward" })
   };
-  var context = (0, import_react10.createContext)(DEFAULT_ICONS);
+  var context = (0, import_react12.createContext)(DEFAULT_ICONS);
   var Provider = context.Provider;
   function useIcon(name, override) {
-    var icons = (0, import_react10.useContext)(context);
+    var icons = (0, import_react12.useContext)(context);
     if (typeof override !== "undefined") {
       return override;
     }
@@ -22519,7 +22646,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   var import_jsx_runtime7 = __toESM(require_jsx_runtime());
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/ripples/reducer.js
-  var import_react11 = __toESM(require_react());
+  var import_react13 = __toESM(require_react());
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/ripples/utils.js
   function isBubbled(event) {
@@ -22610,8 +22737,8 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/ripples/reducer.js
-  var __assign3 = function() {
-    __assign3 = Object.assign || function(t) {
+  var __assign4 = function() {
+    __assign4 = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -22620,7 +22747,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       }
       return t;
     };
-    return __assign3.apply(this, arguments);
+    return __assign4.apply(this, arguments);
   };
   var __read = function(o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
@@ -22699,7 +22826,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }
     var nextState = state.slice();
     var exiting = !ripple.holding || Date.now() - ripple.startTime > 300;
-    nextState[i] = __assign3(__assign3({}, ripple), { exiting, entered: true });
+    nextState[i] = __assign4(__assign4({}, ripple), { exiting, entered: true });
     return nextState;
   }
   function releaseRipple(state) {
@@ -22712,7 +22839,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     var ripple = state[i];
     var exiting = ripple.entered || Date.now() - ripple.startTime > 300;
     var nextState = state.slice();
-    nextState[i] = __assign3(__assign3({}, ripple), { exiting, holding: false });
+    nextState[i] = __assign4(__assign4({}, ripple), { exiting, holding: false });
     return nextState;
   }
   function removeRipple(state, ripple) {
@@ -22729,7 +22856,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   function cancelRipples(state, ease) {
     if (ease) {
       return state.map(function(r) {
-        return __assign3(__assign3({}, r), { exiting: true, mounted: true, holding: false });
+        return __assign4(__assign4({}, r), { exiting: true, mounted: true, holding: false });
       });
     }
     return [];
@@ -22757,25 +22884,25 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     if (disableSpacebarClick === void 0) {
       disableSpacebarClick = false;
     }
-    var _a = __read((0, import_react11.useReducer)(reducer, []), 2), state = _a[0], dispatch = _a[1];
+    var _a = __read((0, import_react13.useReducer)(reducer, []), 2), state = _a[0], dispatch = _a[1];
     var spacebarRef = useRefCache(disableSpacebarClick);
-    var create = (0, import_react11.useCallback)(function(event) {
+    var create = (0, import_react13.useCallback)(function(event) {
       var disableSpacebarClick2 = spacebarRef.current;
       dispatch(createRippleAction(event, disableSpacebarClick2));
     }, []);
-    var release = (0, import_react11.useCallback)(function(event) {
+    var release = (0, import_react13.useCallback)(function(event) {
       dispatch({ type: RELEASE, event });
     }, []);
-    var entered = (0, import_react11.useCallback)(function(ripple) {
+    var entered = (0, import_react13.useCallback)(function(ripple) {
       dispatch({ type: ENTERED, ripple });
     }, []);
-    var cancel = (0, import_react11.useCallback)(function(ease) {
+    var cancel = (0, import_react13.useCallback)(function(ease) {
       if (ease === void 0) {
         ease = false;
       }
       dispatch({ type: CANCEL, ease });
     }, []);
-    var remove = (0, import_react11.useCallback)(function(ripple) {
+    var remove = (0, import_react13.useCallback)(function(ripple) {
       dispatch({ type: REMOVE, ripple });
     }, []);
     return { state, create, release, entered, remove, cancel };
@@ -22790,10 +22917,10 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   var import_classnames4 = __toESM(require_classnames());
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/node_modules/@react-md/transition/es/useTransition.js
-  var import_react12 = __toESM(require_react());
+  var import_react14 = __toESM(require_react());
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/node_modules/@react-md/transition/es/utils.js
-  var __rest2 = function(s, e) {
+  var __rest3 = function(s, e) {
     var t = {};
     for (var p in s)
       if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -22822,7 +22949,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     };
   }
   function getTransitionClassNames(_a) {
-    var classNames9 = _a.classNames, timeoutOptions = __rest2(_a, ["classNames"]);
+    var classNames9 = _a.classNames, timeoutOptions = __rest3(_a, ["classNames"]);
     var timeout2 = getTransitionTimeout(timeoutOptions);
     if (typeof classNames9 === "string") {
       var appear_1 = timeout2.appear, enter_1 = timeout2.enter, exit_1 = timeout2.exit;
@@ -22892,10 +23019,10 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       onExiting,
       onExited
     };
-    var configurationRef = (0, import_react12.useRef)(configuration);
+    var configurationRef = (0, import_react14.useRef)(configuration);
     configurationRef.current = configuration;
     var _g = __read2(useEnsuredRef(nodeRef), 2), ref = _g[0], refCallback = _g[1];
-    var _h = __read2((0, import_react12.useReducer)(function reducer2(state2, action) {
+    var _h = __read2((0, import_react14.useReducer)(function reducer2(state2, action) {
       var _a2 = configuration.timeout, appear2 = _a2.appear, enter2 = _a2.enter, exit2 = _a2.exit;
       var appearing2 = state2.appearing;
       switch (action) {
@@ -22944,7 +23071,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       };
     }), 2), state = _h[0], dispatch = _h[1];
     var appearing = state.appearing, rendered = state.rendered, stage = state.stage;
-    var isFirstRender = (0, import_react12.useRef)(true);
+    var isFirstRender = (0, import_react14.useRef)(true);
     useIsomorphicLayoutEffect(function() {
       var _a2 = configurationRef.current, appear2 = _a2.appear, timeout3 = _a2.timeout, reflow2 = _a2.reflow, onEnter2 = _a2.onEnter, onEntering2 = _a2.onEntering, onEntered2 = _a2.onEntered, onExit2 = _a2.onExit, onExiting2 = _a2.onExiting, onExited2 = _a2.onExited;
       if (isFirstRender.current) {
@@ -23021,8 +23148,8 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/node_modules/@react-md/transition/es/useCSSTransition.js
   var import_classnames3 = __toESM(require_classnames());
-  var __assign4 = function() {
-    __assign4 = Object.assign || function(t) {
+  var __assign5 = function() {
+    __assign5 = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -23031,9 +23158,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       }
       return t;
     };
-    return __assign4.apply(this, arguments);
+    return __assign5.apply(this, arguments);
   };
-  var __rest3 = function(s, e) {
+  var __rest4 = function(s, e) {
     var t = {};
     for (var p in s)
       if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -23046,8 +23173,8 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     return t;
   };
   function useCSSTransition(_a) {
-    var className = _a.className, classNames9 = _a.classNames, _b = _a.appear, appear = _b === void 0 ? false : _b, _c = _a.enter, enter = _c === void 0 ? true : _c, _d = _a.exit, exit = _d === void 0 ? true : _d, timeout2 = _a.timeout, options = __rest3(_a, ["className", "classNames", "appear", "enter", "exit", "timeout"]);
-    var _e = useTransition(__assign4(__assign4({}, options), { appear, enter, exit, timeout: timeout2, reflow: true })), ref = _e.ref, stage = _e.stage, rendered = _e.rendered, appearing = _e.appearing, transitionTo = _e.transitionTo;
+    var className = _a.className, classNames9 = _a.classNames, _b = _a.appear, appear = _b === void 0 ? false : _b, _c = _a.enter, enter = _c === void 0 ? true : _c, _d = _a.exit, exit = _d === void 0 ? true : _d, timeout2 = _a.timeout, options = __rest4(_a, ["className", "classNames", "appear", "enter", "exit", "timeout"]);
+    var _e = useTransition(__assign5(__assign5({}, options), { appear, enter, exit, timeout: timeout2, reflow: true })), ref = _e.ref, stage = _e.stage, rendered = _e.rendered, appearing = _e.appearing, transitionTo = _e.transitionTo;
     var isEntering = stage === "entering";
     var isEnter = isEntering || stage === "enter";
     var isEntered = stage === "entered";
@@ -23076,12 +23203,12 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         isExited && transitionClassNames.exitDone
       ) || void 0
     };
-    return __assign4(__assign4({}, elementProps), { stage, rendered, appearing, elementProps, transitionTo });
+    return __assign5(__assign5({}, elementProps), { stage, rendered, appearing, elementProps, transitionTo });
   }
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/StatesConfig.js
   var import_jsx_runtime4 = __toESM(require_jsx_runtime());
-  var import_react13 = __toESM(require_react());
+  var import_react15 = __toESM(require_react());
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/ripples/constants.js
   var DEFAULT_RIPPLE_CLASSNAMES = {
@@ -23097,19 +23224,19 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   };
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/StatesConfig.js
-  var StatesConfigContext = (0, import_react13.createContext)({
+  var StatesConfigContext = (0, import_react15.createContext)({
     rippleTimeout: DEFAULT_RIPPLE_TIMEOUT,
     rippleClassNames: DEFAULT_RIPPLE_CLASSNAMES,
     disableRipple: false,
     disableProgrammaticRipple: false
   });
   function useStatesConfigContext() {
-    return (0, import_react13.useContext)(StatesConfigContext);
+    return (0, import_react15.useContext)(StatesConfigContext);
   }
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/ripples/Ripple.js
-  var __assign5 = function() {
-    __assign5 = Object.assign || function(t) {
+  var __assign6 = function() {
+    __assign6 = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -23118,7 +23245,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       }
       return t;
     };
-    return __assign5.apply(this, arguments);
+    return __assign6.apply(this, arguments);
   };
   function Ripple(_a) {
     var className = _a.className, propClassNames = _a.classNames, propTimeout = _a.timeout, ripple = _a.ripple, entered = _a.entered, exited = _a.exited;
@@ -23150,31 +23277,10 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     if (!rendered) {
       return null;
     }
-    return (0, import_jsx_runtime5.jsx)("span", __assign5({}, elementProps, { style: style2 }));
+    return (0, import_jsx_runtime5.jsx)("span", __assign6({}, elementProps, { style: style2 }));
   }
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/ripples/RippleContainer.js
-  var __assign6 = function() {
-    __assign6 = Object.assign || function(t) {
-      for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s)
-          if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-      }
-      return t;
-    };
-    return __assign6.apply(this, arguments);
-  };
-  function RippleContainer(_a) {
-    var ripples = _a.ripples, className = _a.className, rippleClassName = _a.rippleClassName, timeout2 = _a.timeout, classNames9 = _a.classNames, entered = _a.entered, exited = _a.exited;
-    return (0, import_jsx_runtime6.jsx)("span", __assign6({ className: (0, import_classnames5.default)("rmd-ripple-container", className) }, { children: ripples.map(function(ripple) {
-      return (0, import_jsx_runtime6.jsx)(Ripple, { ripple, className: rippleClassName, entered, exited, timeout: timeout2, classNames: classNames9 }, ripple.startTime);
-    }) }));
-  }
-
-  // node_modules/@react-md/chip/node_modules/@react-md/states/es/ripples/useRippleHandlers.js
-  var import_react14 = __toESM(require_react());
   var __assign7 = function() {
     __assign7 = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -23187,12 +23293,33 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     };
     return __assign7.apply(this, arguments);
   };
+  function RippleContainer(_a) {
+    var ripples = _a.ripples, className = _a.className, rippleClassName = _a.rippleClassName, timeout2 = _a.timeout, classNames9 = _a.classNames, entered = _a.entered, exited = _a.exited;
+    return (0, import_jsx_runtime6.jsx)("span", __assign7({ className: (0, import_classnames5.default)("rmd-ripple-container", className) }, { children: ripples.map(function(ripple) {
+      return (0, import_jsx_runtime6.jsx)(Ripple, { ripple, className: rippleClassName, entered, exited, timeout: timeout2, classNames: classNames9 }, ripple.startTime);
+    }) }));
+  }
+
+  // node_modules/@react-md/chip/node_modules/@react-md/states/es/ripples/useRippleHandlers.js
+  var import_react16 = __toESM(require_react());
+  var __assign8 = function() {
+    __assign8 = Object.assign || function(t) {
+      for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s)
+          if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+      }
+      return t;
+    };
+    return __assign8.apply(this, arguments);
+  };
   function useRippleHandlers(_a) {
     var create = _a.create, release = _a.release, cancel = _a.cancel, _b = _a.handlers, handlers = _b === void 0 ? {} : _b, _c = _a.disabled, propDisabled = _c === void 0 ? false : _c, _d = _a.disableRipple, disableRipple = _d === void 0 ? false : _d, _e = _a.disableProgrammaticRipple, disableProgrammaticRipple = _e === void 0 ? false : _e;
     var disabled = propDisabled || disableRipple;
-    var ref = useRefCache(__assign7(__assign7({}, handlers), { disableProgrammaticRipple }));
-    var disableProgrammatic = (0, import_react14.useRef)(false);
-    var onKeyDown = (0, import_react14.useCallback)(
+    var ref = useRefCache(__assign8(__assign8({}, handlers), { disableProgrammaticRipple }));
+    var disableProgrammatic = (0, import_react16.useRef)(false);
+    var onKeyDown = (0, import_react16.useCallback)(
       function(event) {
         var callback = ref.current.onKeyDown;
         if (callback) {
@@ -23202,7 +23329,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       },
       [create]
     );
-    var onKeyUp = (0, import_react14.useCallback)(
+    var onKeyUp = (0, import_react16.useCallback)(
       function(event) {
         var callback = ref.current.onKeyUp;
         if (callback) {
@@ -23212,7 +23339,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       },
       [release]
     );
-    var onMouseDown = (0, import_react14.useCallback)(
+    var onMouseDown = (0, import_react16.useCallback)(
       function(event) {
         var callback = ref.current.onMouseDown;
         if (callback) {
@@ -23223,7 +23350,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       },
       [create]
     );
-    var onMouseUp = (0, import_react14.useCallback)(
+    var onMouseUp = (0, import_react16.useCallback)(
       function(event) {
         var callback = ref.current.onMouseUp;
         if (callback) {
@@ -23233,7 +23360,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       },
       [release]
     );
-    var onMouseLeave = (0, import_react14.useCallback)(
+    var onMouseLeave = (0, import_react16.useCallback)(
       function(event) {
         var callback = ref.current.onMouseLeave;
         if (callback) {
@@ -23243,7 +23370,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       },
       [cancel]
     );
-    var onTouchStart = (0, import_react14.useCallback)(
+    var onTouchStart = (0, import_react16.useCallback)(
       function(event) {
         var callback = ref.current.onTouchStart;
         if (callback) {
@@ -23253,7 +23380,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       },
       [create]
     );
-    var onTouchMove = (0, import_react14.useCallback)(
+    var onTouchMove = (0, import_react16.useCallback)(
       function(event) {
         var callback = ref.current.onTouchMove;
         if (callback) {
@@ -23263,7 +23390,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       },
       [cancel]
     );
-    var onTouchEnd = (0, import_react14.useCallback)(
+    var onTouchEnd = (0, import_react16.useCallback)(
       function(event) {
         var callback = ref.current.onTouchEnd;
         if (callback) {
@@ -23273,7 +23400,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       },
       [release]
     );
-    var onClick = (0, import_react14.useCallback)(
+    var onClick = (0, import_react16.useCallback)(
       function(event) {
         var _a2 = ref.current, callback = _a2.onClick, disableProgrammaticRipple2 = _a2.disableProgrammaticRipple;
         if (callback) {
@@ -23301,8 +23428,8 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/ripples/useRipples.js
-  var __assign8 = function() {
-    __assign8 = Object.assign || function(t) {
+  var __assign9 = function() {
+    __assign9 = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -23311,9 +23438,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       }
       return t;
     };
-    return __assign8.apply(this, arguments);
+    return __assign9.apply(this, arguments);
   };
-  var __rest4 = function(s, e) {
+  var __rest5 = function(s, e) {
     var t = {};
     for (var p in s)
       if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -23326,9 +23453,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     return t;
   };
   function useRipples(_a) {
-    var rippleTimeout = _a.rippleTimeout, rippleClassNames = _a.rippleClassNames, rippleContainerClassName = _a.rippleContainerClassName, rippleClassName = _a.rippleClassName, disableRipple = _a.disableRipple, disableSpacebarClick = _a.disableSpacebarClick, options = __rest4(_a, ["rippleTimeout", "rippleClassNames", "rippleContainerClassName", "rippleClassName", "disableRipple", "disableSpacebarClick"]);
+    var rippleTimeout = _a.rippleTimeout, rippleClassNames = _a.rippleClassNames, rippleContainerClassName = _a.rippleContainerClassName, rippleClassName = _a.rippleClassName, disableRipple = _a.disableRipple, disableSpacebarClick = _a.disableSpacebarClick, options = __rest5(_a, ["rippleTimeout", "rippleClassNames", "rippleContainerClassName", "rippleClassName", "disableRipple", "disableSpacebarClick"]);
     var _b = useRippleTransition(disableSpacebarClick), create = _b.create, state = _b.state, release = _b.release, entered = _b.entered, remove = _b.remove, cancel = _b.cancel;
-    var handlers = useRippleHandlers(__assign8({ create, release, cancel, disableRipple }, options));
+    var handlers = useRippleHandlers(__assign9({ create, release, cancel, disableRipple }, options));
     return {
       handlers,
       ripples: disableRipple ? null : (0, import_jsx_runtime7.jsx)(RippleContainer, { ripples: state, className: rippleContainerClassName, rippleClassName, timeout: rippleTimeout, classNames: rippleClassNames, entered, exited: remove }, "ripples")
@@ -23336,7 +23463,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/useKeyboardClickPolyfill.js
-  var import_react15 = __toESM(require_react());
+  var import_react17 = __toESM(require_react());
   function useKeyboardClickPolyfill(_a) {
     var _b = _a === void 0 ? {} : _a, onKeyDown = _b.onKeyDown, _c = _b.disabled, disabled = _c === void 0 ? false : _c, _d = _b.disableEnterClick, disableEnterClick = _d === void 0 ? false : _d, _e = _b.disableSpacebarClick, disableSpacebarClick = _e === void 0 ? false : _e;
     var ref = useRefCache({
@@ -23344,7 +23471,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       disableSpacebarClick,
       disableEnterClick
     });
-    var handleKeyDown = (0, import_react15.useCallback)(function(event) {
+    var handleKeyDown = (0, import_react17.useCallback)(function(event) {
       var _a2 = ref.current, onKeyDown2 = _a2.onKeyDown, disableSpacebarClick2 = _a2.disableSpacebarClick, disableEnterClick2 = _a2.disableEnterClick;
       if (onKeyDown2) {
         onKeyDown2(event);
@@ -23366,9 +23493,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/usePressedStates.js
-  var import_react16 = __toESM(require_react());
-  var __assign9 = function() {
-    __assign9 = Object.assign || function(t) {
+  var import_react18 = __toESM(require_react());
+  var __assign10 = function() {
+    __assign10 = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -23377,7 +23504,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       }
       return t;
     };
-    return __assign9.apply(this, arguments);
+    return __assign10.apply(this, arguments);
   };
   var __read3 = function(o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
@@ -23402,9 +23529,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   };
   function usePressedStates(_a) {
     var _b = _a === void 0 ? {} : _a, _c = _b.handlers, handlers = _c === void 0 ? {} : _c, _d = _b.disableSpacebarClick, disableSpacebarClick = _d === void 0 ? false : _d;
-    var _e = __read3((0, import_react16.useState)(false), 2), pressed = _e[0], setPressed = _e[1];
-    var ref = useRefCache(__assign9(__assign9({}, handlers), { pressed }));
-    var handleKeyDown = (0, import_react16.useCallback)(
+    var _e = __read3((0, import_react18.useState)(false), 2), pressed = _e[0], setPressed = _e[1];
+    var ref = useRefCache(__assign10(__assign10({}, handlers), { pressed }));
+    var handleKeyDown = (0, import_react18.useCallback)(
       function(event) {
         var _a2 = ref.current, onKeyDown = _a2.onKeyDown, pressed2 = _a2.pressed;
         if (onKeyDown) {
@@ -23417,7 +23544,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       },
       [disableSpacebarClick]
     );
-    var handleKeyUp = (0, import_react16.useCallback)(function(event) {
+    var handleKeyUp = (0, import_react18.useCallback)(function(event) {
       var _a2 = ref.current, onKeyUp = _a2.onKeyUp, pressed2 = _a2.pressed;
       if (onKeyUp) {
         onKeyUp(event);
@@ -23426,7 +23553,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         setPressed(false);
       }
     }, []);
-    var handleMouseDown = (0, import_react16.useCallback)(function(event) {
+    var handleMouseDown = (0, import_react18.useCallback)(function(event) {
       var _a2 = ref.current, onMouseDown = _a2.onMouseDown, pressed2 = _a2.pressed;
       if (onMouseDown) {
         onMouseDown(event);
@@ -23435,7 +23562,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         setPressed(true);
       }
     }, []);
-    var handleMouseUp = (0, import_react16.useCallback)(function(event) {
+    var handleMouseUp = (0, import_react18.useCallback)(function(event) {
       var _a2 = ref.current, onMouseUp = _a2.onMouseUp, pressed2 = _a2.pressed;
       if (onMouseUp) {
         onMouseUp(event);
@@ -23444,7 +23571,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         setPressed(false);
       }
     }, []);
-    var handleMouseLeave = (0, import_react16.useCallback)(function(event) {
+    var handleMouseLeave = (0, import_react18.useCallback)(function(event) {
       var _a2 = ref.current, onMouseLeave = _a2.onMouseLeave, pressed2 = _a2.pressed;
       if (onMouseLeave) {
         onMouseLeave(event);
@@ -23453,7 +23580,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         setPressed(false);
       }
     }, []);
-    var handleTouchStart = (0, import_react16.useCallback)(function(event) {
+    var handleTouchStart = (0, import_react18.useCallback)(function(event) {
       var _a2 = ref.current, onTouchStart = _a2.onTouchStart, pressed2 = _a2.pressed;
       if (onTouchStart) {
         onTouchStart(event);
@@ -23462,7 +23589,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         setPressed(true);
       }
     }, []);
-    var handleTouchMove = (0, import_react16.useCallback)(function(event) {
+    var handleTouchMove = (0, import_react18.useCallback)(function(event) {
       var _a2 = ref.current, onTouchMove = _a2.onTouchMove, pressed2 = _a2.pressed;
       if (onTouchMove) {
         onTouchMove(event);
@@ -23471,7 +23598,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         setPressed(false);
       }
     }, []);
-    var handleTouchEnd = (0, import_react16.useCallback)(function(event) {
+    var handleTouchEnd = (0, import_react18.useCallback)(function(event) {
       var _a2 = ref.current, onTouchEnd = _a2.onTouchEnd, pressed2 = _a2.pressed;
       if (onTouchEnd) {
         onTouchEnd(event);
@@ -23497,8 +23624,8 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/useInteractionStates.js
-  var __assign10 = function() {
-    __assign10 = Object.assign || function(t) {
+  var __assign11 = function() {
+    __assign11 = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -23507,7 +23634,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       }
       return t;
     };
-    return __assign10.apply(this, arguments);
+    return __assign11.apply(this, arguments);
   };
   function useInteractionStates(options) {
     if (options === void 0) {
@@ -23530,11 +23657,11 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }
     var handlers = null;
     var ripples = null;
-    var ripplesResult = useRipples(__assign10(__assign10({}, options), { disableSpacebarClick, disableRipple, disableProgrammaticRipple, rippleTimeout, rippleClassName, rippleContainerClassName }));
+    var ripplesResult = useRipples(__assign11(__assign11({}, options), { disableSpacebarClick, disableRipple, disableProgrammaticRipple, rippleTimeout, rippleClassName, rippleContainerClassName }));
     if (!disableRipple) {
       ripples = ripplesResult.ripples, handlers = ripplesResult.handlers;
     }
-    var pressedResult = usePressedStates(__assign10(__assign10({}, options), { handlers: handlers || options.handlers, disableSpacebarClick }));
+    var pressedResult = usePressedStates(__assign11(__assign11({}, options), { handlers: handlers || options.handlers, disableSpacebarClick }));
     if (enablePressedAndRipple || disableRipple && !disablePressedFallback) {
       handlers = pressedResult.handlers;
       className = (0, import_classnames6.default)(className, { "rmd-states--pressed": pressedResult.pressed });
@@ -23554,8 +23681,8 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/@react-md/chip/es/Chip.js
-  var __assign11 = function() {
-    __assign11 = Object.assign || function(t) {
+  var __assign12 = function() {
+    __assign12 = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
         for (var p in s)
@@ -23564,9 +23691,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       }
       return t;
     };
-    return __assign11.apply(this, arguments);
+    return __assign12.apply(this, arguments);
   };
-  var __rest5 = function(s, e) {
+  var __rest6 = function(s, e) {
     var t = {};
     for (var p in s)
       if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -23579,9 +23706,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     return t;
   };
   var block2 = bem("rmd-chip");
-  var Chip = (0, import_react17.forwardRef)(function Chip2(_a, ref) {
+  var Chip = (0, import_react19.forwardRef)(function Chip2(_a, ref) {
     var _b;
-    var ariaPressed = _a["aria-pressed"], propClassName = _a.className, children = _a.children, _c = _a.theme, theme = _c === void 0 ? "solid" : _c, propLeftIcon = _a.leftIcon, rightIcon = _a.rightIcon, _d = _a.raisable, raisable = _d === void 0 ? false : _d, _e = _a.disabled, disabled = _e === void 0 ? false : _e, selected = _a.selected, _f = _a.selectedThemed, selectedThemed = _f === void 0 ? false : _f, contentStyle = _a.contentStyle, contentClassName = _a.contentClassName, _g = _a.disableContentWrap, disableContentWrap = _g === void 0 ? false : _g, propSelectedIcon = _a.selectedIcon, _h = _a.noninteractable, noninteractable = _h === void 0 ? false : _h, _j = _a.disableIconTransition, disableIconTransition = _j === void 0 ? false : _j, props = __rest5(_a, ["aria-pressed", "className", "children", "theme", "leftIcon", "rightIcon", "raisable", "disabled", "selected", "selectedThemed", "contentStyle", "contentClassName", "disableContentWrap", "selectedIcon", "noninteractable", "disableIconTransition"]);
+    var ariaPressed = _a["aria-pressed"], propClassName = _a.className, children = _a.children, _c = _a.theme, theme = _c === void 0 ? "solid" : _c, propLeftIcon = _a.leftIcon, rightIcon = _a.rightIcon, _d = _a.raisable, raisable = _d === void 0 ? false : _d, _e = _a.disabled, disabled = _e === void 0 ? false : _e, selected = _a.selected, _f = _a.selectedThemed, selectedThemed = _f === void 0 ? false : _f, contentStyle = _a.contentStyle, contentClassName = _a.contentClassName, _g = _a.disableContentWrap, disableContentWrap = _g === void 0 ? false : _g, propSelectedIcon = _a.selectedIcon, _h = _a.noninteractable, noninteractable = _h === void 0 ? false : _h, _j = _a.disableIconTransition, disableIconTransition = _j === void 0 ? false : _j, props = __rest6(_a, ["aria-pressed", "className", "children", "theme", "leftIcon", "rightIcon", "raisable", "disabled", "selected", "selectedThemed", "contentStyle", "contentClassName", "disableContentWrap", "selectedIcon", "noninteractable", "disableIconTransition"]);
     var _k = useInteractionStates({
       handlers: props,
       className: propClassName,
@@ -23590,7 +23717,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }), ripples = _k.ripples, className = _k.className, handlers = _k.handlers;
     var content = children;
     if (!disableContentWrap) {
-      content = (0, import_jsx_runtime8.jsx)("span", __assign11({ style: contentStyle, className: (0, import_classnames7.default)(block2("content"), contentClassName) }, { children }));
+      content = (0, import_jsx_runtime8.jsx)("span", __assign12({ style: contentStyle, className: (0, import_classnames7.default)(block2("content"), contentClassName) }, { children }));
     }
     var leftIcon = propLeftIcon;
     var selectable = typeof selected === "boolean";
@@ -23598,9 +23725,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     var isHiddenIcon = false;
     if (selectable && !selectedThemed && typeof leftIcon === "undefined" && selectedIcon) {
       leftIcon = selectedIcon;
-      if (!disableIconTransition && (0, import_react17.isValidElement)(selectedIcon)) {
+      if (!disableIconTransition && (0, import_react19.isValidElement)(selectedIcon)) {
         isHiddenIcon = !selected;
-        leftIcon = (0, import_react17.cloneElement)(selectedIcon, {
+        leftIcon = (0, import_react19.cloneElement)(selectedIcon, {
           className: block2("selected-icon", { visible: selected })
         });
       } else if (disableIconTransition && !selected) {
@@ -23615,7 +23742,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       type: "button",
       disabled
     };
-    return (0, import_jsx_runtime8.jsxs)(Component, __assign11({}, noninteractable ? {} : buttonProps, props, handlers, { ref, className: (0, import_classnames7.default)(block2((_b = {}, _b[theme] = true, _b.disabled = disabled, _b.selected = !disabled && selected && !selectedThemed, _b.themed = !disabled && selected && selectedThemed, _b["solid-disabled"] = disabled && theme === "solid", _b["leading-icon"] = leading && !trailing, _b["trailing-icon"] = trailing && !leading, _b.surrounded = leading && trailing, _b.noninteractable = noninteractable, _b)), className) }, { children: [(0, import_jsx_runtime8.jsx)(TextIconSpacing, __assign11({ icon: leftIcon, beforeClassName: isHiddenIcon ? "" : void 0 }, { children: (0, import_jsx_runtime8.jsx)(TextIconSpacing, __assign11({ icon: rightIcon, iconAfter: true }, { children: content })) })), ripples] }));
+    return (0, import_jsx_runtime8.jsxs)(Component, __assign12({}, noninteractable ? {} : buttonProps, props, handlers, { ref, className: (0, import_classnames7.default)(block2((_b = {}, _b[theme] = true, _b.disabled = disabled, _b.selected = !disabled && selected && !selectedThemed, _b.themed = !disabled && selected && selectedThemed, _b["solid-disabled"] = disabled && theme === "solid", _b["leading-icon"] = leading && !trailing, _b["trailing-icon"] = trailing && !leading, _b.surrounded = leading && trailing, _b.noninteractable = noninteractable, _b)), className) }, { children: [(0, import_jsx_runtime8.jsx)(TextIconSpacing, __assign12({ icon: leftIcon, beforeClassName: isHiddenIcon ? "" : void 0 }, { children: (0, import_jsx_runtime8.jsx)(TextIconSpacing, __assign12({ icon: rightIcon, iconAfter: true }, { children: content })) })), ripples] }));
   });
 
   // node_modules/@react-md/material-icons/node_modules/@react-md/icon/node_modules/@react-md/utils/es/bem.js
@@ -23655,45 +23782,8 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // node_modules/@react-md/material-icons/node_modules/@react-md/icon/es/SVGIcon.js
   var import_jsx_runtime9 = __toESM(require_jsx_runtime());
-  var import_react18 = __toESM(require_react());
+  var import_react20 = __toESM(require_react());
   var import_classnames8 = __toESM(require_classnames());
-  var __assign12 = function() {
-    __assign12 = Object.assign || function(t) {
-      for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s)
-          if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-      }
-      return t;
-    };
-    return __assign12.apply(this, arguments);
-  };
-  var __rest6 = function(s, e) {
-    var t = {};
-    for (var p in s)
-      if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-      for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-        if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-          t[p[i]] = s[p[i]];
-      }
-    return t;
-  };
-  var block3 = bem2("rmd-icon");
-  var SVGIcon = (0, import_react18.forwardRef)(function SVGIcon2(_a, ref) {
-    var _b = _a["aria-hidden"], ariaHidden = _b === void 0 ? true : _b, _c = _a.focusable, focusable = _c === void 0 ? "false" : _c, _d = _a.xmlns, xmlns = _d === void 0 ? "http://www.w3.org/2000/svg" : _d, _e = _a.viewBox, viewBox = _e === void 0 ? "0 0 24 24" : _e, _f = _a.dense, dense = _f === void 0 ? false : _f, className = _a.className, use = _a.use, propChildren = _a.children, props = __rest6(_a, ["aria-hidden", "focusable", "xmlns", "viewBox", "dense", "className", "use", "children"]);
-    var children = propChildren;
-    if (!children && use) {
-      children = (0, import_jsx_runtime9.jsx)("use", { xlinkHref: use });
-    }
-    return (0, import_jsx_runtime9.jsx)("svg", __assign12({}, props, { "aria-hidden": ariaHidden, ref, className: (0, import_classnames8.default)(block3({ svg: true, dense }), className), focusable, xmlns, viewBox }, { children }));
-  });
-
-  // node_modules/@react-md/material-icons/es/AddCircleSVGIcon.js
-  var import_jsx_runtime10 = __toESM(require_jsx_runtime());
-  var import_react19 = __toESM(require_react());
   var __assign13 = function() {
     __assign13 = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -23706,13 +23796,50 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     };
     return __assign13.apply(this, arguments);
   };
-  var AddCircleSVGIcon = (0, import_react19.forwardRef)(function AddCircleSVGIcon2(props, ref) {
-    return (0, import_jsx_runtime10.jsx)(SVGIcon, __assign13({}, props, { ref }, { children: (0, import_jsx_runtime10.jsx)("path", { d: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" }) }));
+  var __rest7 = function(s, e) {
+    var t = {};
+    for (var p in s)
+      if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+      for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+        if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+          t[p[i]] = s[p[i]];
+      }
+    return t;
+  };
+  var block3 = bem2("rmd-icon");
+  var SVGIcon = (0, import_react20.forwardRef)(function SVGIcon2(_a, ref) {
+    var _b = _a["aria-hidden"], ariaHidden = _b === void 0 ? true : _b, _c = _a.focusable, focusable = _c === void 0 ? "false" : _c, _d = _a.xmlns, xmlns = _d === void 0 ? "http://www.w3.org/2000/svg" : _d, _e = _a.viewBox, viewBox = _e === void 0 ? "0 0 24 24" : _e, _f = _a.dense, dense = _f === void 0 ? false : _f, className = _a.className, use = _a.use, propChildren = _a.children, props = __rest7(_a, ["aria-hidden", "focusable", "xmlns", "viewBox", "dense", "className", "use", "children"]);
+    var children = propChildren;
+    if (!children && use) {
+      children = (0, import_jsx_runtime9.jsx)("use", { xlinkHref: use });
+    }
+    return (0, import_jsx_runtime9.jsx)("svg", __assign13({}, props, { "aria-hidden": ariaHidden, ref, className: (0, import_classnames8.default)(block3({ svg: true, dense }), className), focusable, xmlns, viewBox }, { children }));
+  });
+
+  // node_modules/@react-md/material-icons/es/AddCircleSVGIcon.js
+  var import_jsx_runtime10 = __toESM(require_jsx_runtime());
+  var import_react21 = __toESM(require_react());
+  var __assign14 = function() {
+    __assign14 = Object.assign || function(t) {
+      for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s)
+          if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+      }
+      return t;
+    };
+    return __assign14.apply(this, arguments);
+  };
+  var AddCircleSVGIcon = (0, import_react21.forwardRef)(function AddCircleSVGIcon2(props, ref) {
+    return (0, import_jsx_runtime10.jsx)(SVGIcon, __assign14({}, props, { ref }, { children: (0, import_jsx_runtime10.jsx)("path", { d: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" }) }));
   });
 
   // src/components/chipster/chipster.js
   function XCircleIcon(props) {
-    return /* @__PURE__ */ import_react20.default.createElement(AddCircleSVGIcon, {
+    return /* @__PURE__ */ import_react22.default.createElement(AddCircleSVGIcon, {
       ...props,
       style: {
         transform: "rotate(45deg)",
@@ -23733,18 +23860,18 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       }
     }
     if (chips.length) {
-      return /* @__PURE__ */ import_react20.default.createElement("div", {
+      return /* @__PURE__ */ import_react22.default.createElement("div", {
         className: "chipster"
       }, chips.map((chip, i) => {
-        return /* @__PURE__ */ import_react20.default.createElement(Chip, {
+        return /* @__PURE__ */ import_react22.default.createElement(Chip, {
           className: "chip",
           key: i,
           onClick: () => deleteChip(chip),
-          rightIcon: /* @__PURE__ */ import_react20.default.createElement(XCircleIcon, null)
+          rightIcon: /* @__PURE__ */ import_react22.default.createElement(XCircleIcon, null)
         }, chip);
       }));
     } else {
-      return /* @__PURE__ */ import_react20.default.createElement("div", {
+      return /* @__PURE__ */ import_react22.default.createElement("div", {
         className: "noChips"
       }, "select text to create tags");
     }
@@ -23753,16 +23880,24 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // src/stepViews/tagView/tagView.js
   function TagView(props) {
+    const onChange = props.onChange;
+    const { handleStep } = useWizard();
     function dispatch(action) {
-      props.onChange(action);
+      onChange(action);
     }
-    return /* @__PURE__ */ import_react21.default.createElement("div", {
+    handleStep(() => {
+      onChange({
+        type: "markTime",
+        payload: { contentType: props.contentType, timeStamp: Date.now() }
+      });
+    });
+    return /* @__PURE__ */ import_react23.default.createElement("div", {
       className: "Tag"
-    }, /* @__PURE__ */ import_react21.default.createElement(stimulator_default, {
+    }, /* @__PURE__ */ import_react23.default.createElement(stimulator_default, {
       text: props.problem.stimulus,
       enabled: true,
       onChange: dispatch
-    }), /* @__PURE__ */ import_react21.default.createElement(chipster_default, {
+    }), /* @__PURE__ */ import_react23.default.createElement(chipster_default, {
       chips: props.solution.tags,
       onChange: dispatch
     }));
@@ -23770,7 +23905,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   var tagView_default = TagView;
 
   // src/stepViews/diagramSelectView/diagramSelectView.js
-  var import_react50 = __toESM(require_react());
+  var import_react52 = __toESM(require_react());
 
   // node_modules/@babel/runtime/helpers/esm/extends.js
   function _extends() {
@@ -23805,20 +23940,20 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/react-bootstrap/esm/Toast.js
-  var import_react36 = __toESM(require_react());
+  var import_react38 = __toESM(require_react());
   var import_classnames13 = __toESM(require_classnames());
 
   // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useTimeout.js
-  var import_react25 = __toESM(require_react());
+  var import_react27 = __toESM(require_react());
 
   // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useMounted.js
-  var import_react22 = __toESM(require_react());
+  var import_react24 = __toESM(require_react());
   function useMounted() {
-    var mounted = (0, import_react22.useRef)(true);
-    var isMounted = (0, import_react22.useRef)(function() {
+    var mounted = (0, import_react24.useRef)(true);
+    var isMounted = (0, import_react24.useRef)(function() {
       return mounted.current;
     });
-    (0, import_react22.useEffect)(function() {
+    (0, import_react24.useEffect)(function() {
       mounted.current = true;
       return function() {
         mounted.current = false;
@@ -23828,18 +23963,18 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useUpdatedRef.js
-  var import_react23 = __toESM(require_react());
+  var import_react25 = __toESM(require_react());
   function useUpdatedRef(value) {
-    var valueRef = (0, import_react23.useRef)(value);
+    var valueRef = (0, import_react25.useRef)(value);
     valueRef.current = value;
     return valueRef;
   }
 
   // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useWillUnmount.js
-  var import_react24 = __toESM(require_react());
+  var import_react26 = __toESM(require_react());
   function useWillUnmount(fn) {
     var onUnmount = useUpdatedRef(fn);
-    (0, import_react24.useEffect)(function() {
+    (0, import_react26.useEffect)(function() {
       return function() {
         return onUnmount.current();
       };
@@ -23856,11 +23991,11 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
   function useTimeout() {
     var isMounted = useMounted();
-    var handleRef = (0, import_react25.useRef)();
+    var handleRef = (0, import_react27.useRef)();
     useWillUnmount(function() {
       return clearTimeout(handleRef.current);
     });
-    return (0, import_react25.useMemo)(function() {
+    return (0, import_react27.useMemo)(function() {
       var clear = function clear2() {
         return clearTimeout(handleRef.current);
       };
@@ -23886,7 +24021,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // node_modules/react-bootstrap/esm/Fade.js
   var import_classnames9 = __toESM(require_classnames());
-  var import_react28 = __toESM(require_react());
+  var import_react30 = __toESM(require_react());
 
   // node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js
   function _setPrototypeOf(o, p) {
@@ -23906,7 +24041,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // node_modules/react-bootstrap/node_modules/react-transition-group/esm/Transition.js
   var import_prop_types2 = __toESM(require_prop_types());
-  var import_react27 = __toESM(require_react());
+  var import_react29 = __toESM(require_react());
   var import_react_dom = __toESM(require_react_dom());
 
   // node_modules/react-bootstrap/node_modules/react-transition-group/esm/config.js
@@ -23935,8 +24070,8 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   })]) : null;
 
   // node_modules/react-bootstrap/node_modules/react-transition-group/esm/TransitionGroupContext.js
-  var import_react26 = __toESM(require_react());
-  var TransitionGroupContext_default = import_react26.default.createContext(null);
+  var import_react28 = __toESM(require_react());
+  var TransitionGroupContext_default = import_react28.default.createContext(null);
 
   // node_modules/react-bootstrap/node_modules/react-transition-group/esm/utils/reflow.js
   var forceReflow = function forceReflow2(node) {
@@ -24150,12 +24285,12 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         return null;
       }
       var _this$props = this.props, children = _this$props.children, _in = _this$props.in, _mountOnEnter = _this$props.mountOnEnter, _unmountOnExit = _this$props.unmountOnExit, _appear = _this$props.appear, _enter = _this$props.enter, _exit = _this$props.exit, _timeout = _this$props.timeout, _addEndListener = _this$props.addEndListener, _onEnter = _this$props.onEnter, _onEntering = _this$props.onEntering, _onEntered = _this$props.onEntered, _onExit = _this$props.onExit, _onExiting = _this$props.onExiting, _onExited = _this$props.onExited, _nodeRef = _this$props.nodeRef, childProps = _objectWithoutPropertiesLoose(_this$props, ["children", "in", "mountOnEnter", "unmountOnExit", "appear", "enter", "exit", "timeout", "addEndListener", "onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited", "nodeRef"]);
-      return /* @__PURE__ */ import_react27.default.createElement(TransitionGroupContext_default.Provider, {
+      return /* @__PURE__ */ import_react29.default.createElement(TransitionGroupContext_default.Provider, {
         value: null
-      }, typeof children === "function" ? children(status, childProps) : import_react27.default.cloneElement(import_react27.default.Children.only(children), childProps));
+      }, typeof children === "function" ? children(status, childProps) : import_react29.default.cloneElement(import_react29.default.Children.only(children), childProps));
     };
     return Transition2;
-  }(import_react27.default.Component);
+  }(import_react29.default.Component);
   Transition.contextType = TransitionGroupContext_default;
   Transition.propTypes = true ? {
     nodeRef: import_prop_types2.default.shape({
@@ -24411,20 +24546,20 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     appear: false
   };
   var fadeStyles = (_fadeStyles = {}, _fadeStyles[ENTERING] = "show", _fadeStyles[ENTERED2] = "show", _fadeStyles);
-  var Fade = /* @__PURE__ */ import_react28.default.forwardRef(function(_ref, ref) {
+  var Fade = /* @__PURE__ */ import_react30.default.forwardRef(function(_ref, ref) {
     var className = _ref.className, children = _ref.children, props = _objectWithoutPropertiesLoose(_ref, _excluded);
-    var handleEnter = (0, import_react28.useCallback)(function(node) {
+    var handleEnter = (0, import_react30.useCallback)(function(node) {
       triggerBrowserReflow(node);
       if (props.onEnter)
         props.onEnter(node);
     }, [props]);
-    return /* @__PURE__ */ import_react28.default.createElement(Transition_default, _extends({
+    return /* @__PURE__ */ import_react30.default.createElement(Transition_default, _extends({
       ref,
       addEndListener: transitionEndListener
     }, props, {
       onEnter: handleEnter
     }), function(status, innerProps) {
-      return /* @__PURE__ */ import_react28.default.cloneElement(children, _extends({}, innerProps, {
+      return /* @__PURE__ */ import_react30.default.cloneElement(children, _extends({}, innerProps, {
         className: (0, import_classnames9.default)("fade", className, children.props.className, fadeStyles[status])
       }));
     });
@@ -24435,16 +24570,16 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // node_modules/react-bootstrap/esm/ToastHeader.js
   var import_classnames11 = __toESM(require_classnames());
-  var import_react34 = __toESM(require_react());
+  var import_react36 = __toESM(require_react());
 
   // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useEventCallback.js
-  var import_react30 = __toESM(require_react());
+  var import_react32 = __toESM(require_react());
 
   // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useCommittedRef.js
-  var import_react29 = __toESM(require_react());
+  var import_react31 = __toESM(require_react());
   function useCommittedRef(value) {
-    var ref = (0, import_react29.useRef)(value);
-    (0, import_react29.useEffect)(function() {
+    var ref = (0, import_react31.useRef)(value);
+    (0, import_react31.useEffect)(function() {
       ref.current = value;
     }, [value]);
     return ref;
@@ -24454,24 +24589,24 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useEventCallback.js
   function useEventCallback(fn) {
     var ref = useCommittedRef_default(fn);
-    return (0, import_react30.useCallback)(function() {
+    return (0, import_react32.useCallback)(function() {
       return ref.current && ref.current.apply(ref, arguments);
     }, [ref]);
   }
 
   // node_modules/react-bootstrap/esm/ThemeProvider.js
-  var import_react31 = __toESM(require_react());
-  var ThemeContext = /* @__PURE__ */ import_react31.default.createContext({});
+  var import_react33 = __toESM(require_react());
+  var ThemeContext = /* @__PURE__ */ import_react33.default.createContext({});
   var Consumer = ThemeContext.Consumer;
   var Provider2 = ThemeContext.Provider;
   function useBootstrapPrefix(prefix, defaultPrefix) {
-    var prefixes = (0, import_react31.useContext)(ThemeContext);
+    var prefixes = (0, import_react33.useContext)(ThemeContext);
     return prefix || prefixes[defaultPrefix] || defaultPrefix;
   }
 
   // node_modules/react-bootstrap/esm/CloseButton.js
   var import_prop_types3 = __toESM(require_prop_types());
-  var import_react32 = __toESM(require_react());
+  var import_react34 = __toESM(require_react());
   var import_classnames10 = __toESM(require_classnames());
   var _excluded2 = ["label", "onClick", "className"];
   var propTypes = {
@@ -24481,16 +24616,16 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   var defaultProps2 = {
     label: "Close"
   };
-  var CloseButton = /* @__PURE__ */ import_react32.default.forwardRef(function(_ref, ref) {
+  var CloseButton = /* @__PURE__ */ import_react34.default.forwardRef(function(_ref, ref) {
     var label = _ref.label, onClick = _ref.onClick, className = _ref.className, props = _objectWithoutPropertiesLoose(_ref, _excluded2);
-    return /* @__PURE__ */ import_react32.default.createElement("button", _extends({
+    return /* @__PURE__ */ import_react34.default.createElement("button", _extends({
       ref,
       type: "button",
       className: (0, import_classnames10.default)("close", className),
       onClick
-    }, props), /* @__PURE__ */ import_react32.default.createElement("span", {
+    }, props), /* @__PURE__ */ import_react34.default.createElement("span", {
       "aria-hidden": "true"
-    }, "\xD7"), /* @__PURE__ */ import_react32.default.createElement("span", {
+    }, "\xD7"), /* @__PURE__ */ import_react34.default.createElement("span", {
       className: "sr-only"
     }, label));
   });
@@ -24500,8 +24635,8 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   var CloseButton_default = CloseButton;
 
   // node_modules/react-bootstrap/esm/ToastContext.js
-  var import_react33 = __toESM(require_react());
-  var ToastContext = /* @__PURE__ */ import_react33.default.createContext({
+  var import_react35 = __toESM(require_react());
+  var ToastContext = /* @__PURE__ */ import_react35.default.createContext({
     onClose: function onClose() {
     }
   });
@@ -24513,20 +24648,20 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     closeLabel: "Close",
     closeButton: true
   };
-  var ToastHeader = /* @__PURE__ */ import_react34.default.forwardRef(function(_ref, ref) {
+  var ToastHeader = /* @__PURE__ */ import_react36.default.forwardRef(function(_ref, ref) {
     var bsPrefix = _ref.bsPrefix, closeLabel = _ref.closeLabel, closeButton = _ref.closeButton, className = _ref.className, children = _ref.children, props = _objectWithoutPropertiesLoose(_ref, _excluded3);
     bsPrefix = useBootstrapPrefix(bsPrefix, "toast-header");
-    var context4 = (0, import_react34.useContext)(ToastContext_default);
+    var context4 = (0, import_react36.useContext)(ToastContext_default);
     var handleClick = useEventCallback(function(e) {
       if (context4 && context4.onClose) {
         context4.onClose(e);
       }
     });
-    return /* @__PURE__ */ import_react34.default.createElement("div", _extends({
+    return /* @__PURE__ */ import_react36.default.createElement("div", _extends({
       ref
     }, props, {
       className: (0, import_classnames11.default)(bsPrefix, className)
-    }), children, closeButton && /* @__PURE__ */ import_react34.default.createElement(CloseButton_default, {
+    }), children, closeButton && /* @__PURE__ */ import_react36.default.createElement(CloseButton_default, {
       label: closeLabel,
       onClick: handleClick,
       className: "ml-2 mb-1",
@@ -24549,17 +24684,17 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/react-bootstrap/esm/createWithBsPrefix.js
-  var import_react35 = __toESM(require_react());
+  var import_react37 = __toESM(require_react());
   var _excluded4 = ["className", "bsPrefix", "as"];
   var pascalCase = function pascalCase2(str) {
     return str[0].toUpperCase() + camelize(str).slice(1);
   };
   function createWithBsPrefix(prefix, _temp) {
     var _ref = _temp === void 0 ? {} : _temp, _ref$displayName = _ref.displayName, displayName = _ref$displayName === void 0 ? pascalCase(prefix) : _ref$displayName, Component = _ref.Component, defaultProps6 = _ref.defaultProps;
-    var BsComponent = /* @__PURE__ */ import_react35.default.forwardRef(function(_ref2, ref) {
+    var BsComponent = /* @__PURE__ */ import_react37.default.forwardRef(function(_ref2, ref) {
       var className = _ref2.className, bsPrefix = _ref2.bsPrefix, _ref2$as = _ref2.as, Tag2 = _ref2$as === void 0 ? Component || "div" : _ref2$as, props = _objectWithoutPropertiesLoose(_ref2, _excluded4);
       var resolvedPrefix = useBootstrapPrefix(bsPrefix, prefix);
-      return /* @__PURE__ */ import_react35.default.createElement(Tag2, _extends({
+      return /* @__PURE__ */ import_react37.default.createElement(Tag2, _extends({
         ref,
         className: (0, import_classnames12.default)(className, resolvedPrefix)
       }, props));
@@ -24574,41 +24709,41 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // node_modules/react-bootstrap/esm/Toast.js
   var _excluded5 = ["bsPrefix", "className", "children", "transition", "show", "animation", "delay", "autohide", "onClose"];
-  var Toast = /* @__PURE__ */ import_react36.default.forwardRef(function(_ref, ref) {
+  var Toast = /* @__PURE__ */ import_react38.default.forwardRef(function(_ref, ref) {
     var bsPrefix = _ref.bsPrefix, className = _ref.className, children = _ref.children, _ref$transition = _ref.transition, Transition2 = _ref$transition === void 0 ? Fade_default : _ref$transition, _ref$show = _ref.show, show = _ref$show === void 0 ? true : _ref$show, _ref$animation = _ref.animation, animation = _ref$animation === void 0 ? true : _ref$animation, _ref$delay = _ref.delay, delay = _ref$delay === void 0 ? 3e3 : _ref$delay, _ref$autohide = _ref.autohide, autohide = _ref$autohide === void 0 ? false : _ref$autohide, onClose2 = _ref.onClose, props = _objectWithoutPropertiesLoose(_ref, _excluded5);
     bsPrefix = useBootstrapPrefix(bsPrefix, "toast");
-    var delayRef = (0, import_react36.useRef)(delay);
-    var onCloseRef = (0, import_react36.useRef)(onClose2);
-    (0, import_react36.useEffect)(function() {
+    var delayRef = (0, import_react38.useRef)(delay);
+    var onCloseRef = (0, import_react38.useRef)(onClose2);
+    (0, import_react38.useEffect)(function() {
       delayRef.current = delay;
       onCloseRef.current = onClose2;
     }, [delay, onClose2]);
     var autohideTimeout = useTimeout();
     var autohideToast = !!(autohide && show);
-    var autohideFunc = (0, import_react36.useCallback)(function() {
+    var autohideFunc = (0, import_react38.useCallback)(function() {
       if (autohideToast) {
         onCloseRef.current == null ? void 0 : onCloseRef.current();
       }
     }, [autohideToast]);
-    (0, import_react36.useEffect)(function() {
+    (0, import_react38.useEffect)(function() {
       autohideTimeout.set(autohideFunc, delayRef.current);
     }, [autohideTimeout, autohideFunc]);
-    var toastContext = (0, import_react36.useMemo)(function() {
+    var toastContext = (0, import_react38.useMemo)(function() {
       return {
         onClose: onClose2
       };
     }, [onClose2]);
     var hasAnimation = !!(Transition2 && animation);
-    var toast = /* @__PURE__ */ import_react36.default.createElement("div", _extends({}, props, {
+    var toast = /* @__PURE__ */ import_react38.default.createElement("div", _extends({}, props, {
       ref,
       className: (0, import_classnames13.default)(bsPrefix, className, !hasAnimation && (show ? "show" : "hide")),
       role: "alert",
       "aria-live": "assertive",
       "aria-atomic": "true"
     }), children);
-    return /* @__PURE__ */ import_react36.default.createElement(ToastContext_default.Provider, {
+    return /* @__PURE__ */ import_react38.default.createElement(ToastContext_default.Provider, {
       value: toastContext
-    }, hasAnimation && Transition2 ? /* @__PURE__ */ import_react36.default.createElement(Transition2, {
+    }, hasAnimation && Transition2 ? /* @__PURE__ */ import_react38.default.createElement(Transition2, {
       in: show,
       unmountOnExit: true
     }, toast) : toast);
@@ -24620,21 +24755,21 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   });
 
   // src/components/diagramList/diagramList.js
-  var import_react49 = __toESM(require_react());
+  var import_react51 = __toESM(require_react());
 
   // src/components/diagramChange/diagramChange.js
-  var import_react42 = __toESM(require_react());
+  var import_react44 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/Card.js
   var import_classnames16 = __toESM(require_classnames());
-  var import_react40 = __toESM(require_react());
+  var import_react42 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/divWithClassName.js
-  var import_react37 = __toESM(require_react());
+  var import_react39 = __toESM(require_react());
   var import_classnames14 = __toESM(require_classnames());
   var divWithClassName_default = function(className) {
-    return /* @__PURE__ */ import_react37.default.forwardRef(function(p, ref) {
-      return /* @__PURE__ */ import_react37.default.createElement("div", _extends({}, p, {
+    return /* @__PURE__ */ import_react39.default.forwardRef(function(p, ref) {
+      return /* @__PURE__ */ import_react39.default.createElement("div", _extends({}, p, {
         ref,
         className: (0, import_classnames14.default)(p.className, className)
       }));
@@ -24642,23 +24777,23 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   };
 
   // node_modules/react-bootstrap/esm/CardContext.js
-  var import_react38 = __toESM(require_react());
-  var context2 = /* @__PURE__ */ import_react38.default.createContext(null);
+  var import_react40 = __toESM(require_react());
+  var context2 = /* @__PURE__ */ import_react40.default.createContext(null);
   context2.displayName = "CardContext";
   var CardContext_default = context2;
 
   // node_modules/react-bootstrap/esm/CardImg.js
   var import_classnames15 = __toESM(require_classnames());
-  var import_react39 = __toESM(require_react());
+  var import_react41 = __toESM(require_react());
   var _excluded6 = ["bsPrefix", "className", "variant", "as"];
   var defaultProps4 = {
     variant: null
   };
-  var CardImg = /* @__PURE__ */ import_react39.default.forwardRef(
+  var CardImg = /* @__PURE__ */ import_react41.default.forwardRef(
     function(_ref, ref) {
       var bsPrefix = _ref.bsPrefix, className = _ref.className, variant = _ref.variant, _ref$as = _ref.as, Component = _ref$as === void 0 ? "img" : _ref$as, props = _objectWithoutPropertiesLoose(_ref, _excluded6);
       var prefix = useBootstrapPrefix(bsPrefix, "card-img");
-      return /* @__PURE__ */ import_react39.default.createElement(Component, _extends({
+      return /* @__PURE__ */ import_react41.default.createElement(Component, _extends({
         ref,
         className: (0, import_classnames15.default)(variant ? prefix + "-" + variant : prefix, className)
       }, props));
@@ -24691,21 +24826,21 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   var defaultProps5 = {
     body: false
   };
-  var Card = /* @__PURE__ */ import_react40.default.forwardRef(function(_ref, ref) {
+  var Card = /* @__PURE__ */ import_react42.default.forwardRef(function(_ref, ref) {
     var bsPrefix = _ref.bsPrefix, className = _ref.className, bg = _ref.bg, text = _ref.text, border = _ref.border, body = _ref.body, children = _ref.children, _ref$as = _ref.as, Component = _ref$as === void 0 ? "div" : _ref$as, props = _objectWithoutPropertiesLoose(_ref, _excluded7);
     var prefix = useBootstrapPrefix(bsPrefix, "card");
-    var cardContext = (0, import_react40.useMemo)(function() {
+    var cardContext = (0, import_react42.useMemo)(function() {
       return {
         cardHeaderBsPrefix: prefix + "-header"
       };
     }, [prefix]);
-    return /* @__PURE__ */ import_react40.default.createElement(CardContext_default.Provider, {
+    return /* @__PURE__ */ import_react42.default.createElement(CardContext_default.Provider, {
       value: cardContext
-    }, /* @__PURE__ */ import_react40.default.createElement(Component, _extends({
+    }, /* @__PURE__ */ import_react42.default.createElement(Component, _extends({
       ref
     }, props, {
       className: (0, import_classnames16.default)(className, prefix, bg && "bg-" + bg, text && "text-" + text, border && "border-" + border)
-    }), body ? /* @__PURE__ */ import_react40.default.createElement(CardBody, null, children) : children));
+    }), body ? /* @__PURE__ */ import_react42.default.createElement(CardBody, null, children) : children));
   });
   Card.displayName = "Card";
   Card.defaultProps = defaultProps5;
@@ -24721,36 +24856,36 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   var Card_default = Card;
 
   // src/components/diagramChange/diagramChangeWidget.js
-  var import_react41 = __toESM(require_react());
+  var import_react43 = __toESM(require_react());
   function DiagramChangeWidget(props) {
-    return /* @__PURE__ */ import_react41.default.createElement("div", {
+    return /* @__PURE__ */ import_react43.default.createElement("div", {
       className: "diagramChange"
-    }, /* @__PURE__ */ import_react41.default.createElement("div", {
+    }, /* @__PURE__ */ import_react43.default.createElement("div", {
       className: "diagramChangeArrowBox"
-    }, /* @__PURE__ */ import_react41.default.createElement("svg", {
+    }, /* @__PURE__ */ import_react43.default.createElement("svg", {
       className: "diagramChangeArrow",
       version: "1.1",
       viewBox: "0 0 920 281.7",
       xmlns: "http://www.w3.org/2000/svg"
-    }, /* @__PURE__ */ import_react41.default.createElement("g", {
+    }, /* @__PURE__ */ import_react43.default.createElement("g", {
       transform: "translate(-45.141 -322.39)"
-    }, /* @__PURE__ */ import_react41.default.createElement("g", {
+    }, /* @__PURE__ */ import_react43.default.createElement("g", {
       transform: "matrix(.40782 1.0902 2.1895 -.20307 -572.25 1088.6)",
       strokeWidth: "0"
-    }, /* @__PURE__ */ import_react41.default.createElement("path", {
+    }, /* @__PURE__ */ import_react43.default.createElement("path", {
       d: "m-543.8 549.31c21.012 159.22 238.48 193.45 142.86 175.71-102.4-18.993-188.57-81.228-188.57-181.43s86.06-163.05 188.57-181.43c74.041-13.272-166.77 5.932-142.86 187.14z",
       color: "#000000"
-    }), /* @__PURE__ */ import_react41.default.createElement("path", {
+    }), /* @__PURE__ */ import_react43.default.createElement("path", {
       transform: "matrix(.95969 -.28107 .28107 .95969 -196.31 -60.926)",
       d: "m-380 746.65c-5.7405 5.1467-181.6-52.408-183.18-59.952-1.5869-7.5448 136.19-131.06 143.51-128.67 7.3274 2.3981 45.413 183.47 39.672 188.62z",
       color: "#000000"
-    }))))), /* @__PURE__ */ import_react41.default.createElement("div", {
+    }))))), /* @__PURE__ */ import_react43.default.createElement("div", {
       className: "diagramChangeBox"
-    }, /* @__PURE__ */ import_react41.default.createElement("div", {
+    }, /* @__PURE__ */ import_react43.default.createElement("div", {
       className: "diagramChangeItem diagramChangeStart"
-    }, "Start"), /* @__PURE__ */ import_react41.default.createElement("div", {
+    }, "Start"), /* @__PURE__ */ import_react43.default.createElement("div", {
       className: "diagramChangeItem diagramChangeChange"
-    }, "Change"), /* @__PURE__ */ import_react41.default.createElement("div", {
+    }, "Change"), /* @__PURE__ */ import_react43.default.createElement("div", {
       className: "diagramChangeItem diagramChangeEnd"
     }, "End")));
   }
@@ -24765,64 +24900,64 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         payload: "CHANGE"
       });
     }
-    return /* @__PURE__ */ import_react42.default.createElement("div", {
+    return /* @__PURE__ */ import_react44.default.createElement("div", {
       className: "diagramSample"
-    }, /* @__PURE__ */ import_react42.default.createElement(Card_default, {
+    }, /* @__PURE__ */ import_react44.default.createElement(Card_default, {
       onClick: clickHandler
-    }, /* @__PURE__ */ import_react42.default.createElement(Card_default.Body, {
+    }, /* @__PURE__ */ import_react44.default.createElement(Card_default.Body, {
       className: `diagramCard ${selected ? "selected" : ""}`
-    }, /* @__PURE__ */ import_react42.default.createElement("div", {
+    }, /* @__PURE__ */ import_react44.default.createElement("div", {
       className: "diagramTitle"
-    }, /* @__PURE__ */ import_react42.default.createElement("h3", null, "CHANGE"), /* @__PURE__ */ import_react42.default.createElement("p", null, "Is there a start amount that increases or decreases to a new amount?")), /* @__PURE__ */ import_react42.default.createElement("div", {
+    }, /* @__PURE__ */ import_react44.default.createElement("h3", null, "CHANGE"), /* @__PURE__ */ import_react44.default.createElement("p", null, "Is there a start amount that increases or decreases to a new amount?")), /* @__PURE__ */ import_react44.default.createElement("div", {
       className: "diagramExample"
-    }, /* @__PURE__ */ import_react42.default.createElement(DiagramChangeWidget, null), /* @__PURE__ */ import_react42.default.createElement("div", {
+    }, /* @__PURE__ */ import_react44.default.createElement(DiagramChangeWidget, null), /* @__PURE__ */ import_react44.default.createElement("div", {
       className: "diagramEquation"
     }, "S +/- C = E")))));
   }
   var diagramChange_default = DiagramChange;
 
   // src/components/diagramEqualGroups/diagramEqualGroups.js
-  var import_react44 = __toESM(require_react());
+  var import_react46 = __toESM(require_react());
 
   // src/components/diagramEqualGroups/diagramEqualGroupsWidget.js
-  var import_react43 = __toESM(require_react());
+  var import_react45 = __toESM(require_react());
   function DiagramEqualGroupsWidget(props) {
-    return /* @__PURE__ */ import_react43.default.createElement("div", {
+    return /* @__PURE__ */ import_react45.default.createElement("div", {
       className: "diagramEqualBox"
-    }, /* @__PURE__ */ import_react43.default.createElement("div", {
+    }, /* @__PURE__ */ import_react45.default.createElement("div", {
       className: "diagramEqualItem diagramEqualStart"
-    }, /* @__PURE__ */ import_react43.default.createElement("div", {
+    }, /* @__PURE__ */ import_react45.default.createElement("div", {
       className: "diagramEqualIcon"
-    }, /* @__PURE__ */ import_react43.default.createElement("svg", {
+    }, /* @__PURE__ */ import_react45.default.createElement("svg", {
       version: "1.1",
       viewBox: "0 0 100 100",
       xmlns: "http://www.w3.org/2000/svg"
-    }, /* @__PURE__ */ import_react43.default.createElement("ellipse", {
+    }, /* @__PURE__ */ import_react45.default.createElement("ellipse", {
       cx: "50",
       cy: "50",
       rx: "47.015",
       ry: "47.015",
       fill: "#d5d3d3",
       stroke: "#000"
-    }))), /* @__PURE__ */ import_react43.default.createElement("div", {
+    }))), /* @__PURE__ */ import_react45.default.createElement("div", {
       className: "diagramEqualLabel"
-    }, "Groups")), /* @__PURE__ */ import_react43.default.createElement("div", null, "X"), /* @__PURE__ */ import_react43.default.createElement("div", {
+    }, "Groups")), /* @__PURE__ */ import_react45.default.createElement("div", null, "X"), /* @__PURE__ */ import_react45.default.createElement("div", {
       className: "diagramEqualItem diagramEqualEqual"
-    }, "Number"), /* @__PURE__ */ import_react43.default.createElement("div", null, " = "), /* @__PURE__ */ import_react43.default.createElement("div", {
+    }, "Number"), /* @__PURE__ */ import_react45.default.createElement("div", null, " = "), /* @__PURE__ */ import_react45.default.createElement("div", {
       className: "diagramEqualItem diagramEqualEnd"
-    }, /* @__PURE__ */ import_react43.default.createElement("div", {
+    }, /* @__PURE__ */ import_react45.default.createElement("div", {
       className: "diagramEqualIcon"
-    }, /* @__PURE__ */ import_react43.default.createElement("svg", {
+    }, /* @__PURE__ */ import_react45.default.createElement("svg", {
       version: "1.1",
       viewBox: "0 0 100 100",
       xmlns: "http://www.w3.org/2000/svg"
-    }, /* @__PURE__ */ import_react43.default.createElement("path", {
+    }, /* @__PURE__ */ import_react45.default.createElement("path", {
       transform: "matrix(.14629 1.284 -1.284 .14629 109.51 -13.316)",
       d: "m72.025 92.359-60.673-44.835 69.165-30.127-4.2458 37.481z",
       fill: "#d5d3d3",
       stroke: "#000",
       strokeWidth: "1"
-    }))), /* @__PURE__ */ import_react43.default.createElement("div", {
+    }))), /* @__PURE__ */ import_react45.default.createElement("div", {
       className: "diagramEqualLabel"
     }, "Product")));
   }
@@ -24837,37 +24972,37 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         payload: "EQUALGROUPS"
       });
     }
-    return /* @__PURE__ */ import_react44.default.createElement("div", {
+    return /* @__PURE__ */ import_react46.default.createElement("div", {
       className: "diagramSample"
-    }, /* @__PURE__ */ import_react44.default.createElement(Card_default, {
+    }, /* @__PURE__ */ import_react46.default.createElement(Card_default, {
       onClick: clickHandler
-    }, /* @__PURE__ */ import_react44.default.createElement(Card_default.Body, {
+    }, /* @__PURE__ */ import_react46.default.createElement(Card_default.Body, {
       className: `diagramCard ${selected ? "selected" : ""}`
-    }, /* @__PURE__ */ import_react44.default.createElement("div", {
+    }, /* @__PURE__ */ import_react46.default.createElement("div", {
       className: "diagramTitle"
-    }, /* @__PURE__ */ import_react44.default.createElement("h3", null, "EQUAL GROUPS"), /* @__PURE__ */ import_react44.default.createElement("p", null, "Are there groups that are all the same size?")), /* @__PURE__ */ import_react44.default.createElement("div", {
+    }, /* @__PURE__ */ import_react46.default.createElement("h3", null, "EQUAL GROUPS"), /* @__PURE__ */ import_react46.default.createElement("p", null, "Are there groups that are all the same size?")), /* @__PURE__ */ import_react46.default.createElement("div", {
       className: "diagramExample"
-    }, /* @__PURE__ */ import_react44.default.createElement(DiagramEqualGroupsWidget, null), /* @__PURE__ */ import_react44.default.createElement("div", {
+    }, /* @__PURE__ */ import_react46.default.createElement(DiagramEqualGroupsWidget, null), /* @__PURE__ */ import_react46.default.createElement("div", {
       className: "diagramEquation"
     }, "G X N = P")))));
   }
   var diagramEqualGroups_default = DiagramEqualGroups;
 
   // src/components/diagramCombine/diagramCombine.js
-  var import_react46 = __toESM(require_react());
+  var import_react48 = __toESM(require_react());
 
   // src/components/diagramCombine/diagramCombineWidget.js
-  var import_react45 = __toESM(require_react());
+  var import_react47 = __toESM(require_react());
   function DiagramCombineWidget(props) {
-    return /* @__PURE__ */ import_react45.default.createElement("div", {
+    return /* @__PURE__ */ import_react47.default.createElement("div", {
       className: "diagramCombineBox"
-    }, /* @__PURE__ */ import_react45.default.createElement("div", {
+    }, /* @__PURE__ */ import_react47.default.createElement("div", {
       className: "diagramCombineTop"
-    }, "Total"), /* @__PURE__ */ import_react45.default.createElement("div", {
+    }, "Total"), /* @__PURE__ */ import_react47.default.createElement("div", {
       className: "diagramCombineBottom"
-    }, /* @__PURE__ */ import_react45.default.createElement("div", {
+    }, /* @__PURE__ */ import_react47.default.createElement("div", {
       className: "diagramCombineBottomLeft"
-    }, "Part"), /* @__PURE__ */ import_react45.default.createElement("div", {
+    }, "Part"), /* @__PURE__ */ import_react47.default.createElement("div", {
       className: "diagramCombineBottomRight"
     }, "Part")));
   }
@@ -24882,64 +25017,64 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         payload: "COMBINE"
       });
     }
-    return /* @__PURE__ */ import_react46.default.createElement("div", {
+    return /* @__PURE__ */ import_react48.default.createElement("div", {
       className: "diagramSample"
-    }, /* @__PURE__ */ import_react46.default.createElement(Card_default, {
+    }, /* @__PURE__ */ import_react48.default.createElement(Card_default, {
       onClick: clickHandler
-    }, /* @__PURE__ */ import_react46.default.createElement(Card_default.Body, {
+    }, /* @__PURE__ */ import_react48.default.createElement(Card_default.Body, {
       className: `diagramCard ${selected ? "selected" : ""}`
-    }, /* @__PURE__ */ import_react46.default.createElement("div", {
+    }, /* @__PURE__ */ import_react48.default.createElement("div", {
       className: "diagramTitle"
-    }, /* @__PURE__ */ import_react46.default.createElement("h3", null, "COMBINE"), /* @__PURE__ */ import_react46.default.createElement("p", null, "Are parts put together into a total? ")), /* @__PURE__ */ import_react46.default.createElement("div", {
+    }, /* @__PURE__ */ import_react48.default.createElement("h3", null, "COMBINE"), /* @__PURE__ */ import_react48.default.createElement("p", null, "Are parts put together into a total? ")), /* @__PURE__ */ import_react48.default.createElement("div", {
       className: "diagramExample"
-    }, /* @__PURE__ */ import_react46.default.createElement(DiagramCombineWidget, null), /* @__PURE__ */ import_react46.default.createElement("div", {
+    }, /* @__PURE__ */ import_react48.default.createElement(DiagramCombineWidget, null), /* @__PURE__ */ import_react48.default.createElement("div", {
       className: "diagramEquation"
     }, "P + Q = T")))));
   }
   var diagramCombine_default = DiagramCombine;
 
   // src/components/diagramMultiplyTimes/diagramMultiplyTimes.js
-  var import_react48 = __toESM(require_react());
+  var import_react50 = __toESM(require_react());
 
   // src/components/diagramMultiplyTimes/diagramMultiplyTimesWidget.js
-  var import_react47 = __toESM(require_react());
+  var import_react49 = __toESM(require_react());
   function DiagramMultiplyTimesWidget(props) {
-    return /* @__PURE__ */ import_react47.default.createElement("div", {
+    return /* @__PURE__ */ import_react49.default.createElement("div", {
       className: "diagramMultipleBox"
-    }, /* @__PURE__ */ import_react47.default.createElement("div", {
+    }, /* @__PURE__ */ import_react49.default.createElement("div", {
       className: "diagramMultipleItem diagramMultipleStart"
-    }, /* @__PURE__ */ import_react47.default.createElement("div", {
+    }, /* @__PURE__ */ import_react49.default.createElement("div", {
       className: "diagramMultipleIcon"
-    }, /* @__PURE__ */ import_react47.default.createElement("svg", {
+    }, /* @__PURE__ */ import_react49.default.createElement("svg", {
       version: "1.1",
       viewBox: "0 0 100 100",
       xmlns: "http://www.w3.org/2000/svg"
-    }, /* @__PURE__ */ import_react47.default.createElement("ellipse", {
+    }, /* @__PURE__ */ import_react49.default.createElement("ellipse", {
       cx: "50",
       cy: "50",
       rx: "47.015",
       ry: "47.015",
       fill: "#d5d3d3",
       stroke: "#000"
-    }))), /* @__PURE__ */ import_react47.default.createElement("div", {
+    }))), /* @__PURE__ */ import_react49.default.createElement("div", {
       className: "diagramMultipleLabel"
-    }, "Sets")), /* @__PURE__ */ import_react47.default.createElement("div", null, "X"), /* @__PURE__ */ import_react47.default.createElement("div", {
+    }, "Sets")), /* @__PURE__ */ import_react49.default.createElement("div", null, "X"), /* @__PURE__ */ import_react49.default.createElement("div", {
       className: "diagramMultipleItem diagramMultipleMultiple"
-    }, "Multiplier"), /* @__PURE__ */ import_react47.default.createElement("div", null, " = "), /* @__PURE__ */ import_react47.default.createElement("div", {
+    }, "Multiplier"), /* @__PURE__ */ import_react49.default.createElement("div", null, " = "), /* @__PURE__ */ import_react49.default.createElement("div", {
       className: "diagramMultipleItem diagramMultipleEnd"
-    }, /* @__PURE__ */ import_react47.default.createElement("div", {
+    }, /* @__PURE__ */ import_react49.default.createElement("div", {
       className: "diagramMultipleIcon"
-    }, /* @__PURE__ */ import_react47.default.createElement("svg", {
+    }, /* @__PURE__ */ import_react49.default.createElement("svg", {
       version: "1.1",
       viewBox: "0 0 100 100",
       xmlns: "http://www.w3.org/2000/svg"
-    }, /* @__PURE__ */ import_react47.default.createElement("path", {
+    }, /* @__PURE__ */ import_react49.default.createElement("path", {
       transform: "matrix(.14629 1.284 -1.284 .14629 109.51 -13.316)",
       d: "m72.025 92.359-60.673-44.835 69.165-30.127-4.2458 37.481z",
       fill: "#d5d3d3",
       stroke: "#000",
       strokeWidth: "1"
-    }))), /* @__PURE__ */ import_react47.default.createElement("div", {
+    }))), /* @__PURE__ */ import_react49.default.createElement("div", {
       className: "diagramMultipleLabel"
     }, "Product")));
   }
@@ -24954,17 +25089,17 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         payload: "MULTIPLYTIMES"
       });
     }
-    return /* @__PURE__ */ import_react48.default.createElement("div", {
+    return /* @__PURE__ */ import_react50.default.createElement("div", {
       className: "diagramSample"
-    }, /* @__PURE__ */ import_react48.default.createElement(Card_default, {
+    }, /* @__PURE__ */ import_react50.default.createElement(Card_default, {
       onClick: clickHandler
-    }, /* @__PURE__ */ import_react48.default.createElement(Card_default.Body, {
+    }, /* @__PURE__ */ import_react50.default.createElement(Card_default.Body, {
       className: `diagramCard ${selected ? "selected" : ""}`
-    }, /* @__PURE__ */ import_react48.default.createElement("div", {
+    }, /* @__PURE__ */ import_react50.default.createElement("div", {
       className: "diagramTitle"
-    }, /* @__PURE__ */ import_react48.default.createElement("h3", null, "MULTIPLE TIMES"), /* @__PURE__ */ import_react48.default.createElement("p", null, "Are amounts/sets compared a number of times?")), /* @__PURE__ */ import_react48.default.createElement("div", {
+    }, /* @__PURE__ */ import_react50.default.createElement("h3", null, "MULTIPLE TIMES"), /* @__PURE__ */ import_react50.default.createElement("p", null, "Are amounts/sets compared a number of times?")), /* @__PURE__ */ import_react50.default.createElement("div", {
       className: "diagramExample"
-    }, /* @__PURE__ */ import_react48.default.createElement(DiagramMultiplyTimesWidget, null), /* @__PURE__ */ import_react48.default.createElement("div", {
+    }, /* @__PURE__ */ import_react50.default.createElement(DiagramMultiplyTimesWidget, null), /* @__PURE__ */ import_react50.default.createElement("div", {
       className: "diagramEquation"
     }, "S X M = P")))));
   }
@@ -24974,18 +25109,18 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   function DiagramList(props) {
     const current = props.current;
     const onChange = props.onChange;
-    return /* @__PURE__ */ import_react49.default.createElement("div", {
+    return /* @__PURE__ */ import_react51.default.createElement("div", {
       className: "DiagramSelect"
-    }, /* @__PURE__ */ import_react49.default.createElement(diagramCombine_default, {
+    }, /* @__PURE__ */ import_react51.default.createElement(diagramCombine_default, {
       selected: current === "COMBINE",
       onChange
-    }), /* @__PURE__ */ import_react49.default.createElement(diagramMultiplyTimes_default, {
+    }), /* @__PURE__ */ import_react51.default.createElement(diagramMultiplyTimes_default, {
       selected: current === "MULTIPLYTIMES",
       onChange
-    }), /* @__PURE__ */ import_react49.default.createElement(diagramChange_default, {
+    }), /* @__PURE__ */ import_react51.default.createElement(diagramChange_default, {
       selected: current === "CHANGE",
       onChange
-    }), /* @__PURE__ */ import_react49.default.createElement(diagramEqualGroups_default, {
+    }), /* @__PURE__ */ import_react51.default.createElement(diagramEqualGroups_default, {
       selected: current === "EQUALGROUPS",
       onChange
     }));
@@ -24997,28 +25132,50 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     const problem = props.problem;
     const solution = props.solution;
     const onChange = props.onChange;
-    const [showToast, setShowToast] = (0, import_react50.useState)(false);
+    const [toastMsg, setToastMsg] = (0, import_react52.useState)("No toast to see here");
+    const [showToast, setShowToast] = (0, import_react52.useState)(false);
     const toggleToast = () => setShowToast(!showToast);
     const { handleStep } = useWizard();
     handleStep(() => {
       if (!solution.selectedDiagram) {
+        setToastMsg("You must select a diagram before proceeding!");
         toggleToast();
         throw "Don't know where to catch this. If I throw an error object, the app crashes.  This causes an error in the console, but allows me to display the toast and prevent going to next page.";
       }
+      const step = problem.steps.find((s) => s.type === "DIAGRAMSELECT");
+      if (solution.selectedDiagram !== step.correct) {
+        setToastMsg(
+          "That's not the right diagram for this problem.  Try a different choice."
+        );
+        toggleToast();
+        throw "Don't know where to catch this. If I throw an error object, the app crashes.  This causes an error in the console, but allows me to display the toast and prevent going to next page.";
+      } else {
+        onChange({
+          type: "markTime",
+          payload: { contentType: props.contentType, timeStamp: Date.now() }
+        });
+      }
     });
-    return /* @__PURE__ */ import_react50.default.createElement("div", {
+    return /* @__PURE__ */ import_react52.default.createElement("div", {
       className: "DiagramSelectView"
-    }, /* @__PURE__ */ import_react50.default.createElement(stimulator_default, {
+    }, /* @__PURE__ */ import_react52.default.createElement(stimulator_default, {
       text: problem.stimulus,
       enabled: false
-    }), /* @__PURE__ */ import_react50.default.createElement("div", {
+    }), /* @__PURE__ */ import_react52.default.createElement("div", {
       className: "DiagramSelect"
-    }, /* @__PURE__ */ import_react50.default.createElement(Toast_default, {
+    }, /* @__PURE__ */ import_react52.default.createElement(Toast_default, {
       show: showToast,
-      onClose: toggleToast
-    }, /* @__PURE__ */ import_react50.default.createElement(Toast_default.Header, null, /* @__PURE__ */ import_react50.default.createElement("strong", {
+      onClose: toggleToast,
+      style: { margin: "auto" }
+    }, /* @__PURE__ */ import_react52.default.createElement(Toast_default.Header, {
+      style: {
+        background: "red",
+        color: "white",
+        justifyContent: "space-between"
+      }
+    }, /* @__PURE__ */ import_react52.default.createElement("strong", {
       className: "me-auto"
-    }, "Select a Diagram")), /* @__PURE__ */ import_react50.default.createElement(Toast_default.Body, null, "You must select a diagram before proceeding!")), /* @__PURE__ */ import_react50.default.createElement(diagramList_default, {
+    }, "Select a Diagram")), /* @__PURE__ */ import_react52.default.createElement(Toast_default.Body, null, toastMsg)), /* @__PURE__ */ import_react52.default.createElement(diagramList_default, {
       current: solution.selectedDiagram,
       onChange
     })));
@@ -25032,8 +25189,8 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   var import_react78 = __toESM(require_react());
 
   // node_modules/react-dnd/dist/core/DndContext.js
-  var import_react51 = __toESM(require_react(), 1);
-  var DndContext = (0, import_react51.createContext)({
+  var import_react53 = __toESM(require_react(), 1);
+  var DndContext = (0, import_react53.createContext)({
     dragDropManager: void 0
   });
 
@@ -26423,7 +26580,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/react-dnd/dist/core/DndProvider.js
-  var import_react52 = __toESM(require_react(), 1);
+  var import_react54 = __toESM(require_react(), 1);
   function _objectWithoutProperties(source, excluded) {
     if (source == null)
       return {};
@@ -26458,12 +26615,12 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
   var refCount = 0;
   var INSTANCE_SYM = Symbol.for("__REACT_DND_CONTEXT_INSTANCE__");
-  var DndProvider = /* @__PURE__ */ (0, import_react52.memo)(function DndProvider2(_param) {
+  var DndProvider = /* @__PURE__ */ (0, import_react54.memo)(function DndProvider2(_param) {
     var { children } = _param, props = _objectWithoutProperties(_param, [
       "children"
     ]);
     const [manager, isGlobalInstance] = getDndContextValue(props);
-    (0, import_react52.useEffect)(() => {
+    (0, import_react54.useEffect)(() => {
       if (isGlobalInstance) {
         const context4 = getGlobalContext();
         ++refCount;
@@ -26512,18 +26669,18 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // node_modules/react-dnd/dist/hooks/useCollector.js
   var import_fast_deep_equal = __toESM(require_fast_deep_equal(), 1);
-  var import_react54 = __toESM(require_react(), 1);
+  var import_react56 = __toESM(require_react(), 1);
 
   // node_modules/react-dnd/dist/hooks/useIsomorphicLayoutEffect.js
-  var import_react53 = __toESM(require_react(), 1);
-  var useIsomorphicLayoutEffect2 = typeof window !== "undefined" ? import_react53.useLayoutEffect : import_react53.useEffect;
+  var import_react55 = __toESM(require_react(), 1);
+  var useIsomorphicLayoutEffect2 = typeof window !== "undefined" ? import_react55.useLayoutEffect : import_react55.useEffect;
 
   // node_modules/react-dnd/dist/hooks/useCollector.js
   function useCollector(monitor, collect, onUpdate) {
-    const [collected, setCollected] = (0, import_react54.useState)(
+    const [collected, setCollected] = (0, import_react56.useState)(
       () => collect(monitor)
     );
-    const updateCollected = (0, import_react54.useCallback)(() => {
+    const updateCollected = (0, import_react56.useCallback)(() => {
       const nextValue = collect(monitor);
       if (!(0, import_fast_deep_equal.default)(collected, nextValue)) {
         setCollected(nextValue);
@@ -26573,7 +26730,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/react-dnd/dist/hooks/useOptionalFactory.js
-  var import_react55 = __toESM(require_react(), 1);
+  var import_react57 = __toESM(require_react(), 1);
   function useOptionalFactory(arg, deps) {
     const memoDeps = [
       ...deps || []
@@ -26581,15 +26738,15 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     if (deps == null && typeof arg !== "function") {
       memoDeps.push(arg);
     }
-    return (0, import_react55.useMemo)(() => {
+    return (0, import_react57.useMemo)(() => {
       return typeof arg === "function" ? arg() : arg;
     }, memoDeps);
   }
 
   // node_modules/react-dnd/dist/hooks/useDrag/connectors.js
-  var import_react56 = __toESM(require_react(), 1);
+  var import_react58 = __toESM(require_react(), 1);
   function useConnectDragSource(connector) {
-    return (0, import_react56.useMemo)(
+    return (0, import_react58.useMemo)(
       () => connector.hooks.dragSource(),
       [
         connector
@@ -26597,7 +26754,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     );
   }
   function useConnectDragPreview(connector) {
-    return (0, import_react56.useMemo)(
+    return (0, import_react58.useMemo)(
       () => connector.hooks.dragPreview(),
       [
         connector
@@ -26606,7 +26763,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/react-dnd/dist/hooks/useDrag/useDragSourceConnector.js
-  var import_react59 = __toESM(require_react(), 1);
+  var import_react61 = __toESM(require_react(), 1);
 
   // node_modules/react-dnd/dist/internals/DragSourceMonitorImpl.js
   var isCallingCanDrag = false;
@@ -26819,7 +26976,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/react-dnd/dist/internals/wrapConnectorHooks.js
-  var import_react57 = __toESM(require_react(), 1);
+  var import_react59 = __toESM(require_react(), 1);
   function throwIfCompositeComponentElement(element) {
     if (typeof element.type === "string") {
       return;
@@ -26829,7 +26986,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
   function wrapHookToRecognizeElement(hook) {
     return (elementOrNode = null, options = null) => {
-      if (!(0, import_react57.isValidElement)(elementOrNode)) {
+      if (!(0, import_react59.isValidElement)(elementOrNode)) {
         const node = elementOrNode;
         hook(node, options);
         return node;
@@ -26864,11 +27021,11 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     const previousRef = element.ref;
     invariant(typeof previousRef !== "string", "Cannot connect React DnD to an element with an existing string ref. Please convert it to use a callback ref instead, or wrap it into a <span> or <div>. Read more: https://reactjs.org/docs/refs-and-the-dom.html#callback-refs");
     if (!previousRef) {
-      return (0, import_react57.cloneElement)(element, {
+      return (0, import_react59.cloneElement)(element, {
         ref: newRef
       });
     } else {
-      return (0, import_react57.cloneElement)(element, {
+      return (0, import_react59.cloneElement)(element, {
         ref: (node) => {
           setRef(previousRef, node);
           setRef(newRef, node);
@@ -27110,9 +27267,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   };
 
   // node_modules/react-dnd/dist/hooks/useDragDropManager.js
-  var import_react58 = __toESM(require_react(), 1);
+  var import_react60 = __toESM(require_react(), 1);
   function useDragDropManager() {
-    const { dragDropManager } = (0, import_react58.useContext)(DndContext);
+    const { dragDropManager } = (0, import_react60.useContext)(DndContext);
     invariant(dragDropManager != null, "Expected drag drop context");
     return dragDropManager;
   }
@@ -27120,7 +27277,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   // node_modules/react-dnd/dist/hooks/useDrag/useDragSourceConnector.js
   function useDragSourceConnector(dragSourceOptions, dragPreviewOptions) {
     const manager = useDragDropManager();
-    const connector = (0, import_react59.useMemo)(
+    const connector = (0, import_react61.useMemo)(
       () => new SourceConnector(manager.getBackend()),
       [
         manager
@@ -27146,10 +27303,10 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/react-dnd/dist/hooks/useDrag/useDragSourceMonitor.js
-  var import_react60 = __toESM(require_react(), 1);
+  var import_react62 = __toESM(require_react(), 1);
   function useDragSourceMonitor() {
     const manager = useDragDropManager();
-    return (0, import_react60.useMemo)(
+    return (0, import_react62.useMemo)(
       () => new DragSourceMonitorImpl(manager),
       [
         manager
@@ -27158,7 +27315,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/react-dnd/dist/hooks/useDrag/useDragSource.js
-  var import_react61 = __toESM(require_react(), 1);
+  var import_react63 = __toESM(require_react(), 1);
 
   // node_modules/react-dnd/dist/hooks/useDrag/DragSourceImpl.js
   var DragSourceImpl = class {
@@ -27211,14 +27368,14 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // node_modules/react-dnd/dist/hooks/useDrag/useDragSource.js
   function useDragSource(spec, monitor, connector) {
-    const handler = (0, import_react61.useMemo)(
+    const handler = (0, import_react63.useMemo)(
       () => new DragSourceImpl(spec, monitor, connector),
       [
         monitor,
         connector
       ]
     );
-    (0, import_react61.useEffect)(() => {
+    (0, import_react63.useEffect)(() => {
       handler.spec = spec;
     }, [
       spec
@@ -27227,9 +27384,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/react-dnd/dist/hooks/useDrag/useDragType.js
-  var import_react62 = __toESM(require_react(), 1);
+  var import_react64 = __toESM(require_react(), 1);
   function useDragType(spec) {
-    return (0, import_react62.useMemo)(() => {
+    return (0, import_react64.useMemo)(() => {
       const result = spec.type;
       invariant(result != null, "spec.type must be defined");
       return result;
@@ -27275,9 +27432,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/react-dnd/dist/hooks/useDrop/connectors.js
-  var import_react63 = __toESM(require_react(), 1);
+  var import_react65 = __toESM(require_react(), 1);
   function useConnectDropTarget(connector) {
-    return (0, import_react63.useMemo)(
+    return (0, import_react65.useMemo)(
       () => connector.hooks.dropTarget(),
       [
         connector
@@ -27286,10 +27443,10 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/react-dnd/dist/hooks/useDrop/useDropTargetConnector.js
-  var import_react64 = __toESM(require_react(), 1);
+  var import_react66 = __toESM(require_react(), 1);
   function useDropTargetConnector(options) {
     const manager = useDragDropManager();
-    const connector = (0, import_react64.useMemo)(
+    const connector = (0, import_react66.useMemo)(
       () => new TargetConnector(manager.getBackend()),
       [
         manager
@@ -27306,10 +27463,10 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/react-dnd/dist/hooks/useDrop/useDropTargetMonitor.js
-  var import_react65 = __toESM(require_react(), 1);
+  var import_react67 = __toESM(require_react(), 1);
   function useDropTargetMonitor() {
     const manager = useDragDropManager();
-    return (0, import_react65.useMemo)(
+    return (0, import_react67.useMemo)(
       () => new DropTargetMonitorImpl(manager),
       [
         manager
@@ -27318,10 +27475,10 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/react-dnd/dist/hooks/useDrop/useAccept.js
-  var import_react66 = __toESM(require_react(), 1);
+  var import_react68 = __toESM(require_react(), 1);
   function useAccept(spec) {
     const { accept } = spec;
-    return (0, import_react66.useMemo)(() => {
+    return (0, import_react68.useMemo)(() => {
       invariant(spec.accept != null, "accept must be defined");
       return Array.isArray(accept) ? accept : [
         accept
@@ -27332,7 +27489,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/react-dnd/dist/hooks/useDrop/useDropTarget.js
-  var import_react67 = __toESM(require_react(), 1);
+  var import_react69 = __toESM(require_react(), 1);
 
   // node_modules/react-dnd/dist/hooks/useDrop/DropTargetImpl.js
   var DropTargetImpl = class {
@@ -27364,13 +27521,13 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // node_modules/react-dnd/dist/hooks/useDrop/useDropTarget.js
   function useDropTarget(spec, monitor) {
-    const dropTarget = (0, import_react67.useMemo)(
+    const dropTarget = (0, import_react69.useMemo)(
       () => new DropTargetImpl(spec, monitor),
       [
         monitor
       ]
     );
-    (0, import_react67.useEffect)(() => {
+    (0, import_react69.useEffect)(() => {
       dropTarget.spec = spec;
     }, [
       spec
@@ -28858,7 +29015,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   var import_react74 = __toESM(require_react());
 
   // src/components/diagrammer/tags.js
-  var import_react68 = __toESM(require_react());
+  var import_react70 = __toESM(require_react());
   function Tag(props) {
     const tagValue = props.tag;
     const [{ isDragging }, drag] = useDrag(() => ({
@@ -28868,7 +29025,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         isDragging: !!monitor.isDragging()
       })
     }));
-    return /* @__PURE__ */ import_react68.default.createElement(Chip, {
+    return /* @__PURE__ */ import_react70.default.createElement(Chip, {
       key: props.idx,
       ref: drag,
       className: "chip",
@@ -28881,10 +29038,10 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   function Tags(props) {
     const tags = [...props.tags];
     tags.push("unknown");
-    return /* @__PURE__ */ import_react68.default.createElement("div", {
+    return /* @__PURE__ */ import_react70.default.createElement("div", {
       className: "tags"
     }, tags.map((tag, i) => {
-      return /* @__PURE__ */ import_react68.default.createElement(Tag, {
+      return /* @__PURE__ */ import_react70.default.createElement(Tag, {
         key: i,
         idx: i,
         tag
@@ -28894,7 +29051,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   var tags_default = Tags;
 
   // src/components/keypad/key.js
-  var import_react69 = __toESM(require_react());
+  var import_react71 = __toESM(require_react());
   function Key({
     className,
     style: style2,
@@ -28909,7 +29066,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         onClick(retKey);
       }
     }
-    return /* @__PURE__ */ import_react69.default.createElement("button", {
+    return /* @__PURE__ */ import_react71.default.createElement("button", {
       className: `key ${className}`,
       style: { flexGrow: keySize, ...style2 },
       onMouseDown: (evt) => {
@@ -28920,102 +29077,21 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // src/components/keypad/keypad.js
-  var import_react70 = __toESM(require_react());
+  var import_react72 = __toESM(require_react());
   function Keypad({ className, style: style2, children }) {
-    return /* @__PURE__ */ import_react70.default.createElement("div", {
+    return /* @__PURE__ */ import_react72.default.createElement("div", {
       className: `keypad ${className}`,
       style: style2
     }, children);
   }
 
   // src/components/keypad/keyrow.js
-  var import_react71 = __toESM(require_react());
+  var import_react73 = __toESM(require_react());
   function KeyRow({ children, className, style: style2 }) {
-    return /* @__PURE__ */ import_react71.default.createElement("div", {
+    return /* @__PURE__ */ import_react73.default.createElement("div", {
       className: `keyrow ${className}`,
       style: style2
     }, children);
-  }
-
-  // node_modules/react-icons/lib/esm/iconBase.js
-  var import_react73 = __toESM(require_react());
-
-  // node_modules/react-icons/lib/esm/iconContext.js
-  var import_react72 = __toESM(require_react());
-  var DefaultContext = {
-    color: void 0,
-    size: void 0,
-    className: void 0,
-    style: void 0,
-    attr: void 0
-  };
-  var IconContext = import_react72.default.createContext && import_react72.default.createContext(DefaultContext);
-
-  // node_modules/react-icons/lib/esm/iconBase.js
-  var __assign14 = function() {
-    __assign14 = Object.assign || function(t) {
-      for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s)
-          if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-      }
-      return t;
-    };
-    return __assign14.apply(this, arguments);
-  };
-  var __rest7 = function(s, e) {
-    var t = {};
-    for (var p in s)
-      if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-      for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-        if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-          t[p[i]] = s[p[i]];
-      }
-    return t;
-  };
-  function Tree2Element(tree) {
-    return tree && tree.map(function(node, i) {
-      return import_react73.default.createElement(node.tag, __assign14({
-        key: i
-      }, node.attr), Tree2Element(node.child));
-    });
-  }
-  function GenIcon(data) {
-    return function(props) {
-      return import_react73.default.createElement(IconBase, __assign14({
-        attr: __assign14({}, data.attr)
-      }, props), Tree2Element(data.child));
-    };
-  }
-  function IconBase(props) {
-    var elem = function(conf) {
-      var attr = props.attr, size2 = props.size, title = props.title, svgProps = __rest7(props, ["attr", "size", "title"]);
-      var computedSize = size2 || conf.size || "1em";
-      var className;
-      if (conf.className)
-        className = conf.className;
-      if (props.className)
-        className = (className ? className + " " : "") + props.className;
-      return import_react73.default.createElement("svg", __assign14({
-        stroke: "currentColor",
-        fill: "currentColor",
-        strokeWidth: "0"
-      }, conf.attr, attr, svgProps, {
-        className,
-        style: __assign14(__assign14({
-          color: props.color || conf.color
-        }, conf.style), props.style),
-        height: computedSize,
-        width: computedSize,
-        xmlns: "http://www.w3.org/2000/svg"
-      }), title && import_react73.default.createElement("title", null, title), props.children);
-    };
-    return IconContext !== void 0 ? import_react73.default.createElement(IconContext.Consumer, null, function(conf) {
-      return elem(conf);
-    }) : elem(DefaultContext);
   }
 
   // node_modules/react-icons/bs/index.esm.js
@@ -29244,7 +29320,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, /* @__PURE__ */ import_react74.default.createElement("div", {
       className: "diagramChangeItem",
       ref: startDrop,
-      style: { background: isOverStart ? "red" : "" }
+      style: { background: isOverStart ? "#007AFF" : "" }
     }, "start", /* @__PURE__ */ import_react74.default.createElement("input", {
       id: "start",
       value: solution.diagram.change.start,
@@ -29268,7 +29344,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }), /* @__PURE__ */ import_react74.default.createElement("div", {
       className: "diagramChangeItem",
       ref: changeDrop,
-      style: { background: isOverChange ? "red" : "" }
+      style: { background: isOverChange ? "#007AFF" : "" }
     }, "change", /* @__PURE__ */ import_react74.default.createElement("input", {
       id: "change",
       value: solution.diagram.change.change,
@@ -29279,7 +29355,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     })), /* @__PURE__ */ import_react74.default.createElement("div", {
       className: "diagramChangeItem",
       ref: endDrop,
-      style: { background: isOverEnd ? "red" : "" }
+      style: { background: isOverEnd ? "#007AFF" : "" }
     }, "end", /* @__PURE__ */ import_react74.default.createElement("input", {
       id: "end",
       value: solution.diagram.change.end,
@@ -29412,7 +29488,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, /* @__PURE__ */ import_react75.default.createElement("div", {
       className: "diagramCombineTop",
       ref: totalDrop,
-      style: { background: isOverTotal ? "red" : "" }
+      style: { background: isOverTotal ? "#007AFF" : "" }
     }, "Total", /* @__PURE__ */ import_react75.default.createElement("input", {
       id: "total",
       value: solution.diagram.combine.total,
@@ -29426,7 +29502,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, /* @__PURE__ */ import_react75.default.createElement("div", {
       className: "diagramCombineBottomLeft",
       ref: part1Drop,
-      style: { background: isOverPart1 ? "red" : "" }
+      style: { background: isOverPart1 ? "#007AFF" : "" }
     }, "Part", /* @__PURE__ */ import_react75.default.createElement("input", {
       id: "part1",
       value: solution.diagram.combine.part1,
@@ -29437,7 +29513,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     })), /* @__PURE__ */ import_react75.default.createElement("div", {
       className: "diagramCombineBottomRight",
       ref: part2Drop,
-      style: { background: isOverPart2 ? "red" : "" }
+      style: { background: isOverPart2 ? "#007AFF" : "" }
     }, "Part", /* @__PURE__ */ import_react75.default.createElement("input", {
       id: "part2",
       value: solution.diagram.combine.part2,
@@ -29570,7 +29646,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, /* @__PURE__ */ import_react76.default.createElement("div", {
       className: "diagramEqualItem diagramMultipleStart",
       ref: groupsDrop,
-      style: { background: isOverGroups ? "red" : "" }
+      style: { background: isOverGroups ? "#007AFF" : "" }
     }, /* @__PURE__ */ import_react76.default.createElement("div", {
       className: "diagramMultipleIcon"
     }, /* @__PURE__ */ import_react76.default.createElement("svg", {
@@ -29597,7 +29673,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }))), /* @__PURE__ */ import_react76.default.createElement("div", null, "X"), /* @__PURE__ */ import_react76.default.createElement("div", {
       className: "squareIcon verticalIconLayout",
       ref: numberDrop,
-      style: { background: isOverNumber ? "red" : "" }
+      style: { background: isOverNumber ? "#007AFF" : "" }
     }, "Number", /* @__PURE__ */ import_react76.default.createElement("input", {
       id: "number",
       value: solution.diagram.groups.number,
@@ -29608,7 +29684,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     })), /* @__PURE__ */ import_react76.default.createElement("div", null, " = "), /* @__PURE__ */ import_react76.default.createElement("div", {
       className: "diagramEqualItem diagramMultipleEnd",
       ref: productDrop,
-      style: { background: isOverProduct ? "red" : "" }
+      style: { background: isOverProduct ? "#007AFF" : "" }
     }, /* @__PURE__ */ import_react76.default.createElement("div", {
       className: "diagramMultipleIcon"
     }, /* @__PURE__ */ import_react76.default.createElement("svg", {
@@ -29755,7 +29831,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, /* @__PURE__ */ import_react77.default.createElement("div", {
       className: "diagramMultipleItem diagramMultipleStart",
       ref: setsDrop,
-      style: { background: isOverSets ? "red" : "" }
+      style: { background: isOverSets ? "#007AFF" : "" }
     }, /* @__PURE__ */ import_react77.default.createElement("div", {
       className: "diagramMultipleIcon"
     }, /* @__PURE__ */ import_react77.default.createElement("svg", {
@@ -29782,7 +29858,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }))), /* @__PURE__ */ import_react77.default.createElement("div", null, "X"), /* @__PURE__ */ import_react77.default.createElement("div", {
       className: "squareIcon verticalIconLayout",
       ref: multiplierDrop,
-      style: { background: isOverMultiplier ? "red" : "" }
+      style: { background: isOverMultiplier ? "#007AFF" : "" }
     }, "Multiplier", /* @__PURE__ */ import_react77.default.createElement("input", {
       id: "multiplier",
       value: solution.diagram.times.multiplier,
@@ -29793,7 +29869,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     })), /* @__PURE__ */ import_react77.default.createElement("div", null, " = "), /* @__PURE__ */ import_react77.default.createElement("div", {
       className: "diagramMultipleItem diagramMultipleEnd",
       ref: productDrop,
-      style: { background: isOverProduct ? "red" : "" }
+      style: { background: isOverProduct ? "#007AFF" : "" }
     }, /* @__PURE__ */ import_react77.default.createElement("div", {
       className: "diagramMultipleIcon"
     }, /* @__PURE__ */ import_react77.default.createElement("svg", {
@@ -29907,9 +29983,32 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     const toggleToast = () => setShowToast(!showToast);
     const { handleStep } = useWizard();
     handleStep(() => {
-      if (!solution.selectedDiagram) {
+      let fieldsFilled = false;
+      const step = problem.steps.find((s) => s.type === "DIAGRAMSELECT");
+      switch (step.correct) {
+        case "COMBINE":
+          fieldsFilled = solution.diagram.combine.total.length && solution.diagram.combine.part1.length && solution.diagram.combine.part2.length;
+          break;
+        case "MULTIPLYTIMES":
+          fieldsFilled = solution.diagram.times.sets.length && solution.diagram.times.multiplier.length && solution.diagram.times.product.length;
+          break;
+        case "EQUALGROUPS":
+          fieldsFilled = solution.diagram.groups.groups.length && solution.diagram.groups.number.length && solution.diagram.groups.product.length;
+          break;
+        case "CHANGE":
+          fieldsFilled = solution.diagram.change.start.length && solution.diagram.change.change.length && solution.diagram.change.end.length;
+          break;
+        default:
+          fieldsFilled = false;
+      }
+      if (!fieldsFilled) {
         toggleToast();
-        throw Object.assign(new Error("in diagrammerView"), { code: 402 });
+        throw "Don't know where to catch this. If I throw an error object, the app crashes.  This causes an error in the console, but allows me to display the toast and prevent going to next page.";
+      } else {
+        onChange({
+          type: "markTime",
+          payload: { contentType: props.contentType, timeStamp: Date.now() }
+        });
       }
     });
     return /* @__PURE__ */ import_react79.default.createElement("div", {
@@ -29923,10 +30022,17 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       onChange
     }), /* @__PURE__ */ import_react79.default.createElement(Toast_default, {
       show: showToast,
-      onClose: toggleToast
-    }, /* @__PURE__ */ import_react79.default.createElement(Toast_default.Header, null, /* @__PURE__ */ import_react79.default.createElement("strong", {
+      onClose: toggleToast,
+      style: { margin: "auto" }
+    }, /* @__PURE__ */ import_react79.default.createElement(Toast_default.Header, {
+      style: {
+        background: "red",
+        color: "white",
+        justifyContent: "space-between"
+      }
+    }, /* @__PURE__ */ import_react79.default.createElement("strong", {
       className: "me-auto"
-    }, "Select a Diagram")), /* @__PURE__ */ import_react79.default.createElement(Toast_default.Body, null, "You must select a diagram before proceeding!")));
+    }, "Select a Diagram")), /* @__PURE__ */ import_react79.default.createElement(Toast_default.Body, null, "You must provide a value for each field before proceeding!")));
   }
   var diagrammerView_default = DiagrammerView;
 
@@ -29959,13 +30065,19 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       const problem = this.props.problem.steps[5];
       setTimeout(() => {
         document.getElementById("swStage").appendChild(document.getElementById("swClient"));
+        console.info("starting sw question");
         querium.startQuestion(
           "JiraTestPage",
           "Winry",
           {
             label: problem.swlabel,
             type: problem.swtype,
-            definition: problem.definition
+            description: problem.description,
+            definition: problem.definition,
+            mathml: problem.mathml,
+            hint1: problem.hint1,
+            hint2: problem.hint2,
+            hint3: problem.hint3
           },
           { success: this.successCallback },
           {
@@ -29989,12 +30101,44 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // src/stepViews/stepwiseView/stepwiseView.js
   function StepWiseView(props) {
+    const solution = props.solution;
+    let idx = solution.timeStamps.findIndex((x) => x.step === props.contentType);
+    const completed = solution.timeStamps[idx].timestamp ? true : false;
+    function successHandler(results) {
+      console.info(results);
+      props.onChange(results);
+      props.onChange({
+        type: "markTime",
+        payload: { contentType: props.contentType, timeStamp: Date.now() }
+      });
+    }
+    const [showToast, setShowToast] = (0, import_react82.useState)(false);
+    const toggleToast = () => setShowToast(!showToast);
+    const { handleStep } = useWizard();
+    handleStep(() => {
+      if (!completed) {
+        toggleToast();
+        throw "Don't know where to catch this. If I throw an error object, the app crashes.  This causes an error in the console, but allows me to display the toast and prevent going to next page.";
+      }
+    });
     return /* @__PURE__ */ import_react82.default.createElement("div", {
       className: "StepWise"
-    }, /* @__PURE__ */ import_react82.default.createElement(SWContainer, {
+    }, /* @__PURE__ */ import_react82.default.createElement(Toast_default, {
+      show: showToast,
+      onClose: toggleToast,
+      className: "toasty"
+    }, /* @__PURE__ */ import_react82.default.createElement(Toast_default.Header, {
+      style: {
+        background: "red",
+        color: "white",
+        justifyContent: "space-between"
+      }
+    }, /* @__PURE__ */ import_react82.default.createElement("strong", {
+      className: "me-auto"
+    }, "Solve the Equation")), /* @__PURE__ */ import_react82.default.createElement(Toast_default.Body, null, "You must solve the equation before continuing!")), /* @__PURE__ */ import_react82.default.createElement(SWContainer, {
       problem: props.problem,
       solution: props.solution,
-      onChange: props.onChange
+      onChange: successHandler
     }));
   }
   var stepwiseView_default = StepWiseView;
@@ -30658,7 +30802,8 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       maxRows: "10",
       animate: "true",
       className: "Explanation",
-      style: { background: isOverExplanation ? "red" : "" },
+      style: { background: isOverExplanation ? "#007AFF" : "" },
+      theme: "filled",
       autoFocus: true
     }), /* @__PURE__ */ import_react92.default.createElement(tags_default, {
       tags: props.solution.tags
@@ -30676,6 +30821,11 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       if (!solution.explanation.length) {
         toggleToast();
         throw "Don't know where to catch this. If I throw an error object, the app crashes.  This causes an error in the console, but allows me to display the toast and prevent going to next page.";
+      } else {
+        onChange({
+          type: "markTime",
+          payload: { contentType: props.contentType, timeStamp: Date.now() }
+        });
       }
     });
     return /* @__PURE__ */ import_react93.default.createElement("div", {
@@ -30687,8 +30837,15 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       className: "DiagramAnalyze"
     }, /* @__PURE__ */ import_react93.default.createElement(Toast_default, {
       show: showToast,
-      onClose: toggleToast
-    }, /* @__PURE__ */ import_react93.default.createElement(Toast_default.Header, null, /* @__PURE__ */ import_react93.default.createElement("strong", {
+      onClose: toggleToast,
+      style: { margin: "auto" }
+    }, /* @__PURE__ */ import_react93.default.createElement(Toast_default.Header, {
+      style: {
+        background: "red",
+        color: "white",
+        justifyContent: "space-between"
+      }
+    }, /* @__PURE__ */ import_react93.default.createElement("strong", {
       className: "me-auto"
     }, "Explain your Answer")), /* @__PURE__ */ import_react93.default.createElement(Toast_default.Body, null, "You must answer the original question in plain language before proceding!")), /* @__PURE__ */ import_react93.default.createElement(DndProvider, {
       backend: HTML5Backend
@@ -30741,7 +30898,8 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       maxRows: "10",
       animate: "true",
       className: "Review",
-      style: { background: isOverReview ? "red" : "" },
+      style: { background: isOverReview ? "#007AFF" : "" },
+      theme: "filled",
       autoFocus: true
     }), /* @__PURE__ */ import_react94.default.createElement(tags_default, {
       tags: props.solution.tags
@@ -30759,6 +30917,11 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       if (!solution.explanation.length) {
         toggleToast();
         throw "Don't know where to catch this. If I throw an error object, the app crashes.  This causes an error in the console, but allows me to display the toast and prevent going to next page.";
+      } else {
+        onChange({
+          type: "markTime",
+          payload: { contentType: props.contentType, timeStamp: Date.now() }
+        });
       }
     });
     return /* @__PURE__ */ import_react95.default.createElement("div", {
@@ -30770,8 +30933,15 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       className: "DiagramAnalyze"
     }, /* @__PURE__ */ import_react95.default.createElement(Toast_default, {
       show: showToast,
-      onClose: toggleToast
-    }, /* @__PURE__ */ import_react95.default.createElement(Toast_default.Header, null, /* @__PURE__ */ import_react95.default.createElement("strong", {
+      onClose: toggleToast,
+      style: { margin: "auto" }
+    }, /* @__PURE__ */ import_react95.default.createElement(Toast_default.Header, {
+      style: {
+        background: "red",
+        color: "white",
+        justifyContent: "space-between"
+      }
+    }, /* @__PURE__ */ import_react95.default.createElement("strong", {
       className: "me-auto"
     }, "Does your Answer Make Sense?")), /* @__PURE__ */ import_react95.default.createElement(Toast_default.Body, null, "You must explain how your answer makes sense!")), /* @__PURE__ */ import_react95.default.createElement(DndProvider, {
       backend: HTML5Backend
@@ -30805,6 +30975,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       animate: "true",
       placeholder: "type your analysis here...",
       defaultValue: current,
+      theme: "filled",
       onChange: updateAnalysis
     }));
   }
@@ -30822,6 +30993,11 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       if (!solution.diagramAnalysis || solution.diagramAnalysis.length < 10) {
         toggleToast();
         throw "Don't know where to catch this. If I throw an error object, the app crashes.  This causes an error in the console, but allows me to display the toast and prevent going to next page.";
+      } else {
+        onChange({
+          type: "markTime",
+          payload: { contentType: props.contentType, timeStamp: Date.now() }
+        });
       }
     });
     return /* @__PURE__ */ import_react97.default.createElement("div", null, /* @__PURE__ */ import_react97.default.createElement(stimulator_default, {
@@ -30831,8 +31007,15 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       className: "DiagramAnalyze"
     }, /* @__PURE__ */ import_react97.default.createElement(Toast_default, {
       show: showToast,
-      onClose: toggleToast
-    }, /* @__PURE__ */ import_react97.default.createElement(Toast_default.Header, null, /* @__PURE__ */ import_react97.default.createElement("strong", {
+      onClose: toggleToast,
+      style: { margin: "auto" }
+    }, /* @__PURE__ */ import_react97.default.createElement(Toast_default.Header, {
+      style: {
+        background: "red",
+        color: "white",
+        justifyContent: "space-between"
+      }
+    }, /* @__PURE__ */ import_react97.default.createElement("strong", {
       className: "me-auto"
     }, "Analyze Which Diagram")), /* @__PURE__ */ import_react97.default.createElement(Toast_default.Body, null, "You must provide your analysis of which type of problem this is!")), /* @__PURE__ */ import_react97.default.createElement(diagramAnalysis_default, {
       current: solution.diagramAnalysis,
@@ -30955,6 +31138,11 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       if (!solution.identify.number.length || !solution.identify.label.length) {
         toggleToast();
         throw "Don't know where to catch this. If I throw an error object, the app crashes.  This causes an error in the console, but allows me to display the toast and prevent going to next page.";
+      } else {
+        onChange({
+          type: "markTime",
+          payload: { contentType: props.contentType, timeStamp: Date.now() }
+        });
       }
     });
     return /* @__PURE__ */ import_react100.default.createElement("div", {
@@ -30966,8 +31154,15 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       className: "DiagramAnalyze"
     }, /* @__PURE__ */ import_react100.default.createElement(Toast_default, {
       show: showToast,
-      onClose: toggleToast
-    }, /* @__PURE__ */ import_react100.default.createElement(Toast_default.Header, null, /* @__PURE__ */ import_react100.default.createElement("strong", {
+      onClose: toggleToast,
+      style: { margin: "auto" }
+    }, /* @__PURE__ */ import_react100.default.createElement(Toast_default.Header, {
+      style: {
+        background: "red",
+        color: "white",
+        justifyContent: "space-between"
+      }
+    }, /* @__PURE__ */ import_react100.default.createElement("strong", {
       className: "me-auto"
     }, "Identify Number and Label")), /* @__PURE__ */ import_react100.default.createElement(Toast_default.Body, null, "You must provide the ", /* @__PURE__ */ import_react100.default.createElement("i", null, "number"), " and ", /* @__PURE__ */ import_react100.default.createElement("i", null, "label"), " before moving forward")), /* @__PURE__ */ import_react100.default.createElement(Identifier, {
       solution,
@@ -30985,57 +31180,69 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       className: "powerContent"
     }, {
       READ: /* @__PURE__ */ import_react101.default.createElement(readView_default, {
-        stimulus: problem.stimulus
+        stimulus: problem.stimulus,
+        onChange: dispatch,
+        contentType
       }),
       TAG: /* @__PURE__ */ import_react101.default.createElement(tagView_default, {
         problem,
         solution,
-        onChange: dispatch
+        onChange: dispatch,
+        contentType
       }),
       DIAGRAMANALYZE: /* @__PURE__ */ import_react101.default.createElement(diagramAnalyzeView_default, {
         problem,
         solution,
-        onChange: dispatch
+        onChange: dispatch,
+        contentType
       }),
       DIAGRAMSELECT: /* @__PURE__ */ import_react101.default.createElement(diagramSelectView_default, {
         problem,
         solution,
-        onChange: dispatch
+        onChange: dispatch,
+        contentType
       }),
       DIAGRAMMER: /* @__PURE__ */ import_react101.default.createElement(diagrammerView_default, {
         problem,
         solution,
-        onChange: dispatch
+        onChange: dispatch,
+        contentType
       }),
       EQUATIONATOR: /* @__PURE__ */ import_react101.default.createElement(equationatorView_default, {
         problem,
         solution,
-        onChange: dispatch
+        onChange: dispatch,
+        contentType
       }),
       STEPWISE: /* @__PURE__ */ import_react101.default.createElement(stepwiseView_default, {
         problem,
         solution,
-        onChange: dispatch
+        onChange: dispatch,
+        contentType
       }),
       IDENTIFIER: /* @__PURE__ */ import_react101.default.createElement(IdentifierView, {
         problem,
         solution,
-        onChange: dispatch
+        onChange: dispatch,
+        contentType
       }),
       EXPLAINER: /* @__PURE__ */ import_react101.default.createElement(ExplainerView, {
         problem,
         solution,
-        onChange: dispatch
+        onChange: dispatch,
+        contentType
       }),
       REVIEWER: /* @__PURE__ */ import_react101.default.createElement(ReviewerView, {
         problem,
         solution,
-        onChange: dispatch
+        onChange: dispatch,
+        contentType
       }),
       TEST: /* @__PURE__ */ import_react101.default.createElement(TestView, {
         problem,
         solution,
-        onChange: dispatch
+        onChange: dispatch,
+        contentType
       })
     }[contentType]);
   }
@@ -31099,13 +31306,16 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   // src/SWPower.js
   function SWPower(props) {
     const onSubmit = props.onSubmit;
-    const initializedWork = { ...blankWork, problem: props.problem };
+    const initializedWork = props.problem ? { ...blankWork, problem: props.problem } : { ...blankWork };
     const [work, workDispatch] = (0, import_react104.useReducer)(reducer_default, initializedWork);
+    const [maximized, setMaximized] = (0, import_react104.useState)(true);
     return /* @__PURE__ */ import_react104.default.createElement("div", {
-      className: "SWPowerComponent"
+      className: "SWPowerComponent " + (maximized ? "Maximized" : "")
     }, /* @__PURE__ */ import_react104.default.createElement(Wizard, {
       header: /* @__PURE__ */ import_react104.default.createElement(powerTitle_default, {
-        problem: work.problem
+        problem: work.problem,
+        maximized,
+        setMaximized
       }),
       footer: /* @__PURE__ */ import_react104.default.createElement(powerFooter_default, {
         problem: work.problem,
@@ -31129,7 +31339,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   import_react_dom2.default.render(
     /* @__PURE__ */ import_react105.default.createElement(SWPower_default, {
       onSubmit: window.swpwr_onSubmit,
-      problem: window.swpwr_problem
+      problem: window.swpwr_problems
     }),
     document.getElementById("root")
   );

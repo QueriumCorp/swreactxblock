@@ -9589,12 +9589,19 @@ a.text-dark:hover {
 
 /* src/SWPower.css */
 .SWPowerComponent {
-  min-height: 100vh;
+  min-height: 600px;
   max-height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: stretch;
+}
+.Maximized {
+  background: white;
+  position: fixed;
+  top: 0px;
+  min-height: 100vh;
+  max-height: 100vh;
 }
 
 /* src/components/powerTitle/powerTitle.css */
@@ -9602,6 +9609,8 @@ a.text-dark:hover {
   padding: 10px;
 }
 .titleText {
+  display: flex;
+  justify-content: space-between;
   color: lightgray;
   font-size: 52px;
   line-height: 0.75;
@@ -9750,7 +9759,7 @@ a.text-dark:hover {
 
 /* src/components/diagramCombine/diagramCombine.css */
 .selected {
-  background-color: yellowgreen;
+  background-color: #007aff;
 }
 .diagramCombineBox {
   display: flex;
@@ -10139,6 +10148,12 @@ a.text-dark:hover {
   display: flex;
   flex-grow: 2;
 }
+.toasty {
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  transform: translate(-50%, 10px);
+}
 
 /* src/components/explainer/explainer.css */
 .ExplainerFields {
@@ -10225,7 +10240,7 @@ a.text-dark:hover {
 
 /* src/stepViews/identifierView/identifierView.css */
 .Identifier {
-  color: lightblue;
+  color: inherit;
 }
 
 /* src/components/powerFooter/powerFooter.css */
