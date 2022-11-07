@@ -122,6 +122,12 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     q_hint2 = String(help="SWPWR Second Hint", default='', scope=Scope.content)
     q_hint3 = String(help="SWPWR Third Hint", default='', scope=Scope.content)
     q_swpwr_problem = String(help="SWPWR SWPWR Problem", default='', scope=Scope.content)
+    # New on Nov 7, 2022
+    q_swpwr_prepare_2_correct = Integer(help='SWPWR Prepare 2 Min Length', default=0, scope=Scope.content)
+    q_swpwr_prepare_3_correct = Integer(help='SWPWR Prepare 3 Min Length', default=0, scope=Scope.content)
+    q_swpwr_organize_1_schema_name = String(help='SWPWR Organize 1 Schema Name', default='COMBINE', scope=Scope.content)
+    q_swpwr_explain_2_correct = Integer(help='SWPWR Explain 2 Min Length', default=0, scope=Scope.content)
+    q_swpwr_review_1_correct = Integer(help='SWPWR Review 1 Min Length', default=0, scope=Scope.content)
     # STUDENT'S QUESTION PERFORMANCE FIELDS
     swpwr_results = String(help="SWPWR The student's SWPWR Solution structure", default={}, scope=Scope.user_state)
     xb_user_email = String(help="SWPWR The user's email addr", default="", scope=Scope.user_state)
@@ -526,6 +532,44 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if DEBUG: logger.info('SWPWRXBlock student_view() self.my_grade_min_steps_ded={m}'.format(m=self.my_grade_min_steps_ded))
 
 
+        # Fetch the new xblock-specific attributes if they exist, otherwise set them to a default
+        # New fields on Nov 7, 2022
+        # q_swpwr_prepare_2_correct = Integer(help='SWPWR Prepare 2 Min Length', default=0, scope=Scope.content)
+        # q_swpwr_prepare_3_correct = Integer(help='SWPWR Prepare 3 Min Length', default=0, scope=Scope.content)
+        # q_swpwr_organize_1_schema_name = String(help='SWPWR Organize 1 Schema Name', default='COMBINE', scope=Scope.content)
+        # q_swpwr_explain_2_correct = Integer(help='SWPWR Explain 1 Min Length', default=0, scope=Scope.content)
+        # q_swpwr_review_1_correct = Integer(help='SWPWR Review 1 Min Length', default=0, scope=Scope.content)
+        try:
+            temp_value = self.q_swpwr_prepare_2_prepare_correct
+        except (NameError,AttributeError) as e:
+            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_prepare_2_correct was not defined in this instance: {e}'.format(e=e))
+            self.q_swpwr_prepare_2_correct = 0
+        if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_prepare_2_correct: {t}'.format(t=self.q_swpwr_prepare_2_correct))
+        try:
+            temp_value = self.q_swpwr_prepare_3_prepare_correct
+        except (NameError,AttributeError) as e:
+            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_prepare_3_correct was not defined in this instance: {e}'.format(e=e))
+            self.q_swpwr_prepare_3_correct = 0
+        if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_prepare_3_correct: {t}'.format(t=self.q_swpwr_prepare_3_correct))
+        try:
+            temp_value = self.q_swpwr_organize_1_schema_name
+        except (NameError,AttributeError) as e:
+            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_organize_1_schema_name was not defined in this instance: {e}'.format(e=e))
+            self.q_swpwr_organize_1_schema_name = 'COMBINE'
+        if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_1_organize_schema_name: {t}'.format(t=self.q_swpwr_organize_1_schema_name))
+        try:
+            temp_value = self.q_swpwr_explain_2_correct
+        except (NameError,AttributeError) as e:
+            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_explain_2_correct was not defined in this instance: {e}'.format(e=e))
+            self.q_swpwr_explain_2_correct = 0
+        if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_explain_2_correct: {t}'.format(t=self.q_swpwr_explain_2_correct))
+        try:
+            temp_value = self.q_swpwr_organize_review_1_correct
+        except (NameError,AttributeError) as e:
+            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_review_1_correct was not defined in this instance: {e}'.format(e=e))
+            self.q_swpwr_review_1_correct = 0
+        if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_review_1_correct: {t}'.format(t=self.q_swpwr_review_1_correct))
+
         # Save an identifier for the user
 
         user_service = self.runtime.service( self, 'user')
@@ -766,7 +810,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 instruction = "Identify Important Information",
                 longInstruction = 'Identify the key facts in the word problem below. Select these important pieces of text. This will allow you to quickly paste helpful snippets as you work the problem.',
                 type = "TAG",
-                correct = 2,
+                correct = 0,
                 valid = 0
               ),
               dict(
@@ -775,7 +819,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 instruction = "What kind of problem is this?",
                 longInstruction = 'Discuss what type of problem you think this is. (Not graded)',
                 type = "DIAGRAMANALYZE",
-                correct = 20,
+                correct = 0,
                 valid = 0
               ),
               dict(
@@ -825,7 +869,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 instruction = "Explain your Answer",
                 longInstruction = 'Answer the original question in plain language.',
                 type = "EXPLAINER",
-                correct = 20,
+                correct = 0,
                 valid = 0
               ),
               dict(
@@ -834,7 +878,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 instruction = "Does your answer make sense?",
                 longInstruction = 'Discuss if your answer seems reasonable.',
                 type = "REVIEWER",
-                correct = 20,
+                correct = 0,
                 valid = 0
               )
             ]
@@ -842,27 +886,33 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
 
         # We now modify the problem template here, and pass it in already modified for this particular question.
-        # frag.add_javascript(self.resource_string("static/js/src/swpwr_problem.js"))     # Template SWPWR problem to work. We will update it.
 
-        # Manipulate the Dict
-        SWPHASE = 5	# Which element of the phase array is the StepWise question?
-        # StepWise problem data goes in swpwr_problem['steps'][SWPHASE]
-        # console.info("SWPWRXStudent window.swpwr_problem.steps[SWPHASE] original",window.swpwr_problem.steps[SWPHASE]);
+        # Fields in the 'steps' array in the Dict (zero-based)
+        PREPPHASE1 = 0  # Prepare (1 of 3)
+        PREPPHASE2 = 1  # Prepare (2 of 3)
+        PREPPHASE3 = 2  # Prepare (3 of 3)
+        ORGPHASE1  = 3  # Organize (1 of 2)
+        ORGPHASE2  = 4  # Organize (2 of 2)
+        WORKPHASE1 = 5  # Work (1 of 1): Element of the steps array for the StepWise question
+        EXPPHASE1  = 6	# Explain (1 of 2)
+        EXPPHASE2  = 7	# Explain (2 of 2)
+        REVPHASE1  = 8	# Review (1 of 1)
+
+        # StepWise problem data goes in swpwr_problem['steps'][WORKPHASE1]
         if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem original json={j}".format(j=json.dumps(swpwr_problem,separators=(',',':'))))
-        # window.swpwr_problem.steps[SWPHASE].swlabel = question.q_label;
         swpwr_problem['stimulus'] = self.q_swpwr_problem
-        # window.swpwr_problem.steps[SWPHASE].description = question.q_stimulus;
-        swpwr_problem['steps'][SWPHASE]['description'] = self.q_stimulus
-        # window.swpwr_problem.steps[SWPHASE].definition = question.q_definition;
-        swpwr_problem['steps'][SWPHASE]['definition'] = self.q_definition
-        # window.swpwr_problem.steps[SWPHASE].swtype = question.q_type;
-        swpwr_problem['steps'][SWPHASE]['swtype'] = self.q_type
-        # window.swpwr_problem.steps[SWPHASE].hint1 = question.q_hint1;
-        swpwr_problem['steps'][SWPHASE]['hint1'] = self.q_hint1
-        # window.swpwr_problem.steps[SWPHASE].hint2 = question.q_hint2;
-        swpwr_problem['steps'][SWPHASE]['hint2'] = self.q_hint2
-        # window.swpwr_problem.steps[SWPHASE].hint3 = question.q_hint3;
-        swpwr_problem['steps'][SWPHASE]['hint3'] = self.q_hint3
+        swpwr_problem['steps'][PREPPHASE2].correct = self.q_swpwr_prepare_2_correct
+        swpwr_problem['steps'][PREPPHASE3].correct = self.q_swpwr_prepare_3_correct
+        swpwr_problem['steps'][ORGPHASE1].correct = self.q_swpwr_organize_1_schema_name
+        swpwr_problem['steps'][WORKPHASE1]['description'] = self.q_stimulus
+        swpwr_problem['steps'][WORKPHASE1]['definition'] = self.q_definition
+        swpwr_problem['steps'][WORKPHASE1]['swtype'] = self.q_type
+        swpwr_problem['steps'][WORKPHASE1]['hint1'] = self.q_hint1
+        swpwr_problem['steps'][WORKPHASE1]['hint2'] = self.q_hint2
+        swpwr_problem['steps'][WORKPHASE1]['hint3'] = self.q_hint3
+        swpwr_problem['steps'][EXPPHASE2].correct = self.q_swpwr_explain_2_correct
+        swpwr_problem['steps'][REVPHASE1].correct = self.q_swpwr_review_1_correct
+
         # Emit the Python dict into the HTML as Javascript object
         json_string = json.dumps(swpwr_problem,separators=(',', ':'))
         javascript_string = '      window.swpwr_problem = '+json_string+';'
@@ -871,22 +921,17 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         frag.add_javascript(self.resource_string("static/js/src/final_callback.js"))    # Final submit callback code
 
-        # Load up the React app bundle js, and wrap it as needed.
+        # Load up the React app bundle js, and wrap it as needed so it does not run until after the DOM is completely loaded
         bundle_string = self.resource_string("public/assets/app.js")
 
         if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string head={e}".format(e=bundle_string[0:100]))
         if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string tail={e}".format(e=bundle_string[len(bundle_string)-100:]))
         # Wrap the bundle js in a jQuery function so it runs after the DOM finishes loading, to emulate the 'defer' action of a <script> tag in the React index.html
-        mid_string = '$(function() {'+bundle_string
+        mid_string = '$(function() {'+bundle_string     # Add jQuery function start
         if DEBUG: logger.info("SWPWRXBlock student_view() mid_string head={e}".format(e=mid_string[0:100]))
         if DEBUG: logger.info("SWPWRXBlock student_view() mid_string tail={e}".format(e=mid_string[len(mid_string)-100:]))
-        # Remove this comment string if it exists //# sourceMappingURL=main.e04ca138.chunk.js.map
-        # Can't just append the following to the string if there is a sourceMappingURL comment after the code
-        # Don't need the re.sub with esbuilt assets
-        # mid_string = re.sub('//# sourceMappingURL=main\.[a-z0-9]+\.chunk\.js\.map','',mid_string)   # Get rid of sourceMappingURL comment
-        # if DEBUG: logger.info("SWPWRXBlock student_view() mid_string post sub tail={e}".format(e=mid_string[len(mid_string)-100:]))
         # Add jQuery function ending.
-        final_string = mid_string+'});'  # Adds final '});'
+        final_string = mid_string+'});'                 # Adds final '});' for the jQuery function
         if DEBUG: logger.info("SWPWRXBlock student_view() final_string head={e}".format(e=final_string[0:100]))
         if DEBUG: logger.info("SWPWRXBlock student_view() final_string tail={e}".format(e=final_string[len(final_string)-100:]))
         frag.add_resource(final_string,'application/javascript','foot')
