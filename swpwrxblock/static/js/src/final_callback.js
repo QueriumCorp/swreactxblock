@@ -1,3 +1,8 @@
+
+      // global array for storing the SWPWR problems in the assignment
+
+      window.swpwr_problems = [];
+
       // Final callback to submit SWPWR React app results
 
       window.swpwr_onSubmit = (solution) =>{
