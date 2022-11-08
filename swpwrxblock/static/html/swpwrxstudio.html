@@ -84,23 +84,23 @@
     <li class="field comp-setting-entry metadata_entry">
       <div class="wrapper-comp-setting">
         <label for="id" class="label setting-label">Id</label>
-        <input id='id' type="text" name="id" value="{self.q_swpwr_id}" class="input setting-input">
+        <input id='id' type="text" name="id" value="{self.q_id}" class="input setting-input">
       </div>
-      <span class="tip setting-help">The optional id for this question.</span>
+      <span class="tip setting-help">The optional StepWise id for this question.</span>
     </li>
     <li class="field comp-setting-entry metadata_entry">
       <div class="wrapper-comp-setting">
         <label for="label" class="label setting-label">Label</label>
         <input id='label' type="text" name="label" value="{self.q_label}" class="input setting-input">
       </div>
-      <span class="tip setting-help">The optional label for this question.</span>
+      <span class="tip setting-help">The optional StepWise label for this question.</span>
     </li>
     <li class="field comp-setting-entry metadata_entry">
       <div class="wrapper-comp-setting">
         <label for="stimulus" class="label setting-label">Stimulus</label>
         <input id='stimulus' type="text" name="stimulus" value="{self.q_stimulus}" class="input setting-input">
       </div>
-      <span class="tip setting-help">The stimulus tells the student what is expected of them for this question. HTML
+      <span class="tip setting-help">The StepWise stimulus tells the student what is expected of them for this question. HTML
         and LaTeX are both supported.</span>
     </li>
     <li class="field comp-setting-entry metadata_entry">
@@ -122,26 +122,34 @@
         <label for="display_math" class="label setting-label">Display Math</label>
         <input id='display_math' type="text" name="display_math" value="{self.q_display_math}" class="input setting-input">
       </div>
-      <span class="tip setting-help">The LaTeX or MathML representation of the question. If left blank, StepWise will
+      <span class="tip setting-help">The StepWise LaTeX or MathML representation of the question. If left blank, StepWise will
         automatically generate the display math for the question. For word problems where the math should not be
         displayed to the student, you can enter and empty LaTeX (i.e., '\(\)' ).</span>
     </li>
     <li class="field comp-setting-entry metadata_entry">
       <div class="wrapper-comp-setting">
-        <label for="hint1" class="label setting-label">First Hint</label>
+        <label for="hint1" class="label setting-label">StepWise First Hint</label>
         <input id='hint1' type="text" name="hint1" value="{self.q_hint1}" class="input setting-input">
       </div>
       <div class="wrapper-comp-setting">
-        <label for="hint2" class="label setting-label">Second Hint</label>
+        <label for="hint2" class="label setting-label">StepWise Second Hint</label>
         <input id='hint2' type="text" name="hint2" value="{self.q_hint2}" class="input setting-input">
       </div>
       <div class="wrapper-comp-setting">
-        <label for="hint3" class="label setting-label">Third Hint</label>
+        <label for="hint3" class="label setting-label">StepWise Third Hint</label>
         <input id='hint3' type="text" name="hint3" value="{self.q_hint3}" class="input setting-input">
       </div>
       <span class="tip setting-help">These are question-specific hints used for word problems. Their primary use is to
         help the student translate the word problem into math. You may provide up to three hints. The StepWise AI will
         automatically generate math hints.</span>
+    </li>
+    <li class="field comp-setting-entry metadata_entry">
+      <div class="wrapper-comp-setting">
+        <label for="swpwr_id" class="label setting-label">Id</label>
+        <input id='swpwr_id' type="text" name="swpwr_id" value="{self.q_swpwr_id}" class="input setting-input">
+      </div>
+      <span class="tip setting-help">This is the SWPWR unique id for this problem that names the root div
+        and must be unique within an assignment with multiple SWPWR questions.</span>
     </li>
     <li class="field comp-setting-entry metadata_entry">
       <div class="wrapper-comp-setting">

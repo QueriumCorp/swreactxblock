@@ -112,7 +112,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     # STEP-WISE QUESTION DEFINITION FIELDS FOR VARIANTS
     display_name = String(display_name="SWPWR Display name", default='SWPWR', scope=Scope.content)
 
-    q_swpwr_id = String(help="SWPWR Question ID", default="", scope=Scope.content)
+    q_id = String(help="Question ID", default="", scope=Scope.content)
     q_label = String(help="SWPWR Question label", default="", scope=Scope.content)
     q_stimulus = String(help="SWPWR Stimulus", default='Solve for \\(a\\). \\(5a+4=2a-5\\)', scope=Scope.content)
     q_definition = String(help="SWPWR Definition", default='SolveFor[5a+4=2a-5,a]', scope=Scope.content)
@@ -122,6 +122,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     q_hint2 = String(help="SWPWR Second Hint", default='', scope=Scope.content)
     q_hint3 = String(help="SWPWR Third Hint", default='', scope=Scope.content)
     q_swpwr_problem = String(help="SWPWR SWPWR Problem", default='', scope=Scope.content)
+    q_swpwr_id = String(help="SWPWR Question ID", default="", scope=Scope.content)
     # New on Nov 7, 2022
     q_swpwr_prepare_2_correct = Integer(help='SWPWR Prepare 2 Min Length', default=0, scope=Scope.content)
     q_swpwr_prepare_3_correct = Integer(help='SWPWR Prepare 3 Min Length', default=0, scope=Scope.content)
@@ -980,9 +981,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
 
     # SAVE
-    # For rescoring events.  Should be a no-op.
     def save(self):
-        # if DEBUG: logger.info("SWPWRXBlock save() self.raw_earned={g} self.weight={w} self.solution={s}".format(g=self.raw_earned,w=self.weight,s=self.solution))
+        if DEBUG: logger.info("SWPWRXBlock save() self{s}".format(s=self))
         XBlock.save(self)       # Call parent class save()
         # if DEBUG: logger.info("SWPWRXBlock save() back from parent save. self.solution={s}".format(s=self.solution))
 
@@ -1313,7 +1313,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         self.q_grade_min_steps_count = int(data['q_grade_min_steps_count'])
         self.q_grade_min_steps_ded = float(data['q_grade_min_steps_ded'])
 
-        self.q_swpwr_id = data['swpwr_id']
+        self.q_id = data['id']
         self.q_label = data['label']
         self.q_stimulus = data['stimulus']
         self.q_definition = data['definition']
@@ -1323,6 +1323,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         self.q_hint2 = data['hint2']
         self.q_hint3 = data['hint3']
         self.q_swpwr_problem = data['swpwr_problem']
+        self.q_swpwr_id = data['swpwr_id']
         self.q_swpwr_prepare_2_correct = data['swpwr_prepare_2_correct']
         self.q_swpwr_prepare_3_correct = data['swpwr_prepare_3_correct']
         self.q_swpwr_organize_1_schema_name = data['swpwr_organize_1_schema_name']
