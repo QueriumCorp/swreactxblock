@@ -31,6 +31,7 @@ function SWPWRXStudio(runtime, element, question) {
             hint1 : $('#hint1', element).val(),
             hint2 : $('#hint2', element).val(),
             hint3 : $('#hint3', element).val(),
+            swpwr_id : $('#swpwr_id', element).val(),
             swpwr_problem : $('#swpwr_problem', element).val(),
             swpwr_prepare_2_correct : $('#swpwr_prepare_2_correct', element).val(),
             swpwr_prepare_3_correct : $('#swpwr_prepare_3_correct', element).val(),
