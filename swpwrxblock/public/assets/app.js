@@ -21780,6 +21780,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   // src/components/powerTitle/powerTitle.js
   function PowerTitle(props) {
     const problem = props.problem;
+    const maximizable = props.maximizable;
     const { activeStep } = useWizard();
     const title = problem.stepsMnemonic;
     const subTitle = problem.steps[activeStep].label;
@@ -21799,11 +21800,11 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         key: index,
         className: index === mnemonicIndex ? "powerTitleCurrentLetter" : ""
       }, char);
-    })), props.maximized ? /* @__PURE__ */ import_react4.default.createElement("div", {
+    })), maximizable && /* @__PURE__ */ import_react4.default.createElement("div", null, props.maximized ? /* @__PURE__ */ import_react4.default.createElement("div", {
       onClick: handleMaximize
     }, /* @__PURE__ */ import_react4.default.createElement(FiMinimize2, null)) : /* @__PURE__ */ import_react4.default.createElement("div", {
       onClick: handleMaximize
-    }, /* @__PURE__ */ import_react4.default.createElement(FiMaximize2, null))), /* @__PURE__ */ import_react4.default.createElement("div", {
+    }, /* @__PURE__ */ import_react4.default.createElement(FiMaximize2, null)))), /* @__PURE__ */ import_react4.default.createElement("div", {
       className: "subTitle"
     }, subTitle), /* @__PURE__ */ import_react4.default.createElement("p", {
       className: "instructions"
@@ -31308,14 +31309,15 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     const onSubmit = props.onSubmit;
     const initializedWork = props.problem ? { ...blankWork, problem: props.problem } : { ...blankWork };
     const [work, workDispatch] = (0, import_react104.useReducer)(reducer_default, initializedWork);
-    const [maximized, setMaximized] = (0, import_react104.useState)(true);
+    const [maximized, setMaximized] = (0, import_react104.useState)(false);
     return /* @__PURE__ */ import_react104.default.createElement("div", {
       className: "SWPowerComponent " + (maximized ? "Maximized" : "")
     }, /* @__PURE__ */ import_react104.default.createElement(Wizard, {
       header: /* @__PURE__ */ import_react104.default.createElement(powerTitle_default, {
         problem: work.problem,
         maximized,
-        setMaximized
+        setMaximized,
+        maximizable: false
       }),
       footer: /* @__PURE__ */ import_react104.default.createElement(powerFooter_default, {
         problem: work.problem,
@@ -31336,13 +31338,15 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   var SWPower_default = SWPower;
 
   // src/index.js
-  import_react_dom2.default.render(
-    /* @__PURE__ */ import_react105.default.createElement(SWPower_default, {
-      onSubmit: window.swpwr_onSubmit,
-      problem: window.swpwr_problems
-    }),
-    document.getElementById("root")
-  );
+  for (let i = 0; i < window.swpwr_problems.length; i++) {
+    import_react_dom2.default.render(
+      /* @__PURE__ */ import_react105.default.createElement(SWPower_default, {
+        onSubmit: window.swpwr_onSubmit,
+        problem: window.swpwr_problems[i]
+      }),
+      document.getElementById(window.swpwr_problems[i].qId)
+    );
+  }
 })();
 /*
 object-assign
