@@ -538,6 +538,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         except (NameError,AttributeError) as e:
             if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_id was not defined in this instance: {e}'.format(e=e))
             self.q_swpwr_id = 'ROOT'	# Default for React app.  Better have only one of these per assignment to avoid dup IDs
+        if (self.q_swpwr_id == ""):
+            self.q_swpwr_id = 'ROOT'
         if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_id: {t}'.format(t=self.q_swpwr_id))
 
         # New fields on Nov 7, 2022
