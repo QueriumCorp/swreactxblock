@@ -112,7 +112,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     # STEP-WISE QUESTION DEFINITION FIELDS FOR VARIANTS
     display_name = String(display_name="SWPWR Display name", default='SWPWR', scope=Scope.content)
 
-    q_id = String(help="SWPWR Question ID", default="", scope=Scope.content)
+    q_swpwr_id = String(help="SWPWR Question ID", default="", scope=Scope.content)
     q_label = String(help="SWPWR Question label", default="", scope=Scope.content)
     q_stimulus = String(help="SWPWR Stimulus", default='Solve for \\(a\\). \\(5a+4=2a-5\\)', scope=Scope.content)
     q_definition = String(help="SWPWR Definition", default='SolveFor[5a+4=2a-5,a]', scope=Scope.content)
@@ -533,12 +533,20 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
 
         # Fetch the new xblock-specific attributes if they exist, otherwise set them to a default
+        try:
+            temp_value = self.q_swpwr_id
+        except (NameError,AttributeError) as e:
+            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_id was not defined in this instance: {e}'.format(e=e))
+            self.q_swpwr_id = 'ROOT'	# Default for React app.  Better have only one of these per assignment to avoid dup IDs
+        if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_id: {t}'.format(t=self.q_swpwr_id))
+
         # New fields on Nov 7, 2022
         # q_swpwr_prepare_2_correct = Integer(help='SWPWR Prepare 2 Min Length', default=0, scope=Scope.content)
         # q_swpwr_prepare_3_correct = Integer(help='SWPWR Prepare 3 Min Length', default=0, scope=Scope.content)
         # q_swpwr_organize_1_schema_name = String(help='SWPWR Organize 1 Schema Name', default='COMBINE', scope=Scope.content)
         # q_swpwr_explain_2_correct = Integer(help='SWPWR Explain 1 Min Length', default=0, scope=Scope.content)
         # q_swpwr_review_1_correct = Integer(help='SWPWR Review 1 Min Length', default=0, scope=Scope.content)
+
         try:
             temp_value = self.q_swpwr_prepare_2_prepare_correct
         except (NameError,AttributeError) as e:
@@ -788,9 +796,14 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         frag.add_resource('<base href="/testq_assets/"/>','text/html','head')		# Needed so react code can find its pages. Don't do earlier or impacts relative pathnames of resources
 
+        root_div = '<div id="'+self.q_swpwr_id+'"></div>'		                                # Needed so React code can find its root DOM
+        frag.add_resource(root_div,'text/html','tail')
+        if DEBUG: logger.info('SWPWRXBlock student_view() root_div={r}'.format(r=root_dif))
+
         # The swpwr problem template as a Python dict
         swpwr_problem_template = dict(
             label = "the problem label",
+            qId = "sample",                  # Name of the root DOM for the React app for this problem
             description = "a desc",
             my_class = "sampleWord",
             stimulus = 'A mountain bike is on sale for $399. Its regular price is $650.  What is the difference between the regular price and the sale price?',
@@ -903,6 +916,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template template before stimulus={s}".format(s=swpwr_problem_template['stimulus']))
         if DEBUG: logger.info("SWPWRXBlock student_view() self.q_swpwr_problem={s}".format(s=self.q_swpwr_problem))
         swpwr_problem_template['stimulus'] = self.q_swpwr_problem
+        swpwr_problem_template['qId'] = self.q_swpwr_id    # This is used as the ID value for the root DOM for React, it it must be unique in an assignment
         if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template template after stimulus={s}".format(s=swpwr_problem_template['stimulus']))
         swpwr_problem_template['steps'][PREPPHASE2]['correct'] = self.q_swpwr_prepare_2_correct
         swpwr_problem_template['steps'][PREPPHASE3]['correct'] = self.q_swpwr_prepare_3_correct
@@ -919,6 +933,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         # Emit the Python dict into the HTML as Javascript object
         json_string = json.dumps(swpwr_problem_template,separators=(',', ':'))
         javascript_string = '      window.swpwr_problem_template = '+json_string+';'
+        javascript_string = javascript_string+'      window.swpwr_problems.push(swpwr.swpwr_problem_template);'
         if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template final javascript={j}".format(j=javascript_string))
         frag.add_javascript(javascript_string)     # SWPWR problem to work.
 
@@ -1296,7 +1311,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         self.q_grade_min_steps_count = int(data['q_grade_min_steps_count'])
         self.q_grade_min_steps_ded = float(data['q_grade_min_steps_ded'])
 
-        self.q_id = data['id']
+        self.q_swpwr_id = data['swpwr_id']
         self.q_label = data['label']
         self.q_stimulus = data['stimulus']
         self.q_definition = data['definition']
@@ -1523,7 +1538,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                     break
 
         if tries>=max_tries:
-            if DEBUG: logger.error("pick_variant() could not find an unattempted variant of {i} {l} in {m} tries! clearing self.variants_attempted.".format(i=self.q_id,l=self.q_label,m=max_tries))
+            if DEBUG: logger.error("pick_variant() could not find an unattempted variant of {i} {l} in {m} tries! clearing self.variants_attempted.".format(i=self.q_swpwr_id,l=self.q_label,m=max_tries))
             q_index = 0		# Default
             self.variants_attempted = 0;
 
@@ -1532,7 +1547,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         # Note: we won't set self.variants_attempted for this variant until they actually begin work on it (see start_attempt() below)
 
         question = {
-            "q_id" : self.q_id,
+            "q_swpwr_id" : self.q_swpwr_id,
             "q_user" : self.xb_user_email,
             "q_index" : 0,
             "q_label" : self.q_label,
