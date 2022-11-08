@@ -798,7 +798,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         root_div = '<div id="'+self.q_swpwr_id+'"></div>'		                                # Needed so React code can find its root DOM
         frag.add_resource(root_div,'text/html','tail')
-        if DEBUG: logger.info('SWPWRXBlock student_view() root_div={r}'.format(r=root_dif))
+        if DEBUG: logger.info('SWPWRXBlock student_view() root_div={r}'.format(r=root_div))
 
         # The swpwr problem template as a Python dict
         swpwr_problem_template = dict(
