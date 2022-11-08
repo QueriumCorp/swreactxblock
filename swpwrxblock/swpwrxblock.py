@@ -933,14 +933,14 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         swpwr_problem_template['steps'][EXPPHASE2]['correct'] = self.q_swpwr_explain_2_correct
         swpwr_problem_template['steps'][REVPHASE1]['correct'] = self.q_swpwr_review_1_correct
 
+        frag.add_javascript(self.resource_string("static/js/src/final_callback.js"))    # Final submit callback code and define swpwr_problems[]
+
         # Emit the Python dict into the HTML as Javascript object
         json_string = json.dumps(swpwr_problem_template,separators=(',', ':'))
         javascript_string = '      window.swpwr_problem_template = '+json_string+';'
         javascript_string = javascript_string+'window.swpwr_problems.push(window.swpwr_problem_template);console.info("window.swpwr_problems.length=",window.swpwr_problems.length);'
         if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template final javascript={j}".format(j=javascript_string))
         frag.add_javascript(javascript_string)     # SWPWR problem to work.
-
-        frag.add_javascript(self.resource_string("static/js/src/final_callback.js"))    # Final submit callback code
 
         # Load up the React app bundle js, and wrap it as needed so it does not run until after the DOM is completely loaded
         bundle_string = self.resource_string("public/assets/app.js")
