@@ -69,8 +69,8 @@ function SWPWRXStudent(runtime, element) {
             console.info("SWPWRXStudent grade",grade);
             console.info("SWPWRXStudent swpwr_id",swpwr_id);
 
-            // Replace the React root div id KAFROOT with the swpwr problem ID
-            document.getElementById("KAFROOT").setAttribute("id", swpwr_id);
+            // DON'T Replace the React root div id KAFROOT with the swpwr problem ID: Use one xblock per assignment
+            // document.getElementById("KAFROOT").setAttribute("id", swpwr_id);
 
             console.info("SWPWRXStudent root div id replaced");
 
