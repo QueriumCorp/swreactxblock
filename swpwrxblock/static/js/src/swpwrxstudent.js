@@ -72,6 +72,8 @@ function SWPWRXStudent(runtime, element) {
             // Replace the React root div id KAFROOT with the swpwr problem ID
             document.getElementById("KAFROOT").setAttribute("id", swpwr_id);
 
+            console.info("SWPWRXStudent root div id replaced");
+
             // Replace the stepwise-related fields in the SWPR React problem template with the StepWise values from the Xblock attributes
 
             // if (typeof enable_showme === 'undefined') {
