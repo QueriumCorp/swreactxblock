@@ -54,6 +54,7 @@ function SWPWRXStudent(runtime, element) {
             var min_steps = question.q_grade_min_steps_count;
             var min_steps_ded = question.q_grade_min_steps_ded;
             var swpwr_problem = question.swpwr_problem;
+            var swpwr_id = question.q_swpwr_id;
 
             console.info("SWPWRXStudent question",question);
             // console.info("SWPWRXStudent enable_showme",enable_showme);
@@ -66,6 +67,12 @@ function SWPWRXStudent(runtime, element) {
             console.info("SWPWRXStudent min steps",min_steps);
             console.info("SWPWRXStudent min steps dec",min_steps_ded);
             console.info("SWPWRXStudent grade",grade);
+            console.info("SWPWRXStudent swpwr_id",swpwr_id);
+
+            // DON'T Replace the React root div id KAFROOT with the swpwr problem ID: Use one xblock per assignment
+            // document.getElementById("KAFROOT").setAttribute("id", swpwr_id);
+
+            console.info("SWPWRXStudent root div id replaced");
 
             // Replace the stepwise-related fields in the SWPR React problem template with the StepWise values from the Xblock attributes
 
