@@ -9645,6 +9645,7 @@ a.text-dark:hover {
   user-select: none;
   padding: 18px 36px 18px 36px;
   border-bottom: 1px solid black;
+  min-width: 600px;
 }
 .taggable {
   user-select: auto;
