@@ -31309,7 +31309,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     const onSubmit = props.onSubmit;
     const initializedWork = props.problem ? { ...blankWork, problem: props.problem } : { ...blankWork };
     const [work, workDispatch] = (0, import_react104.useReducer)(reducer_default, initializedWork);
-    const [maximized, setMaximized] = (0, import_react104.useState)(false);
+    const [maximized, setMaximized] = (0, import_react104.useState)(true);
     return /* @__PURE__ */ import_react104.default.createElement("div", {
       className: "SWPowerComponent " + (maximized ? "Maximized" : "")
     }, /* @__PURE__ */ import_react104.default.createElement(Wizard, {
