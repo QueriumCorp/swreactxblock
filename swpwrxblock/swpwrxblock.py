@@ -715,7 +715,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 #     <link
 #       rel="stylesheet"
 #       type="text/css"
-#       href="https://stepwise.querium.com/client/querium-stepwise-1.6.8.css"
+#       href="https://stepwise.querium.com/client/querium-stepwise-1.6.8.1-sw4wp.css"
 #     />
 # 
 #     <!-- REQUIRED Javascript files for Querium StepWise Client -->
@@ -779,7 +779,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_css_url("//stepwise.querium.com/libs/mathquill/mathquill.css")
         # <!-- REQUIRED for the chip components -->
         frag.add_css_url("//cdn.jsdelivr.net/gh/mlaursen/react-md@5.1.4/themes/react-md.teal-pink-200-light.min.css")
-        frag.add_css_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.8.css")
+        frag.add_css_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.8.1-sw4wp.css")
         frag.add_javascript_url("//www.gstatic.com/firebasejs/4.4.0/firebase.js")               # For qEval client-side logging
         frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js")
         frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.min.js")
