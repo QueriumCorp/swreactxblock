@@ -31317,7 +31317,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         problem: work.problem,
         maximized,
         setMaximized,
-        maximizable: false
+        maximizable: true
       }),
       footer: /* @__PURE__ */ import_react104.default.createElement(powerFooter_default, {
         problem: work.problem,
