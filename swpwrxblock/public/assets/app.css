@@ -9602,6 +9602,9 @@ a.text-dark:hover {
   top: 0px;
   min-height: 100vh;
   max-height: 100vh;
+  width: 95%;
+  border-style: solid;
+  border-width: thin;
 }
 
 /* src/components/powerTitle/powerTitle.css */
