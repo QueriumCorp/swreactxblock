@@ -925,6 +925,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         swpwr_problem_template['steps'][PREPPHASE2]['correct'] = self.q_swpwr_prepare_2_correct
         swpwr_problem_template['steps'][PREPPHASE3]['correct'] = self.q_swpwr_prepare_3_correct
         swpwr_problem_template['steps'][ORGPHASE1]['correct'] = self.q_swpwr_organize_1_schema_name
+        swpwr_problem_template['steps'][WORKPHASE1]['swlabel'] = self.q_label
         swpwr_problem_template['steps'][WORKPHASE1]['description'] = self.q_stimulus
         swpwr_problem_template['steps'][WORKPHASE1]['definition'] = self.q_definition
         swpwr_problem_template['steps'][WORKPHASE1]['swtype'] = self.q_type
