@@ -19,7 +19,7 @@ function SWPWRXStudent(runtime, element) {
     // Now we do the question manipulation in swpwrxblock.py
     // const SWPHASE = 5;          // Which element of the POWER steps array in window.swpwr_problem contains the StepWise UI?
 
-    $('.swpwrReact').show();        // Show React app root div
+    $('.SWPowerComponent').show();  // Show React app root div
 
     $('.sequence-bottom').hide();   // Don't show the EdX sequential navigation buttons that lie on top of the react div
     $('.problem-complete').hide();  // Don't show the 'problem is complete' message
