@@ -21,7 +21,7 @@ function SWPWRXStudent(runtime, element) {
 
     $('.swpwrReact').show();        // Show React app root div
 
-    $('.sequence-bottom').hide();   // Don't show the EdX sequential navigation buttons
+    $('.sequence-bottom').hide();   // Don't show the EdX sequential navigation buttons that lie on top of the react div
     $('.problem-complete').hide();  // Don't show the 'problem is complete' message
 
     get_data_data = {}		// don't need to sent any data to get_data
@@ -740,10 +740,6 @@ function SWPWRXStudent(runtime, element) {
 
             // $('.question-info').show(); // Show question info box now that loading is done
             // $('.loading-box').hide();   // Done loading data
-            $('.sequence-bottom').show();   // Show the EdX sequential navigation buttons
-            $('.problem-complete').show();  // Show the 'problem is complete' message
-            $('.swpwrReact').hide();        // Hide the React app root div
-
        } //end of success block
     });
     console.info("SWPWRXStudent end");

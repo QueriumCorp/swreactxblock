@@ -22,8 +22,8 @@
             console.info("swpwr_onSubmit solution POST error textStatus=",textStatus," errorThrown=",errorThrown);
           }
         });
-        // Don't hide the React app or show the problem complete msg for now
-        // $('.swpwrReact').hide();        // Hide React app root div
-        // $('.problem-complete').show();  // Show the 'problem is complete' message
+        // Hide the React app and show the problem complete msg
+        $('.swpwrReact').hide();        // Hide React app root div
+        $('.problem-complete').show();  // Show the 'problem is complete' message
       };
 
