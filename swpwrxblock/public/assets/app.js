@@ -30136,7 +30136,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       }
     }, /* @__PURE__ */ import_react82.default.createElement("strong", {
       className: "me-auto"
-    }, "Solve the Equation")), /* @__PURE__ */ import_react82.default.createElement(Toast_default.Body, null, "You must solve the equation before continuing!")), /* @__PURE__ */ import_react82.default.createElement(SWContainer, {
+    }, "Solve the Equation")), /* @__PURE__ */ import_react82.default.createElement(Toast_default.Body, null, "You must solve the equation before continuing! Click 'Submit' after you enter each step.")), /* @__PURE__ */ import_react82.default.createElement(SWContainer, {
       problem: props.problem,
       solution: props.solution,
       onChange: successHandler
