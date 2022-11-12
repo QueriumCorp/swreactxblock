@@ -9590,7 +9590,7 @@ a.text-dark:hover {
 /* src/SWPower.css */
 .SWPowerComponent {
   min-height: 600px;
-  max-height: 95vh;
+  max-height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -9600,12 +9600,9 @@ a.text-dark:hover {
   background: white;
   position: fixed;
   top: 0px;
-  left: 10px;
-  min-height: 95vh;
-  max-height: 95vh;
-  max-width: 650px;
-  border-style: solid;
-  border-width: thin;
+  min-height: 100vh;
+  max-height: 100vh;
+  border: solid 1px black;
 }
 
 /* src/components/powerTitle/powerTitle.css */
@@ -9901,12 +9898,24 @@ a.text-dark:hover {
   display: flex;
   flex-direction: column;
 }
+.toasty {
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  transform: translate(-50%, 10px);
+}
 
 /* src/stepViews/diagrammerView/diagrammerView.css */
 .DiagrammerView {
   display: flex;
   flex-direction: column;
   justify-content: stretch;
+}
+.toasty {
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  transform: translate(-50%, 10px);
 }
 
 /* src/components/diagrammer/diagrammer.css */
@@ -10178,6 +10187,12 @@ a.text-dark:hover {
 }
 
 /* src/stepViews/explainerView/explainerView.css */
+.toasty {
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  transform: translate(-50%, 10px);
+}
 
 /* src/components/reviewer/reviewer.css */
 .ReviewerFields {
@@ -10199,10 +10214,22 @@ a.text-dark:hover {
 }
 
 /* src/stepViews/reviewerView/reviewerView.css */
+.toasty {
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  transform: translate(-50%, 10px);
+}
 
 /* src/stepViews/diagramAnalyzeView/diagramAnalyzeView.css */
 .DiagramSelect {
   color: initial;
+}
+.toasty {
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  transform: translate(-50%, 10px);
 }
 
 /* src/components/diagramAnalysis/diagramAnalysis.css */
@@ -10246,6 +10273,12 @@ a.text-dark:hover {
 /* src/stepViews/identifierView/identifierView.css */
 .Identifier {
   color: inherit;
+}
+.toasty {
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  transform: translate(-50%, 10px);
 }
 
 /* src/components/powerFooter/powerFooter.css */

@@ -1110,7 +1110,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect14(create, deps) {
+          function useEffect15(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1383,7 +1383,7 @@
           exports.useCallback = useCallback13;
           exports.useContext = useContext8;
           exports.useDebugValue = useDebugValue;
-          exports.useEffect = useEffect14;
+          exports.useEffect = useEffect15;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useLayoutEffect = useLayoutEffect4;
           exports.useMemo = useMemo20;
@@ -21836,6 +21836,15 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         }
       }
     }
+    (0, import_react5.useEffect)(() => {
+      if (window.MathJax) {
+        window.MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+      } else {
+        setTimeout(() => {
+          window.MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+        }, "1000");
+      }
+    });
     return /* @__PURE__ */ import_react5.default.createElement("div", {
       onMouseUp: createTag,
       onTouchEnd: createTag,
@@ -25167,7 +25176,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, /* @__PURE__ */ import_react52.default.createElement(Toast_default, {
       show: showToast,
       onClose: toggleToast,
-      style: { margin: "auto" }
+      className: "toasty"
     }, /* @__PURE__ */ import_react52.default.createElement(Toast_default.Header, {
       style: {
         background: "red",
@@ -29370,7 +29379,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       className: "keypadBox"
     }, /* @__PURE__ */ import_react74.default.createElement(Keypad, {
       className: "myKeypad",
-      style: { minHeight: "300px", minWidth: "200px" }
+      style: { minHeight: "250px", minWidth: "200px" }
     }, /* @__PURE__ */ import_react74.default.createElement(KeyRow, null, /* @__PURE__ */ import_react74.default.createElement(Key, {
       onClick: handleSoftKeyPress,
       retKey: "&LARR;",
@@ -29410,7 +29419,10 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, "2"), /* @__PURE__ */ import_react74.default.createElement(Key, {
       onClick: handleSoftKeyPress,
       retKey: "3"
-    }, "3")))))));
+    }, "3")), /* @__PURE__ */ import_react74.default.createElement(KeyRow, null, /* @__PURE__ */ import_react74.default.createElement(Key, {
+      onClick: handleSoftKeyPress,
+      retKey: "0"
+    }, "0")))))));
   }
 
   // src/components/diagrammer/combine.js
@@ -29568,7 +29580,10 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, "2"), /* @__PURE__ */ import_react75.default.createElement(Key, {
       onClick: handleSoftKeyPress,
       retKey: "3"
-    }, "3")))))));
+    }, "3")), /* @__PURE__ */ import_react75.default.createElement(KeyRow, null, /* @__PURE__ */ import_react75.default.createElement(Key, {
+      onClick: handleSoftKeyPress,
+      retKey: "0"
+    }, "0")), " ")))));
   }
 
   // src/components/diagrammer/equalGroups.js
@@ -29753,7 +29768,10 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, "2"), /* @__PURE__ */ import_react76.default.createElement(Key, {
       onClick: handleSoftKeyPress,
       retKey: "3"
-    }, "3")))))));
+    }, "3")), /* @__PURE__ */ import_react76.default.createElement(KeyRow, null, /* @__PURE__ */ import_react76.default.createElement(Key, {
+      onClick: handleSoftKeyPress,
+      retKey: "0"
+    }, "0")), " ")))));
   }
 
   // src/components/diagrammer/multiplyTimes.js
@@ -29938,7 +29956,10 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, "2"), /* @__PURE__ */ import_react77.default.createElement(Key, {
       onClick: handleSoftKeyPress,
       retKey: "3"
-    }, "3")))))));
+    }, "3")), /* @__PURE__ */ import_react77.default.createElement(KeyRow, null, /* @__PURE__ */ import_react77.default.createElement(Key, {
+      onClick: handleSoftKeyPress,
+      retKey: "0"
+    }, "0")), " ")))));
   }
 
   // src/components/diagrammer/diagrammer.js
@@ -30024,7 +30045,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }), /* @__PURE__ */ import_react79.default.createElement(Toast_default, {
       show: showToast,
       onClose: toggleToast,
-      style: { margin: "auto" }
+      className: "toasty"
     }, /* @__PURE__ */ import_react79.default.createElement(Toast_default.Header, {
       style: {
         background: "red",
@@ -30082,7 +30103,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
           },
           { success: this.successCallback },
           {
-            hideMenu: true,
+            hideMenu: false,
             scribbles: false
           }
         );
@@ -30839,7 +30860,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, /* @__PURE__ */ import_react93.default.createElement(Toast_default, {
       show: showToast,
       onClose: toggleToast,
-      style: { margin: "auto" }
+      className: "toasty"
     }, /* @__PURE__ */ import_react93.default.createElement(Toast_default.Header, {
       style: {
         background: "red",
@@ -30935,7 +30956,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, /* @__PURE__ */ import_react95.default.createElement(Toast_default, {
       show: showToast,
       onClose: toggleToast,
-      style: { margin: "auto" }
+      className: "toasty"
     }, /* @__PURE__ */ import_react95.default.createElement(Toast_default.Header, {
       style: {
         background: "red",
@@ -31009,7 +31030,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, /* @__PURE__ */ import_react97.default.createElement(Toast_default, {
       show: showToast,
       onClose: toggleToast,
-      style: { margin: "auto" }
+      className: "toasty"
     }, /* @__PURE__ */ import_react97.default.createElement(Toast_default.Header, {
       style: {
         background: "red",
@@ -31156,7 +31177,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, /* @__PURE__ */ import_react100.default.createElement(Toast_default, {
       show: showToast,
       onClose: toggleToast,
-      style: { margin: "auto" }
+      className: "toasty"
     }, /* @__PURE__ */ import_react100.default.createElement(Toast_default.Header, {
       style: {
         background: "red",
@@ -31309,7 +31330,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     const onSubmit = props.onSubmit;
     const initializedWork = props.problem ? { ...blankWork, problem: props.problem } : { ...blankWork };
     const [work, workDispatch] = (0, import_react104.useReducer)(reducer_default, initializedWork);
-    const [maximized, setMaximized] = (0, import_react104.useState)(true);
+    const [maximized, setMaximized] = (0, import_react104.useState)(false);
     return /* @__PURE__ */ import_react104.default.createElement("div", {
       className: "SWPowerComponent " + (maximized ? "Maximized" : "")
     }, /* @__PURE__ */ import_react104.default.createElement(Wizard, {
@@ -31317,7 +31338,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         problem: work.problem,
         maximized,
         setMaximized,
-        maximizable: true
+        maximizable: false
       }),
       footer: /* @__PURE__ */ import_react104.default.createElement(powerFooter_default, {
         problem: work.problem,
