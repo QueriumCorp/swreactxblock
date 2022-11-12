@@ -860,7 +860,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 label = "Work the Problem",
                 mnemonicIndex = 2,
                 instruction = "Solve the equation",
-                longInstruction = "Take your diagram and transform it into a math equation.",
+                longInstruction = "Take your diagram and transform it into a math equation. You may have to scroll the problem below and click the 'three lines' menu and click 'Full Screen' to see the entire page.",
                 type = "STEPWISE",
                 swlabel = "QUES-6011X",
                 description = "Solve by addition, foolish defaultProblem.  \\begin{array}{c}7x-2y=3 \\\\4x+5y=3.25\\end{array}",
