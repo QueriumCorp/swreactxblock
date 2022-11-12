@@ -843,7 +843,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 label = "Organize",
                 mnemonicIndex = 1,
                 instruction = "What type of problem is this?",
-                longInstruction = 'Select the problem type that best describes this problem',
+                longInstruction = 'Scroll the diagram list below and select the problem type that best describes this problem.',
                 type =  "DIAGRAMSELECT",
                 correct = "COMBINE",   # "COMBINE", "MULTIPLYTIMES", "EQUALGROUPS", "CHANGE"
                 valid = 0
