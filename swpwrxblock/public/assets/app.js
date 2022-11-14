@@ -1110,7 +1110,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect15(create, deps) {
+          function useEffect16(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1383,7 +1383,7 @@
           exports.useCallback = useCallback13;
           exports.useContext = useContext8;
           exports.useDebugValue = useDebugValue;
-          exports.useEffect = useEffect15;
+          exports.useEffect = useEffect16;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useLayoutEffect = useLayoutEffect4;
           exports.useMemo = useMemo20;
@@ -2374,12 +2374,12 @@
       if (true) {
         (function() {
           "use strict";
-          var React58 = require_react();
+          var React62 = require_react();
           var _assign = require_object_assign();
           var Scheduler2 = require_scheduler();
           var checkPropTypes = require_checkPropTypes();
           var tracing = require_tracing();
-          var ReactSharedInternals = React58.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React62.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           if (!ReactSharedInternals.hasOwnProperty("ReactCurrentDispatcher")) {
             ReactSharedInternals.ReactCurrentDispatcher = {
               current: null
@@ -2432,7 +2432,7 @@
               }
             }
           }
-          if (!React58) {
+          if (!React62) {
             {
               throw Error("ReactDOM was loaded before React. Make sure you load the React package before loading ReactDOM.");
             }
@@ -3882,7 +3882,7 @@
           var didWarnInvalidChild = false;
           function flattenChildren(children) {
             var content = "";
-            React58.Children.forEach(children, function(child) {
+            React62.Children.forEach(children, function(child) {
               if (child == null) {
                 return;
               }
@@ -3893,7 +3893,7 @@
           function validateProps(element, props) {
             {
               if (typeof props.children === "object" && props.children !== null) {
-                React58.Children.forEach(props.children, function(child) {
+                React62.Children.forEach(props.children, function(child) {
                   if (child == null) {
                     return;
                   }
@@ -10947,7 +10947,7 @@
           }
           var fakeInternalInstance = {};
           var isArray = Array.isArray;
-          var emptyRefsObject = new React58.Component().refs;
+          var emptyRefsObject = new React62.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -19592,7 +19592,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       if (true) {
         (function() {
           "use strict";
-          var React58 = require_react();
+          var React62 = require_react();
           var REACT_ELEMENT_TYPE = 60103;
           var REACT_PORTAL_TYPE = 60106;
           exports.Fragment = 60107;
@@ -19648,7 +19648,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
             }
             return null;
           }
-          var ReactSharedInternals = React58.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React62.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
@@ -21074,11 +21074,11 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         if (superClass)
           Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
       }
-      var Toggle2 = function(_PureComponent) {
-        _inherits(Toggle3, _PureComponent);
-        function Toggle3(props) {
-          _classCallCheck(this, Toggle3);
-          var _this = _possibleConstructorReturn(this, (Toggle3.__proto__ || Object.getPrototypeOf(Toggle3)).call(this, props));
+      var Toggle3 = function(_PureComponent) {
+        _inherits(Toggle4, _PureComponent);
+        function Toggle4(props) {
+          _classCallCheck(this, Toggle4);
+          var _this = _possibleConstructorReturn(this, (Toggle4.__proto__ || Object.getPrototypeOf(Toggle4)).call(this, props));
           _this.handleClick = _this.handleClick.bind(_this);
           _this.handleTouchStart = _this.handleTouchStart.bind(_this);
           _this.handleTouchMove = _this.handleTouchMove.bind(_this);
@@ -21092,7 +21092,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
           };
           return _this;
         }
-        _createClass(Toggle3, [{
+        _createClass(Toggle4, [{
           key: "componentDidUpdate",
           value: function componentDidUpdate(prevProps) {
             if (prevProps.checked !== this.props.checked) {
@@ -21196,7 +21196,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
             if (!icons) {
               return null;
             }
-            return icons[type] === void 0 ? Toggle3.defaultProps.icons[type] : icons[type];
+            return icons[type] === void 0 ? Toggle4.defaultProps.icons[type] : icons[type];
           }
         }, {
           key: "render",
@@ -21244,17 +21244,17 @@ For more info, visit https://fb.me/react-mock-scheduler`);
             );
           }
         }]);
-        return Toggle3;
+        return Toggle4;
       }(_react.PureComponent);
-      exports.default = Toggle2;
-      Toggle2.displayName = "Toggle";
-      Toggle2.defaultProps = {
+      exports.default = Toggle3;
+      Toggle3.displayName = "Toggle";
+      Toggle3.defaultProps = {
         icons: {
           checked: _react2.default.createElement(_check2.default, null),
           unchecked: _react2.default.createElement(_x2.default, null)
         }
       };
-      Toggle2.propTypes = {
+      Toggle3.propTypes = {
         checked: _propTypes2.default.bool,
         disabled: _propTypes2.default.bool,
         defaultChecked: _propTypes2.default.bool,
@@ -21276,11 +21276,11 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   });
 
   // src/index.js
-  var import_react105 = __toESM(require_react());
+  var import_react109 = __toESM(require_react());
   var import_react_dom2 = __toESM(require_react_dom());
 
   // src/SWPower.js
-  var import_react104 = __toESM(require_react());
+  var import_react108 = __toESM(require_react());
 
   // node_modules/react-use-wizard/dist/react-use-wizard.esm.js
   var import_react = __toESM(require_react());
@@ -21815,7 +21815,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   var powerTitle_default = PowerTitle;
 
   // src/components/powerContent/powerContent.js
-  var import_react101 = __toESM(require_react());
+  var import_react105 = __toESM(require_react());
 
   // src/stepViews/readView/readView.js
   var import_react6 = __toESM(require_react());
@@ -30068,7 +30068,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   var equationatorView_default = EquationatorView;
 
   // src/stepViews/stepwiseView/stepwiseView.js
-  var import_react82 = __toESM(require_react());
+  var import_react86 = __toESM(require_react());
 
   // src/components/stepWise/stepWise.js
   var import_react81 = __toESM(require_react());
@@ -30084,13 +30084,15 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       };
     }
     componentDidMount() {
-      const problem = this.props.problem.steps[5];
+      const problem = this.props.problem.steps.find((step) => {
+        return step.type === "STEPWISE";
+      });
       setTimeout(() => {
-        document.getElementById("swStage").appendChild(document.getElementById("swClient"));
+        this.myRef.current.appendChild(document.getElementById("swClient"));
         console.info("starting sw question");
         querium.startQuestion(
-          "JiraTestPage",
-          "Winry",
+          window.querium.appID,
+          window.querium.student,
           {
             label: problem.swlabel,
             type: problem.swtype,
@@ -30110,7 +30112,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       }, 0);
     }
     componentWillUnmount() {
-      document.getElementById("swBackStage").appendChild(document.getElementById("swStage"));
+      document.getElementById("swBackStage").appendChild(document.getElementById("swClient"));
     }
     render() {
       return /* @__PURE__ */ import_react81.default.createElement("div", {
@@ -30120,6 +30122,257 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       });
     }
   };
+
+  // src/components/diagrammer/multiplyTimesDisplay.js
+  var import_react82 = __toESM(require_react());
+  function MultiplyTimesDisplay(props) {
+    const solution = props.solution;
+    return /* @__PURE__ */ import_react82.default.createElement("div", {
+      className: "diagramContainer"
+    }, /* @__PURE__ */ import_react82.default.createElement(Card_default, {
+      style: { flexGrow: "2" }
+    }, /* @__PURE__ */ import_react82.default.createElement(Card_default.Body, {
+      className: "diagramScroll",
+      style: { padding: 0 }
+    }, /* @__PURE__ */ import_react82.default.createElement("div", {
+      className: "diagramExample",
+      style: { flexDirection: "row", justifyContent: "center" }
+    }, /* @__PURE__ */ import_react82.default.createElement("div", {
+      className: "diagramBox"
+    }, /* @__PURE__ */ import_react82.default.createElement("div", {
+      className: "diagramMultipleItem diagramMultipleStart"
+    }, /* @__PURE__ */ import_react82.default.createElement("div", {
+      className: "diagramMultipleIcon"
+    }, /* @__PURE__ */ import_react82.default.createElement("svg", {
+      version: "1.1",
+      viewBox: "0 0 100 100",
+      xmlns: "http://www.w3.org/2000/svg"
+    }, /* @__PURE__ */ import_react82.default.createElement("ellipse", {
+      cx: "50",
+      cy: "50",
+      rx: "47.015",
+      ry: "47.015",
+      fill: "#d5d3d3",
+      stroke: "#000"
+    }))), /* @__PURE__ */ import_react82.default.createElement("div", {
+      className: "verticalIconLayout"
+    }, "Sets", /* @__PURE__ */ import_react82.default.createElement("input", {
+      id: "sets",
+      value: solution.diagram.times.sets,
+      className: "inputField",
+      readOnly: true
+    }))), /* @__PURE__ */ import_react82.default.createElement("div", null, "X"), /* @__PURE__ */ import_react82.default.createElement("div", {
+      className: "squareIcon verticalIconLayout"
+    }, "Multiplier", /* @__PURE__ */ import_react82.default.createElement("input", {
+      id: "multiplier",
+      value: solution.diagram.times.multiplier,
+      className: "inputField",
+      readOnly: true
+    })), /* @__PURE__ */ import_react82.default.createElement("div", null, " = "), /* @__PURE__ */ import_react82.default.createElement("div", {
+      className: "diagramMultipleItem diagramMultipleEnd"
+    }, /* @__PURE__ */ import_react82.default.createElement("div", {
+      className: "diagramMultipleIcon"
+    }, /* @__PURE__ */ import_react82.default.createElement("svg", {
+      version: "1.1",
+      viewBox: "0 0 100 100",
+      xmlns: "http://www.w3.org/2000/svg"
+    }, /* @__PURE__ */ import_react82.default.createElement("path", {
+      transform: "matrix(.14629 1.284 -1.284 .14629 109.51 -13.316)",
+      d: "m72.025 92.359-60.673-44.835 69.165-30.127-4.2458 37.481z",
+      fill: "#d5d3d3",
+      stroke: "#000",
+      strokeWidth: "1"
+    }))), /* @__PURE__ */ import_react82.default.createElement("div", {
+      className: "verticalIconLayout"
+    }, "Product", /* @__PURE__ */ import_react82.default.createElement("input", {
+      id: "product",
+      value: solution.diagram.times.product,
+      className: "inputField",
+      readOnly: true
+    }))))))));
+  }
+
+  // src/components/diagrammer/combineDisplay.js
+  var import_react83 = __toESM(require_react());
+  function CombineDisplay(props) {
+    const solution = props.solution;
+    return /* @__PURE__ */ import_react83.default.createElement("div", {
+      className: "diagramContainer"
+    }, /* @__PURE__ */ import_react83.default.createElement(Card_default, {
+      style: { flexGrow: "2" }
+    }, /* @__PURE__ */ import_react83.default.createElement(Card_default.Body, {
+      className: "diagramScroll",
+      style: { padding: 0 }
+    }, /* @__PURE__ */ import_react83.default.createElement("div", {
+      className: "diagramExample",
+      style: { flexDirection: "row", justifyContent: "center" }
+    }, /* @__PURE__ */ import_react83.default.createElement("div", {
+      className: "diagramCombineBox"
+    }, /* @__PURE__ */ import_react83.default.createElement("div", {
+      className: "diagramCombineTop"
+    }, "Total", /* @__PURE__ */ import_react83.default.createElement("input", {
+      id: "total",
+      value: solution.diagram.combine.total,
+      className: "inputField",
+      autoFocus: true,
+      readOnly: true
+    })), /* @__PURE__ */ import_react83.default.createElement("div", {
+      className: "diagramCombineBottom"
+    }, /* @__PURE__ */ import_react83.default.createElement("div", {
+      className: "diagramCombineBottomLeft"
+    }, "Part", /* @__PURE__ */ import_react83.default.createElement("input", {
+      id: "part1",
+      value: solution.diagram.combine.part1,
+      className: "inputField",
+      readOnly: true
+    })), /* @__PURE__ */ import_react83.default.createElement("div", {
+      className: "diagramCombineBottomRight"
+    }, "Part", /* @__PURE__ */ import_react83.default.createElement("input", {
+      id: "part2",
+      value: solution.diagram.combine.part2,
+      className: "inputField",
+      readOnly: true
+    }))))))));
+  }
+
+  // src/components/diagrammer/changeDisplay.js
+  var import_react84 = __toESM(require_react());
+  var import_react_toggle2 = __toESM(require_component());
+  function ChangeDisplay(props) {
+    const solution = props.solution;
+    return /* @__PURE__ */ import_react84.default.createElement("div", {
+      className: "diagramContainer"
+    }, /* @__PURE__ */ import_react84.default.createElement(Card_default, {
+      style: { flexGrow: "2" }
+    }, /* @__PURE__ */ import_react84.default.createElement(Card_default.Body, {
+      className: "diagramScroll",
+      style: { padding: 0 }
+    }, /* @__PURE__ */ import_react84.default.createElement("div", {
+      className: "diagramExample",
+      style: { flexDirection: "row", justifyContent: "center" }
+    }, /* @__PURE__ */ import_react84.default.createElement("div", {
+      className: "diagramChangeArrowBox"
+    }, /* @__PURE__ */ import_react84.default.createElement("svg", {
+      className: "diagramChangeArrow",
+      version: "1.1",
+      viewBox: "0 0 920 281.7",
+      xmlns: "http://www.w3.org/2000/svg"
+    }, /* @__PURE__ */ import_react84.default.createElement("g", {
+      transform: "translate(-45.141 -322.39)"
+    }, /* @__PURE__ */ import_react84.default.createElement("g", {
+      transform: "matrix(.40782 1.0902 2.1895 -.20307 -572.25 1088.6)",
+      strokeWidth: "0"
+    }, /* @__PURE__ */ import_react84.default.createElement("path", {
+      d: "m-543.8 549.31c21.012 159.22 238.48 193.45 142.86 175.71-102.4-18.993-188.57-81.228-188.57-181.43s86.06-163.05 188.57-181.43c74.041-13.272-166.77 5.932-142.86 187.14z",
+      color: "#000000"
+    }), /* @__PURE__ */ import_react84.default.createElement("path", {
+      transform: "matrix(.95969 -.28107 .28107 .95969 -196.31 -60.926)",
+      d: "m-380 746.65c-5.7405 5.1467-181.6-52.408-183.18-59.952-1.5869-7.5448 136.19-131.06 143.51-128.67 7.3274 2.3981 45.413 183.47 39.672 188.62z",
+      color: "#000000"
+    }))))), /* @__PURE__ */ import_react84.default.createElement("div", {
+      className: "diagramBox"
+    }, /* @__PURE__ */ import_react84.default.createElement("div", {
+      className: "diagramChangeItem"
+    }, "start", /* @__PURE__ */ import_react84.default.createElement("input", {
+      id: "start",
+      value: solution.diagram.change.start,
+      className: "inputField",
+      readOnly: true
+    })), /* @__PURE__ */ import_react84.default.createElement(import_react_toggle2.default, {
+      defaultChecked: props.solution.diagram.change.sign,
+      className: "signToggle",
+      icons: {
+        checked: /* @__PURE__ */ import_react84.default.createElement(TiPlus, {
+          size: 28
+        }),
+        unchecked: /* @__PURE__ */ import_react84.default.createElement(FaMinus, {
+          size: 42
+        })
+      }
+    }), /* @__PURE__ */ import_react84.default.createElement("div", {
+      className: "diagramChangeItem"
+    }, "change", /* @__PURE__ */ import_react84.default.createElement("input", {
+      id: "change",
+      value: solution.diagram.change.change,
+      className: "inputField",
+      readOnly: true
+    })), /* @__PURE__ */ import_react84.default.createElement("div", {
+      className: "diagramChangeItem"
+    }, "end", /* @__PURE__ */ import_react84.default.createElement("input", {
+      id: "end",
+      value: solution.diagram.change.end,
+      className: "inputField",
+      readOnly: true
+    })))))));
+  }
+
+  // src/components/diagrammer/equalGroupsDisplay.js
+  var import_react85 = __toESM(require_react());
+  function EqualGroupsDisplay(props) {
+    const solution = props.solution;
+    return /* @__PURE__ */ import_react85.default.createElement("div", {
+      className: "diagramContainer"
+    }, /* @__PURE__ */ import_react85.default.createElement(Card_default, {
+      style: { flexGrow: "2" }
+    }, /* @__PURE__ */ import_react85.default.createElement(Card_default.Body, {
+      className: "diagramScroll",
+      style: { padding: 0 }
+    }, /* @__PURE__ */ import_react85.default.createElement("div", {
+      className: "diagramExample",
+      style: { flexDirection: "row", justifyContent: "center" }
+    }, /* @__PURE__ */ import_react85.default.createElement("div", {
+      className: "diagramBox"
+    }, /* @__PURE__ */ import_react85.default.createElement("div", {
+      className: "diagramEqualItem diagramMultipleStart"
+    }, /* @__PURE__ */ import_react85.default.createElement("div", {
+      className: "diagramMultipleIcon"
+    }, /* @__PURE__ */ import_react85.default.createElement("svg", {
+      version: "1.1",
+      viewBox: "0 0 100 100",
+      xmlns: "http://www.w3.org/2000/svg"
+    }, /* @__PURE__ */ import_react85.default.createElement("ellipse", {
+      cx: "50",
+      cy: "50",
+      rx: "47.015",
+      ry: "47.015",
+      fill: "#d5d3d3",
+      stroke: "#000"
+    }))), /* @__PURE__ */ import_react85.default.createElement("div", {
+      className: "verticalIconLayout"
+    }, "Groups", /* @__PURE__ */ import_react85.default.createElement("input", {
+      id: "groups",
+      value: solution.diagram.groups.groups,
+      className: "inputField",
+      readOnly: true
+    }))), /* @__PURE__ */ import_react85.default.createElement("div", null, "X"), /* @__PURE__ */ import_react85.default.createElement("div", {
+      className: "squareIcon verticalIconLayout"
+    }, "Number", /* @__PURE__ */ import_react85.default.createElement("input", {
+      id: "number",
+      value: solution.diagram.groups.number,
+      className: "inputField"
+    })), /* @__PURE__ */ import_react85.default.createElement("div", null, " = "), /* @__PURE__ */ import_react85.default.createElement("div", {
+      className: "diagramEqualItem diagramMultipleEnd"
+    }, /* @__PURE__ */ import_react85.default.createElement("div", {
+      className: "diagramMultipleIcon"
+    }, /* @__PURE__ */ import_react85.default.createElement("svg", {
+      version: "1.1",
+      viewBox: "0 0 100 100",
+      xmlns: "http://www.w3.org/2000/svg"
+    }, /* @__PURE__ */ import_react85.default.createElement("path", {
+      transform: "matrix(.14629 1.284 -1.284 .14629 109.51 -13.316)",
+      d: "m72.025 92.359-60.673-44.835 69.165-30.127-4.2458 37.481z",
+      fill: "#d5d3d3",
+      stroke: "#000",
+      strokeWidth: "1"
+    }))), /* @__PURE__ */ import_react85.default.createElement("div", {
+      className: "verticalIconLayout"
+    }, "Product", /* @__PURE__ */ import_react85.default.createElement("input", {
+      id: "product",
+      value: solution.diagram.groups.product,
+      className: "inputField",
+      readOnly: true
+    }))))))));
+  }
 
   // src/stepViews/stepwiseView/stepwiseView.js
   function StepWiseView(props) {
@@ -30134,7 +30387,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         payload: { contentType: props.contentType, timeStamp: Date.now() }
       });
     }
-    const [showToast, setShowToast] = (0, import_react82.useState)(false);
+    const [showToast, setShowToast] = (0, import_react86.useState)(false);
     const toggleToast = () => setShowToast(!showToast);
     const { handleStep } = useWizard();
     handleStep(() => {
@@ -30143,33 +30396,59 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         throw "Don't know where to catch this. If I throw an error object, the app crashes.  This causes an error in the console, but allows me to display the toast and prevent going to next page.";
       }
     });
-    return /* @__PURE__ */ import_react82.default.createElement("div", {
+    (0, import_react86.useEffect)(() => {
+      if (window.MathJax) {
+        window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub]);
+      } else {
+        setTimeout(() => {
+          window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub]);
+        }, "1000");
+      }
+    });
+    return /* @__PURE__ */ import_react86.default.createElement("div", {
       className: "StepWise"
-    }, /* @__PURE__ */ import_react82.default.createElement(Toast_default, {
+    }, /* @__PURE__ */ import_react86.default.createElement(Toast_default, {
       show: showToast,
       onClose: toggleToast,
       className: "toasty"
-    }, /* @__PURE__ */ import_react82.default.createElement(Toast_default.Header, {
+    }, /* @__PURE__ */ import_react86.default.createElement(Toast_default.Header, {
       style: {
         background: "red",
         color: "white",
         justifyContent: "space-between"
       }
-    }, /* @__PURE__ */ import_react82.default.createElement("strong", {
+    }, /* @__PURE__ */ import_react86.default.createElement("strong", {
       className: "me-auto"
-    }, "Solve the Equation")), /* @__PURE__ */ import_react82.default.createElement(Toast_default.Body, null, "You must solve the equation before continuing! Click 'Enter Step' after you enter each step.")), /* @__PURE__ */ import_react82.default.createElement(SWContainer, {
+    }, "Solve the Equation")), /* @__PURE__ */ import_react86.default.createElement(Toast_default.Body, null, "You must solve the equation before continuing! Click 'Enter Step' after you enter each step.")), /* @__PURE__ */ import_react86.default.createElement("div", null, {
+      COMBINE: /* @__PURE__ */ import_react86.default.createElement(CombineDisplay, {
+        solution
+      }),
+      MULTIPLYTIMES: /* @__PURE__ */ import_react86.default.createElement(MultiplyTimesDisplay, {
+        solution
+      }),
+      EQUALGROUPS: /* @__PURE__ */ import_react86.default.createElement(EqualGroupsDisplay, {
+        solution
+      }),
+      CHANGE: /* @__PURE__ */ import_react86.default.createElement(ChangeDisplay, {
+        solution
+      })
+    }[solution.selectedDiagram]), !completed ? /* @__PURE__ */ import_react86.default.createElement(SWContainer, {
       problem: props.problem,
       solution: props.solution,
       onChange: successHandler
-    }));
+    }) : /* @__PURE__ */ import_react86.default.createElement("div", {
+      className: "successMsg"
+    }, /* @__PURE__ */ import_react86.default.createElement("h1", null, "Success!"), /* @__PURE__ */ import_react86.default.createElement("p", null, "You finished with working the problem. Your final answer was:"), /* @__PURE__ */ import_react86.default.createElement("p", {
+      style: { textAlign: "center" }
+    }, solution.stepWise.stepDetails[solution.stepWise.stepDetails.length - 1].mathML)));
   }
   var stepwiseView_default = StepWiseView;
 
   // src/stepViews/explainerView/explainerView.js
-  var import_react93 = __toESM(require_react());
+  var import_react97 = __toESM(require_react());
 
   // src/components/explainer/explainer.js
-  var import_react92 = __toESM(require_react());
+  var import_react96 = __toESM(require_react());
 
   // node_modules/@react-md/form/node_modules/@react-md/utils/es/applyRef.js
   function applyRef2(instance, ref) {
@@ -30219,14 +30498,14 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/@react-md/form/node_modules/@react-md/utils/es/useIsomorphicLayoutEffect.js
-  var import_react83 = __toESM(require_react());
-  var useIsomorphicLayoutEffect3 = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined" ? import_react83.useLayoutEffect : import_react83.useEffect;
+  var import_react87 = __toESM(require_react());
+  var useIsomorphicLayoutEffect3 = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined" ? import_react87.useLayoutEffect : import_react87.useEffect;
 
   // node_modules/@react-md/form/node_modules/@react-md/utils/es/useEnsuredRef.js
-  var import_react84 = __toESM(require_react());
+  var import_react88 = __toESM(require_react());
   function useEnsuredRef2(propRef) {
-    var ref = (0, import_react84.useRef)(null);
-    var refHandler = (0, import_react84.useCallback)(function(instance) {
+    var ref = (0, import_react88.useRef)(null);
+    var refHandler = (0, import_react88.useCallback)(function(instance) {
       applyRef2(instance, propRef);
       ref.current = instance;
     }, [propRef]);
@@ -30366,8 +30645,8 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // node_modules/@react-md/form/es/FormThemeProvider.js
   var import_jsx_runtime12 = __toESM(require_jsx_runtime());
-  var import_react85 = __toESM(require_react());
-  var context3 = (0, import_react85.createContext)({
+  var import_react89 = __toESM(require_react());
+  var context3 = (0, import_react89.createContext)({
     theme: "outline",
     underlineDirection: "left"
   });
@@ -30375,7 +30654,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     if (options === void 0) {
       options = {};
     }
-    var formTheme = (0, import_react85.useContext)(context3);
+    var formTheme = (0, import_react89.useContext)(context3);
     var theme = options.theme, underlineDirection = options.underlineDirection;
     theme = theme !== null && theme !== void 0 ? theme : formTheme.theme;
     underlineDirection = underlineDirection !== null && underlineDirection !== void 0 ? underlineDirection : formTheme.underlineDirection;
@@ -30388,7 +30667,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // node_modules/@react-md/form/es/label/Label.js
   var import_jsx_runtime13 = __toESM(require_jsx_runtime());
-  var import_react86 = __toESM(require_react());
+  var import_react90 = __toESM(require_react());
   var import_classnames17 = __toESM(require_classnames());
   var __assign16 = function() {
     __assign16 = Object.assign || function(t) {
@@ -30419,7 +30698,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     var _b = _a === void 0 ? {} : _a, _c = _b.error, error = _c === void 0 ? false : _c, _d = _b.active, active = _d === void 0 ? false : _d, _e = _b.disabled, disabled = _e === void 0 ? false : _e;
     return styles({ error, active, disabled });
   };
-  var Label = (0, import_react86.forwardRef)(function Label2(_a, ref) {
+  var Label = (0, import_react90.forwardRef)(function Label2(_a, ref) {
     var htmlFor = _a.htmlFor, className = _a.className, _b = _a.error, error = _b === void 0 ? false : _b, _c = _a.active, active = _c === void 0 ? false : _c, _d = _a.disabled, disabled = _d === void 0 ? false : _d, _e = _a.component, Component = _e === void 0 ? "label" : _e, children = _a.children, props = __rest8(_a, ["htmlFor", "className", "error", "active", "disabled", "component", "children"]);
     if (!children) {
       return null;
@@ -30429,7 +30708,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // node_modules/@react-md/form/es/label/FloatingLabel.js
   var import_jsx_runtime14 = __toESM(require_jsx_runtime());
-  var import_react87 = __toESM(require_react());
+  var import_react91 = __toESM(require_react());
   var import_classnames18 = __toESM(require_classnames());
   var __assign17 = function() {
     __assign17 = Object.assign || function(t) {
@@ -30456,7 +30735,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     return t;
   };
   var block4 = bem3("rmd-floating-label");
-  var FloatingLabel = (0, import_react87.forwardRef)(function FloatingLabel2(_a, ref) {
+  var FloatingLabel = (0, import_react91.forwardRef)(function FloatingLabel2(_a, ref) {
     var className = _a.className, dense = _a.dense, valued = _a.valued, floating = _a.floating, _b = _a.error, error = _b === void 0 ? false : _b, _c = _a.active, active = _c === void 0 ? false : _c, _d = _a.disabled, disabled = _d === void 0 ? false : _d, props = __rest9(_a, ["className", "dense", "valued", "floating", "error", "active", "disabled"]);
     return (0, import_jsx_runtime14.jsx)(Label, __assign17({}, props, { ref, className: (0, import_classnames18.default)(block4({
       dense,
@@ -30467,12 +30746,12 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // node_modules/@react-md/form/es/text-field/TextFieldContainer.js
   var import_jsx_runtime16 = __toESM(require_jsx_runtime());
-  var import_react89 = __toESM(require_react());
+  var import_react93 = __toESM(require_react());
   var import_classnames20 = __toESM(require_classnames());
 
   // node_modules/@react-md/form/es/text-field/TextFieldAddon.js
   var import_jsx_runtime15 = __toESM(require_jsx_runtime());
-  var import_react88 = __toESM(require_react());
+  var import_react92 = __toESM(require_react());
   var import_classnames19 = __toESM(require_classnames());
   var __assign18 = function() {
     __assign18 = Object.assign || function(t) {
@@ -30499,7 +30778,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     return t;
   };
   var block5 = bem3("rmd-text-field-addon");
-  var TextFieldAddon = (0, import_react88.forwardRef)(function TextFieldAddon2(_a, ref) {
+  var TextFieldAddon = (0, import_react92.forwardRef)(function TextFieldAddon2(_a, ref) {
     var children = _a.children, className = _a.className, _b = _a.presentational, presentational = _b === void 0 ? true : _b, props = __rest10(_a, ["children", "className", "presentational"]);
     if (!children) {
       return null;
@@ -30533,7 +30812,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     return t;
   };
   var block6 = bem3("rmd-text-field-container");
-  var TextFieldContainer = (0, import_react89.forwardRef)(function TextFieldContainer2(_a, ref) {
+  var TextFieldContainer = (0, import_react93.forwardRef)(function TextFieldContainer2(_a, ref) {
     var _b;
     var className = _a.className, children = _a.children, _c = _a.inline, inline = _c === void 0 ? false : _c, propTheme = _a.theme, _d = _a.error, error = _d === void 0 ? false : _d, active = _a.active, label = _a.label, _e = _a.dense, dense = _e === void 0 ? false : _e, _f = _a.stretch, stretch = _f === void 0 ? false : _f, _g = _a.disabled, disabled = _g === void 0 ? false : _g, _h = _a.isLeftAddon, isLeftAddon = _h === void 0 ? true : _h, _j = _a.isRightAddon, isRightAddon = _j === void 0 ? true : _j, leftChildren = _a.leftChildren, rightChildren = _a.rightChildren, propUnderlineDirection = _a.underlineDirection, props = __rest11(_a, ["className", "children", "inline", "theme", "error", "active", "label", "dense", "stretch", "disabled", "isLeftAddon", "isRightAddon", "leftChildren", "rightChildren", "underlineDirection"]);
     var _k = useFormTheme({
@@ -30568,7 +30847,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   });
 
   // node_modules/@react-md/form/es/useFieldStates.js
-  var import_react90 = __toESM(require_react());
+  var import_react94 = __toESM(require_react());
   var __read5 = function(o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m)
@@ -30592,14 +30871,14 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   };
   function useFieldStates(_a) {
     var onBlur = _a.onBlur, onFocus = _a.onFocus, onChange = _a.onChange, value = _a.value, defaultValue = _a.defaultValue;
-    var _b = __read5((0, import_react90.useState)(false), 2), focused = _b[0], setFocused = _b[1];
-    var _c = __read5((0, import_react90.useState)(function() {
+    var _b = __read5((0, import_react94.useState)(false), 2), focused = _b[0], setFocused = _b[1];
+    var _c = __read5((0, import_react94.useState)(function() {
       if (typeof value === "undefined") {
         return typeof defaultValue !== "undefined" && defaultValue.length > 0;
       }
       return value.length > 0;
     }), 2), valued = _c[0], setValued = _c[1];
-    var handleBlur = (0, import_react90.useCallback)(function(event) {
+    var handleBlur = (0, import_react94.useCallback)(function(event) {
       if (onBlur) {
         onBlur(event);
       }
@@ -30610,13 +30889,13 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         setValued(input.validity.badInput || (value !== null && value !== void 0 ? value : input.value).length > 0);
       }
     }, [onBlur, value]);
-    var handleFocus = (0, import_react90.useCallback)(function(event) {
+    var handleFocus = (0, import_react94.useCallback)(function(event) {
       if (onFocus) {
         onFocus(event);
       }
       setFocused(true);
     }, [onFocus]);
-    var handleChange = (0, import_react90.useCallback)(function(event) {
+    var handleChange = (0, import_react94.useCallback)(function(event) {
       if (onChange) {
         onChange(event);
       }
@@ -30629,8 +30908,8 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       }
       setValued(input.value.length > 0);
     }, [onChange]);
-    var prevValue = (0, import_react90.useRef)(value);
-    (0, import_react90.useEffect)(function() {
+    var prevValue = (0, import_react94.useRef)(value);
+    (0, import_react94.useEffect)(function() {
       if (prevValue.current !== value && typeof value === "string") {
         prevValue.current = value;
         setValued(value.length > 0);
@@ -30647,7 +30926,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // node_modules/@react-md/form/es/text-field/TextArea.js
   var import_jsx_runtime17 = __toESM(require_jsx_runtime());
-  var import_react91 = __toESM(require_react());
+  var import_react95 = __toESM(require_react());
   var import_classnames21 = __toESM(require_classnames());
   var __assign20 = function() {
     __assign20 = Object.assign || function(t) {
@@ -30698,22 +30977,22 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   var container = bem3("rmd-textarea-container");
   var PADDING_VARIABLES = "var(--rmd-form-text-padding-top, 0px) + var(--rmd-form-textarea-padding, 0px)";
   var DEFAULT_LINE_HEIGHT = "24";
-  var TextArea = (0, import_react91.forwardRef)(function TextArea2(_a, forwardedRef) {
+  var TextArea = (0, import_react95.forwardRef)(function TextArea2(_a, forwardedRef) {
     var style2 = _a.style, className = _a.className, areaStyle = _a.areaStyle, areaClassName = _a.areaClassName, containerRef = _a.containerRef, containerProps = _a.containerProps, label = _a.label, labelStyle = _a.labelStyle, labelClassName = _a.labelClassName, _b = _a.rows, rows = _b === void 0 ? 2 : _b, _c = _a.maxRows, maxRows = _c === void 0 ? -1 : _c, _d = _a.resize, resize = _d === void 0 ? "auto" : _d, propTheme = _a.theme, _e = _a.dense, dense = _e === void 0 ? false : _e, _f = _a.inline, propInline = _f === void 0 ? false : _f, _g = _a.error, error = _g === void 0 ? false : _g, _h = _a.stretch, stretch = _h === void 0 ? false : _h, _j = _a.disabled, disabled = _j === void 0 ? false : _j, _k = _a.animate, animate = _k === void 0 ? true : _k, _l = _a.isLeftAddon, isLeftAddon = _l === void 0 ? true : _l, _m = _a.isRightAddon, isRightAddon = _m === void 0 ? true : _m, propUnderlineDirection = _a.underlineDirection, propOnBlur = _a.onBlur, propOnFocus = _a.onFocus, propOnChange = _a.onChange, leftChildren = _a.leftChildren, rightChildren = _a.rightChildren, props = __rest12(_a, ["style", "className", "areaStyle", "areaClassName", "containerRef", "containerProps", "label", "labelStyle", "labelClassName", "rows", "maxRows", "resize", "theme", "dense", "inline", "error", "stretch", "disabled", "animate", "isLeftAddon", "isRightAddon", "underlineDirection", "onBlur", "onFocus", "onChange", "leftChildren", "rightChildren"]);
     var id = props.id, value = props.value, defaultValue = props.defaultValue;
     var _o = useFormTheme({
       theme: propTheme,
       underlineDirection: propUnderlineDirection
     }), theme = _o.theme, underlineDirection = _o.underlineDirection;
-    var _p = __read6((0, import_react91.useState)(), 2), height = _p[0], setHeight = _p[1];
-    (0, import_react91.useEffect)(function() {
+    var _p = __read6((0, import_react95.useState)(), 2), height = _p[0], setHeight = _p[1];
+    (0, import_react95.useEffect)(function() {
       if (resize !== "auto" && typeof height === "number") {
         setHeight(void 0);
       }
     }, [resize, height]);
-    var maskRef = (0, import_react91.useRef)(null);
-    var _q = __read6((0, import_react91.useState)(false), 2), scrollable = _q[0], setScrollable = _q[1];
-    var updateHeight = (0, import_react91.useCallback)(function() {
+    var maskRef = (0, import_react95.useRef)(null);
+    var _q = __read6((0, import_react95.useState)(false), 2), scrollable = _q[0], setScrollable = _q[1];
+    var updateHeight = (0, import_react95.useCallback)(function() {
       var mask = maskRef.current;
       if (!mask) {
         return;
@@ -30755,7 +31034,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       defaultValue
     }), valued = _s.valued, focused = _s.focused, onBlur = _s.onBlur, onFocus = _s.onFocus, onChange = _s.onChange;
     var _t = __read6(useEnsuredRef2(forwardedRef), 2), ref = _t[0], refHandler = _t[1];
-    var handleClick = (0, import_react91.useCallback)(function(event) {
+    var handleClick = (0, import_react95.useCallback)(function(event) {
       if (ref.current && event.target === event.currentTarget) {
         ref.current.focus();
       }
@@ -30810,11 +31089,11 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     function handleExplanation(event) {
       onChange({ type: "explanation", payload: event.target.value });
     }
-    return /* @__PURE__ */ import_react92.default.createElement("div", {
+    return /* @__PURE__ */ import_react96.default.createElement("div", {
       className: "ExplainerFields"
-    }, /* @__PURE__ */ import_react92.default.createElement("div", {
+    }, /* @__PURE__ */ import_react96.default.createElement("div", {
       className: "ExplanationIdentify"
-    }, solution.identify.number, " ", solution.identify.label), /* @__PURE__ */ import_react92.default.createElement(TextArea, {
+    }, solution.identify.number, " ", solution.identify.label), /* @__PURE__ */ import_react96.default.createElement(TextArea, {
       id: "explanation",
       ref: explanation,
       value: solution.explanation,
@@ -30827,7 +31106,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       style: { background: isOverExplanation ? "#007AFF" : "" },
       theme: "filled",
       autoFocus: true
-    }), /* @__PURE__ */ import_react92.default.createElement(tags_default, {
+    }), /* @__PURE__ */ import_react96.default.createElement(tags_default, {
       tags: props.solution.tags
     }));
   }
@@ -30836,7 +31115,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   function ExplainerView(props) {
     const solution = props.solution;
     const onChange = props.onChange;
-    const [showToast, setShowToast] = (0, import_react93.useState)(false);
+    const [showToast, setShowToast] = (0, import_react97.useState)(false);
     const toggleToast = () => setShowToast(!showToast);
     const { handleStep } = useWizard();
     handleStep(() => {
@@ -30850,38 +31129,38 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         });
       }
     });
-    return /* @__PURE__ */ import_react93.default.createElement("div", {
+    return /* @__PURE__ */ import_react97.default.createElement("div", {
       className: "Explainer"
-    }, /* @__PURE__ */ import_react93.default.createElement(stimulator_default, {
+    }, /* @__PURE__ */ import_react97.default.createElement(stimulator_default, {
       text: props.problem.stimulus,
       enabled: false
-    }), /* @__PURE__ */ import_react93.default.createElement("div", {
+    }), /* @__PURE__ */ import_react97.default.createElement("div", {
       className: "DiagramAnalyze"
-    }, /* @__PURE__ */ import_react93.default.createElement(Toast_default, {
+    }, /* @__PURE__ */ import_react97.default.createElement(Toast_default, {
       show: showToast,
       onClose: toggleToast,
       className: "toasty"
-    }, /* @__PURE__ */ import_react93.default.createElement(Toast_default.Header, {
+    }, /* @__PURE__ */ import_react97.default.createElement(Toast_default.Header, {
       style: {
         background: "red",
         color: "white",
         justifyContent: "space-between"
       }
-    }, /* @__PURE__ */ import_react93.default.createElement("strong", {
+    }, /* @__PURE__ */ import_react97.default.createElement("strong", {
       className: "me-auto"
-    }, "Explain your Answer")), /* @__PURE__ */ import_react93.default.createElement(Toast_default.Body, null, "You must answer the original question in plain language before proceding!")), /* @__PURE__ */ import_react93.default.createElement(DndProvider, {
+    }, "Explain your Answer")), /* @__PURE__ */ import_react97.default.createElement(Toast_default.Body, null, "You must answer the original question in plain language before proceding!")), /* @__PURE__ */ import_react97.default.createElement(DndProvider, {
       backend: HTML5Backend
-    }, /* @__PURE__ */ import_react93.default.createElement(Explainer, {
+    }, /* @__PURE__ */ import_react97.default.createElement(Explainer, {
       solution,
       onChange
     }))));
   }
 
   // src/stepViews/reviewerView/reviewerView.js
-  var import_react95 = __toESM(require_react());
+  var import_react99 = __toESM(require_react());
 
   // src/components/reviewer/reviewer.js
-  var import_react94 = __toESM(require_react());
+  var import_react98 = __toESM(require_react());
   function Reviewer(props) {
     const solution = props.solution;
     const onChange = props.onChange;
@@ -30906,11 +31185,11 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     function handleReview(event) {
       onChange({ type: "review", payload: event.target.value });
     }
-    return /* @__PURE__ */ import_react94.default.createElement("div", {
+    return /* @__PURE__ */ import_react98.default.createElement("div", {
       className: "ReviewerFields"
-    }, /* @__PURE__ */ import_react94.default.createElement("div", {
+    }, /* @__PURE__ */ import_react98.default.createElement("div", {
       className: "ReviewerExplanation"
-    }, solution.explanation), /* @__PURE__ */ import_react94.default.createElement(TextArea, {
+    }, solution.explanation), /* @__PURE__ */ import_react98.default.createElement(TextArea, {
       id: "review",
       ref: review,
       value: solution.review,
@@ -30923,7 +31202,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       style: { background: isOverReview ? "#007AFF" : "" },
       theme: "filled",
       autoFocus: true
-    }), /* @__PURE__ */ import_react94.default.createElement(tags_default, {
+    }), /* @__PURE__ */ import_react98.default.createElement(tags_default, {
       tags: props.solution.tags
     }));
   }
@@ -30932,7 +31211,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   function ReviewerView(props) {
     const solution = props.solution;
     const onChange = props.onChange;
-    const [showToast, setShowToast] = (0, import_react95.useState)(false);
+    const [showToast, setShowToast] = (0, import_react99.useState)(false);
     const toggleToast = () => setShowToast(!showToast);
     const { handleStep } = useWizard();
     handleStep(() => {
@@ -30946,38 +31225,38 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         });
       }
     });
-    return /* @__PURE__ */ import_react95.default.createElement("div", {
+    return /* @__PURE__ */ import_react99.default.createElement("div", {
       className: "Reviewer"
-    }, /* @__PURE__ */ import_react95.default.createElement(stimulator_default, {
+    }, /* @__PURE__ */ import_react99.default.createElement(stimulator_default, {
       text: props.problem.stimulus,
       enabled: false
-    }), /* @__PURE__ */ import_react95.default.createElement("div", {
+    }), /* @__PURE__ */ import_react99.default.createElement("div", {
       className: "DiagramAnalyze"
-    }, /* @__PURE__ */ import_react95.default.createElement(Toast_default, {
+    }, /* @__PURE__ */ import_react99.default.createElement(Toast_default, {
       show: showToast,
       onClose: toggleToast,
       className: "toasty"
-    }, /* @__PURE__ */ import_react95.default.createElement(Toast_default.Header, {
+    }, /* @__PURE__ */ import_react99.default.createElement(Toast_default.Header, {
       style: {
         background: "red",
         color: "white",
         justifyContent: "space-between"
       }
-    }, /* @__PURE__ */ import_react95.default.createElement("strong", {
+    }, /* @__PURE__ */ import_react99.default.createElement("strong", {
       className: "me-auto"
-    }, "Does your Answer Make Sense?")), /* @__PURE__ */ import_react95.default.createElement(Toast_default.Body, null, "You must explain how your answer makes sense!")), /* @__PURE__ */ import_react95.default.createElement(DndProvider, {
+    }, "Does your Answer Make Sense?")), /* @__PURE__ */ import_react99.default.createElement(Toast_default.Body, null, "You must explain how your answer makes sense!")), /* @__PURE__ */ import_react99.default.createElement(DndProvider, {
       backend: HTML5Backend
-    }, /* @__PURE__ */ import_react95.default.createElement(Reviewer, {
+    }, /* @__PURE__ */ import_react99.default.createElement(Reviewer, {
       solution,
       onChange
     }))));
   }
 
   // src/stepViews/diagramAnalyzeView/diagramAnalyzeView.js
-  var import_react97 = __toESM(require_react());
+  var import_react101 = __toESM(require_react());
 
   // src/components/diagramAnalysis/diagramAnalysis.js
-  var import_react96 = __toESM(require_react());
+  var import_react100 = __toESM(require_react());
   function DiagramAnalysis(props) {
     const current = props.current;
     const onChange = props.onChange;
@@ -30988,9 +31267,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         payload: analysis
       });
     }
-    return /* @__PURE__ */ import_react96.default.createElement("div", {
+    return /* @__PURE__ */ import_react100.default.createElement("div", {
       className: "DiagramAnalysis"
-    }, /* @__PURE__ */ import_react96.default.createElement(TextArea, {
+    }, /* @__PURE__ */ import_react100.default.createElement(TextArea, {
       rows: "4",
       maxRows: "10",
       resize: "false",
@@ -31008,7 +31287,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     const problem = props.problem;
     const solution = props.solution;
     const onChange = props.onChange;
-    const [showToast, setShowToast] = (0, import_react97.useState)(false);
+    const [showToast, setShowToast] = (0, import_react101.useState)(false);
     const toggleToast = () => setShowToast(!showToast);
     const { handleStep } = useWizard();
     handleStep(() => {
@@ -31022,24 +31301,24 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         });
       }
     });
-    return /* @__PURE__ */ import_react97.default.createElement("div", null, /* @__PURE__ */ import_react97.default.createElement(stimulator_default, {
+    return /* @__PURE__ */ import_react101.default.createElement("div", null, /* @__PURE__ */ import_react101.default.createElement(stimulator_default, {
       text: problem.stimulus,
       enabled: false
-    }), /* @__PURE__ */ import_react97.default.createElement("div", {
+    }), /* @__PURE__ */ import_react101.default.createElement("div", {
       className: "DiagramAnalyze"
-    }, /* @__PURE__ */ import_react97.default.createElement(Toast_default, {
+    }, /* @__PURE__ */ import_react101.default.createElement(Toast_default, {
       show: showToast,
       onClose: toggleToast,
       className: "toasty"
-    }, /* @__PURE__ */ import_react97.default.createElement(Toast_default.Header, {
+    }, /* @__PURE__ */ import_react101.default.createElement(Toast_default.Header, {
       style: {
         background: "red",
         color: "white",
         justifyContent: "space-between"
       }
-    }, /* @__PURE__ */ import_react97.default.createElement("strong", {
+    }, /* @__PURE__ */ import_react101.default.createElement("strong", {
       className: "me-auto"
-    }, "Analyze Which Diagram")), /* @__PURE__ */ import_react97.default.createElement(Toast_default.Body, null, "You must provide your analysis of which type of problem this is!")), /* @__PURE__ */ import_react97.default.createElement(diagramAnalysis_default, {
+    }, "Analyze Which Diagram")), /* @__PURE__ */ import_react101.default.createElement(Toast_default.Body, null, "You must provide your analysis of which type of problem this is!")), /* @__PURE__ */ import_react101.default.createElement(diagramAnalysis_default, {
       current: solution.diagramAnalysis,
       onChange
     })));
@@ -31047,7 +31326,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   var diagramAnalyzeView_default = DiagramAnalyzeView;
 
   // src/stepViews/testView/testView.js
-  var import_react98 = __toESM(require_react());
+  var import_react102 = __toESM(require_react());
   function TestView(props) {
     function keyClick(val) {
       const target = document.querySelector("#testInput");
@@ -31060,68 +31339,68 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         target.focus();
       }
     }
-    return /* @__PURE__ */ import_react98.default.createElement("div", {
+    return /* @__PURE__ */ import_react102.default.createElement("div", {
       className: "testBox"
-    }, /* @__PURE__ */ import_react98.default.createElement("input", {
+    }, /* @__PURE__ */ import_react102.default.createElement("input", {
       id: "testInput",
       autoFocus: true
-    }), /* @__PURE__ */ import_react98.default.createElement("div", {
+    }), /* @__PURE__ */ import_react102.default.createElement("div", {
       style: {
         position: "absolute",
         width: "200px",
         height: "300px",
         background: "grey"
       }
-    }, /* @__PURE__ */ import_react98.default.createElement(Keypad, {
+    }, /* @__PURE__ */ import_react102.default.createElement(Keypad, {
       className: "myKeypad",
       style: { fontSize: "2rem" }
-    }, /* @__PURE__ */ import_react98.default.createElement(KeyRow, null, /* @__PURE__ */ import_react98.default.createElement(Key, {
+    }, /* @__PURE__ */ import_react102.default.createElement(KeyRow, null, /* @__PURE__ */ import_react102.default.createElement(Key, {
       onClick: keyClick,
       retKey: "&LARR;",
       style: { background: "orange" }
-    }, "\u2190"), /* @__PURE__ */ import_react98.default.createElement(Key, {
+    }, "\u2190"), /* @__PURE__ */ import_react102.default.createElement(Key, {
       onClick: keyClick,
       retKey: "&RARR;",
       style: { background: "orange" }
-    }, "\u2192"), /* @__PURE__ */ import_react98.default.createElement(Key, {
+    }, "\u2192"), /* @__PURE__ */ import_react102.default.createElement(Key, {
       onClick: keyClick,
       retKey: "&BKSP;",
       style: { background: "orange" }
-    }, /* @__PURE__ */ import_react98.default.createElement(BsBackspace, null))), /* @__PURE__ */ import_react98.default.createElement(KeyRow, null, /* @__PURE__ */ import_react98.default.createElement(Key, {
+    }, /* @__PURE__ */ import_react102.default.createElement(BsBackspace, null))), /* @__PURE__ */ import_react102.default.createElement(KeyRow, null, /* @__PURE__ */ import_react102.default.createElement(Key, {
       onClick: keyClick,
       retKey: "7"
-    }, /* @__PURE__ */ import_react98.default.createElement("i", null, "7")), /* @__PURE__ */ import_react98.default.createElement(Key, {
+    }, /* @__PURE__ */ import_react102.default.createElement("i", null, "7")), /* @__PURE__ */ import_react102.default.createElement(Key, {
       onClick: keyClick,
       retKey: "8"
-    }, "8"), /* @__PURE__ */ import_react98.default.createElement(Key, {
+    }, "8"), /* @__PURE__ */ import_react102.default.createElement(Key, {
       onClick: keyClick,
       retKey: "9"
-    }, "9")), /* @__PURE__ */ import_react98.default.createElement(KeyRow, null, /* @__PURE__ */ import_react98.default.createElement(Key, {
+    }, "9")), /* @__PURE__ */ import_react102.default.createElement(KeyRow, null, /* @__PURE__ */ import_react102.default.createElement(Key, {
       onClick: keyClick,
       retKey: "4"
-    }, "4"), /* @__PURE__ */ import_react98.default.createElement(Key, {
+    }, "4"), /* @__PURE__ */ import_react102.default.createElement(Key, {
       onClick: keyClick,
       retKey: "5"
-    }, "5"), /* @__PURE__ */ import_react98.default.createElement(Key, {
+    }, "5"), /* @__PURE__ */ import_react102.default.createElement(Key, {
       onClick: keyClick,
       retKey: "6"
-    }, "6")), /* @__PURE__ */ import_react98.default.createElement(KeyRow, null, /* @__PURE__ */ import_react98.default.createElement(Key, {
+    }, "6")), /* @__PURE__ */ import_react102.default.createElement(KeyRow, null, /* @__PURE__ */ import_react102.default.createElement(Key, {
       onClick: keyClick,
       retKey: "1"
-    }, "1"), /* @__PURE__ */ import_react98.default.createElement(Key, {
+    }, "1"), /* @__PURE__ */ import_react102.default.createElement(Key, {
       onClick: keyClick,
       retKey: "2"
-    }, "2"), /* @__PURE__ */ import_react98.default.createElement(Key, {
+    }, "2"), /* @__PURE__ */ import_react102.default.createElement(Key, {
       onClick: keyClick,
       retKey: "3"
     }, "3")))));
   }
 
   // src/stepViews/identifierView/identifierView.js
-  var import_react100 = __toESM(require_react());
+  var import_react104 = __toESM(require_react());
 
   // src/components/identifier/identifier.js
-  var import_react99 = __toESM(require_react());
+  var import_react103 = __toESM(require_react());
   function Identifier(props) {
     const solution = props.solution;
     const onChange = props.onChange;
@@ -31131,16 +31410,16 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     function handleLabel(event) {
       onChange({ type: "identifyLabel", payload: event.target.value });
     }
-    return /* @__PURE__ */ import_react99.default.createElement("div", {
+    return /* @__PURE__ */ import_react103.default.createElement("div", {
       className: "IdentifierFields"
-    }, /* @__PURE__ */ import_react99.default.createElement("input", {
+    }, /* @__PURE__ */ import_react103.default.createElement("input", {
       id: "number",
       value: solution.identify.number,
       onChange: handleNumber,
       placeholder: "Number",
       className: "Number",
       autoFocus: true
-    }), /* @__PURE__ */ import_react99.default.createElement("input", {
+    }), /* @__PURE__ */ import_react103.default.createElement("input", {
       id: "label",
       value: solution.identify.label,
       onChange: handleLabel,
@@ -31153,7 +31432,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   function IdentifierView(props) {
     const solution = props.solution;
     const onChange = props.onChange;
-    const [showToast, setShowToast] = (0, import_react100.useState)(false);
+    const [showToast, setShowToast] = (0, import_react104.useState)(false);
     const toggleToast = () => setShowToast(!showToast);
     const { handleStep } = useWizard();
     handleStep(() => {
@@ -31167,26 +31446,26 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         });
       }
     });
-    return /* @__PURE__ */ import_react100.default.createElement("div", {
+    return /* @__PURE__ */ import_react104.default.createElement("div", {
       className: "Identifier"
-    }, /* @__PURE__ */ import_react100.default.createElement(stimulator_default, {
+    }, /* @__PURE__ */ import_react104.default.createElement(stimulator_default, {
       text: props.problem.stimulus,
       enabled: false
-    }), /* @__PURE__ */ import_react100.default.createElement("div", {
+    }), /* @__PURE__ */ import_react104.default.createElement("div", {
       className: "DiagramAnalyze"
-    }, /* @__PURE__ */ import_react100.default.createElement(Toast_default, {
+    }, /* @__PURE__ */ import_react104.default.createElement(Toast_default, {
       show: showToast,
       onClose: toggleToast,
       className: "toasty"
-    }, /* @__PURE__ */ import_react100.default.createElement(Toast_default.Header, {
+    }, /* @__PURE__ */ import_react104.default.createElement(Toast_default.Header, {
       style: {
         background: "red",
         color: "white",
         justifyContent: "space-between"
       }
-    }, /* @__PURE__ */ import_react100.default.createElement("strong", {
+    }, /* @__PURE__ */ import_react104.default.createElement("strong", {
       className: "me-auto"
-    }, "Identify Number and Label")), /* @__PURE__ */ import_react100.default.createElement(Toast_default.Body, null, "You must provide the ", /* @__PURE__ */ import_react100.default.createElement("i", null, "number"), " and ", /* @__PURE__ */ import_react100.default.createElement("i", null, "label"), " before moving forward")), /* @__PURE__ */ import_react100.default.createElement(Identifier, {
+    }, "Identify Number and Label")), /* @__PURE__ */ import_react104.default.createElement(Toast_default.Body, null, "You must provide the ", /* @__PURE__ */ import_react104.default.createElement("i", null, "number"), " and ", /* @__PURE__ */ import_react104.default.createElement("i", null, "label"), " before moving forward")), /* @__PURE__ */ import_react104.default.createElement(Identifier, {
       solution,
       onChange
     })));
@@ -31198,69 +31477,69 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     const problem = props.problem;
     const solution = props.solution;
     const dispatch = props.dispatcher;
-    return /* @__PURE__ */ import_react101.default.createElement("div", {
+    return /* @__PURE__ */ import_react105.default.createElement("div", {
       className: "powerContent"
     }, {
-      READ: /* @__PURE__ */ import_react101.default.createElement(readView_default, {
+      READ: /* @__PURE__ */ import_react105.default.createElement(readView_default, {
         stimulus: problem.stimulus,
         onChange: dispatch,
         contentType
       }),
-      TAG: /* @__PURE__ */ import_react101.default.createElement(tagView_default, {
+      TAG: /* @__PURE__ */ import_react105.default.createElement(tagView_default, {
         problem,
         solution,
         onChange: dispatch,
         contentType
       }),
-      DIAGRAMANALYZE: /* @__PURE__ */ import_react101.default.createElement(diagramAnalyzeView_default, {
+      DIAGRAMANALYZE: /* @__PURE__ */ import_react105.default.createElement(diagramAnalyzeView_default, {
         problem,
         solution,
         onChange: dispatch,
         contentType
       }),
-      DIAGRAMSELECT: /* @__PURE__ */ import_react101.default.createElement(diagramSelectView_default, {
+      DIAGRAMSELECT: /* @__PURE__ */ import_react105.default.createElement(diagramSelectView_default, {
         problem,
         solution,
         onChange: dispatch,
         contentType
       }),
-      DIAGRAMMER: /* @__PURE__ */ import_react101.default.createElement(diagrammerView_default, {
+      DIAGRAMMER: /* @__PURE__ */ import_react105.default.createElement(diagrammerView_default, {
         problem,
         solution,
         onChange: dispatch,
         contentType
       }),
-      EQUATIONATOR: /* @__PURE__ */ import_react101.default.createElement(equationatorView_default, {
+      EQUATIONATOR: /* @__PURE__ */ import_react105.default.createElement(equationatorView_default, {
         problem,
         solution,
         onChange: dispatch,
         contentType
       }),
-      STEPWISE: /* @__PURE__ */ import_react101.default.createElement(stepwiseView_default, {
+      STEPWISE: /* @__PURE__ */ import_react105.default.createElement(stepwiseView_default, {
         problem,
         solution,
         onChange: dispatch,
         contentType
       }),
-      IDENTIFIER: /* @__PURE__ */ import_react101.default.createElement(IdentifierView, {
+      IDENTIFIER: /* @__PURE__ */ import_react105.default.createElement(IdentifierView, {
         problem,
         solution,
         onChange: dispatch,
         contentType
       }),
-      EXPLAINER: /* @__PURE__ */ import_react101.default.createElement(ExplainerView, {
+      EXPLAINER: /* @__PURE__ */ import_react105.default.createElement(ExplainerView, {
         problem,
         solution,
         onChange: dispatch,
         contentType
       }),
-      REVIEWER: /* @__PURE__ */ import_react101.default.createElement(ReviewerView, {
+      REVIEWER: /* @__PURE__ */ import_react105.default.createElement(ReviewerView, {
         problem,
         solution,
         onChange: dispatch,
         contentType
       }),
-      TEST: /* @__PURE__ */ import_react101.default.createElement(TestView, {
+      TEST: /* @__PURE__ */ import_react105.default.createElement(TestView, {
         problem,
         solution,
         onChange: dispatch,
@@ -31271,11 +31550,11 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   var powerContent_default = PowerContent;
 
   // src/components/powerFooter/powerFooter.js
-  var import_react103 = __toESM(require_react());
+  var import_react107 = __toESM(require_react());
 
   // src/components/button/button.js
-  var import_react102 = __toESM(require_react());
-  var Button = ({ label, ...rest }) => /* @__PURE__ */ import_react102.default.createElement("button", {
+  var import_react106 = __toESM(require_react());
+  var Button = ({ label, ...rest }) => /* @__PURE__ */ import_react106.default.createElement("button", {
     className: "Button",
     ...rest
   }, label);
@@ -31292,18 +31571,18 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       isLastStep,
       isFirstStep
     } = useWizard();
-    return /* @__PURE__ */ import_react103.default.createElement("div", {
+    return /* @__PURE__ */ import_react107.default.createElement("div", {
       className: "powerFooter"
-    }, /* @__PURE__ */ import_react103.default.createElement("div", {
+    }, /* @__PURE__ */ import_react107.default.createElement("div", {
       className: "Info"
-    }, /* @__PURE__ */ import_react103.default.createElement("p", null, "Has previous step: ", !isFirstStep ? "\u2705" : "\u26D4"), /* @__PURE__ */ import_react103.default.createElement("br", null), /* @__PURE__ */ import_react103.default.createElement("p", null, "Has next step: ", !isLastStep ? "\u2705" : "\u26D4", " "), /* @__PURE__ */ import_react103.default.createElement("br", null), /* @__PURE__ */ import_react103.default.createElement("p", null, "Active step: ", activeStep, " ", /* @__PURE__ */ import_react103.default.createElement("br", null)), /* @__PURE__ */ import_react103.default.createElement("br", null), /* @__PURE__ */ import_react103.default.createElement("p", null, "Total steps: ", stepCount, " ", /* @__PURE__ */ import_react103.default.createElement("br", null))), /* @__PURE__ */ import_react103.default.createElement("div", {
+    }, /* @__PURE__ */ import_react107.default.createElement("p", null, "Has previous step: ", !isFirstStep ? "\u2705" : "\u26D4"), /* @__PURE__ */ import_react107.default.createElement("br", null), /* @__PURE__ */ import_react107.default.createElement("p", null, "Has next step: ", !isLastStep ? "\u2705" : "\u26D4", " "), /* @__PURE__ */ import_react107.default.createElement("br", null), /* @__PURE__ */ import_react107.default.createElement("p", null, "Active step: ", activeStep, " ", /* @__PURE__ */ import_react107.default.createElement("br", null)), /* @__PURE__ */ import_react107.default.createElement("br", null), /* @__PURE__ */ import_react107.default.createElement("p", null, "Total steps: ", stepCount, " ", /* @__PURE__ */ import_react107.default.createElement("br", null))), /* @__PURE__ */ import_react107.default.createElement("div", {
       className: "Actions"
-    }, !isFirstStep && /* @__PURE__ */ import_react103.default.createElement(button_default, {
+    }, !isFirstStep && /* @__PURE__ */ import_react107.default.createElement(button_default, {
       className: "WizButton",
       label: "Previous",
       onClick: () => previousStep(),
       disabled: isLoading
-    }, "Previous"), !isLastStep && /* @__PURE__ */ import_react103.default.createElement(button_default, {
+    }, "Previous"), !isLastStep && /* @__PURE__ */ import_react107.default.createElement(button_default, {
       className: "WizButton",
       label: "Next",
       onClick: () => {
@@ -31314,7 +31593,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         }
       },
       disabled: isLoading
-    }), isLastStep && /* @__PURE__ */ import_react103.default.createElement(button_default, {
+    }), isLastStep && /* @__PURE__ */ import_react107.default.createElement(button_default, {
       className: "WizButton",
       label: "Submit",
       onClick: () => {
@@ -31329,25 +31608,25 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   function SWPower(props) {
     const onSubmit = props.onSubmit;
     const initializedWork = props.problem ? { ...blankWork, problem: props.problem } : { ...blankWork };
-    const [work, workDispatch] = (0, import_react104.useReducer)(reducer_default, initializedWork);
-    const [maximized, setMaximized] = (0, import_react104.useState)(false);
-    return /* @__PURE__ */ import_react104.default.createElement("div", {
+    const [work, workDispatch] = (0, import_react108.useReducer)(reducer_default, initializedWork);
+    const [maximized, setMaximized] = (0, import_react108.useState)(true);
+    return /* @__PURE__ */ import_react108.default.createElement("div", {
       className: "SWPowerComponent " + (maximized ? "Maximized" : "")
-    }, /* @__PURE__ */ import_react104.default.createElement(Wizard, {
-      header: /* @__PURE__ */ import_react104.default.createElement(powerTitle_default, {
+    }, /* @__PURE__ */ import_react108.default.createElement(Wizard, {
+      header: /* @__PURE__ */ import_react108.default.createElement(powerTitle_default, {
         problem: work.problem,
         maximized,
         setMaximized,
-        maximizable: false
+        maximizable: true
       }),
-      footer: /* @__PURE__ */ import_react104.default.createElement(powerFooter_default, {
+      footer: /* @__PURE__ */ import_react108.default.createElement(powerFooter_default, {
         problem: work.problem,
         solution: work.solution,
         dispatcher: workDispatch,
         onSubmit
       })
     }, work.problem.steps.map((step, i) => {
-      return /* @__PURE__ */ import_react104.default.createElement(powerContent_default, {
+      return /* @__PURE__ */ import_react108.default.createElement(powerContent_default, {
         key: i,
         problem: work.problem,
         solution: work.solution,
@@ -31361,7 +31640,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   // src/index.js
   for (let i = 0; i < window.swpwr_problems.length; i++) {
     import_react_dom2.default.render(
-      /* @__PURE__ */ import_react105.default.createElement(SWPower_default, {
+      /* @__PURE__ */ import_react109.default.createElement(SWPower_default, {
         onSubmit: window.swpwr_onSubmit,
         problem: window.swpwr_problems[i]
       }),

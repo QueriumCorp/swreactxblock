@@ -9589,8 +9589,8 @@ a.text-dark:hover {
 
 /* src/SWPower.css */
 .SWPowerComponent {
+  flex-grow: 2;
   min-height: 600px;
-  max-height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -10157,10 +10157,21 @@ a.text-dark:hover {
   color: cyan;
 }
 
+/* src/components/stepWise/stepWise.css */
+#swClient {
+  position: relative;
+  flex-grow: 2;
+  overflow: scroll;
+}
+
 /* src/stepViews/stepwiseView/stepwiseView.css */
 .StepWise {
   display: flex;
+  flex-direction: column;
   flex-grow: 2;
+}
+.successMsg {
+  margin: 10px;
 }
 .toasty {
   position: absolute;
