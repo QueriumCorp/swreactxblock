@@ -750,6 +750,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_resource('<link rel="apple-touch-icon" href="/logo192.png"/>','text/html','head')
 #NOTYET        frag.add_resource('<link rel="manifest" href="/public/manifest.json"/>','text/html','head')
         frag.add_resource('<title>Querium StepWise Power</title>','text/html','head')
+        frag.add_resource('<style>.SWPowerComponent { flex-grow: 2; }</style>','text/html','head')
 
 # Apparently jQuery already loaded
 #HIDEME        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
