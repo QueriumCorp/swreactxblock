@@ -603,6 +603,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if DEBUG: logger.info("SWPWRXBlock student_view() pick_variant selected q_index={i} question={q}".format(i=q_index,q=self.question))
 
 ### HEAD ASSETS
+# <!DOCTYPE html>
+# <html lang="en">
 #   <head>
 #     <meta charset="utf-8" />
 #     <link rel="icon" href="/favicon.ico" />
@@ -640,7 +642,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 #       media="all"
 #     />
 # 
-#         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+#     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 #     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 #     <!--[if lt IE 9]>
 #       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -715,7 +717,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 #     <link
 #       rel="stylesheet"
 #       type="text/css"
-#       href="https://stepwise.querium.com/client/querium-stepwise-1.6.8.1-sw4wp.css"
+#       href="https://stepwise.querium.com/client/querium-stepwise-1.6.8.css"
 #     />
 # 
 #     <!-- REQUIRED Javascript files for Querium StepWise Client -->
@@ -750,9 +752,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_resource('<link rel="apple-touch-icon" href="/logo192.png"/>','text/html','head')
 #NOTYET        frag.add_resource('<link rel="manifest" href="/public/manifest.json"/>','text/html','head')
         frag.add_resource('<title>Querium StepWise Power</title>','text/html','head')
-        frag.add_resource('<style>.SWPowerComponent { flex-grow: 2; }</style>','text/html','head')
-        frag.add_resource('<style>.Maximized { left: 10px; max-width: 95% }</style>','text/html','head')
-        frag.add_resource('<style>.stimulator { max-width: 600px }</style>','text/html','head')
 
 # Apparently jQuery already loaded
 #HIDEME        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
@@ -766,8 +765,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 #NOTYET       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 #NOTYET     <![endif]-->
 #                Bootstrap CSS
-#NOTFOUND        frag.add_css(self.resource_string("css/scrolling-nav.css"))
-        frag.add_javascript_url("//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML")
+        frag.add_javascript_url("//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_HTMLorMML")
         frag.add_resource('<script type="text/x-mathjax-config">MathJax.Hub.Config({ messageStyle: \'none\', skipStartupTypeset: true, showMathMenu: true, tex2jax: { preview: \'none\' }, asciimath2jax: { delimiters: [[\'`\',\'`\'],[\'``\',\'``\']], preview: "none" }, AsciiMath: {displaystyle: false} }); MathJax.Hub.Register.LoadHook("[MathJax]/extensions/asciimath2jax.js",function () { var AM = MathJax.Extension.asciimath2jax, CREATEPATTERNS = AM.createPatterns; AM.createPatterns = function () { var result = CREATEPATTERNS.call(this); this.match[\'``\'].mode = ";mode=display"; return result; }; }); MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready",function () { var AM = MathJax.InputJax.AsciiMath; AM.postfilterHooks.Add(function (data) { if (data.script.type.match(/;mode=display/)) {data.math.root.display = "block"} return data; }); });</script>','text/html','head')
         frag.add_css_url("//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css")
 #NOTYET Don't include this for now.  Just running on iPads
@@ -775,10 +773,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         frag.add_css_url("//fonts.googleapis.com/css?family=Lato")
         frag.add_css_url("//fonts.googleapis.com/css?family=Oswald")
-#                 Angular CSS
-#NOTFOUND        frag.add_css(self.resource_string("vendor/ng-sortable/dist/ng-sortable.css"))
-#                 Angular CSS
-#NOTFOUND        frag.add_css(self.resource_string("vendor/ng-scrollbar/dist/ng-scrollbar.css"))
         frag.add_css_url("//stepwise.querium.com/libs/mathquill/mathquill.css")
         # <!-- REQUIRED for the chip components -->
         frag.add_css_url("//cdn.jsdelivr.net/gh/mlaursen/react-md@5.1.4/themes/react-md.teal-pink-200-light.min.css")
@@ -792,28 +786,21 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_css(self.resource_string("static/css/swpwrxstudent.css"))
         frag.add_javascript(self.resource_string("static/js/src/swpwrxstudent.js"))
 
-        frag.add_content('<script>querium.qEvalLogging=!0</script>')
+        frag.add_content('<script>querium.qEvalLogging=true;</script>')
 
 # Now we can finally add the React app bundle assets
 
-        # frag.add_css(self.resource_string("static/css/main.b870043f.chunk.css"))
-        # frag.add_css(self.resource_string("static/css/1.7f8b3af7.chunk.css"))
         frag.add_css(self.resource_string("public/assets/app.css"))
 
-        frag.add_resource('<base href="/testq_assets/"/>','text/html','head')		# Needed so react code can find its pages. Don't do earlier or impacts relative pathnames of resources
-
-        # Don't emit root div, since it's loaded up from the student html now
-        # root_div = '<div id="'+self.q_swpwr_id+'"></div>'		                                # Needed so React code can find its root DOM
-        # frag.add_resource(root_div,'text/html')
-        # if DEBUG: logger.info('SWPWRXBlock student_view() root_div={r}'.format(r=root_div))
+#NOTINJVR        frag.add_resource('<base href="/testq_assets/"/>','text/html','head')		# Needed so react code can find its pages. Don't do earlier or impacts relative pathnames of resources
 
         # The swpwr problem template as a Python dict
         swpwr_problem_template = dict(
-            label = "the problem label",
             qId = "sample",                  # Name of the root DOM for the React app for this problem
+            label = "the problem label",
             description = "a desc",
             my_class = "sampleWord",
-            stimulus = 'A mountain bike is on sale for $399. Its regular price is $650.  What is the difference between the regular price and the sale price?',
+            stimulus = 'A mountain bike is on sale for \\($399\\). Its regular price is \\($650\\).  What is the difference between the regular price and the sale price?',
             stepsMnemonic = "POWER",
             steps = [
               dict(
@@ -837,7 +824,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 label = "Prepare",
                 mnemonicIndex  = 0,
                 instruction = "What kind of problem is this?",
-                longInstruction = 'Discuss what type of problem you think this is. (Not graded)',
+                longInstruction = 'Write some text to discuss what type of problem you think this is. (Not graded)',
                 type = "DIAGRAMANALYZE",
                 correct = 0,
                 valid = 0
@@ -863,7 +850,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 label = "Work the Problem",
                 mnemonicIndex = 2,
                 instruction = "Solve the equation",
-                longInstruction = "Take your diagram and transform it into a math equation, then solve it.",
+                longInstruction = "Take your diagram and transform it into a math equation.",
                 type = "STEPWISE",
                 swlabel = "QUES-6011X",
                 description = "Solve by addition, foolish defaultProblem.  \\begin{array}{c}7x-2y=3 \\\\4x+5y=3.25\\end{array}",
@@ -878,8 +865,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
               dict(
                 label = "Explain",
                 mnemonicIndex = 3,
-                instruction = "Identify the Number and the Label ",
-                longInstruction = 'What is the number and what is its label ?',
+                instruction = "Identify the Number and the Label for its units.",
+                longInstruction = 'What is the number and what is its label?',
                 type = "IDENTIFIER",
                 valid = 0
               ),
@@ -896,7 +883,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 label = "Review",
                 mnemonicIndex = 4,
                 instruction = "Does your answer make sense?",
-                longInstruction = 'Discuss if your answer seems reasonable.',
+                longInstruction = 'Write some text to discuss if your answer seems reasonable.',
                 type = "REVIEWER",
                 correct = 0,
                 valid = 0
