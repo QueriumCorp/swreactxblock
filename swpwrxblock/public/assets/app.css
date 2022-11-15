@@ -9599,9 +9599,12 @@ a.text-dark:hover {
 .Maximized {
   background: white;
   position: fixed;
+  left: 0px;
   top: 0px;
   min-height: 100vh;
   max-height: 100vh;
+  width: 100%;
+  max-width: 100%;
   border: solid 1px black;
 }
 
