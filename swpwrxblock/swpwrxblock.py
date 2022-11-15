@@ -960,7 +960,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
           };
           querium.appID = "SW4WPapp";
           console.info("querium.appID = " + querium.appID);
-          querium.student = SW4WPuser;
+          querium.student = "SW4WPuser";
           console.info("querium.student = " + querium.student);
           querium.options = options;
           console.info("querium.options = " + querium.options);
