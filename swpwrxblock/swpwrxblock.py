@@ -949,6 +949,29 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if DEBUG: logger.info("SWPWRXBlock student_view() final_string tail={e}".format(e=final_string[len(final_string)-100:]))
         frag.add_resource(final_string,'application/javascript','foot')
 
+        stepwise_setup_string = '''
+          var options = {
+            hideMenu: true,
+            readySet: false,
+            issueSubmit: true,
+            showMe: false,
+            hint: true,
+            scribbles: false
+          };
+          querium.appID = "SW4WPapp";
+          console.info("querium.appID = " + querium.appID);
+          querium.student = SW4WPuser;
+          console.info("querium.student = " + querium.student);
+          querium.options = options;
+          console.info("querium.options = " + querium.options);
+          querium.serverURL = localStorage.getItem('server');
+          console.info("querium.serverURL = " + querium.serverURL);
+          window.swpwr_onSubmit = solution => {
+            console.info("swpwr_onSubmit solution = " + solution);
+          };
+        '''
+        frag.add_resource(stepwise_setup_string,'application/javascript','foot')
+
         if DEBUG: logger.info("SWPWRXBlock student_view() head={e}".format(e=frag.head_html()))
         if DEBUG: logger.info("SWPWRXBlock student_view() body={e}".format(e=frag.body_html()))
         if DEBUG: logger.info("SWPWRXBlock student_view() foot={e}".format(e=frag.foot_html()))
