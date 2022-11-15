@@ -18,154 +18,7 @@
       </div>
     </div>
 
-    <!-- Just hiding the test page widgets so I don't have to spend time
-    detangling them -->
-    <div id="swClientControls" style="display: none">
-      <p>
-        Your question will be running on version 1.6.8.1 of the StepWise Client
-        (1.6.6 + Firebase + log button fixes).
-      </p>
-
-      <p></p>
-      <p>
-        <label for="author">Author:</label>
-        <input id="author" />&nbsp;
-        <button onclick="saveTest()">Save Author Name</button>
-      </p>
-      <p>
-        <label for="server">StepWiseAI Server:</label>
-        <input id="server" style="width: 400px" />&nbsp;
-        <button onclick="setServer()">Set</button>
-      </p>
-      <ul>
-        <li>https://stepwisedev.querium.com/webMathematica/api/</li>
-        <li>https://stepwise.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai00.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai01.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai02.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai03.querium.com/webMathematica/api/</li>
-        <li>https://stepwiseai04.querium.com/webMathematica/api/</li>
-      </ul>
-    </div>
     <script type="text/javascript">
-      var qqUser =
-        localStorage.getItem("name") == null ||
-        localStorage.getItem("name").length === 0
-          ? "SW4WP User"
-          : localStorage.getItem("name");
-      var server =
-        localStorage.getItem("server") == null ||
-        localStorage.getItem("server").length === 0
-          ? "https://stepwise.querium.com/webMathematica/api/"
-          : localStorage.getItem("server");
-      var questionList = [];
-      var urlParams = getJsonFromUrl(true);
-      var problemID = urlParams.assignment_id;
-      var theProblem = false;
-
-      window.onload = function() &#123;
-        document.getElementById("author").value = qqUser;
-        document.getElementById("server").value = server;
-        querium.serverURL = server;
-      &#125;;
-
-      document.getElementById("author").onblur = function(e) &#123;
-        var author = document.getElementById("author").value;
-        if (author.length > 2) &#123;
-          localStorage.setItem("name", author);
-        &#125;
-      &#125;;
-      document.getElementById("author").onkeypress = function(e) &#123;
-        var event = e || window.event;
-        var charCode = event.which || event.keyCode;
-
-        if (charCode == "13") &#123;
-          var author = document.getElementById("author").value;
-          if (author.length > 2) &#123;
-            localStorage.setItem("name", author);
-          &#125;
-          return false;
-        &#125;
-      &#125;;
-      document.getElementById("server").onblur = function(e) &#123;
-        var server = document.getElementById("server").value;
-        localStorage.setItem("server", server);
-        querium.serverURL = server;
-      &#125;;
-      document.getElementById("server").onkeypress = function(e) &#123;
-        var event = e || window.event;
-        var charCode = event.which || event.keyCode;
-
-        if (charCode == "13") &#123;
-          var server = document.getElementById("server").value;
-          localStorage.setItem("server", server);
-          querium.serverURL = server;
-          return false;
-        &#125;
-      &#125;;
-
-      function saveTest() &#123;
-        var author = document.getElementById("author").value;
-        if (author.length > 2) &#123;
-          localStorage.setItem("name", author);
-          var state = querium.saveState("querium");
-          state.problemDef = state.problemDef.replace(/^"(.+(?="$))"$/, "$1");
-          /* testRef.push(&#123;
-                      problemID: problemID,
-                      author: author,
-                      log: JSON.stringify(state)
-                  &#125;);
-                  alert('Test saved');
-      */
-          alert("Name saved");
-        &#125; else &#123;
-          alert("Who am I?  Why am I here?");
-        &#125;
-      &#125;
-
-      function setServer() &#123;
-        var server = document.getElementById("server").value;
-        localStorage.setItem("server", server);
-        querium.serverURL = server;
-        alert("Server changed to " + server);
-      &#125;
-
-      function getJsonFromUrl(hashBased) &#123;
-        var query;
-        if (hashBased) &#123;
-          var pos = location.href.indexOf("?");
-          if (pos == -1) return [];
-          query = location.href.substr(pos + 1);
-        &#125; else &#123;
-          query = location.search.substr(1);
-        &#125;
-        var result = &#123;&#125;;
-        query.split("&").forEach(function(part) &#123;
-          if (!part) return;
-          var item = part.split("=");
-          var key = item[0];
-          var from = key.indexOf("[");
-          if (from == -1) result[key] = decodeURIComponent(item[1]);
-          else &#123;
-            var to = key.indexOf("]");
-            var index = key.substring(from + 1, to);
-            key = key.substring(0, from);
-            if (!result[key]) result[key] = [];
-            if (!index) result[key].push(item[1]);
-            else result[key][index] = item[1];
-          &#125;
-        &#125;);
-        return result;
-      &#125;
-    </script>
-
-    <script type="text/javascript">
-      var callbacks = &#123;
-        success: celebrate,
-        status: updateProgress
-      &#125;;
-
       var options = &#123;
         hideMenu: true,
         readySet: false,
@@ -174,46 +27,19 @@
         hint: true,
         scribbles: false
       &#125;;
-
-      function saveProgress() &#123;
-        console.dir(querium.saveState());
-      &#125;
-
-      function celebrate(stats) &#123;
-        console.log("celebrating victory in webApp");
-        console.dir(stats);
-        alert("Victory is OURS!");
-        var btnElement = document.querySelector("#endOfSW");
-        console.log("btnElement = ", btnElement);
-        var classValues = btnElement.classList;
-        console.log("classValues = ", classValues);
-        btnElement.classList.remove(
-          "ui-disabled"
-        ); /* Enable next question button after StepWise */
-        setCorrect(); /* This counts as a correct question */
-        updateCorrect(); /* increase the number of stars */
-        showCorrect(); /* Update the stars right now */
-      &#125;
-
-      function updateProgress(stats) &#123;
-        console.log("updatingProgress in webApp");
-        console.dir(stats);
-      &#125;
-
       querium.appID = "SW4WPapp";
-      console.log("querium.appID = " + querium.appID);
-      querium.student = qqUser;
-      console.log("querium.student = " + querium.student);
-      // querium.callbacks = &#123;
-      //   success: celebrate,
-      // &#125;;
+      console.info("querium.appID = " + querium.appID);
+      querium.student = SW4WPuser;
+      console.info("querium.student = " + querium.student);
       querium.options = options;
-      console.log("querium.options = " + querium.options);
+      console.info("querium.options = " + querium.options);
+      querium.serverURL = "https://stepwiseai03.querium.com/webMathematica/api/";
+      console.info("querium.serverURL = " + querium.serverURL);
     </script>
 
-    <script>
+    <script type="text/javascript">
       window.swpwr_onSubmit = solution => &#123;
-        console.info(solution);
+        console.info("swpwr_onSubmit solution = " + solution);
       &#125;;
     </script>
 </div>
