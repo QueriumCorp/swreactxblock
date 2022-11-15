@@ -963,12 +963,14 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
           querium.student = "SW4WPuser";
           console.info("querium.student = " + querium.student);
           querium.options = options;
-          console.info("querium.options = " + querium.options);
+          console.info("querium.options.hideMenu = " + querium.options.hideMenu);
+          console.info("querium.options.readySet = " + querium.options.readySet);
+          console.info("querium.options.issueSubmit = " + querium.options.issueSubmit);
+          console.info("querium.options.showMe = " + querium.options.showMe);
+          console.info("querium.options.hint = " + querium.options.hint);
+          console.info("querium.options.scribbles = " + querium.options.scribbles);
           querium.serverURL = localStorage.getItem('server');
           console.info("querium.serverURL = " + querium.serverURL);
-          window.swpwr_onSubmit = solution => {
-            console.info("swpwr_onSubmit solution = " + solution);
-          };
         '''
         frag.add_resource(stepwise_setup_string,'application/javascript','foot')
 
