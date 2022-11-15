@@ -167,7 +167,11 @@
       &#125;;
 
       var options = &#123;
-        hideMenu: false,
+        hideMenu: true,
+        readySet: false,
+        issueSubmit: true,
+        showMe: false,
+        hint: true,
         scribbles: false
       &#125;;
 
@@ -197,12 +201,14 @@
       &#125;
 
       querium.appID = "SW4WPapp";
+      console.log("querium.appID = " + querium.appID);
       querium.student = qqUser;
       console.log("querium.student = " + querium.student);
       // querium.callbacks = &#123;
       //   success: celebrate,
       // &#125;;
       querium.options = options;
+      console.log("querium.options = " + querium.options);
     </script>
 
     <script>
