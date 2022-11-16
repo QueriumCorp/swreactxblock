@@ -551,13 +551,13 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         # q_swpwr_review_1_correct = Integer(help='SWPWR Review 1 Min Length', default=0, scope=Scope.content)
 
         try:
-            temp_value = self.q_swpwr_prepare_2_prepare_correct
+            temp_value = self.q_swpwr_prepare_2_correct
         except (NameError,AttributeError) as e:
             if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_prepare_2_correct was not defined in this instance: {e}'.format(e=e))
             self.q_swpwr_prepare_2_correct = 0
         if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_prepare_2_correct: {t}'.format(t=self.q_swpwr_prepare_2_correct))
         try:
-            temp_value = self.q_swpwr_prepare_3_prepare_correct
+            temp_value = self.q_swpwr_prepare_3_correct
         except (NameError,AttributeError) as e:
             if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_prepare_3_correct was not defined in this instance: {e}'.format(e=e))
             self.q_swpwr_prepare_3_correct = 0
@@ -567,7 +567,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         except (NameError,AttributeError) as e:
             if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_organize_1_schema_name was not defined in this instance: {e}'.format(e=e))
             self.q_swpwr_organize_1_schema_name = 'COMBINE'
-        if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_1_organize_schema_name: {t}'.format(t=self.q_swpwr_organize_1_schema_name))
+        if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_organize_1_schema_name: {t}'.format(t=self.q_swpwr_organize_1_schema_name))
         try:
             temp_value = self.q_swpwr_explain_2_correct
         except (NameError,AttributeError) as e:
@@ -575,7 +575,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             self.q_swpwr_explain_2_correct = 0
         if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_explain_2_correct: {t}'.format(t=self.q_swpwr_explain_2_correct))
         try:
-            temp_value = self.q_swpwr_organize_review_1_correct
+            temp_value = self.q_swpwr_review_1_correct
         except (NameError,AttributeError) as e:
             if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_review_1_correct was not defined in this instance: {e}'.format(e=e))
             self.q_swpwr_review_1_correct = 0
