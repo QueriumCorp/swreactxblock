@@ -125,10 +125,10 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     q_swpwr_id = String(help="SWPWR Question ID", default="", scope=Scope.content)
     # New on Nov 7, 2022
     q_swpwr_prepare_2_correct = Integer(help='SWPWR Prepare 2 Min Length', default=0, scope=Scope.content)
-    q_swpwr_prepare_3_correct = Integer(help='SWPWR Prepare 3 Min Length', default=0, scope=Scope.content)
+    q_swpwr_prepare_3_correct = Integer(help='SWPWR Prepare 3 Min Length', default=20, scope=Scope.content)
     q_swpwr_organize_1_schema_name = String(help='SWPWR Organize 1 Schema Name one of COMBINE, MULTIPLYTIMES, EQUALGROUPS, CHANGE', default='COMBINE', scope=Scope.content)
-    q_swpwr_explain_2_correct = Integer(help='SWPWR Explain 2 Min Length', default=0, scope=Scope.content)
-    q_swpwr_review_1_correct = Integer(help='SWPWR Review 1 Min Length', default=0, scope=Scope.content)
+    q_swpwr_explain_2_correct = Integer(help='SWPWR Explain 2 Min Length', default=20, scope=Scope.content)
+    q_swpwr_review_1_correct = Integer(help='SWPWR Review 1 Min Length', default=20, scope=Scope.content)
     # STUDENT'S QUESTION PERFORMANCE FIELDS
     swpwr_results = String(help="SWPWR The student's SWPWR Solution structure", default={}, scope=Scope.user_state)
     xb_user_email = String(help="SWPWR The user's email addr", default="", scope=Scope.user_state)
@@ -826,7 +826,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 instruction = "What type of problem is this?",
                 longInstruction = 'What type of problem do you think this is? Explain your answer. (Not graded)',
                 type = "DIAGRAMANALYZE",
-                correct = 0,
+                correct = 20,
                 valid = 0
               ),
               dict(
@@ -876,7 +876,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 instruction = "Write a Sentence",
                 longInstruction = 'Write a sentence to answer the original question.',
                 type = "EXPLAINER",
-                correct = 0,
+                correct = 20,
                 valid = 0
               ),
               dict(
@@ -885,7 +885,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 instruction = "Does your answer make sense?",
                 longInstruction = 'Is your answer reasonable? Explain why or why not.',
                 type = "REVIEWER",
-                correct = 0,
+                correct = 20,
                 valid = 0
               )
             ]
