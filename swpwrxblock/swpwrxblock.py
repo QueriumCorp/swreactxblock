@@ -815,7 +815,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 label = "Prepare",
                 mnemonicIndex =  0,
                 instruction = "Identify Important Information",
-                longInstruction = 'Identify the key facts in the word problem below. Select these important pieces of text. This will allow you to quickly paste helpful snippets as you work the problem.',
+                longInstruction = 'Identify the key facts in the problem. Select these important pieces of information. This will allow you to quickly paste the information as you work the problem.',
                 type = "TAG",
                 correct = 0,
                 valid = 0
@@ -823,8 +823,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
               dict(
                 label = "Prepare",
                 mnemonicIndex  = 0,
-                instruction = "What kind of problem is this?",
-                longInstruction = 'Write some text to discuss what type of problem you think this is. (Not graded)',
+                instruction = "What type of problem is this?",
+                longInstruction = 'What type of problem do you think this is? Explain your answer. (Not graded)',
                 type = "DIAGRAMANALYZE",
                 correct = 0,
                 valid = 0
@@ -833,7 +833,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 label = "Organize",
                 mnemonicIndex = 1,
                 instruction = "What type of problem is this?",
-                longInstruction = 'Scroll the diagram list below and select the problem type that best describes this problem.',
+                longInstruction = 'Scroll through the list below and choose the correct problem type.',
                 type =  "DIAGRAMSELECT",
                 correct = "COMBINE",   # "COMBINE", "MULTIPLYTIMES", "EQUALGROUPS", "CHANGE"
                 valid = 0
@@ -842,15 +842,15 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 label = "Organize",
                 mnemonicIndex = 1,
                 instruction = "Fill in the Diagram",
-                longInstruction = "Fill in each amount in the diagram with information from the problem. You can click in each box and type the information using your keyboard or you can drag and drop the important information that you selected earlier. If an amount is unknown, enter 'unknown'.",
+                longInstruction = "Fill in the diagram with information from the problem. You can click in each box and type the information using your keyboard, or you can drag and drop the important information that you selected earlier. If an amount is unknown, enter 'unknown'.",
                 type = "DIAGRAMMER",
                 valid = 0
               ),
               dict(
                 label = "Work the Problem",
                 mnemonicIndex = 2,
-                instruction = "Solve the equation",
-                longInstruction = "Take your diagram and transform it into a math equation.",
+                instruction = "Set Up and Solve an Equation",
+                longInstruction = "Use your diagram to write an equation. Then solve. Take as many steps as you need.",
                 type = "STEPWISE",
                 swlabel = "QUES-6011X",
                 description = "Solve by addition, foolish defaultProblem.  \\begin{array}{c}7x-2y=3 \\\\4x+5y=3.25\\end{array}",
@@ -863,34 +863,33 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 valid = 0
               ),
               dict(
-                label = "Explain",
+                label = "Explain the Answer",
                 mnemonicIndex = 3,
-                instruction = "Identify the Number and the Label for its units.",
-                longInstruction = 'What is the number and what is its label?',
+                instruction = "Give the Final Answer",
+                longInstruction = 'The final answer has two parts, a number and a label. Give both parts in the boxes below.',
                 type = "IDENTIFIER",
                 valid = 0
               ),
               dict(
-                label = "Explain",
+                label = "Explain the Answer",
                 mnemonicIndex = 3,
-                instruction = "Explain your Answer",
-                longInstruction = 'Answer the original question in plain language.',
+                instruction = "Write a Sentence",
+                longInstruction = 'Write a sentence to answer the original question.',
                 type = "EXPLAINER",
                 correct = 0,
                 valid = 0
               ),
               dict(
-                label = "Review",
+                label = "Review and Revise",
                 mnemonicIndex = 4,
                 instruction = "Does your answer make sense?",
-                longInstruction = 'Write some text to discuss if your answer seems reasonable.',
+                longInstruction = 'Is your answer reasonable? Explain why or why not.',
                 type = "REVIEWER",
                 correct = 0,
                 valid = 0
               )
             ]
           )
-
 
         # We now modify the problem template here, and pass it in already modified for this particular question.
 
