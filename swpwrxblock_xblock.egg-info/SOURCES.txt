@@ -11,7 +11,9 @@ swpwrxblock/public/logo512.png
 swpwrxblock/public/manifest.json
 swpwrxblock/public/robots.txt
 swpwrxblock/public/assets/app.css
+swpwrxblock/public/assets/app.css.bak
 swpwrxblock/public/assets/app.js
+swpwrxblock/public/assets/app.js.bak
 swpwrxblock/static/README.txt
 swpwrxblock/static/css/swpwrxauthor.css
 swpwrxblock/static/css/swpwrxstudent.css
