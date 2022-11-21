@@ -560,7 +560,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             temp_value = self.q_swpwr_prepare_3_correct
         except (NameError,AttributeError) as e:
             if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_prepare_3_correct was not defined in this instance: {e}'.format(e=e))
-            self.q_swpwr_prepare_3_correct = 0
+            self.q_swpwr_prepare_3_correct = 20
         if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_prepare_3_correct: {t}'.format(t=self.q_swpwr_prepare_3_correct))
         try:
             temp_value = self.q_swpwr_organize_1_schema_name
@@ -572,13 +572,13 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             temp_value = self.q_swpwr_explain_2_correct
         except (NameError,AttributeError) as e:
             if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_explain_2_correct was not defined in this instance: {e}'.format(e=e))
-            self.q_swpwr_explain_2_correct = 0
+            self.q_swpwr_explain_2_correct = 20
         if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_explain_2_correct: {t}'.format(t=self.q_swpwr_explain_2_correct))
         try:
             temp_value = self.q_swpwr_review_1_correct
         except (NameError,AttributeError) as e:
             if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_review_1_correct was not defined in this instance: {e}'.format(e=e))
-            self.q_swpwr_review_1_correct = 0
+            self.q_swpwr_review_1_correct = 20
         if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_review_1_correct: {t}'.format(t=self.q_swpwr_review_1_correct))
 
         # Save an identifier for the user
@@ -800,7 +800,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             label = "the problem label",
             description = "a desc",
             my_class = "sampleWord",
-            stimulus = 'A mountain bike is on sale for \\($399\\). Its regular price is \\($650\\).  What is the difference between the regular price and the sale price?',
+            stimulus = 'I am the sample problem stimulus',
             stepsMnemonic = "POWER",
             steps = [
               dict(
@@ -909,8 +909,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template template before stimulus={s}".format(s=swpwr_problem_template['stimulus']))
         if DEBUG: logger.info("SWPWRXBlock student_view() self.q_swpwr_problem={s}".format(s=self.q_swpwr_problem))
         swpwr_problem_template['stimulus'] = self.q_swpwr_problem
-        swpwr_problem_template['qId'] = self.q_swpwr_id    # This is used as the ID value for the root DOM for React, it it must be unique in an assignment
         if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template template after stimulus={s}".format(s=swpwr_problem_template['stimulus']))
+        swpwr_problem_template['qId'] = self.q_swpwr_id    # This is used as the ID value for the root DOM for React, it it must be unique in an assignment
         swpwr_problem_template['steps'][PREPPHASE2]['correct'] = self.q_swpwr_prepare_2_correct
         swpwr_problem_template['steps'][PREPPHASE3]['correct'] = self.q_swpwr_prepare_3_correct
         swpwr_problem_template['steps'][ORGPHASE1]['correct'] = self.q_swpwr_organize_1_schema_name
