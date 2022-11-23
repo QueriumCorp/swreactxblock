@@ -10271,10 +10271,10 @@ a.text-dark:hover {
 /* src/components/identifier/identifier.css */
 .IdentifierFields {
   display: flex;
-  min-height: 100px;
-  justify-content: flex-start;
+  min-height: 80px;
+  justify-content: center;
   align-items: center;
-  padding: 18px 36px 18px 36px;
+  padding: 0px 36px 18px 36px;
 }
 .Number {
   max-height: 2rem;

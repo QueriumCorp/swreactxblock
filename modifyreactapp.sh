@@ -59,3 +59,7 @@
 #   }
 sed -I .bak -e 's/const \[maximized, setMaximized\] = (0, import_react108\.useState)(false);/const [maximized, setMaximized] = (0, import_react108.useState)(true);/' -e 's/maximizable: false/maximizable: true/' swpwrxblock/public/assets/app.js
 sed -I .bak -e 's/Maximized {/Maximized {\n    left: 0px;\n    width: 100%;\n    max-width: 100%;/' swpwrxblock/public/assets/app.css
+echo diffing app.js
+diff swpwrxblock/public/assets/app.js swpwrxblock/public/assets/app.js.bak
+echo diffing app.css
+diff swpwrxblock/public/assets/app.css swpwrxblock/public/assets/app.css.bak

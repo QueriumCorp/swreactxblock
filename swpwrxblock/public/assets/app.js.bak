@@ -1098,7 +1098,7 @@
             }
             return dispatcher.useContext(Context, unstable_observedBits);
           }
-          function useState18(initialState3) {
+          function useState19(initialState3) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState3);
           }
@@ -1110,7 +1110,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect16(create, deps) {
+          function useEffect17(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1383,13 +1383,13 @@
           exports.useCallback = useCallback13;
           exports.useContext = useContext8;
           exports.useDebugValue = useDebugValue;
-          exports.useEffect = useEffect16;
+          exports.useEffect = useEffect17;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useLayoutEffect = useLayoutEffect4;
           exports.useMemo = useMemo20;
           exports.useReducer = useReducer4;
           exports.useRef = useRef14;
-          exports.useState = useState18;
+          exports.useState = useState19;
           exports.version = ReactVersion;
         })();
       }
@@ -19585,627 +19585,6 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }
   });
 
-  // node_modules/react/cjs/react-jsx-runtime.development.js
-  var require_react_jsx_runtime_development = __commonJS({
-    "node_modules/react/cjs/react-jsx-runtime.development.js"(exports) {
-      "use strict";
-      if (true) {
-        (function() {
-          "use strict";
-          var React62 = require_react();
-          var REACT_ELEMENT_TYPE = 60103;
-          var REACT_PORTAL_TYPE = 60106;
-          exports.Fragment = 60107;
-          var REACT_STRICT_MODE_TYPE = 60108;
-          var REACT_PROFILER_TYPE = 60114;
-          var REACT_PROVIDER_TYPE = 60109;
-          var REACT_CONTEXT_TYPE = 60110;
-          var REACT_FORWARD_REF_TYPE = 60112;
-          var REACT_SUSPENSE_TYPE = 60113;
-          var REACT_SUSPENSE_LIST_TYPE = 60120;
-          var REACT_MEMO_TYPE = 60115;
-          var REACT_LAZY_TYPE = 60116;
-          var REACT_BLOCK_TYPE = 60121;
-          var REACT_SERVER_BLOCK_TYPE = 60122;
-          var REACT_FUNDAMENTAL_TYPE = 60117;
-          var REACT_SCOPE_TYPE = 60119;
-          var REACT_OPAQUE_ID_TYPE = 60128;
-          var REACT_DEBUG_TRACING_MODE_TYPE = 60129;
-          var REACT_OFFSCREEN_TYPE = 60130;
-          var REACT_LEGACY_HIDDEN_TYPE = 60131;
-          if (typeof Symbol === "function" && Symbol.for) {
-            var symbolFor = Symbol.for;
-            REACT_ELEMENT_TYPE = symbolFor("react.element");
-            REACT_PORTAL_TYPE = symbolFor("react.portal");
-            exports.Fragment = symbolFor("react.fragment");
-            REACT_STRICT_MODE_TYPE = symbolFor("react.strict_mode");
-            REACT_PROFILER_TYPE = symbolFor("react.profiler");
-            REACT_PROVIDER_TYPE = symbolFor("react.provider");
-            REACT_CONTEXT_TYPE = symbolFor("react.context");
-            REACT_FORWARD_REF_TYPE = symbolFor("react.forward_ref");
-            REACT_SUSPENSE_TYPE = symbolFor("react.suspense");
-            REACT_SUSPENSE_LIST_TYPE = symbolFor("react.suspense_list");
-            REACT_MEMO_TYPE = symbolFor("react.memo");
-            REACT_LAZY_TYPE = symbolFor("react.lazy");
-            REACT_BLOCK_TYPE = symbolFor("react.block");
-            REACT_SERVER_BLOCK_TYPE = symbolFor("react.server.block");
-            REACT_FUNDAMENTAL_TYPE = symbolFor("react.fundamental");
-            REACT_SCOPE_TYPE = symbolFor("react.scope");
-            REACT_OPAQUE_ID_TYPE = symbolFor("react.opaque.id");
-            REACT_DEBUG_TRACING_MODE_TYPE = symbolFor("react.debug_trace_mode");
-            REACT_OFFSCREEN_TYPE = symbolFor("react.offscreen");
-            REACT_LEGACY_HIDDEN_TYPE = symbolFor("react.legacy_hidden");
-          }
-          var MAYBE_ITERATOR_SYMBOL = typeof Symbol === "function" && Symbol.iterator;
-          var FAUX_ITERATOR_SYMBOL = "@@iterator";
-          function getIteratorFn(maybeIterable) {
-            if (maybeIterable === null || typeof maybeIterable !== "object") {
-              return null;
-            }
-            var maybeIterator = MAYBE_ITERATOR_SYMBOL && maybeIterable[MAYBE_ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL];
-            if (typeof maybeIterator === "function") {
-              return maybeIterator;
-            }
-            return null;
-          }
-          var ReactSharedInternals = React62.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-          function error(format) {
-            {
-              for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-                args[_key2 - 1] = arguments[_key2];
-              }
-              printWarning("error", format, args);
-            }
-          }
-          function printWarning(level, format, args) {
-            {
-              var ReactDebugCurrentFrame2 = ReactSharedInternals.ReactDebugCurrentFrame;
-              var stack = "";
-              if (currentlyValidatingElement) {
-                var name = getComponentName(currentlyValidatingElement.type);
-                var owner = currentlyValidatingElement._owner;
-                stack += describeComponentFrame(name, currentlyValidatingElement._source, owner && getComponentName(owner.type));
-              }
-              stack += ReactDebugCurrentFrame2.getStackAddendum();
-              if (stack !== "") {
-                format += "%s";
-                args = args.concat([stack]);
-              }
-              var argsWithFormat = args.map(function(item) {
-                return "" + item;
-              });
-              argsWithFormat.unshift("Warning: " + format);
-              Function.prototype.apply.call(console[level], console, argsWithFormat);
-            }
-          }
-          var enableScopeAPI = false;
-          function isValidElementType(type) {
-            if (typeof type === "string" || typeof type === "function") {
-              return true;
-            }
-            if (type === exports.Fragment || type === REACT_PROFILER_TYPE || type === REACT_DEBUG_TRACING_MODE_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || type === REACT_LEGACY_HIDDEN_TYPE || enableScopeAPI) {
-              return true;
-            }
-            if (typeof type === "object" && type !== null) {
-              if (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_BLOCK_TYPE || type[0] === REACT_SERVER_BLOCK_TYPE) {
-                return true;
-              }
-            }
-            return false;
-          }
-          var BEFORE_SLASH_RE = /^(.*)[\\\/]/;
-          function describeComponentFrame(name, source, ownerName) {
-            var sourceInfo = "";
-            if (source) {
-              var path = source.fileName;
-              var fileName = path.replace(BEFORE_SLASH_RE, "");
-              {
-                if (/^index\./.test(fileName)) {
-                  var match = path.match(BEFORE_SLASH_RE);
-                  if (match) {
-                    var pathBeforeSlash = match[1];
-                    if (pathBeforeSlash) {
-                      var folderName = pathBeforeSlash.replace(BEFORE_SLASH_RE, "");
-                      fileName = folderName + "/" + fileName;
-                    }
-                  }
-                }
-              }
-              sourceInfo = " (at " + fileName + ":" + source.lineNumber + ")";
-            } else if (ownerName) {
-              sourceInfo = " (created by " + ownerName + ")";
-            }
-            return "\n    in " + (name || "Unknown") + sourceInfo;
-          }
-          var Resolved = 1;
-          function refineResolvedLazyComponent(lazyComponent) {
-            return lazyComponent._status === Resolved ? lazyComponent._result : null;
-          }
-          function getWrappedName(outerType, innerType, wrapperName) {
-            var functionName = innerType.displayName || innerType.name || "";
-            return outerType.displayName || (functionName !== "" ? wrapperName + "(" + functionName + ")" : wrapperName);
-          }
-          function getComponentName(type) {
-            if (type == null) {
-              return null;
-            }
-            {
-              if (typeof type.tag === "number") {
-                error("Received an unexpected object in getComponentName(). This is likely a bug in React. Please file an issue.");
-              }
-            }
-            if (typeof type === "function") {
-              return type.displayName || type.name || null;
-            }
-            if (typeof type === "string") {
-              return type;
-            }
-            switch (type) {
-              case exports.Fragment:
-                return "Fragment";
-              case REACT_PORTAL_TYPE:
-                return "Portal";
-              case REACT_PROFILER_TYPE:
-                return "Profiler";
-              case REACT_STRICT_MODE_TYPE:
-                return "StrictMode";
-              case REACT_SUSPENSE_TYPE:
-                return "Suspense";
-              case REACT_SUSPENSE_LIST_TYPE:
-                return "SuspenseList";
-            }
-            if (typeof type === "object") {
-              switch (type.$$typeof) {
-                case REACT_CONTEXT_TYPE:
-                  return "Context.Consumer";
-                case REACT_PROVIDER_TYPE:
-                  return "Context.Provider";
-                case REACT_FORWARD_REF_TYPE:
-                  return getWrappedName(type, type.render, "ForwardRef");
-                case REACT_MEMO_TYPE:
-                  return getComponentName(type.type);
-                case REACT_BLOCK_TYPE:
-                  return getComponentName(type.render);
-                case REACT_LAZY_TYPE: {
-                  var thenable = type;
-                  var resolvedThenable = refineResolvedLazyComponent(thenable);
-                  if (resolvedThenable) {
-                    return getComponentName(resolvedThenable);
-                  }
-                  break;
-                }
-              }
-            }
-            return null;
-          }
-          var loggedTypeFailures = {};
-          var ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
-          var currentlyValidatingElement = null;
-          function setCurrentlyValidatingElement(element) {
-            {
-              currentlyValidatingElement = element;
-            }
-          }
-          function checkPropTypes(typeSpecs, values, location, componentName, element) {
-            {
-              var has = Function.call.bind(Object.prototype.hasOwnProperty);
-              for (var typeSpecName in typeSpecs) {
-                if (has(typeSpecs, typeSpecName)) {
-                  var error$1 = void 0;
-                  try {
-                    if (typeof typeSpecs[typeSpecName] !== "function") {
-                      var err = Error((componentName || "React class") + ": " + location + " type `" + typeSpecName + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof typeSpecs[typeSpecName] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
-                      err.name = "Invariant Violation";
-                      throw err;
-                    }
-                    error$1 = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
-                  } catch (ex) {
-                    error$1 = ex;
-                  }
-                  if (error$1 && !(error$1 instanceof Error)) {
-                    setCurrentlyValidatingElement(element);
-                    error("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", componentName || "React class", location, typeSpecName, typeof error$1);
-                    setCurrentlyValidatingElement(null);
-                  }
-                  if (error$1 instanceof Error && !(error$1.message in loggedTypeFailures)) {
-                    loggedTypeFailures[error$1.message] = true;
-                    setCurrentlyValidatingElement(element);
-                    error("Failed %s type: %s", location, error$1.message);
-                    setCurrentlyValidatingElement(null);
-                  }
-                }
-              }
-            }
-          }
-          var ReactCurrentOwner = ReactSharedInternals.ReactCurrentOwner;
-          var hasOwnProperty = Object.prototype.hasOwnProperty;
-          var RESERVED_PROPS = {
-            key: true,
-            ref: true,
-            __self: true,
-            __source: true
-          };
-          var specialPropKeyWarningShown;
-          var specialPropRefWarningShown;
-          var didWarnAboutStringRefs;
-          {
-            didWarnAboutStringRefs = {};
-          }
-          function hasValidRef(config) {
-            {
-              if (hasOwnProperty.call(config, "ref")) {
-                var getter = Object.getOwnPropertyDescriptor(config, "ref").get;
-                if (getter && getter.isReactWarning) {
-                  return false;
-                }
-              }
-            }
-            return config.ref !== void 0;
-          }
-          function hasValidKey(config) {
-            {
-              if (hasOwnProperty.call(config, "key")) {
-                var getter = Object.getOwnPropertyDescriptor(config, "key").get;
-                if (getter && getter.isReactWarning) {
-                  return false;
-                }
-              }
-            }
-            return config.key !== void 0;
-          }
-          function warnIfStringRefCannotBeAutoConverted(config, self2) {
-            {
-              if (typeof config.ref === "string" && ReactCurrentOwner.current && self2 && ReactCurrentOwner.current.stateNode !== self2) {
-                var componentName = getComponentName(ReactCurrentOwner.current.type);
-                if (!didWarnAboutStringRefs[componentName]) {
-                  error('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', getComponentName(ReactCurrentOwner.current.type), config.ref);
-                  didWarnAboutStringRefs[componentName] = true;
-                }
-              }
-            }
-          }
-          function defineKeyPropWarningGetter(props, displayName) {
-            {
-              var warnAboutAccessingKey = function() {
-                if (!specialPropKeyWarningShown) {
-                  specialPropKeyWarningShown = true;
-                  error("%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", displayName);
-                }
-              };
-              warnAboutAccessingKey.isReactWarning = true;
-              Object.defineProperty(props, "key", {
-                get: warnAboutAccessingKey,
-                configurable: true
-              });
-            }
-          }
-          function defineRefPropWarningGetter(props, displayName) {
-            {
-              var warnAboutAccessingRef = function() {
-                if (!specialPropRefWarningShown) {
-                  specialPropRefWarningShown = true;
-                  error("%s: `ref` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", displayName);
-                }
-              };
-              warnAboutAccessingRef.isReactWarning = true;
-              Object.defineProperty(props, "ref", {
-                get: warnAboutAccessingRef,
-                configurable: true
-              });
-            }
-          }
-          var ReactElement = function(type, key, ref, self2, source, owner, props) {
-            var element = {
-              $$typeof: REACT_ELEMENT_TYPE,
-              type,
-              key,
-              ref,
-              props,
-              _owner: owner
-            };
-            {
-              element._store = {};
-              Object.defineProperty(element._store, "validated", {
-                configurable: false,
-                enumerable: false,
-                writable: true,
-                value: false
-              });
-              Object.defineProperty(element, "_self", {
-                configurable: false,
-                enumerable: false,
-                writable: false,
-                value: self2
-              });
-              Object.defineProperty(element, "_source", {
-                configurable: false,
-                enumerable: false,
-                writable: false,
-                value: source
-              });
-              if (Object.freeze) {
-                Object.freeze(element.props);
-                Object.freeze(element);
-              }
-            }
-            return element;
-          };
-          function jsxDEV(type, config, maybeKey, source, self2) {
-            {
-              var propName;
-              var props = {};
-              var key = null;
-              var ref = null;
-              if (maybeKey !== void 0) {
-                key = "" + maybeKey;
-              }
-              if (hasValidKey(config)) {
-                key = "" + config.key;
-              }
-              if (hasValidRef(config)) {
-                ref = config.ref;
-                warnIfStringRefCannotBeAutoConverted(config, self2);
-              }
-              for (propName in config) {
-                if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
-                  props[propName] = config[propName];
-                }
-              }
-              if (type && type.defaultProps) {
-                var defaultProps6 = type.defaultProps;
-                for (propName in defaultProps6) {
-                  if (props[propName] === void 0) {
-                    props[propName] = defaultProps6[propName];
-                  }
-                }
-              }
-              if (key || ref) {
-                var displayName = typeof type === "function" ? type.displayName || type.name || "Unknown" : type;
-                if (key) {
-                  defineKeyPropWarningGetter(props, displayName);
-                }
-                if (ref) {
-                  defineRefPropWarningGetter(props, displayName);
-                }
-              }
-              return ReactElement(type, key, ref, self2, source, ReactCurrentOwner.current, props);
-            }
-          }
-          var ReactCurrentOwner$1 = ReactSharedInternals.ReactCurrentOwner;
-          var ReactDebugCurrentFrame$1 = ReactSharedInternals.ReactDebugCurrentFrame;
-          function setCurrentlyValidatingElement$1(element) {
-            currentlyValidatingElement = element;
-          }
-          var propTypesMisspellWarningShown;
-          {
-            propTypesMisspellWarningShown = false;
-          }
-          function isValidElement5(object) {
-            {
-              return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
-            }
-          }
-          function getDeclarationErrorAddendum() {
-            {
-              if (ReactCurrentOwner$1.current) {
-                var name = getComponentName(ReactCurrentOwner$1.current.type);
-                if (name) {
-                  return "\n\nCheck the render method of `" + name + "`.";
-                }
-              }
-              return "";
-            }
-          }
-          function getSourceInfoErrorAddendum(source) {
-            {
-              if (source !== void 0) {
-                var fileName = source.fileName.replace(/^.*[\\\/]/, "");
-                var lineNumber = source.lineNumber;
-                return "\n\nCheck your code at " + fileName + ":" + lineNumber + ".";
-              }
-              return "";
-            }
-          }
-          var ownerHasKeyUseWarning = {};
-          function getCurrentComponentErrorInfo(parentType) {
-            {
-              var info = getDeclarationErrorAddendum();
-              if (!info) {
-                var parentName = typeof parentType === "string" ? parentType : parentType.displayName || parentType.name;
-                if (parentName) {
-                  info = "\n\nCheck the top-level render call using <" + parentName + ">.";
-                }
-              }
-              return info;
-            }
-          }
-          function validateExplicitKey(element, parentType) {
-            {
-              if (!element._store || element._store.validated || element.key != null) {
-                return;
-              }
-              element._store.validated = true;
-              var currentComponentErrorInfo = getCurrentComponentErrorInfo(parentType);
-              if (ownerHasKeyUseWarning[currentComponentErrorInfo]) {
-                return;
-              }
-              ownerHasKeyUseWarning[currentComponentErrorInfo] = true;
-              var childOwner = "";
-              if (element && element._owner && element._owner !== ReactCurrentOwner$1.current) {
-                childOwner = " It was passed a child from " + getComponentName(element._owner.type) + ".";
-              }
-              setCurrentlyValidatingElement$1(element);
-              error('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', currentComponentErrorInfo, childOwner);
-              setCurrentlyValidatingElement$1(null);
-            }
-          }
-          function validateChildKeys(node, parentType) {
-            {
-              if (typeof node !== "object") {
-                return;
-              }
-              if (Array.isArray(node)) {
-                for (var i = 0; i < node.length; i++) {
-                  var child = node[i];
-                  if (isValidElement5(child)) {
-                    validateExplicitKey(child, parentType);
-                  }
-                }
-              } else if (isValidElement5(node)) {
-                if (node._store) {
-                  node._store.validated = true;
-                }
-              } else if (node) {
-                var iteratorFn = getIteratorFn(node);
-                if (typeof iteratorFn === "function") {
-                  if (iteratorFn !== node.entries) {
-                    var iterator = iteratorFn.call(node);
-                    var step;
-                    while (!(step = iterator.next()).done) {
-                      if (isValidElement5(step.value)) {
-                        validateExplicitKey(step.value, parentType);
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-          function validatePropTypes(element) {
-            {
-              var type = element.type;
-              if (type === null || type === void 0 || typeof type === "string") {
-                return;
-              }
-              var propTypes2;
-              if (typeof type === "function") {
-                propTypes2 = type.propTypes;
-              } else if (typeof type === "object" && (type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_MEMO_TYPE)) {
-                propTypes2 = type.propTypes;
-              } else {
-                return;
-              }
-              if (propTypes2) {
-                var name = getComponentName(type);
-                checkPropTypes(propTypes2, element.props, "prop", name, element);
-              } else if (type.PropTypes !== void 0 && !propTypesMisspellWarningShown) {
-                propTypesMisspellWarningShown = true;
-                var _name = getComponentName(type);
-                error("Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?", _name || "Unknown");
-              }
-              if (typeof type.getDefaultProps === "function" && !type.getDefaultProps.isReactClassApproved) {
-                error("getDefaultProps is only used on classic React.createClass definitions. Use a static property named `defaultProps` instead.");
-              }
-            }
-          }
-          function validateFragmentProps(fragment) {
-            {
-              var keys = Object.keys(fragment.props);
-              for (var i = 0; i < keys.length; i++) {
-                var key = keys[i];
-                if (key !== "children" && key !== "key") {
-                  setCurrentlyValidatingElement$1(fragment);
-                  error("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", key);
-                  setCurrentlyValidatingElement$1(null);
-                  break;
-                }
-              }
-              if (fragment.ref !== null) {
-                setCurrentlyValidatingElement$1(fragment);
-                error("Invalid attribute `ref` supplied to `React.Fragment`.");
-                setCurrentlyValidatingElement$1(null);
-              }
-            }
-          }
-          function jsxWithValidation(type, props, key, isStaticChildren, source, self2) {
-            {
-              var validType = isValidElementType(type);
-              if (!validType) {
-                var info = "";
-                if (type === void 0 || typeof type === "object" && type !== null && Object.keys(type).length === 0) {
-                  info += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.";
-                }
-                var sourceInfo = getSourceInfoErrorAddendum(source);
-                if (sourceInfo) {
-                  info += sourceInfo;
-                } else {
-                  info += getDeclarationErrorAddendum();
-                }
-                var typeString;
-                if (type === null) {
-                  typeString = "null";
-                } else if (Array.isArray(type)) {
-                  typeString = "array";
-                } else if (type !== void 0 && type.$$typeof === REACT_ELEMENT_TYPE) {
-                  typeString = "<" + (getComponentName(type.type) || "Unknown") + " />";
-                  info = " Did you accidentally export a JSX literal instead of a component?";
-                } else {
-                  typeString = typeof type;
-                }
-                error("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", typeString, info);
-              }
-              var element = jsxDEV(type, props, key, source, self2);
-              if (element == null) {
-                return element;
-              }
-              if (validType) {
-                var children = props.children;
-                if (children !== void 0) {
-                  if (isStaticChildren) {
-                    if (Array.isArray(children)) {
-                      for (var i = 0; i < children.length; i++) {
-                        validateChildKeys(children[i], type);
-                      }
-                      if (Object.freeze) {
-                        Object.freeze(children);
-                      }
-                    } else {
-                      error("React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead.");
-                    }
-                  } else {
-                    validateChildKeys(children, type);
-                  }
-                }
-              }
-              if (type === exports.Fragment) {
-                validateFragmentProps(element);
-              } else {
-                validatePropTypes(element);
-              }
-              return element;
-            }
-          }
-          function jsxWithValidationStatic(type, props, key) {
-            {
-              return jsxWithValidation(type, props, key, true);
-            }
-          }
-          function jsxWithValidationDynamic(type, props, key) {
-            {
-              return jsxWithValidation(type, props, key, false);
-            }
-          }
-          var jsx = jsxWithValidationDynamic;
-          var jsxs = jsxWithValidationStatic;
-          exports.jsx = jsx;
-          exports.jsxs = jsxs;
-        })();
-      }
-    }
-  });
-
-  // node_modules/react/jsx-runtime.js
-  var require_jsx_runtime = __commonJS({
-    "node_modules/react/jsx-runtime.js"(exports, module) {
-      "use strict";
-      if (false) {
-        module.exports = null;
-      } else {
-        module.exports = require_react_jsx_runtime_development();
-      }
-    }
-  });
-
   // node_modules/classnames/index.js
   var require_classnames = __commonJS({
     "node_modules/classnames/index.js"(exports, module) {
@@ -20879,6 +20258,627 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }
   });
 
+  // node_modules/react/cjs/react-jsx-runtime.development.js
+  var require_react_jsx_runtime_development = __commonJS({
+    "node_modules/react/cjs/react-jsx-runtime.development.js"(exports) {
+      "use strict";
+      if (true) {
+        (function() {
+          "use strict";
+          var React62 = require_react();
+          var REACT_ELEMENT_TYPE = 60103;
+          var REACT_PORTAL_TYPE = 60106;
+          exports.Fragment = 60107;
+          var REACT_STRICT_MODE_TYPE = 60108;
+          var REACT_PROFILER_TYPE = 60114;
+          var REACT_PROVIDER_TYPE = 60109;
+          var REACT_CONTEXT_TYPE = 60110;
+          var REACT_FORWARD_REF_TYPE = 60112;
+          var REACT_SUSPENSE_TYPE = 60113;
+          var REACT_SUSPENSE_LIST_TYPE = 60120;
+          var REACT_MEMO_TYPE = 60115;
+          var REACT_LAZY_TYPE = 60116;
+          var REACT_BLOCK_TYPE = 60121;
+          var REACT_SERVER_BLOCK_TYPE = 60122;
+          var REACT_FUNDAMENTAL_TYPE = 60117;
+          var REACT_SCOPE_TYPE = 60119;
+          var REACT_OPAQUE_ID_TYPE = 60128;
+          var REACT_DEBUG_TRACING_MODE_TYPE = 60129;
+          var REACT_OFFSCREEN_TYPE = 60130;
+          var REACT_LEGACY_HIDDEN_TYPE = 60131;
+          if (typeof Symbol === "function" && Symbol.for) {
+            var symbolFor = Symbol.for;
+            REACT_ELEMENT_TYPE = symbolFor("react.element");
+            REACT_PORTAL_TYPE = symbolFor("react.portal");
+            exports.Fragment = symbolFor("react.fragment");
+            REACT_STRICT_MODE_TYPE = symbolFor("react.strict_mode");
+            REACT_PROFILER_TYPE = symbolFor("react.profiler");
+            REACT_PROVIDER_TYPE = symbolFor("react.provider");
+            REACT_CONTEXT_TYPE = symbolFor("react.context");
+            REACT_FORWARD_REF_TYPE = symbolFor("react.forward_ref");
+            REACT_SUSPENSE_TYPE = symbolFor("react.suspense");
+            REACT_SUSPENSE_LIST_TYPE = symbolFor("react.suspense_list");
+            REACT_MEMO_TYPE = symbolFor("react.memo");
+            REACT_LAZY_TYPE = symbolFor("react.lazy");
+            REACT_BLOCK_TYPE = symbolFor("react.block");
+            REACT_SERVER_BLOCK_TYPE = symbolFor("react.server.block");
+            REACT_FUNDAMENTAL_TYPE = symbolFor("react.fundamental");
+            REACT_SCOPE_TYPE = symbolFor("react.scope");
+            REACT_OPAQUE_ID_TYPE = symbolFor("react.opaque.id");
+            REACT_DEBUG_TRACING_MODE_TYPE = symbolFor("react.debug_trace_mode");
+            REACT_OFFSCREEN_TYPE = symbolFor("react.offscreen");
+            REACT_LEGACY_HIDDEN_TYPE = symbolFor("react.legacy_hidden");
+          }
+          var MAYBE_ITERATOR_SYMBOL = typeof Symbol === "function" && Symbol.iterator;
+          var FAUX_ITERATOR_SYMBOL = "@@iterator";
+          function getIteratorFn(maybeIterable) {
+            if (maybeIterable === null || typeof maybeIterable !== "object") {
+              return null;
+            }
+            var maybeIterator = MAYBE_ITERATOR_SYMBOL && maybeIterable[MAYBE_ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL];
+            if (typeof maybeIterator === "function") {
+              return maybeIterator;
+            }
+            return null;
+          }
+          var ReactSharedInternals = React62.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          function error(format) {
+            {
+              for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+                args[_key2 - 1] = arguments[_key2];
+              }
+              printWarning("error", format, args);
+            }
+          }
+          function printWarning(level, format, args) {
+            {
+              var ReactDebugCurrentFrame2 = ReactSharedInternals.ReactDebugCurrentFrame;
+              var stack = "";
+              if (currentlyValidatingElement) {
+                var name = getComponentName(currentlyValidatingElement.type);
+                var owner = currentlyValidatingElement._owner;
+                stack += describeComponentFrame(name, currentlyValidatingElement._source, owner && getComponentName(owner.type));
+              }
+              stack += ReactDebugCurrentFrame2.getStackAddendum();
+              if (stack !== "") {
+                format += "%s";
+                args = args.concat([stack]);
+              }
+              var argsWithFormat = args.map(function(item) {
+                return "" + item;
+              });
+              argsWithFormat.unshift("Warning: " + format);
+              Function.prototype.apply.call(console[level], console, argsWithFormat);
+            }
+          }
+          var enableScopeAPI = false;
+          function isValidElementType(type) {
+            if (typeof type === "string" || typeof type === "function") {
+              return true;
+            }
+            if (type === exports.Fragment || type === REACT_PROFILER_TYPE || type === REACT_DEBUG_TRACING_MODE_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || type === REACT_LEGACY_HIDDEN_TYPE || enableScopeAPI) {
+              return true;
+            }
+            if (typeof type === "object" && type !== null) {
+              if (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_BLOCK_TYPE || type[0] === REACT_SERVER_BLOCK_TYPE) {
+                return true;
+              }
+            }
+            return false;
+          }
+          var BEFORE_SLASH_RE = /^(.*)[\\\/]/;
+          function describeComponentFrame(name, source, ownerName) {
+            var sourceInfo = "";
+            if (source) {
+              var path = source.fileName;
+              var fileName = path.replace(BEFORE_SLASH_RE, "");
+              {
+                if (/^index\./.test(fileName)) {
+                  var match = path.match(BEFORE_SLASH_RE);
+                  if (match) {
+                    var pathBeforeSlash = match[1];
+                    if (pathBeforeSlash) {
+                      var folderName = pathBeforeSlash.replace(BEFORE_SLASH_RE, "");
+                      fileName = folderName + "/" + fileName;
+                    }
+                  }
+                }
+              }
+              sourceInfo = " (at " + fileName + ":" + source.lineNumber + ")";
+            } else if (ownerName) {
+              sourceInfo = " (created by " + ownerName + ")";
+            }
+            return "\n    in " + (name || "Unknown") + sourceInfo;
+          }
+          var Resolved = 1;
+          function refineResolvedLazyComponent(lazyComponent) {
+            return lazyComponent._status === Resolved ? lazyComponent._result : null;
+          }
+          function getWrappedName(outerType, innerType, wrapperName) {
+            var functionName = innerType.displayName || innerType.name || "";
+            return outerType.displayName || (functionName !== "" ? wrapperName + "(" + functionName + ")" : wrapperName);
+          }
+          function getComponentName(type) {
+            if (type == null) {
+              return null;
+            }
+            {
+              if (typeof type.tag === "number") {
+                error("Received an unexpected object in getComponentName(). This is likely a bug in React. Please file an issue.");
+              }
+            }
+            if (typeof type === "function") {
+              return type.displayName || type.name || null;
+            }
+            if (typeof type === "string") {
+              return type;
+            }
+            switch (type) {
+              case exports.Fragment:
+                return "Fragment";
+              case REACT_PORTAL_TYPE:
+                return "Portal";
+              case REACT_PROFILER_TYPE:
+                return "Profiler";
+              case REACT_STRICT_MODE_TYPE:
+                return "StrictMode";
+              case REACT_SUSPENSE_TYPE:
+                return "Suspense";
+              case REACT_SUSPENSE_LIST_TYPE:
+                return "SuspenseList";
+            }
+            if (typeof type === "object") {
+              switch (type.$$typeof) {
+                case REACT_CONTEXT_TYPE:
+                  return "Context.Consumer";
+                case REACT_PROVIDER_TYPE:
+                  return "Context.Provider";
+                case REACT_FORWARD_REF_TYPE:
+                  return getWrappedName(type, type.render, "ForwardRef");
+                case REACT_MEMO_TYPE:
+                  return getComponentName(type.type);
+                case REACT_BLOCK_TYPE:
+                  return getComponentName(type.render);
+                case REACT_LAZY_TYPE: {
+                  var thenable = type;
+                  var resolvedThenable = refineResolvedLazyComponent(thenable);
+                  if (resolvedThenable) {
+                    return getComponentName(resolvedThenable);
+                  }
+                  break;
+                }
+              }
+            }
+            return null;
+          }
+          var loggedTypeFailures = {};
+          var ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
+          var currentlyValidatingElement = null;
+          function setCurrentlyValidatingElement(element) {
+            {
+              currentlyValidatingElement = element;
+            }
+          }
+          function checkPropTypes(typeSpecs, values, location, componentName, element) {
+            {
+              var has = Function.call.bind(Object.prototype.hasOwnProperty);
+              for (var typeSpecName in typeSpecs) {
+                if (has(typeSpecs, typeSpecName)) {
+                  var error$1 = void 0;
+                  try {
+                    if (typeof typeSpecs[typeSpecName] !== "function") {
+                      var err = Error((componentName || "React class") + ": " + location + " type `" + typeSpecName + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof typeSpecs[typeSpecName] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
+                      err.name = "Invariant Violation";
+                      throw err;
+                    }
+                    error$1 = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
+                  } catch (ex) {
+                    error$1 = ex;
+                  }
+                  if (error$1 && !(error$1 instanceof Error)) {
+                    setCurrentlyValidatingElement(element);
+                    error("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", componentName || "React class", location, typeSpecName, typeof error$1);
+                    setCurrentlyValidatingElement(null);
+                  }
+                  if (error$1 instanceof Error && !(error$1.message in loggedTypeFailures)) {
+                    loggedTypeFailures[error$1.message] = true;
+                    setCurrentlyValidatingElement(element);
+                    error("Failed %s type: %s", location, error$1.message);
+                    setCurrentlyValidatingElement(null);
+                  }
+                }
+              }
+            }
+          }
+          var ReactCurrentOwner = ReactSharedInternals.ReactCurrentOwner;
+          var hasOwnProperty = Object.prototype.hasOwnProperty;
+          var RESERVED_PROPS = {
+            key: true,
+            ref: true,
+            __self: true,
+            __source: true
+          };
+          var specialPropKeyWarningShown;
+          var specialPropRefWarningShown;
+          var didWarnAboutStringRefs;
+          {
+            didWarnAboutStringRefs = {};
+          }
+          function hasValidRef(config) {
+            {
+              if (hasOwnProperty.call(config, "ref")) {
+                var getter = Object.getOwnPropertyDescriptor(config, "ref").get;
+                if (getter && getter.isReactWarning) {
+                  return false;
+                }
+              }
+            }
+            return config.ref !== void 0;
+          }
+          function hasValidKey(config) {
+            {
+              if (hasOwnProperty.call(config, "key")) {
+                var getter = Object.getOwnPropertyDescriptor(config, "key").get;
+                if (getter && getter.isReactWarning) {
+                  return false;
+                }
+              }
+            }
+            return config.key !== void 0;
+          }
+          function warnIfStringRefCannotBeAutoConverted(config, self2) {
+            {
+              if (typeof config.ref === "string" && ReactCurrentOwner.current && self2 && ReactCurrentOwner.current.stateNode !== self2) {
+                var componentName = getComponentName(ReactCurrentOwner.current.type);
+                if (!didWarnAboutStringRefs[componentName]) {
+                  error('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', getComponentName(ReactCurrentOwner.current.type), config.ref);
+                  didWarnAboutStringRefs[componentName] = true;
+                }
+              }
+            }
+          }
+          function defineKeyPropWarningGetter(props, displayName) {
+            {
+              var warnAboutAccessingKey = function() {
+                if (!specialPropKeyWarningShown) {
+                  specialPropKeyWarningShown = true;
+                  error("%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", displayName);
+                }
+              };
+              warnAboutAccessingKey.isReactWarning = true;
+              Object.defineProperty(props, "key", {
+                get: warnAboutAccessingKey,
+                configurable: true
+              });
+            }
+          }
+          function defineRefPropWarningGetter(props, displayName) {
+            {
+              var warnAboutAccessingRef = function() {
+                if (!specialPropRefWarningShown) {
+                  specialPropRefWarningShown = true;
+                  error("%s: `ref` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", displayName);
+                }
+              };
+              warnAboutAccessingRef.isReactWarning = true;
+              Object.defineProperty(props, "ref", {
+                get: warnAboutAccessingRef,
+                configurable: true
+              });
+            }
+          }
+          var ReactElement = function(type, key, ref, self2, source, owner, props) {
+            var element = {
+              $$typeof: REACT_ELEMENT_TYPE,
+              type,
+              key,
+              ref,
+              props,
+              _owner: owner
+            };
+            {
+              element._store = {};
+              Object.defineProperty(element._store, "validated", {
+                configurable: false,
+                enumerable: false,
+                writable: true,
+                value: false
+              });
+              Object.defineProperty(element, "_self", {
+                configurable: false,
+                enumerable: false,
+                writable: false,
+                value: self2
+              });
+              Object.defineProperty(element, "_source", {
+                configurable: false,
+                enumerable: false,
+                writable: false,
+                value: source
+              });
+              if (Object.freeze) {
+                Object.freeze(element.props);
+                Object.freeze(element);
+              }
+            }
+            return element;
+          };
+          function jsxDEV(type, config, maybeKey, source, self2) {
+            {
+              var propName;
+              var props = {};
+              var key = null;
+              var ref = null;
+              if (maybeKey !== void 0) {
+                key = "" + maybeKey;
+              }
+              if (hasValidKey(config)) {
+                key = "" + config.key;
+              }
+              if (hasValidRef(config)) {
+                ref = config.ref;
+                warnIfStringRefCannotBeAutoConverted(config, self2);
+              }
+              for (propName in config) {
+                if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
+                  props[propName] = config[propName];
+                }
+              }
+              if (type && type.defaultProps) {
+                var defaultProps6 = type.defaultProps;
+                for (propName in defaultProps6) {
+                  if (props[propName] === void 0) {
+                    props[propName] = defaultProps6[propName];
+                  }
+                }
+              }
+              if (key || ref) {
+                var displayName = typeof type === "function" ? type.displayName || type.name || "Unknown" : type;
+                if (key) {
+                  defineKeyPropWarningGetter(props, displayName);
+                }
+                if (ref) {
+                  defineRefPropWarningGetter(props, displayName);
+                }
+              }
+              return ReactElement(type, key, ref, self2, source, ReactCurrentOwner.current, props);
+            }
+          }
+          var ReactCurrentOwner$1 = ReactSharedInternals.ReactCurrentOwner;
+          var ReactDebugCurrentFrame$1 = ReactSharedInternals.ReactDebugCurrentFrame;
+          function setCurrentlyValidatingElement$1(element) {
+            currentlyValidatingElement = element;
+          }
+          var propTypesMisspellWarningShown;
+          {
+            propTypesMisspellWarningShown = false;
+          }
+          function isValidElement5(object) {
+            {
+              return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+            }
+          }
+          function getDeclarationErrorAddendum() {
+            {
+              if (ReactCurrentOwner$1.current) {
+                var name = getComponentName(ReactCurrentOwner$1.current.type);
+                if (name) {
+                  return "\n\nCheck the render method of `" + name + "`.";
+                }
+              }
+              return "";
+            }
+          }
+          function getSourceInfoErrorAddendum(source) {
+            {
+              if (source !== void 0) {
+                var fileName = source.fileName.replace(/^.*[\\\/]/, "");
+                var lineNumber = source.lineNumber;
+                return "\n\nCheck your code at " + fileName + ":" + lineNumber + ".";
+              }
+              return "";
+            }
+          }
+          var ownerHasKeyUseWarning = {};
+          function getCurrentComponentErrorInfo(parentType) {
+            {
+              var info = getDeclarationErrorAddendum();
+              if (!info) {
+                var parentName = typeof parentType === "string" ? parentType : parentType.displayName || parentType.name;
+                if (parentName) {
+                  info = "\n\nCheck the top-level render call using <" + parentName + ">.";
+                }
+              }
+              return info;
+            }
+          }
+          function validateExplicitKey(element, parentType) {
+            {
+              if (!element._store || element._store.validated || element.key != null) {
+                return;
+              }
+              element._store.validated = true;
+              var currentComponentErrorInfo = getCurrentComponentErrorInfo(parentType);
+              if (ownerHasKeyUseWarning[currentComponentErrorInfo]) {
+                return;
+              }
+              ownerHasKeyUseWarning[currentComponentErrorInfo] = true;
+              var childOwner = "";
+              if (element && element._owner && element._owner !== ReactCurrentOwner$1.current) {
+                childOwner = " It was passed a child from " + getComponentName(element._owner.type) + ".";
+              }
+              setCurrentlyValidatingElement$1(element);
+              error('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', currentComponentErrorInfo, childOwner);
+              setCurrentlyValidatingElement$1(null);
+            }
+          }
+          function validateChildKeys(node, parentType) {
+            {
+              if (typeof node !== "object") {
+                return;
+              }
+              if (Array.isArray(node)) {
+                for (var i = 0; i < node.length; i++) {
+                  var child = node[i];
+                  if (isValidElement5(child)) {
+                    validateExplicitKey(child, parentType);
+                  }
+                }
+              } else if (isValidElement5(node)) {
+                if (node._store) {
+                  node._store.validated = true;
+                }
+              } else if (node) {
+                var iteratorFn = getIteratorFn(node);
+                if (typeof iteratorFn === "function") {
+                  if (iteratorFn !== node.entries) {
+                    var iterator = iteratorFn.call(node);
+                    var step;
+                    while (!(step = iterator.next()).done) {
+                      if (isValidElement5(step.value)) {
+                        validateExplicitKey(step.value, parentType);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          function validatePropTypes(element) {
+            {
+              var type = element.type;
+              if (type === null || type === void 0 || typeof type === "string") {
+                return;
+              }
+              var propTypes2;
+              if (typeof type === "function") {
+                propTypes2 = type.propTypes;
+              } else if (typeof type === "object" && (type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_MEMO_TYPE)) {
+                propTypes2 = type.propTypes;
+              } else {
+                return;
+              }
+              if (propTypes2) {
+                var name = getComponentName(type);
+                checkPropTypes(propTypes2, element.props, "prop", name, element);
+              } else if (type.PropTypes !== void 0 && !propTypesMisspellWarningShown) {
+                propTypesMisspellWarningShown = true;
+                var _name = getComponentName(type);
+                error("Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?", _name || "Unknown");
+              }
+              if (typeof type.getDefaultProps === "function" && !type.getDefaultProps.isReactClassApproved) {
+                error("getDefaultProps is only used on classic React.createClass definitions. Use a static property named `defaultProps` instead.");
+              }
+            }
+          }
+          function validateFragmentProps(fragment) {
+            {
+              var keys = Object.keys(fragment.props);
+              for (var i = 0; i < keys.length; i++) {
+                var key = keys[i];
+                if (key !== "children" && key !== "key") {
+                  setCurrentlyValidatingElement$1(fragment);
+                  error("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", key);
+                  setCurrentlyValidatingElement$1(null);
+                  break;
+                }
+              }
+              if (fragment.ref !== null) {
+                setCurrentlyValidatingElement$1(fragment);
+                error("Invalid attribute `ref` supplied to `React.Fragment`.");
+                setCurrentlyValidatingElement$1(null);
+              }
+            }
+          }
+          function jsxWithValidation(type, props, key, isStaticChildren, source, self2) {
+            {
+              var validType = isValidElementType(type);
+              if (!validType) {
+                var info = "";
+                if (type === void 0 || typeof type === "object" && type !== null && Object.keys(type).length === 0) {
+                  info += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.";
+                }
+                var sourceInfo = getSourceInfoErrorAddendum(source);
+                if (sourceInfo) {
+                  info += sourceInfo;
+                } else {
+                  info += getDeclarationErrorAddendum();
+                }
+                var typeString;
+                if (type === null) {
+                  typeString = "null";
+                } else if (Array.isArray(type)) {
+                  typeString = "array";
+                } else if (type !== void 0 && type.$$typeof === REACT_ELEMENT_TYPE) {
+                  typeString = "<" + (getComponentName(type.type) || "Unknown") + " />";
+                  info = " Did you accidentally export a JSX literal instead of a component?";
+                } else {
+                  typeString = typeof type;
+                }
+                error("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", typeString, info);
+              }
+              var element = jsxDEV(type, props, key, source, self2);
+              if (element == null) {
+                return element;
+              }
+              if (validType) {
+                var children = props.children;
+                if (children !== void 0) {
+                  if (isStaticChildren) {
+                    if (Array.isArray(children)) {
+                      for (var i = 0; i < children.length; i++) {
+                        validateChildKeys(children[i], type);
+                      }
+                      if (Object.freeze) {
+                        Object.freeze(children);
+                      }
+                    } else {
+                      error("React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead.");
+                    }
+                  } else {
+                    validateChildKeys(children, type);
+                  }
+                }
+              }
+              if (type === exports.Fragment) {
+                validateFragmentProps(element);
+              } else {
+                validatePropTypes(element);
+              }
+              return element;
+            }
+          }
+          function jsxWithValidationStatic(type, props, key) {
+            {
+              return jsxWithValidation(type, props, key, true);
+            }
+          }
+          function jsxWithValidationDynamic(type, props, key) {
+            {
+              return jsxWithValidation(type, props, key, false);
+            }
+          }
+          var jsx = jsxWithValidationDynamic;
+          var jsxs = jsxWithValidationStatic;
+          exports.jsx = jsx;
+          exports.jsxs = jsxs;
+        })();
+      }
+    }
+  });
+
+  // node_modules/react/jsx-runtime.js
+  var require_jsx_runtime = __commonJS({
+    "node_modules/react/jsx-runtime.js"(exports, module) {
+      "use strict";
+      if (false) {
+        module.exports = null;
+      } else {
+        module.exports = require_react_jsx_runtime_development();
+      }
+    }
+  });
+
   // node_modules/fast-deep-equal/index.js
   var require_fast_deep_equal = __commonJS({
     "node_modules/fast-deep-equal/index.js"(exports, module) {
@@ -21541,7 +21541,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       label: ""
     },
     explanation: "",
-    rationalization: "",
+    review: "",
     timeStamps: []
   };
 
@@ -21873,20 +21873,867 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   var readView_default = ReadView;
 
   // src/stepViews/tagView/tagView.js
-  var import_react23 = __toESM(require_react());
+  var import_react38 = __toESM(require_react());
+
+  // node_modules/@babel/runtime/helpers/esm/extends.js
+  function _extends() {
+    _extends = Object.assign ? Object.assign.bind() : function(target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    };
+    return _extends.apply(this, arguments);
+  }
+
+  // node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
+  function _objectWithoutPropertiesLoose(source, excluded) {
+    if (source == null)
+      return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i;
+    for (i = 0; i < sourceKeys.length; i++) {
+      key = sourceKeys[i];
+      if (excluded.indexOf(key) >= 0)
+        continue;
+      target[key] = source[key];
+    }
+    return target;
+  }
+
+  // node_modules/react-bootstrap/esm/Toast.js
+  var import_react21 = __toESM(require_react());
+  var import_classnames5 = __toESM(require_classnames());
+
+  // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useTimeout.js
+  var import_react10 = __toESM(require_react());
+
+  // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useMounted.js
+  var import_react7 = __toESM(require_react());
+  function useMounted() {
+    var mounted = (0, import_react7.useRef)(true);
+    var isMounted = (0, import_react7.useRef)(function() {
+      return mounted.current;
+    });
+    (0, import_react7.useEffect)(function() {
+      mounted.current = true;
+      return function() {
+        mounted.current = false;
+      };
+    }, []);
+    return isMounted.current;
+  }
+
+  // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useUpdatedRef.js
+  var import_react8 = __toESM(require_react());
+  function useUpdatedRef(value) {
+    var valueRef = (0, import_react8.useRef)(value);
+    valueRef.current = value;
+    return valueRef;
+  }
+
+  // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useWillUnmount.js
+  var import_react9 = __toESM(require_react());
+  function useWillUnmount(fn) {
+    var onUnmount = useUpdatedRef(fn);
+    (0, import_react9.useEffect)(function() {
+      return function() {
+        return onUnmount.current();
+      };
+    }, []);
+  }
+
+  // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useTimeout.js
+  var MAX_DELAY_MS = Math.pow(2, 31) - 1;
+  function setChainedTimeout(handleRef, fn, timeoutAtMs) {
+    var delayMs = timeoutAtMs - Date.now();
+    handleRef.current = delayMs <= MAX_DELAY_MS ? setTimeout(fn, delayMs) : setTimeout(function() {
+      return setChainedTimeout(handleRef, fn, timeoutAtMs);
+    }, MAX_DELAY_MS);
+  }
+  function useTimeout() {
+    var isMounted = useMounted();
+    var handleRef = (0, import_react10.useRef)();
+    useWillUnmount(function() {
+      return clearTimeout(handleRef.current);
+    });
+    return (0, import_react10.useMemo)(function() {
+      var clear = function clear2() {
+        return clearTimeout(handleRef.current);
+      };
+      function set(fn, delayMs) {
+        if (delayMs === void 0) {
+          delayMs = 0;
+        }
+        if (!isMounted())
+          return;
+        clear();
+        if (delayMs <= MAX_DELAY_MS) {
+          handleRef.current = setTimeout(fn, delayMs);
+        } else {
+          setChainedTimeout(handleRef, fn, Date.now() + delayMs);
+        }
+      }
+      return {
+        set,
+        clear
+      };
+    }, []);
+  }
+
+  // node_modules/react-bootstrap/esm/Fade.js
+  var import_classnames = __toESM(require_classnames());
+  var import_react13 = __toESM(require_react());
+
+  // node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js
+  function _setPrototypeOf(o, p) {
+    _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p2) {
+      o2.__proto__ = p2;
+      return o2;
+    };
+    return _setPrototypeOf(o, p);
+  }
+
+  // node_modules/@babel/runtime/helpers/esm/inheritsLoose.js
+  function _inheritsLoose(subClass, superClass) {
+    subClass.prototype = Object.create(superClass.prototype);
+    subClass.prototype.constructor = subClass;
+    _setPrototypeOf(subClass, superClass);
+  }
+
+  // node_modules/react-bootstrap/node_modules/react-transition-group/esm/Transition.js
+  var import_prop_types2 = __toESM(require_prop_types());
+  var import_react12 = __toESM(require_react());
+  var import_react_dom = __toESM(require_react_dom());
+
+  // node_modules/react-bootstrap/node_modules/react-transition-group/esm/config.js
+  var config_default = {
+    disabled: false
+  };
+
+  // node_modules/react-bootstrap/node_modules/react-transition-group/esm/utils/PropTypes.js
+  var import_prop_types = __toESM(require_prop_types());
+  var timeoutsShape = true ? import_prop_types.default.oneOfType([import_prop_types.default.number, import_prop_types.default.shape({
+    enter: import_prop_types.default.number,
+    exit: import_prop_types.default.number,
+    appear: import_prop_types.default.number
+  }).isRequired]) : null;
+  var classNamesShape = true ? import_prop_types.default.oneOfType([import_prop_types.default.string, import_prop_types.default.shape({
+    enter: import_prop_types.default.string,
+    exit: import_prop_types.default.string,
+    active: import_prop_types.default.string
+  }), import_prop_types.default.shape({
+    enter: import_prop_types.default.string,
+    enterDone: import_prop_types.default.string,
+    enterActive: import_prop_types.default.string,
+    exit: import_prop_types.default.string,
+    exitDone: import_prop_types.default.string,
+    exitActive: import_prop_types.default.string
+  })]) : null;
+
+  // node_modules/react-bootstrap/node_modules/react-transition-group/esm/TransitionGroupContext.js
+  var import_react11 = __toESM(require_react());
+  var TransitionGroupContext_default = import_react11.default.createContext(null);
+
+  // node_modules/react-bootstrap/node_modules/react-transition-group/esm/utils/reflow.js
+  var forceReflow = function forceReflow2(node) {
+    return node.scrollTop;
+  };
+
+  // node_modules/react-bootstrap/node_modules/react-transition-group/esm/Transition.js
+  var UNMOUNTED = "unmounted";
+  var EXITED = "exited";
+  var ENTERING = "entering";
+  var ENTERED = "entered";
+  var EXITING = "exiting";
+  var Transition = /* @__PURE__ */ function(_React$Component) {
+    _inheritsLoose(Transition2, _React$Component);
+    function Transition2(props, context4) {
+      var _this;
+      _this = _React$Component.call(this, props, context4) || this;
+      var parentGroup = context4;
+      var appear = parentGroup && !parentGroup.isMounting ? props.enter : props.appear;
+      var initialStatus;
+      _this.appearStatus = null;
+      if (props.in) {
+        if (appear) {
+          initialStatus = EXITED;
+          _this.appearStatus = ENTERING;
+        } else {
+          initialStatus = ENTERED;
+        }
+      } else {
+        if (props.unmountOnExit || props.mountOnEnter) {
+          initialStatus = UNMOUNTED;
+        } else {
+          initialStatus = EXITED;
+        }
+      }
+      _this.state = {
+        status: initialStatus
+      };
+      _this.nextCallback = null;
+      return _this;
+    }
+    Transition2.getDerivedStateFromProps = function getDerivedStateFromProps(_ref, prevState) {
+      var nextIn = _ref.in;
+      if (nextIn && prevState.status === UNMOUNTED) {
+        return {
+          status: EXITED
+        };
+      }
+      return null;
+    };
+    var _proto = Transition2.prototype;
+    _proto.componentDidMount = function componentDidMount() {
+      this.updateStatus(true, this.appearStatus);
+    };
+    _proto.componentDidUpdate = function componentDidUpdate(prevProps) {
+      var nextStatus = null;
+      if (prevProps !== this.props) {
+        var status = this.state.status;
+        if (this.props.in) {
+          if (status !== ENTERING && status !== ENTERED) {
+            nextStatus = ENTERING;
+          }
+        } else {
+          if (status === ENTERING || status === ENTERED) {
+            nextStatus = EXITING;
+          }
+        }
+      }
+      this.updateStatus(false, nextStatus);
+    };
+    _proto.componentWillUnmount = function componentWillUnmount() {
+      this.cancelNextCallback();
+    };
+    _proto.getTimeouts = function getTimeouts() {
+      var timeout2 = this.props.timeout;
+      var exit, enter, appear;
+      exit = enter = appear = timeout2;
+      if (timeout2 != null && typeof timeout2 !== "number") {
+        exit = timeout2.exit;
+        enter = timeout2.enter;
+        appear = timeout2.appear !== void 0 ? timeout2.appear : enter;
+      }
+      return {
+        exit,
+        enter,
+        appear
+      };
+    };
+    _proto.updateStatus = function updateStatus(mounting, nextStatus) {
+      if (mounting === void 0) {
+        mounting = false;
+      }
+      if (nextStatus !== null) {
+        this.cancelNextCallback();
+        if (nextStatus === ENTERING) {
+          if (this.props.unmountOnExit || this.props.mountOnEnter) {
+            var node = this.props.nodeRef ? this.props.nodeRef.current : import_react_dom.default.findDOMNode(this);
+            if (node)
+              forceReflow(node);
+          }
+          this.performEnter(mounting);
+        } else {
+          this.performExit();
+        }
+      } else if (this.props.unmountOnExit && this.state.status === EXITED) {
+        this.setState({
+          status: UNMOUNTED
+        });
+      }
+    };
+    _proto.performEnter = function performEnter(mounting) {
+      var _this2 = this;
+      var enter = this.props.enter;
+      var appearing = this.context ? this.context.isMounting : mounting;
+      var _ref2 = this.props.nodeRef ? [appearing] : [import_react_dom.default.findDOMNode(this), appearing], maybeNode = _ref2[0], maybeAppearing = _ref2[1];
+      var timeouts = this.getTimeouts();
+      var enterTimeout = appearing ? timeouts.appear : timeouts.enter;
+      if (!mounting && !enter || config_default.disabled) {
+        this.safeSetState({
+          status: ENTERED
+        }, function() {
+          _this2.props.onEntered(maybeNode);
+        });
+        return;
+      }
+      this.props.onEnter(maybeNode, maybeAppearing);
+      this.safeSetState({
+        status: ENTERING
+      }, function() {
+        _this2.props.onEntering(maybeNode, maybeAppearing);
+        _this2.onTransitionEnd(enterTimeout, function() {
+          _this2.safeSetState({
+            status: ENTERED
+          }, function() {
+            _this2.props.onEntered(maybeNode, maybeAppearing);
+          });
+        });
+      });
+    };
+    _proto.performExit = function performExit() {
+      var _this3 = this;
+      var exit = this.props.exit;
+      var timeouts = this.getTimeouts();
+      var maybeNode = this.props.nodeRef ? void 0 : import_react_dom.default.findDOMNode(this);
+      if (!exit || config_default.disabled) {
+        this.safeSetState({
+          status: EXITED
+        }, function() {
+          _this3.props.onExited(maybeNode);
+        });
+        return;
+      }
+      this.props.onExit(maybeNode);
+      this.safeSetState({
+        status: EXITING
+      }, function() {
+        _this3.props.onExiting(maybeNode);
+        _this3.onTransitionEnd(timeouts.exit, function() {
+          _this3.safeSetState({
+            status: EXITED
+          }, function() {
+            _this3.props.onExited(maybeNode);
+          });
+        });
+      });
+    };
+    _proto.cancelNextCallback = function cancelNextCallback() {
+      if (this.nextCallback !== null) {
+        this.nextCallback.cancel();
+        this.nextCallback = null;
+      }
+    };
+    _proto.safeSetState = function safeSetState(nextState, callback) {
+      callback = this.setNextCallback(callback);
+      this.setState(nextState, callback);
+    };
+    _proto.setNextCallback = function setNextCallback(callback) {
+      var _this4 = this;
+      var active = true;
+      this.nextCallback = function(event) {
+        if (active) {
+          active = false;
+          _this4.nextCallback = null;
+          callback(event);
+        }
+      };
+      this.nextCallback.cancel = function() {
+        active = false;
+      };
+      return this.nextCallback;
+    };
+    _proto.onTransitionEnd = function onTransitionEnd(timeout2, handler) {
+      this.setNextCallback(handler);
+      var node = this.props.nodeRef ? this.props.nodeRef.current : import_react_dom.default.findDOMNode(this);
+      var doesNotHaveTimeoutOrListener = timeout2 == null && !this.props.addEndListener;
+      if (!node || doesNotHaveTimeoutOrListener) {
+        setTimeout(this.nextCallback, 0);
+        return;
+      }
+      if (this.props.addEndListener) {
+        var _ref3 = this.props.nodeRef ? [this.nextCallback] : [node, this.nextCallback], maybeNode = _ref3[0], maybeNextCallback = _ref3[1];
+        this.props.addEndListener(maybeNode, maybeNextCallback);
+      }
+      if (timeout2 != null) {
+        setTimeout(this.nextCallback, timeout2);
+      }
+    };
+    _proto.render = function render() {
+      var status = this.state.status;
+      if (status === UNMOUNTED) {
+        return null;
+      }
+      var _this$props = this.props, children = _this$props.children, _in = _this$props.in, _mountOnEnter = _this$props.mountOnEnter, _unmountOnExit = _this$props.unmountOnExit, _appear = _this$props.appear, _enter = _this$props.enter, _exit = _this$props.exit, _timeout = _this$props.timeout, _addEndListener = _this$props.addEndListener, _onEnter = _this$props.onEnter, _onEntering = _this$props.onEntering, _onEntered = _this$props.onEntered, _onExit = _this$props.onExit, _onExiting = _this$props.onExiting, _onExited = _this$props.onExited, _nodeRef = _this$props.nodeRef, childProps = _objectWithoutPropertiesLoose(_this$props, ["children", "in", "mountOnEnter", "unmountOnExit", "appear", "enter", "exit", "timeout", "addEndListener", "onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited", "nodeRef"]);
+      return /* @__PURE__ */ import_react12.default.createElement(TransitionGroupContext_default.Provider, {
+        value: null
+      }, typeof children === "function" ? children(status, childProps) : import_react12.default.cloneElement(import_react12.default.Children.only(children), childProps));
+    };
+    return Transition2;
+  }(import_react12.default.Component);
+  Transition.contextType = TransitionGroupContext_default;
+  Transition.propTypes = true ? {
+    nodeRef: import_prop_types2.default.shape({
+      current: typeof Element === "undefined" ? import_prop_types2.default.any : function(propValue, key, componentName, location, propFullName, secret) {
+        var value = propValue[key];
+        return import_prop_types2.default.instanceOf(value && "ownerDocument" in value ? value.ownerDocument.defaultView.Element : Element)(propValue, key, componentName, location, propFullName, secret);
+      }
+    }),
+    children: import_prop_types2.default.oneOfType([import_prop_types2.default.func.isRequired, import_prop_types2.default.element.isRequired]).isRequired,
+    in: import_prop_types2.default.bool,
+    mountOnEnter: import_prop_types2.default.bool,
+    unmountOnExit: import_prop_types2.default.bool,
+    appear: import_prop_types2.default.bool,
+    enter: import_prop_types2.default.bool,
+    exit: import_prop_types2.default.bool,
+    timeout: function timeout(props) {
+      var pt = timeoutsShape;
+      if (!props.addEndListener)
+        pt = pt.isRequired;
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+      return pt.apply(void 0, [props].concat(args));
+    },
+    addEndListener: import_prop_types2.default.func,
+    onEnter: import_prop_types2.default.func,
+    onEntering: import_prop_types2.default.func,
+    onEntered: import_prop_types2.default.func,
+    onExit: import_prop_types2.default.func,
+    onExiting: import_prop_types2.default.func,
+    onExited: import_prop_types2.default.func
+  } : {};
+  function noop() {
+  }
+  Transition.defaultProps = {
+    in: false,
+    mountOnEnter: false,
+    unmountOnExit: false,
+    appear: false,
+    enter: true,
+    exit: true,
+    onEnter: noop,
+    onEntering: noop,
+    onEntered: noop,
+    onExit: noop,
+    onExiting: noop,
+    onExited: noop
+  };
+  Transition.UNMOUNTED = UNMOUNTED;
+  Transition.EXITED = EXITED;
+  Transition.ENTERING = ENTERING;
+  Transition.ENTERED = ENTERED;
+  Transition.EXITING = EXITING;
+  var Transition_default = Transition;
+
+  // node_modules/dom-helpers/esm/ownerDocument.js
+  function ownerDocument(node) {
+    return node && node.ownerDocument || document;
+  }
+
+  // node_modules/dom-helpers/esm/ownerWindow.js
+  function ownerWindow(node) {
+    var doc = ownerDocument(node);
+    return doc && doc.defaultView || window;
+  }
+
+  // node_modules/dom-helpers/esm/getComputedStyle.js
+  function getComputedStyle2(node, psuedoElement) {
+    return ownerWindow(node).getComputedStyle(node, psuedoElement);
+  }
+
+  // node_modules/dom-helpers/esm/hyphenate.js
+  var rUpper = /([A-Z])/g;
+  function hyphenate(string) {
+    return string.replace(rUpper, "-$1").toLowerCase();
+  }
+
+  // node_modules/dom-helpers/esm/hyphenateStyle.js
+  var msPattern = /^ms-/;
+  function hyphenateStyleName(string) {
+    return hyphenate(string).replace(msPattern, "-ms-");
+  }
+
+  // node_modules/dom-helpers/esm/isTransform.js
+  var supportedTransforms = /^((translate|rotate|scale)(X|Y|Z|3d)?|matrix(3d)?|perspective|skew(X|Y)?)$/i;
+  function isTransform(value) {
+    return !!(value && supportedTransforms.test(value));
+  }
+
+  // node_modules/dom-helpers/esm/css.js
+  function style(node, property) {
+    var css = "";
+    var transforms = "";
+    if (typeof property === "string") {
+      return node.style.getPropertyValue(hyphenateStyleName(property)) || getComputedStyle2(node).getPropertyValue(hyphenateStyleName(property));
+    }
+    Object.keys(property).forEach(function(key) {
+      var value = property[key];
+      if (!value && value !== 0) {
+        node.style.removeProperty(hyphenateStyleName(key));
+      } else if (isTransform(key)) {
+        transforms += key + "(" + value + ") ";
+      } else {
+        css += hyphenateStyleName(key) + ": " + value + ";";
+      }
+    });
+    if (transforms) {
+      css += "transform: " + transforms + ";";
+    }
+    node.style.cssText += ";" + css;
+  }
+  var css_default = style;
+
+  // node_modules/dom-helpers/esm/canUseDOM.js
+  var canUseDOM_default = !!(typeof window !== "undefined" && window.document && window.document.createElement);
+
+  // node_modules/dom-helpers/esm/addEventListener.js
+  var optionsSupported = false;
+  var onceSupported = false;
+  try {
+    options = {
+      get passive() {
+        return optionsSupported = true;
+      },
+      get once() {
+        return onceSupported = optionsSupported = true;
+      }
+    };
+    if (canUseDOM_default) {
+      window.addEventListener("test", options, options);
+      window.removeEventListener("test", options, true);
+    }
+  } catch (e) {
+  }
+  var options;
+  function addEventListener2(node, eventName, handler, options) {
+    if (options && typeof options !== "boolean" && !onceSupported) {
+      var once = options.once, capture = options.capture;
+      var wrappedHandler = handler;
+      if (!onceSupported && once) {
+        wrappedHandler = handler.__once || function onceHandler(event) {
+          this.removeEventListener(eventName, onceHandler, capture);
+          handler.call(this, event);
+        };
+        handler.__once = wrappedHandler;
+      }
+      node.addEventListener(eventName, wrappedHandler, optionsSupported ? options : capture);
+    }
+    node.addEventListener(eventName, handler, options);
+  }
+  var addEventListener_default = addEventListener2;
+
+  // node_modules/dom-helpers/esm/removeEventListener.js
+  function removeEventListener(node, eventName, handler, options) {
+    var capture = options && typeof options !== "boolean" ? options.capture : options;
+    node.removeEventListener(eventName, handler, capture);
+    if (handler.__once) {
+      node.removeEventListener(eventName, handler.__once, capture);
+    }
+  }
+  var removeEventListener_default = removeEventListener;
+
+  // node_modules/dom-helpers/esm/listen.js
+  function listen(node, eventName, handler, options) {
+    addEventListener_default(node, eventName, handler, options);
+    return function() {
+      removeEventListener_default(node, eventName, handler, options);
+    };
+  }
+  var listen_default = listen;
+
+  // node_modules/dom-helpers/esm/triggerEvent.js
+  function triggerEvent(node, eventName, bubbles, cancelable) {
+    if (bubbles === void 0) {
+      bubbles = false;
+    }
+    if (cancelable === void 0) {
+      cancelable = true;
+    }
+    if (node) {
+      var event = document.createEvent("HTMLEvents");
+      event.initEvent(eventName, bubbles, cancelable);
+      node.dispatchEvent(event);
+    }
+  }
+
+  // node_modules/dom-helpers/esm/transitionEnd.js
+  function parseDuration(node) {
+    var str = css_default(node, "transitionDuration") || "";
+    var mult = str.indexOf("ms") === -1 ? 1e3 : 1;
+    return parseFloat(str) * mult;
+  }
+  function emulateTransitionEnd(element, duration, padding) {
+    if (padding === void 0) {
+      padding = 5;
+    }
+    var called = false;
+    var handle = setTimeout(function() {
+      if (!called)
+        triggerEvent(element, "transitionend", true);
+    }, duration + padding);
+    var remove = listen_default(element, "transitionend", function() {
+      called = true;
+    }, {
+      once: true
+    });
+    return function() {
+      clearTimeout(handle);
+      remove();
+    };
+  }
+  function transitionEnd(element, handler, duration, padding) {
+    if (duration == null)
+      duration = parseDuration(element) || 0;
+    var removeEmulate = emulateTransitionEnd(element, duration, padding);
+    var remove = listen_default(element, "transitionend", handler);
+    return function() {
+      removeEmulate();
+      remove();
+    };
+  }
+
+  // node_modules/react-bootstrap/esm/transitionEndListener.js
+  function parseDuration2(node, property) {
+    var str = css_default(node, property) || "";
+    var mult = str.indexOf("ms") === -1 ? 1e3 : 1;
+    return parseFloat(str) * mult;
+  }
+  function transitionEndListener(element, handler) {
+    var duration = parseDuration2(element, "transitionDuration");
+    var delay = parseDuration2(element, "transitionDelay");
+    var remove = transitionEnd(element, function(e) {
+      if (e.target === element) {
+        remove();
+        handler(e);
+      }
+    }, duration + delay);
+  }
+
+  // node_modules/react-bootstrap/esm/triggerBrowserReflow.js
+  function triggerBrowserReflow(node) {
+    node.offsetHeight;
+  }
+
+  // node_modules/react-bootstrap/esm/Fade.js
+  var _excluded = ["className", "children"];
+  var _fadeStyles;
+  var defaultProps = {
+    in: false,
+    timeout: 300,
+    mountOnEnter: false,
+    unmountOnExit: false,
+    appear: false
+  };
+  var fadeStyles = (_fadeStyles = {}, _fadeStyles[ENTERING] = "show", _fadeStyles[ENTERED] = "show", _fadeStyles);
+  var Fade = /* @__PURE__ */ import_react13.default.forwardRef(function(_ref, ref) {
+    var className = _ref.className, children = _ref.children, props = _objectWithoutPropertiesLoose(_ref, _excluded);
+    var handleEnter = (0, import_react13.useCallback)(function(node) {
+      triggerBrowserReflow(node);
+      if (props.onEnter)
+        props.onEnter(node);
+    }, [props]);
+    return /* @__PURE__ */ import_react13.default.createElement(Transition_default, _extends({
+      ref,
+      addEndListener: transitionEndListener
+    }, props, {
+      onEnter: handleEnter
+    }), function(status, innerProps) {
+      return /* @__PURE__ */ import_react13.default.cloneElement(children, _extends({}, innerProps, {
+        className: (0, import_classnames.default)("fade", className, children.props.className, fadeStyles[status])
+      }));
+    });
+  });
+  Fade.defaultProps = defaultProps;
+  Fade.displayName = "Fade";
+  var Fade_default = Fade;
+
+  // node_modules/react-bootstrap/esm/ToastHeader.js
+  var import_classnames3 = __toESM(require_classnames());
+  var import_react19 = __toESM(require_react());
+
+  // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useEventCallback.js
+  var import_react15 = __toESM(require_react());
+
+  // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useCommittedRef.js
+  var import_react14 = __toESM(require_react());
+  function useCommittedRef(value) {
+    var ref = (0, import_react14.useRef)(value);
+    (0, import_react14.useEffect)(function() {
+      ref.current = value;
+    }, [value]);
+    return ref;
+  }
+  var useCommittedRef_default = useCommittedRef;
+
+  // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useEventCallback.js
+  function useEventCallback(fn) {
+    var ref = useCommittedRef_default(fn);
+    return (0, import_react15.useCallback)(function() {
+      return ref.current && ref.current.apply(ref, arguments);
+    }, [ref]);
+  }
+
+  // node_modules/react-bootstrap/esm/ThemeProvider.js
+  var import_react16 = __toESM(require_react());
+  var ThemeContext = /* @__PURE__ */ import_react16.default.createContext({});
+  var Consumer = ThemeContext.Consumer;
+  var Provider = ThemeContext.Provider;
+  function useBootstrapPrefix(prefix, defaultPrefix) {
+    var prefixes = (0, import_react16.useContext)(ThemeContext);
+    return prefix || prefixes[defaultPrefix] || defaultPrefix;
+  }
+
+  // node_modules/react-bootstrap/esm/CloseButton.js
+  var import_prop_types3 = __toESM(require_prop_types());
+  var import_react17 = __toESM(require_react());
+  var import_classnames2 = __toESM(require_classnames());
+  var _excluded2 = ["label", "onClick", "className"];
+  var propTypes = {
+    label: import_prop_types3.default.string.isRequired,
+    onClick: import_prop_types3.default.func
+  };
+  var defaultProps2 = {
+    label: "Close"
+  };
+  var CloseButton = /* @__PURE__ */ import_react17.default.forwardRef(function(_ref, ref) {
+    var label = _ref.label, onClick = _ref.onClick, className = _ref.className, props = _objectWithoutPropertiesLoose(_ref, _excluded2);
+    return /* @__PURE__ */ import_react17.default.createElement("button", _extends({
+      ref,
+      type: "button",
+      className: (0, import_classnames2.default)("close", className),
+      onClick
+    }, props), /* @__PURE__ */ import_react17.default.createElement("span", {
+      "aria-hidden": "true"
+    }, "\xD7"), /* @__PURE__ */ import_react17.default.createElement("span", {
+      className: "sr-only"
+    }, label));
+  });
+  CloseButton.displayName = "CloseButton";
+  CloseButton.propTypes = propTypes;
+  CloseButton.defaultProps = defaultProps2;
+  var CloseButton_default = CloseButton;
+
+  // node_modules/react-bootstrap/esm/ToastContext.js
+  var import_react18 = __toESM(require_react());
+  var ToastContext = /* @__PURE__ */ import_react18.default.createContext({
+    onClose: function onClose() {
+    }
+  });
+  var ToastContext_default = ToastContext;
+
+  // node_modules/react-bootstrap/esm/ToastHeader.js
+  var _excluded3 = ["bsPrefix", "closeLabel", "closeButton", "className", "children"];
+  var defaultProps3 = {
+    closeLabel: "Close",
+    closeButton: true
+  };
+  var ToastHeader = /* @__PURE__ */ import_react19.default.forwardRef(function(_ref, ref) {
+    var bsPrefix = _ref.bsPrefix, closeLabel = _ref.closeLabel, closeButton = _ref.closeButton, className = _ref.className, children = _ref.children, props = _objectWithoutPropertiesLoose(_ref, _excluded3);
+    bsPrefix = useBootstrapPrefix(bsPrefix, "toast-header");
+    var context4 = (0, import_react19.useContext)(ToastContext_default);
+    var handleClick = useEventCallback(function(e) {
+      if (context4 && context4.onClose) {
+        context4.onClose(e);
+      }
+    });
+    return /* @__PURE__ */ import_react19.default.createElement("div", _extends({
+      ref
+    }, props, {
+      className: (0, import_classnames3.default)(bsPrefix, className)
+    }), children, closeButton && /* @__PURE__ */ import_react19.default.createElement(CloseButton_default, {
+      label: closeLabel,
+      onClick: handleClick,
+      className: "ml-2 mb-1",
+      "data-dismiss": "toast"
+    }));
+  });
+  ToastHeader.displayName = "ToastHeader";
+  ToastHeader.defaultProps = defaultProps3;
+  var ToastHeader_default = ToastHeader;
+
+  // node_modules/react-bootstrap/esm/createWithBsPrefix.js
+  var import_classnames4 = __toESM(require_classnames());
+
+  // node_modules/dom-helpers/esm/camelize.js
+  var rHyphen = /-(.)/g;
+  function camelize(string) {
+    return string.replace(rHyphen, function(_, chr) {
+      return chr.toUpperCase();
+    });
+  }
+
+  // node_modules/react-bootstrap/esm/createWithBsPrefix.js
+  var import_react20 = __toESM(require_react());
+  var _excluded4 = ["className", "bsPrefix", "as"];
+  var pascalCase = function pascalCase2(str) {
+    return str[0].toUpperCase() + camelize(str).slice(1);
+  };
+  function createWithBsPrefix(prefix, _temp) {
+    var _ref = _temp === void 0 ? {} : _temp, _ref$displayName = _ref.displayName, displayName = _ref$displayName === void 0 ? pascalCase(prefix) : _ref$displayName, Component = _ref.Component, defaultProps6 = _ref.defaultProps;
+    var BsComponent = /* @__PURE__ */ import_react20.default.forwardRef(function(_ref2, ref) {
+      var className = _ref2.className, bsPrefix = _ref2.bsPrefix, _ref2$as = _ref2.as, Tag2 = _ref2$as === void 0 ? Component || "div" : _ref2$as, props = _objectWithoutPropertiesLoose(_ref2, _excluded4);
+      var resolvedPrefix = useBootstrapPrefix(bsPrefix, prefix);
+      return /* @__PURE__ */ import_react20.default.createElement(Tag2, _extends({
+        ref,
+        className: (0, import_classnames4.default)(className, resolvedPrefix)
+      }, props));
+    });
+    BsComponent.defaultProps = defaultProps6;
+    BsComponent.displayName = displayName;
+    return BsComponent;
+  }
+
+  // node_modules/react-bootstrap/esm/ToastBody.js
+  var ToastBody_default = createWithBsPrefix("toast-body");
+
+  // node_modules/react-bootstrap/esm/Toast.js
+  var _excluded5 = ["bsPrefix", "className", "children", "transition", "show", "animation", "delay", "autohide", "onClose"];
+  var Toast = /* @__PURE__ */ import_react21.default.forwardRef(function(_ref, ref) {
+    var bsPrefix = _ref.bsPrefix, className = _ref.className, children = _ref.children, _ref$transition = _ref.transition, Transition2 = _ref$transition === void 0 ? Fade_default : _ref$transition, _ref$show = _ref.show, show = _ref$show === void 0 ? true : _ref$show, _ref$animation = _ref.animation, animation = _ref$animation === void 0 ? true : _ref$animation, _ref$delay = _ref.delay, delay = _ref$delay === void 0 ? 3e3 : _ref$delay, _ref$autohide = _ref.autohide, autohide = _ref$autohide === void 0 ? false : _ref$autohide, onClose2 = _ref.onClose, props = _objectWithoutPropertiesLoose(_ref, _excluded5);
+    bsPrefix = useBootstrapPrefix(bsPrefix, "toast");
+    var delayRef = (0, import_react21.useRef)(delay);
+    var onCloseRef = (0, import_react21.useRef)(onClose2);
+    (0, import_react21.useEffect)(function() {
+      delayRef.current = delay;
+      onCloseRef.current = onClose2;
+    }, [delay, onClose2]);
+    var autohideTimeout = useTimeout();
+    var autohideToast = !!(autohide && show);
+    var autohideFunc = (0, import_react21.useCallback)(function() {
+      if (autohideToast) {
+        onCloseRef.current == null ? void 0 : onCloseRef.current();
+      }
+    }, [autohideToast]);
+    (0, import_react21.useEffect)(function() {
+      autohideTimeout.set(autohideFunc, delayRef.current);
+    }, [autohideTimeout, autohideFunc]);
+    var toastContext = (0, import_react21.useMemo)(function() {
+      return {
+        onClose: onClose2
+      };
+    }, [onClose2]);
+    var hasAnimation = !!(Transition2 && animation);
+    var toast = /* @__PURE__ */ import_react21.default.createElement("div", _extends({}, props, {
+      ref,
+      className: (0, import_classnames5.default)(bsPrefix, className, !hasAnimation && (show ? "show" : "hide")),
+      role: "alert",
+      "aria-live": "assertive",
+      "aria-atomic": "true"
+    }), children);
+    return /* @__PURE__ */ import_react21.default.createElement(ToastContext_default.Provider, {
+      value: toastContext
+    }, hasAnimation && Transition2 ? /* @__PURE__ */ import_react21.default.createElement(Transition2, {
+      in: show,
+      unmountOnExit: true
+    }, toast) : toast);
+  });
+  Toast.displayName = "Toast";
+  var Toast_default = Object.assign(Toast, {
+    Body: ToastBody_default,
+    Header: ToastHeader_default
+  });
 
   // src/components/chipster/chipster.js
-  var import_react22 = __toESM(require_react());
+  var import_react37 = __toESM(require_react());
 
   // node_modules/@react-md/chip/es/Chip.js
   var import_jsx_runtime8 = __toESM(require_jsx_runtime());
-  var import_react19 = __toESM(require_react());
-  var import_classnames7 = __toESM(require_classnames());
+  var import_react34 = __toESM(require_react());
+  var import_classnames12 = __toESM(require_classnames());
 
   // node_modules/@react-md/chip/node_modules/@react-md/icon/es/FontIcon.js
   var import_jsx_runtime = __toESM(require_jsx_runtime());
-  var import_react10 = __toESM(require_react());
-  var import_classnames = __toESM(require_classnames());
+  var import_react25 = __toESM(require_react());
+  var import_classnames6 = __toESM(require_classnames());
 
   // node_modules/@react-md/chip/node_modules/@react-md/utils/es/applyRef.js
   function applyRef(instance, ref) {
@@ -21936,18 +22783,18 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/@react-md/chip/node_modules/@react-md/utils/es/useRefCache.js
-  var import_react7 = __toESM(require_react());
+  var import_react22 = __toESM(require_react());
   function useRefCache(cacheable) {
-    var ref = (0, import_react7.useRef)(cacheable);
-    (0, import_react7.useEffect)(function() {
+    var ref = (0, import_react22.useRef)(cacheable);
+    (0, import_react22.useEffect)(function() {
       ref.current = cacheable;
     });
     return ref;
   }
 
   // node_modules/@react-md/chip/node_modules/@react-md/utils/es/useIsomorphicLayoutEffect.js
-  var import_react8 = __toESM(require_react());
-  var useIsomorphicLayoutEffect = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined" ? import_react8.useLayoutEffect : import_react8.useEffect;
+  var import_react23 = __toESM(require_react());
+  var useIsomorphicLayoutEffect = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined" ? import_react23.useLayoutEffect : import_react23.useEffect;
 
   // node_modules/@juggle/resize-observer/lib/utils/resizeObservers.js
   var resizeObservers = [];
@@ -22506,10 +23353,10 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }();
 
   // node_modules/@react-md/chip/node_modules/@react-md/utils/es/useEnsuredRef.js
-  var import_react9 = __toESM(require_react());
+  var import_react24 = __toESM(require_react());
   function useEnsuredRef(propRef) {
-    var ref = (0, import_react9.useRef)(null);
-    var refHandler = (0, import_react9.useCallback)(function(instance) {
+    var ref = (0, import_react24.useRef)(null);
+    var refHandler = (0, import_react24.useCallback)(function(instance) {
       applyRef(instance, propRef);
       ref.current = instance;
     }, [propRef]);
@@ -22571,9 +23418,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     return t;
   };
   var block = bem("rmd-icon");
-  var FontIcon = (0, import_react10.forwardRef)(function FontIcon2(_a, ref) {
+  var FontIcon = (0, import_react25.forwardRef)(function FontIcon2(_a, ref) {
     var className = _a.className, children = _a.children, _b = _a["aria-hidden"], ariaHidden = _b === void 0 ? true : _b, _c = _a.dense, dense = _c === void 0 ? false : _c, _d = _a.iconClassName, iconClassName = _d === void 0 ? "material-icons" : _d, _e = _a.forceSize, forceSize = _e === void 0 ? false : _e, _f = _a.forceFontSize, forceFontSize = _f === void 0 ? false : _f, props = __rest2(_a, ["className", "children", "aria-hidden", "dense", "iconClassName", "forceSize", "forceFontSize"]);
-    return (0, import_jsx_runtime.jsx)("i", __assign2({}, props, { "aria-hidden": ariaHidden, ref, className: (0, import_classnames.default)(block({
+    return (0, import_jsx_runtime.jsx)("i", __assign2({}, props, { "aria-hidden": ariaHidden, ref, className: (0, import_classnames6.default)(block({
       font: true,
       dense,
       "forced-font": forceFontSize,
@@ -22583,8 +23430,8 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // node_modules/@react-md/chip/node_modules/@react-md/icon/es/TextIconSpacing.js
   var import_jsx_runtime2 = __toESM(require_jsx_runtime());
-  var import_react11 = __toESM(require_react());
-  var import_classnames2 = __toESM(require_classnames());
+  var import_react26 = __toESM(require_react());
+  var import_classnames7 = __toESM(require_classnames());
   var __assign3 = function() {
     __assign3 = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -22604,16 +23451,16 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       return (0, import_jsx_runtime2.jsx)(import_jsx_runtime2.Fragment, { children });
     }
     var isAfter = flexReverse ? !iconAfter : iconAfter;
-    var baseClassName = (0, import_classnames2.default)((_b = {}, _b[beforeClassName] = !stacked && !isAfter, _b[afterClassName] = !stacked && isAfter, _b[aboveClassName] = stacked && !isAfter, _b[belowClassName] = stacked && isAfter, _b), className);
+    var baseClassName = (0, import_classnames7.default)((_b = {}, _b[beforeClassName] = !stacked && !isAfter, _b[afterClassName] = !stacked && isAfter, _b[aboveClassName] = stacked && !isAfter, _b[belowClassName] = stacked && isAfter, _b), className);
     var iconEl = propIcon;
     var content = children;
-    if (!forceIconWrap && (0, import_react11.isValidElement)(propIcon)) {
-      var icon = import_react11.Children.only(propIcon);
-      iconEl = (0, import_react11.cloneElement)(icon, {
-        className: (0, import_classnames2.default)(baseClassName, icon.props.className)
+    if (!forceIconWrap && (0, import_react26.isValidElement)(propIcon)) {
+      var icon = import_react26.Children.only(propIcon);
+      iconEl = (0, import_react26.cloneElement)(icon, {
+        className: (0, import_classnames7.default)(baseClassName, icon.props.className)
       });
     } else if (propIcon) {
-      iconEl = (0, import_jsx_runtime2.jsx)("span", __assign3({ className: (0, import_classnames2.default)("rmd-text-icon-spacing", baseClassName) }, { children: propIcon }));
+      iconEl = (0, import_jsx_runtime2.jsx)("span", __assign3({ className: (0, import_classnames7.default)("rmd-text-icon-spacing", baseClassName) }, { children: propIcon }));
     }
     if (iconEl) {
       content = (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [!iconAfter && iconEl, children, iconAfter && iconEl] });
@@ -22623,7 +23470,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // node_modules/@react-md/chip/node_modules/@react-md/icon/es/IconProvider.js
   var import_jsx_runtime3 = __toESM(require_jsx_runtime());
-  var import_react12 = __toESM(require_react());
+  var import_react27 = __toESM(require_react());
   var DEFAULT_ICONS = {
     back: (0, import_jsx_runtime3.jsx)(FontIcon, { children: "keyboard_arrow_left" }),
     checkbox: (0, import_jsx_runtime3.jsx)(FontIcon, { children: "check_box" }),
@@ -22639,10 +23486,10 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     selected: (0, import_jsx_runtime3.jsx)(FontIcon, { children: "check" }),
     sort: (0, import_jsx_runtime3.jsx)(FontIcon, { children: "arrow_upward" })
   };
-  var context = (0, import_react12.createContext)(DEFAULT_ICONS);
-  var Provider = context.Provider;
+  var context = (0, import_react27.createContext)(DEFAULT_ICONS);
+  var Provider2 = context.Provider;
   function useIcon(name, override) {
-    var icons = (0, import_react12.useContext)(context);
+    var icons = (0, import_react27.useContext)(context);
     if (typeof override !== "undefined") {
       return override;
     }
@@ -22650,13 +23497,13 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/useInteractionStates.js
-  var import_classnames6 = __toESM(require_classnames());
+  var import_classnames11 = __toESM(require_classnames());
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/ripples/useRipples.js
   var import_jsx_runtime7 = __toESM(require_jsx_runtime());
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/ripples/reducer.js
-  var import_react13 = __toESM(require_react());
+  var import_react28 = __toESM(require_react());
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/ripples/utils.js
   function isBubbled(event) {
@@ -22794,7 +23641,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   var CREATE = "CREATE";
   var CANCEL = "CANCEL";
   var RELEASE = "RELEASE";
-  var ENTERED = "ENTERED";
+  var ENTERED2 = "ENTERED";
   var REMOVE = "REMOVE";
   function createRippleAction(event, disableSpacebarClick) {
     var _a = event, type = _a.type, target = _a.target, currentTarget = _a.currentTarget, touches = _a.touches, pageX = _a.pageX, pageY = _a.pageY, button = _a.button, key = _a.key;
@@ -22882,7 +23729,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         return releaseRipple(state);
       case CANCEL:
         return cancelRipples(state, action.ease);
-      case ENTERED:
+      case ENTERED2:
         return enteredRipple(state, action.ripple);
       case REMOVE:
         return removeRipple(state, action.ripple);
@@ -22894,25 +23741,25 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     if (disableSpacebarClick === void 0) {
       disableSpacebarClick = false;
     }
-    var _a = __read((0, import_react13.useReducer)(reducer, []), 2), state = _a[0], dispatch = _a[1];
+    var _a = __read((0, import_react28.useReducer)(reducer, []), 2), state = _a[0], dispatch = _a[1];
     var spacebarRef = useRefCache(disableSpacebarClick);
-    var create = (0, import_react13.useCallback)(function(event) {
+    var create = (0, import_react28.useCallback)(function(event) {
       var disableSpacebarClick2 = spacebarRef.current;
       dispatch(createRippleAction(event, disableSpacebarClick2));
     }, []);
-    var release = (0, import_react13.useCallback)(function(event) {
+    var release = (0, import_react28.useCallback)(function(event) {
       dispatch({ type: RELEASE, event });
     }, []);
-    var entered = (0, import_react13.useCallback)(function(ripple) {
-      dispatch({ type: ENTERED, ripple });
+    var entered = (0, import_react28.useCallback)(function(ripple) {
+      dispatch({ type: ENTERED2, ripple });
     }, []);
-    var cancel = (0, import_react13.useCallback)(function(ease) {
+    var cancel = (0, import_react28.useCallback)(function(ease) {
       if (ease === void 0) {
         ease = false;
       }
       dispatch({ type: CANCEL, ease });
     }, []);
-    var remove = (0, import_react13.useCallback)(function(ripple) {
+    var remove = (0, import_react28.useCallback)(function(ripple) {
       dispatch({ type: REMOVE, ripple });
     }, []);
     return { state, create, release, entered, remove, cancel };
@@ -22920,14 +23767,14 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/ripples/RippleContainer.js
   var import_jsx_runtime6 = __toESM(require_jsx_runtime());
-  var import_classnames5 = __toESM(require_classnames());
+  var import_classnames10 = __toESM(require_classnames());
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/ripples/Ripple.js
   var import_jsx_runtime5 = __toESM(require_jsx_runtime());
-  var import_classnames4 = __toESM(require_classnames());
+  var import_classnames9 = __toESM(require_classnames());
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/node_modules/@react-md/transition/es/useTransition.js
-  var import_react14 = __toESM(require_react());
+  var import_react29 = __toESM(require_react());
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/node_modules/@react-md/transition/es/utils.js
   var __rest3 = function(s, e) {
@@ -23029,10 +23876,10 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       onExiting,
       onExited
     };
-    var configurationRef = (0, import_react14.useRef)(configuration);
+    var configurationRef = (0, import_react29.useRef)(configuration);
     configurationRef.current = configuration;
     var _g = __read2(useEnsuredRef(nodeRef), 2), ref = _g[0], refCallback = _g[1];
-    var _h = __read2((0, import_react14.useReducer)(function reducer2(state2, action) {
+    var _h = __read2((0, import_react29.useReducer)(function reducer2(state2, action) {
       var _a2 = configuration.timeout, appear2 = _a2.appear, enter2 = _a2.enter, exit2 = _a2.exit;
       var appearing2 = state2.appearing;
       switch (action) {
@@ -23081,7 +23928,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       };
     }), 2), state = _h[0], dispatch = _h[1];
     var appearing = state.appearing, rendered = state.rendered, stage = state.stage;
-    var isFirstRender = (0, import_react14.useRef)(true);
+    var isFirstRender = (0, import_react29.useRef)(true);
     useIsomorphicLayoutEffect(function() {
       var _a2 = configurationRef.current, appear2 = _a2.appear, timeout3 = _a2.timeout, reflow2 = _a2.reflow, onEnter2 = _a2.onEnter, onEntering2 = _a2.onEntering, onEntered2 = _a2.onEntered, onExit2 = _a2.onExit, onExiting2 = _a2.onExiting, onExited2 = _a2.onExited;
       if (isFirstRender.current) {
@@ -23157,7 +24004,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/node_modules/@react-md/transition/es/useCSSTransition.js
-  var import_classnames3 = __toESM(require_classnames());
+  var import_classnames8 = __toESM(require_classnames());
   var __assign5 = function() {
     __assign5 = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -23200,7 +24047,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     });
     var elementProps = {
       ref,
-      className: (0, import_classnames3.default)(
+      className: (0, import_classnames8.default)(
         className,
         appearing && isEnter && transitionClassNames.appear,
         appearing && isEntering && transitionClassNames.appearActive,
@@ -23218,7 +24065,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/StatesConfig.js
   var import_jsx_runtime4 = __toESM(require_jsx_runtime());
-  var import_react15 = __toESM(require_react());
+  var import_react30 = __toESM(require_react());
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/ripples/constants.js
   var DEFAULT_RIPPLE_CLASSNAMES = {
@@ -23234,14 +24081,14 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   };
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/StatesConfig.js
-  var StatesConfigContext = (0, import_react15.createContext)({
+  var StatesConfigContext = (0, import_react30.createContext)({
     rippleTimeout: DEFAULT_RIPPLE_TIMEOUT,
     rippleClassNames: DEFAULT_RIPPLE_CLASSNAMES,
     disableRipple: false,
     disableProgrammaticRipple: false
   });
   function useStatesConfigContext() {
-    return (0, import_react15.useContext)(StatesConfigContext);
+    return (0, import_react30.useContext)(StatesConfigContext);
   }
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/ripples/Ripple.js
@@ -23275,7 +24122,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       appear: true,
       transitionIn: !exiting,
       timeout: timeout2,
-      className: (0, import_classnames4.default)("rmd-ripple", className),
+      className: (0, import_classnames9.default)("rmd-ripple", className),
       classNames: classNames9,
       onEntered: function() {
         entered(ripple);
@@ -23305,13 +24152,13 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   };
   function RippleContainer(_a) {
     var ripples = _a.ripples, className = _a.className, rippleClassName = _a.rippleClassName, timeout2 = _a.timeout, classNames9 = _a.classNames, entered = _a.entered, exited = _a.exited;
-    return (0, import_jsx_runtime6.jsx)("span", __assign7({ className: (0, import_classnames5.default)("rmd-ripple-container", className) }, { children: ripples.map(function(ripple) {
+    return (0, import_jsx_runtime6.jsx)("span", __assign7({ className: (0, import_classnames10.default)("rmd-ripple-container", className) }, { children: ripples.map(function(ripple) {
       return (0, import_jsx_runtime6.jsx)(Ripple, { ripple, className: rippleClassName, entered, exited, timeout: timeout2, classNames: classNames9 }, ripple.startTime);
     }) }));
   }
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/ripples/useRippleHandlers.js
-  var import_react16 = __toESM(require_react());
+  var import_react31 = __toESM(require_react());
   var __assign8 = function() {
     __assign8 = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -23328,8 +24175,8 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     var create = _a.create, release = _a.release, cancel = _a.cancel, _b = _a.handlers, handlers = _b === void 0 ? {} : _b, _c = _a.disabled, propDisabled = _c === void 0 ? false : _c, _d = _a.disableRipple, disableRipple = _d === void 0 ? false : _d, _e = _a.disableProgrammaticRipple, disableProgrammaticRipple = _e === void 0 ? false : _e;
     var disabled = propDisabled || disableRipple;
     var ref = useRefCache(__assign8(__assign8({}, handlers), { disableProgrammaticRipple }));
-    var disableProgrammatic = (0, import_react16.useRef)(false);
-    var onKeyDown = (0, import_react16.useCallback)(
+    var disableProgrammatic = (0, import_react31.useRef)(false);
+    var onKeyDown = (0, import_react31.useCallback)(
       function(event) {
         var callback = ref.current.onKeyDown;
         if (callback) {
@@ -23339,7 +24186,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       },
       [create]
     );
-    var onKeyUp = (0, import_react16.useCallback)(
+    var onKeyUp = (0, import_react31.useCallback)(
       function(event) {
         var callback = ref.current.onKeyUp;
         if (callback) {
@@ -23349,7 +24196,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       },
       [release]
     );
-    var onMouseDown = (0, import_react16.useCallback)(
+    var onMouseDown = (0, import_react31.useCallback)(
       function(event) {
         var callback = ref.current.onMouseDown;
         if (callback) {
@@ -23360,7 +24207,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       },
       [create]
     );
-    var onMouseUp = (0, import_react16.useCallback)(
+    var onMouseUp = (0, import_react31.useCallback)(
       function(event) {
         var callback = ref.current.onMouseUp;
         if (callback) {
@@ -23370,7 +24217,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       },
       [release]
     );
-    var onMouseLeave = (0, import_react16.useCallback)(
+    var onMouseLeave = (0, import_react31.useCallback)(
       function(event) {
         var callback = ref.current.onMouseLeave;
         if (callback) {
@@ -23380,7 +24227,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       },
       [cancel]
     );
-    var onTouchStart = (0, import_react16.useCallback)(
+    var onTouchStart = (0, import_react31.useCallback)(
       function(event) {
         var callback = ref.current.onTouchStart;
         if (callback) {
@@ -23390,7 +24237,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       },
       [create]
     );
-    var onTouchMove = (0, import_react16.useCallback)(
+    var onTouchMove = (0, import_react31.useCallback)(
       function(event) {
         var callback = ref.current.onTouchMove;
         if (callback) {
@@ -23400,7 +24247,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       },
       [cancel]
     );
-    var onTouchEnd = (0, import_react16.useCallback)(
+    var onTouchEnd = (0, import_react31.useCallback)(
       function(event) {
         var callback = ref.current.onTouchEnd;
         if (callback) {
@@ -23410,7 +24257,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       },
       [release]
     );
-    var onClick = (0, import_react16.useCallback)(
+    var onClick = (0, import_react31.useCallback)(
       function(event) {
         var _a2 = ref.current, callback = _a2.onClick, disableProgrammaticRipple2 = _a2.disableProgrammaticRipple;
         if (callback) {
@@ -23473,7 +24320,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/useKeyboardClickPolyfill.js
-  var import_react17 = __toESM(require_react());
+  var import_react32 = __toESM(require_react());
   function useKeyboardClickPolyfill(_a) {
     var _b = _a === void 0 ? {} : _a, onKeyDown = _b.onKeyDown, _c = _b.disabled, disabled = _c === void 0 ? false : _c, _d = _b.disableEnterClick, disableEnterClick = _d === void 0 ? false : _d, _e = _b.disableSpacebarClick, disableSpacebarClick = _e === void 0 ? false : _e;
     var ref = useRefCache({
@@ -23481,7 +24328,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       disableSpacebarClick,
       disableEnterClick
     });
-    var handleKeyDown = (0, import_react17.useCallback)(function(event) {
+    var handleKeyDown = (0, import_react32.useCallback)(function(event) {
       var _a2 = ref.current, onKeyDown2 = _a2.onKeyDown, disableSpacebarClick2 = _a2.disableSpacebarClick, disableEnterClick2 = _a2.disableEnterClick;
       if (onKeyDown2) {
         onKeyDown2(event);
@@ -23503,7 +24350,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   }
 
   // node_modules/@react-md/chip/node_modules/@react-md/states/es/usePressedStates.js
-  var import_react18 = __toESM(require_react());
+  var import_react33 = __toESM(require_react());
   var __assign10 = function() {
     __assign10 = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -23539,9 +24386,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   };
   function usePressedStates(_a) {
     var _b = _a === void 0 ? {} : _a, _c = _b.handlers, handlers = _c === void 0 ? {} : _c, _d = _b.disableSpacebarClick, disableSpacebarClick = _d === void 0 ? false : _d;
-    var _e = __read3((0, import_react18.useState)(false), 2), pressed = _e[0], setPressed = _e[1];
+    var _e = __read3((0, import_react33.useState)(false), 2), pressed = _e[0], setPressed = _e[1];
     var ref = useRefCache(__assign10(__assign10({}, handlers), { pressed }));
-    var handleKeyDown = (0, import_react18.useCallback)(
+    var handleKeyDown = (0, import_react33.useCallback)(
       function(event) {
         var _a2 = ref.current, onKeyDown = _a2.onKeyDown, pressed2 = _a2.pressed;
         if (onKeyDown) {
@@ -23554,7 +24401,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       },
       [disableSpacebarClick]
     );
-    var handleKeyUp = (0, import_react18.useCallback)(function(event) {
+    var handleKeyUp = (0, import_react33.useCallback)(function(event) {
       var _a2 = ref.current, onKeyUp = _a2.onKeyUp, pressed2 = _a2.pressed;
       if (onKeyUp) {
         onKeyUp(event);
@@ -23563,7 +24410,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         setPressed(false);
       }
     }, []);
-    var handleMouseDown = (0, import_react18.useCallback)(function(event) {
+    var handleMouseDown = (0, import_react33.useCallback)(function(event) {
       var _a2 = ref.current, onMouseDown = _a2.onMouseDown, pressed2 = _a2.pressed;
       if (onMouseDown) {
         onMouseDown(event);
@@ -23572,7 +24419,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         setPressed(true);
       }
     }, []);
-    var handleMouseUp = (0, import_react18.useCallback)(function(event) {
+    var handleMouseUp = (0, import_react33.useCallback)(function(event) {
       var _a2 = ref.current, onMouseUp = _a2.onMouseUp, pressed2 = _a2.pressed;
       if (onMouseUp) {
         onMouseUp(event);
@@ -23581,7 +24428,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         setPressed(false);
       }
     }, []);
-    var handleMouseLeave = (0, import_react18.useCallback)(function(event) {
+    var handleMouseLeave = (0, import_react33.useCallback)(function(event) {
       var _a2 = ref.current, onMouseLeave = _a2.onMouseLeave, pressed2 = _a2.pressed;
       if (onMouseLeave) {
         onMouseLeave(event);
@@ -23590,7 +24437,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         setPressed(false);
       }
     }, []);
-    var handleTouchStart = (0, import_react18.useCallback)(function(event) {
+    var handleTouchStart = (0, import_react33.useCallback)(function(event) {
       var _a2 = ref.current, onTouchStart = _a2.onTouchStart, pressed2 = _a2.pressed;
       if (onTouchStart) {
         onTouchStart(event);
@@ -23599,7 +24446,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         setPressed(true);
       }
     }, []);
-    var handleTouchMove = (0, import_react18.useCallback)(function(event) {
+    var handleTouchMove = (0, import_react33.useCallback)(function(event) {
       var _a2 = ref.current, onTouchMove = _a2.onTouchMove, pressed2 = _a2.pressed;
       if (onTouchMove) {
         onTouchMove(event);
@@ -23608,7 +24455,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
         setPressed(false);
       }
     }, []);
-    var handleTouchEnd = (0, import_react18.useCallback)(function(event) {
+    var handleTouchEnd = (0, import_react33.useCallback)(function(event) {
       var _a2 = ref.current, onTouchEnd = _a2.onTouchEnd, pressed2 = _a2.pressed;
       if (onTouchEnd) {
         onTouchEnd(event);
@@ -23674,7 +24521,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     var pressedResult = usePressedStates(__assign11(__assign11({}, options), { handlers: handlers || options.handlers, disableSpacebarClick }));
     if (enablePressedAndRipple || disableRipple && !disablePressedFallback) {
       handlers = pressedResult.handlers;
-      className = (0, import_classnames6.default)(className, { "rmd-states--pressed": pressedResult.pressed });
+      className = (0, import_classnames11.default)(className, { "rmd-states--pressed": pressedResult.pressed });
     }
     handlers = handlers || options.handlers || {};
     handlers.onKeyDown = useKeyboardClickPolyfill({
@@ -23716,7 +24563,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     return t;
   };
   var block2 = bem("rmd-chip");
-  var Chip = (0, import_react19.forwardRef)(function Chip2(_a, ref) {
+  var Chip = (0, import_react34.forwardRef)(function Chip2(_a, ref) {
     var _b;
     var ariaPressed = _a["aria-pressed"], propClassName = _a.className, children = _a.children, _c = _a.theme, theme = _c === void 0 ? "solid" : _c, propLeftIcon = _a.leftIcon, rightIcon = _a.rightIcon, _d = _a.raisable, raisable = _d === void 0 ? false : _d, _e = _a.disabled, disabled = _e === void 0 ? false : _e, selected = _a.selected, _f = _a.selectedThemed, selectedThemed = _f === void 0 ? false : _f, contentStyle = _a.contentStyle, contentClassName = _a.contentClassName, _g = _a.disableContentWrap, disableContentWrap = _g === void 0 ? false : _g, propSelectedIcon = _a.selectedIcon, _h = _a.noninteractable, noninteractable = _h === void 0 ? false : _h, _j = _a.disableIconTransition, disableIconTransition = _j === void 0 ? false : _j, props = __rest6(_a, ["aria-pressed", "className", "children", "theme", "leftIcon", "rightIcon", "raisable", "disabled", "selected", "selectedThemed", "contentStyle", "contentClassName", "disableContentWrap", "selectedIcon", "noninteractable", "disableIconTransition"]);
     var _k = useInteractionStates({
@@ -23727,7 +24574,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }), ripples = _k.ripples, className = _k.className, handlers = _k.handlers;
     var content = children;
     if (!disableContentWrap) {
-      content = (0, import_jsx_runtime8.jsx)("span", __assign12({ style: contentStyle, className: (0, import_classnames7.default)(block2("content"), contentClassName) }, { children }));
+      content = (0, import_jsx_runtime8.jsx)("span", __assign12({ style: contentStyle, className: (0, import_classnames12.default)(block2("content"), contentClassName) }, { children }));
     }
     var leftIcon = propLeftIcon;
     var selectable = typeof selected === "boolean";
@@ -23735,9 +24582,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     var isHiddenIcon = false;
     if (selectable && !selectedThemed && typeof leftIcon === "undefined" && selectedIcon) {
       leftIcon = selectedIcon;
-      if (!disableIconTransition && (0, import_react19.isValidElement)(selectedIcon)) {
+      if (!disableIconTransition && (0, import_react34.isValidElement)(selectedIcon)) {
         isHiddenIcon = !selected;
-        leftIcon = (0, import_react19.cloneElement)(selectedIcon, {
+        leftIcon = (0, import_react34.cloneElement)(selectedIcon, {
           className: block2("selected-icon", { visible: selected })
         });
       } else if (disableIconTransition && !selected) {
@@ -23752,7 +24599,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       type: "button",
       disabled
     };
-    return (0, import_jsx_runtime8.jsxs)(Component, __assign12({}, noninteractable ? {} : buttonProps, props, handlers, { ref, className: (0, import_classnames7.default)(block2((_b = {}, _b[theme] = true, _b.disabled = disabled, _b.selected = !disabled && selected && !selectedThemed, _b.themed = !disabled && selected && selectedThemed, _b["solid-disabled"] = disabled && theme === "solid", _b["leading-icon"] = leading && !trailing, _b["trailing-icon"] = trailing && !leading, _b.surrounded = leading && trailing, _b.noninteractable = noninteractable, _b)), className) }, { children: [(0, import_jsx_runtime8.jsx)(TextIconSpacing, __assign12({ icon: leftIcon, beforeClassName: isHiddenIcon ? "" : void 0 }, { children: (0, import_jsx_runtime8.jsx)(TextIconSpacing, __assign12({ icon: rightIcon, iconAfter: true }, { children: content })) })), ripples] }));
+    return (0, import_jsx_runtime8.jsxs)(Component, __assign12({}, noninteractable ? {} : buttonProps, props, handlers, { ref, className: (0, import_classnames12.default)(block2((_b = {}, _b[theme] = true, _b.disabled = disabled, _b.selected = !disabled && selected && !selectedThemed, _b.themed = !disabled && selected && selectedThemed, _b["solid-disabled"] = disabled && theme === "solid", _b["leading-icon"] = leading && !trailing, _b["trailing-icon"] = trailing && !leading, _b.surrounded = leading && trailing, _b.noninteractable = noninteractable, _b)), className) }, { children: [(0, import_jsx_runtime8.jsx)(TextIconSpacing, __assign12({ icon: leftIcon, beforeClassName: isHiddenIcon ? "" : void 0 }, { children: (0, import_jsx_runtime8.jsx)(TextIconSpacing, __assign12({ icon: rightIcon, iconAfter: true }, { children: content })) })), ripples] }));
   });
 
   // node_modules/@react-md/material-icons/node_modules/@react-md/icon/node_modules/@react-md/utils/es/bem.js
@@ -23792,8 +24639,8 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // node_modules/@react-md/material-icons/node_modules/@react-md/icon/es/SVGIcon.js
   var import_jsx_runtime9 = __toESM(require_jsx_runtime());
-  var import_react20 = __toESM(require_react());
-  var import_classnames8 = __toESM(require_classnames());
+  var import_react35 = __toESM(require_react());
+  var import_classnames13 = __toESM(require_classnames());
   var __assign13 = function() {
     __assign13 = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -23819,18 +24666,18 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     return t;
   };
   var block3 = bem2("rmd-icon");
-  var SVGIcon = (0, import_react20.forwardRef)(function SVGIcon2(_a, ref) {
+  var SVGIcon = (0, import_react35.forwardRef)(function SVGIcon2(_a, ref) {
     var _b = _a["aria-hidden"], ariaHidden = _b === void 0 ? true : _b, _c = _a.focusable, focusable = _c === void 0 ? "false" : _c, _d = _a.xmlns, xmlns = _d === void 0 ? "http://www.w3.org/2000/svg" : _d, _e = _a.viewBox, viewBox = _e === void 0 ? "0 0 24 24" : _e, _f = _a.dense, dense = _f === void 0 ? false : _f, className = _a.className, use = _a.use, propChildren = _a.children, props = __rest7(_a, ["aria-hidden", "focusable", "xmlns", "viewBox", "dense", "className", "use", "children"]);
     var children = propChildren;
     if (!children && use) {
       children = (0, import_jsx_runtime9.jsx)("use", { xlinkHref: use });
     }
-    return (0, import_jsx_runtime9.jsx)("svg", __assign13({}, props, { "aria-hidden": ariaHidden, ref, className: (0, import_classnames8.default)(block3({ svg: true, dense }), className), focusable, xmlns, viewBox }, { children }));
+    return (0, import_jsx_runtime9.jsx)("svg", __assign13({}, props, { "aria-hidden": ariaHidden, ref, className: (0, import_classnames13.default)(block3({ svg: true, dense }), className), focusable, xmlns, viewBox }, { children }));
   });
 
   // node_modules/@react-md/material-icons/es/AddCircleSVGIcon.js
   var import_jsx_runtime10 = __toESM(require_jsx_runtime());
-  var import_react21 = __toESM(require_react());
+  var import_react36 = __toESM(require_react());
   var __assign14 = function() {
     __assign14 = Object.assign || function(t) {
       for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -23843,13 +24690,13 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     };
     return __assign14.apply(this, arguments);
   };
-  var AddCircleSVGIcon = (0, import_react21.forwardRef)(function AddCircleSVGIcon2(props, ref) {
+  var AddCircleSVGIcon = (0, import_react36.forwardRef)(function AddCircleSVGIcon2(props, ref) {
     return (0, import_jsx_runtime10.jsx)(SVGIcon, __assign14({}, props, { ref }, { children: (0, import_jsx_runtime10.jsx)("path", { d: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" }) }));
   });
 
   // src/components/chipster/chipster.js
   function XCircleIcon(props) {
-    return /* @__PURE__ */ import_react22.default.createElement(AddCircleSVGIcon, {
+    return /* @__PURE__ */ import_react37.default.createElement(AddCircleSVGIcon, {
       ...props,
       style: {
         transform: "rotate(45deg)",
@@ -23870,18 +24717,18 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       }
     }
     if (chips.length) {
-      return /* @__PURE__ */ import_react22.default.createElement("div", {
+      return /* @__PURE__ */ import_react37.default.createElement("div", {
         className: "chipster"
       }, chips.map((chip, i) => {
-        return /* @__PURE__ */ import_react22.default.createElement(Chip, {
+        return /* @__PURE__ */ import_react37.default.createElement(Chip, {
           className: "chip",
           key: i,
           onClick: () => deleteChip(chip),
-          rightIcon: /* @__PURE__ */ import_react22.default.createElement(XCircleIcon, null)
+          rightIcon: /* @__PURE__ */ import_react37.default.createElement(XCircleIcon, null)
         }, chip);
       }));
     } else {
-      return /* @__PURE__ */ import_react22.default.createElement("div", {
+      return /* @__PURE__ */ import_react37.default.createElement("div", {
         className: "noChips"
       }, "select text to create tags");
     }
@@ -23890,24 +24737,48 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // src/stepViews/tagView/tagView.js
   function TagView(props) {
+    const problem = props.problem;
+    const step = problem.steps.find((step2) => step2.type === "TAG");
+    const solution = props.solution;
     const onChange = props.onChange;
     const { handleStep } = useWizard();
+    const [showToast, setShowToast] = (0, import_react38.useState)(false);
+    const toggleToast = () => setShowToast(!showToast);
+    handleStep(() => {
+      if (!solution.tags || solution.tags.length < step.correct) {
+        toggleToast();
+        throw "Don't know where to catch this. If I throw an error object, the app crashes.  This causes an error in the console, but allows me to display the toast and prevent going to next page.";
+      } else {
+        onChange({
+          type: "markTime",
+          payload: { contentType: props.contentType, timeStamp: Date.now() }
+        });
+      }
+    });
     function dispatch(action) {
       onChange(action);
     }
-    handleStep(() => {
-      onChange({
-        type: "markTime",
-        payload: { contentType: props.contentType, timeStamp: Date.now() }
-      });
-    });
-    return /* @__PURE__ */ import_react23.default.createElement("div", {
+    return /* @__PURE__ */ import_react38.default.createElement("div", {
       className: "Tag"
-    }, /* @__PURE__ */ import_react23.default.createElement(stimulator_default, {
+    }, /* @__PURE__ */ import_react38.default.createElement(Toast_default, {
+      show: showToast,
+      onClose: toggleToast,
+      className: "toasty",
+      delay: 3e3,
+      autohide: true
+    }, /* @__PURE__ */ import_react38.default.createElement(Toast_default.Header, {
+      style: {
+        background: "red",
+        color: "white",
+        justifyContent: "space-between"
+      }
+    }, /* @__PURE__ */ import_react38.default.createElement("strong", {
+      className: "me-auto"
+    }, "Identify Important Facts")), /* @__PURE__ */ import_react38.default.createElement(Toast_default.Body, null, "You must select a minimum of ", step.correct, " important facts!")), /* @__PURE__ */ import_react38.default.createElement(stimulator_default, {
       text: props.problem.stimulus,
       enabled: true,
       onChange: dispatch
-    }), /* @__PURE__ */ import_react23.default.createElement(chipster_default, {
+    }), /* @__PURE__ */ import_react38.default.createElement(chipster_default, {
       chips: props.solution.tags,
       onChange: dispatch
     }));
@@ -23916,853 +24787,6 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // src/stepViews/diagramSelectView/diagramSelectView.js
   var import_react52 = __toESM(require_react());
-
-  // node_modules/@babel/runtime/helpers/esm/extends.js
-  function _extends() {
-    _extends = Object.assign ? Object.assign.bind() : function(target) {
-      for (var i = 1; i < arguments.length; i++) {
-        var source = arguments[i];
-        for (var key in source) {
-          if (Object.prototype.hasOwnProperty.call(source, key)) {
-            target[key] = source[key];
-          }
-        }
-      }
-      return target;
-    };
-    return _extends.apply(this, arguments);
-  }
-
-  // node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
-  function _objectWithoutPropertiesLoose(source, excluded) {
-    if (source == null)
-      return {};
-    var target = {};
-    var sourceKeys = Object.keys(source);
-    var key, i;
-    for (i = 0; i < sourceKeys.length; i++) {
-      key = sourceKeys[i];
-      if (excluded.indexOf(key) >= 0)
-        continue;
-      target[key] = source[key];
-    }
-    return target;
-  }
-
-  // node_modules/react-bootstrap/esm/Toast.js
-  var import_react38 = __toESM(require_react());
-  var import_classnames13 = __toESM(require_classnames());
-
-  // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useTimeout.js
-  var import_react27 = __toESM(require_react());
-
-  // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useMounted.js
-  var import_react24 = __toESM(require_react());
-  function useMounted() {
-    var mounted = (0, import_react24.useRef)(true);
-    var isMounted = (0, import_react24.useRef)(function() {
-      return mounted.current;
-    });
-    (0, import_react24.useEffect)(function() {
-      mounted.current = true;
-      return function() {
-        mounted.current = false;
-      };
-    }, []);
-    return isMounted.current;
-  }
-
-  // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useUpdatedRef.js
-  var import_react25 = __toESM(require_react());
-  function useUpdatedRef(value) {
-    var valueRef = (0, import_react25.useRef)(value);
-    valueRef.current = value;
-    return valueRef;
-  }
-
-  // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useWillUnmount.js
-  var import_react26 = __toESM(require_react());
-  function useWillUnmount(fn) {
-    var onUnmount = useUpdatedRef(fn);
-    (0, import_react26.useEffect)(function() {
-      return function() {
-        return onUnmount.current();
-      };
-    }, []);
-  }
-
-  // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useTimeout.js
-  var MAX_DELAY_MS = Math.pow(2, 31) - 1;
-  function setChainedTimeout(handleRef, fn, timeoutAtMs) {
-    var delayMs = timeoutAtMs - Date.now();
-    handleRef.current = delayMs <= MAX_DELAY_MS ? setTimeout(fn, delayMs) : setTimeout(function() {
-      return setChainedTimeout(handleRef, fn, timeoutAtMs);
-    }, MAX_DELAY_MS);
-  }
-  function useTimeout() {
-    var isMounted = useMounted();
-    var handleRef = (0, import_react27.useRef)();
-    useWillUnmount(function() {
-      return clearTimeout(handleRef.current);
-    });
-    return (0, import_react27.useMemo)(function() {
-      var clear = function clear2() {
-        return clearTimeout(handleRef.current);
-      };
-      function set(fn, delayMs) {
-        if (delayMs === void 0) {
-          delayMs = 0;
-        }
-        if (!isMounted())
-          return;
-        clear();
-        if (delayMs <= MAX_DELAY_MS) {
-          handleRef.current = setTimeout(fn, delayMs);
-        } else {
-          setChainedTimeout(handleRef, fn, Date.now() + delayMs);
-        }
-      }
-      return {
-        set,
-        clear
-      };
-    }, []);
-  }
-
-  // node_modules/react-bootstrap/esm/Fade.js
-  var import_classnames9 = __toESM(require_classnames());
-  var import_react30 = __toESM(require_react());
-
-  // node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js
-  function _setPrototypeOf(o, p) {
-    _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p2) {
-      o2.__proto__ = p2;
-      return o2;
-    };
-    return _setPrototypeOf(o, p);
-  }
-
-  // node_modules/@babel/runtime/helpers/esm/inheritsLoose.js
-  function _inheritsLoose(subClass, superClass) {
-    subClass.prototype = Object.create(superClass.prototype);
-    subClass.prototype.constructor = subClass;
-    _setPrototypeOf(subClass, superClass);
-  }
-
-  // node_modules/react-bootstrap/node_modules/react-transition-group/esm/Transition.js
-  var import_prop_types2 = __toESM(require_prop_types());
-  var import_react29 = __toESM(require_react());
-  var import_react_dom = __toESM(require_react_dom());
-
-  // node_modules/react-bootstrap/node_modules/react-transition-group/esm/config.js
-  var config_default = {
-    disabled: false
-  };
-
-  // node_modules/react-bootstrap/node_modules/react-transition-group/esm/utils/PropTypes.js
-  var import_prop_types = __toESM(require_prop_types());
-  var timeoutsShape = true ? import_prop_types.default.oneOfType([import_prop_types.default.number, import_prop_types.default.shape({
-    enter: import_prop_types.default.number,
-    exit: import_prop_types.default.number,
-    appear: import_prop_types.default.number
-  }).isRequired]) : null;
-  var classNamesShape = true ? import_prop_types.default.oneOfType([import_prop_types.default.string, import_prop_types.default.shape({
-    enter: import_prop_types.default.string,
-    exit: import_prop_types.default.string,
-    active: import_prop_types.default.string
-  }), import_prop_types.default.shape({
-    enter: import_prop_types.default.string,
-    enterDone: import_prop_types.default.string,
-    enterActive: import_prop_types.default.string,
-    exit: import_prop_types.default.string,
-    exitDone: import_prop_types.default.string,
-    exitActive: import_prop_types.default.string
-  })]) : null;
-
-  // node_modules/react-bootstrap/node_modules/react-transition-group/esm/TransitionGroupContext.js
-  var import_react28 = __toESM(require_react());
-  var TransitionGroupContext_default = import_react28.default.createContext(null);
-
-  // node_modules/react-bootstrap/node_modules/react-transition-group/esm/utils/reflow.js
-  var forceReflow = function forceReflow2(node) {
-    return node.scrollTop;
-  };
-
-  // node_modules/react-bootstrap/node_modules/react-transition-group/esm/Transition.js
-  var UNMOUNTED = "unmounted";
-  var EXITED = "exited";
-  var ENTERING = "entering";
-  var ENTERED2 = "entered";
-  var EXITING = "exiting";
-  var Transition = /* @__PURE__ */ function(_React$Component) {
-    _inheritsLoose(Transition2, _React$Component);
-    function Transition2(props, context4) {
-      var _this;
-      _this = _React$Component.call(this, props, context4) || this;
-      var parentGroup = context4;
-      var appear = parentGroup && !parentGroup.isMounting ? props.enter : props.appear;
-      var initialStatus;
-      _this.appearStatus = null;
-      if (props.in) {
-        if (appear) {
-          initialStatus = EXITED;
-          _this.appearStatus = ENTERING;
-        } else {
-          initialStatus = ENTERED2;
-        }
-      } else {
-        if (props.unmountOnExit || props.mountOnEnter) {
-          initialStatus = UNMOUNTED;
-        } else {
-          initialStatus = EXITED;
-        }
-      }
-      _this.state = {
-        status: initialStatus
-      };
-      _this.nextCallback = null;
-      return _this;
-    }
-    Transition2.getDerivedStateFromProps = function getDerivedStateFromProps(_ref, prevState) {
-      var nextIn = _ref.in;
-      if (nextIn && prevState.status === UNMOUNTED) {
-        return {
-          status: EXITED
-        };
-      }
-      return null;
-    };
-    var _proto = Transition2.prototype;
-    _proto.componentDidMount = function componentDidMount() {
-      this.updateStatus(true, this.appearStatus);
-    };
-    _proto.componentDidUpdate = function componentDidUpdate(prevProps) {
-      var nextStatus = null;
-      if (prevProps !== this.props) {
-        var status = this.state.status;
-        if (this.props.in) {
-          if (status !== ENTERING && status !== ENTERED2) {
-            nextStatus = ENTERING;
-          }
-        } else {
-          if (status === ENTERING || status === ENTERED2) {
-            nextStatus = EXITING;
-          }
-        }
-      }
-      this.updateStatus(false, nextStatus);
-    };
-    _proto.componentWillUnmount = function componentWillUnmount() {
-      this.cancelNextCallback();
-    };
-    _proto.getTimeouts = function getTimeouts() {
-      var timeout2 = this.props.timeout;
-      var exit, enter, appear;
-      exit = enter = appear = timeout2;
-      if (timeout2 != null && typeof timeout2 !== "number") {
-        exit = timeout2.exit;
-        enter = timeout2.enter;
-        appear = timeout2.appear !== void 0 ? timeout2.appear : enter;
-      }
-      return {
-        exit,
-        enter,
-        appear
-      };
-    };
-    _proto.updateStatus = function updateStatus(mounting, nextStatus) {
-      if (mounting === void 0) {
-        mounting = false;
-      }
-      if (nextStatus !== null) {
-        this.cancelNextCallback();
-        if (nextStatus === ENTERING) {
-          if (this.props.unmountOnExit || this.props.mountOnEnter) {
-            var node = this.props.nodeRef ? this.props.nodeRef.current : import_react_dom.default.findDOMNode(this);
-            if (node)
-              forceReflow(node);
-          }
-          this.performEnter(mounting);
-        } else {
-          this.performExit();
-        }
-      } else if (this.props.unmountOnExit && this.state.status === EXITED) {
-        this.setState({
-          status: UNMOUNTED
-        });
-      }
-    };
-    _proto.performEnter = function performEnter(mounting) {
-      var _this2 = this;
-      var enter = this.props.enter;
-      var appearing = this.context ? this.context.isMounting : mounting;
-      var _ref2 = this.props.nodeRef ? [appearing] : [import_react_dom.default.findDOMNode(this), appearing], maybeNode = _ref2[0], maybeAppearing = _ref2[1];
-      var timeouts = this.getTimeouts();
-      var enterTimeout = appearing ? timeouts.appear : timeouts.enter;
-      if (!mounting && !enter || config_default.disabled) {
-        this.safeSetState({
-          status: ENTERED2
-        }, function() {
-          _this2.props.onEntered(maybeNode);
-        });
-        return;
-      }
-      this.props.onEnter(maybeNode, maybeAppearing);
-      this.safeSetState({
-        status: ENTERING
-      }, function() {
-        _this2.props.onEntering(maybeNode, maybeAppearing);
-        _this2.onTransitionEnd(enterTimeout, function() {
-          _this2.safeSetState({
-            status: ENTERED2
-          }, function() {
-            _this2.props.onEntered(maybeNode, maybeAppearing);
-          });
-        });
-      });
-    };
-    _proto.performExit = function performExit() {
-      var _this3 = this;
-      var exit = this.props.exit;
-      var timeouts = this.getTimeouts();
-      var maybeNode = this.props.nodeRef ? void 0 : import_react_dom.default.findDOMNode(this);
-      if (!exit || config_default.disabled) {
-        this.safeSetState({
-          status: EXITED
-        }, function() {
-          _this3.props.onExited(maybeNode);
-        });
-        return;
-      }
-      this.props.onExit(maybeNode);
-      this.safeSetState({
-        status: EXITING
-      }, function() {
-        _this3.props.onExiting(maybeNode);
-        _this3.onTransitionEnd(timeouts.exit, function() {
-          _this3.safeSetState({
-            status: EXITED
-          }, function() {
-            _this3.props.onExited(maybeNode);
-          });
-        });
-      });
-    };
-    _proto.cancelNextCallback = function cancelNextCallback() {
-      if (this.nextCallback !== null) {
-        this.nextCallback.cancel();
-        this.nextCallback = null;
-      }
-    };
-    _proto.safeSetState = function safeSetState(nextState, callback) {
-      callback = this.setNextCallback(callback);
-      this.setState(nextState, callback);
-    };
-    _proto.setNextCallback = function setNextCallback(callback) {
-      var _this4 = this;
-      var active = true;
-      this.nextCallback = function(event) {
-        if (active) {
-          active = false;
-          _this4.nextCallback = null;
-          callback(event);
-        }
-      };
-      this.nextCallback.cancel = function() {
-        active = false;
-      };
-      return this.nextCallback;
-    };
-    _proto.onTransitionEnd = function onTransitionEnd(timeout2, handler) {
-      this.setNextCallback(handler);
-      var node = this.props.nodeRef ? this.props.nodeRef.current : import_react_dom.default.findDOMNode(this);
-      var doesNotHaveTimeoutOrListener = timeout2 == null && !this.props.addEndListener;
-      if (!node || doesNotHaveTimeoutOrListener) {
-        setTimeout(this.nextCallback, 0);
-        return;
-      }
-      if (this.props.addEndListener) {
-        var _ref3 = this.props.nodeRef ? [this.nextCallback] : [node, this.nextCallback], maybeNode = _ref3[0], maybeNextCallback = _ref3[1];
-        this.props.addEndListener(maybeNode, maybeNextCallback);
-      }
-      if (timeout2 != null) {
-        setTimeout(this.nextCallback, timeout2);
-      }
-    };
-    _proto.render = function render() {
-      var status = this.state.status;
-      if (status === UNMOUNTED) {
-        return null;
-      }
-      var _this$props = this.props, children = _this$props.children, _in = _this$props.in, _mountOnEnter = _this$props.mountOnEnter, _unmountOnExit = _this$props.unmountOnExit, _appear = _this$props.appear, _enter = _this$props.enter, _exit = _this$props.exit, _timeout = _this$props.timeout, _addEndListener = _this$props.addEndListener, _onEnter = _this$props.onEnter, _onEntering = _this$props.onEntering, _onEntered = _this$props.onEntered, _onExit = _this$props.onExit, _onExiting = _this$props.onExiting, _onExited = _this$props.onExited, _nodeRef = _this$props.nodeRef, childProps = _objectWithoutPropertiesLoose(_this$props, ["children", "in", "mountOnEnter", "unmountOnExit", "appear", "enter", "exit", "timeout", "addEndListener", "onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited", "nodeRef"]);
-      return /* @__PURE__ */ import_react29.default.createElement(TransitionGroupContext_default.Provider, {
-        value: null
-      }, typeof children === "function" ? children(status, childProps) : import_react29.default.cloneElement(import_react29.default.Children.only(children), childProps));
-    };
-    return Transition2;
-  }(import_react29.default.Component);
-  Transition.contextType = TransitionGroupContext_default;
-  Transition.propTypes = true ? {
-    nodeRef: import_prop_types2.default.shape({
-      current: typeof Element === "undefined" ? import_prop_types2.default.any : function(propValue, key, componentName, location, propFullName, secret) {
-        var value = propValue[key];
-        return import_prop_types2.default.instanceOf(value && "ownerDocument" in value ? value.ownerDocument.defaultView.Element : Element)(propValue, key, componentName, location, propFullName, secret);
-      }
-    }),
-    children: import_prop_types2.default.oneOfType([import_prop_types2.default.func.isRequired, import_prop_types2.default.element.isRequired]).isRequired,
-    in: import_prop_types2.default.bool,
-    mountOnEnter: import_prop_types2.default.bool,
-    unmountOnExit: import_prop_types2.default.bool,
-    appear: import_prop_types2.default.bool,
-    enter: import_prop_types2.default.bool,
-    exit: import_prop_types2.default.bool,
-    timeout: function timeout(props) {
-      var pt = timeoutsShape;
-      if (!props.addEndListener)
-        pt = pt.isRequired;
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
-      return pt.apply(void 0, [props].concat(args));
-    },
-    addEndListener: import_prop_types2.default.func,
-    onEnter: import_prop_types2.default.func,
-    onEntering: import_prop_types2.default.func,
-    onEntered: import_prop_types2.default.func,
-    onExit: import_prop_types2.default.func,
-    onExiting: import_prop_types2.default.func,
-    onExited: import_prop_types2.default.func
-  } : {};
-  function noop() {
-  }
-  Transition.defaultProps = {
-    in: false,
-    mountOnEnter: false,
-    unmountOnExit: false,
-    appear: false,
-    enter: true,
-    exit: true,
-    onEnter: noop,
-    onEntering: noop,
-    onEntered: noop,
-    onExit: noop,
-    onExiting: noop,
-    onExited: noop
-  };
-  Transition.UNMOUNTED = UNMOUNTED;
-  Transition.EXITED = EXITED;
-  Transition.ENTERING = ENTERING;
-  Transition.ENTERED = ENTERED2;
-  Transition.EXITING = EXITING;
-  var Transition_default = Transition;
-
-  // node_modules/dom-helpers/esm/ownerDocument.js
-  function ownerDocument(node) {
-    return node && node.ownerDocument || document;
-  }
-
-  // node_modules/dom-helpers/esm/ownerWindow.js
-  function ownerWindow(node) {
-    var doc = ownerDocument(node);
-    return doc && doc.defaultView || window;
-  }
-
-  // node_modules/dom-helpers/esm/getComputedStyle.js
-  function getComputedStyle2(node, psuedoElement) {
-    return ownerWindow(node).getComputedStyle(node, psuedoElement);
-  }
-
-  // node_modules/dom-helpers/esm/hyphenate.js
-  var rUpper = /([A-Z])/g;
-  function hyphenate(string) {
-    return string.replace(rUpper, "-$1").toLowerCase();
-  }
-
-  // node_modules/dom-helpers/esm/hyphenateStyle.js
-  var msPattern = /^ms-/;
-  function hyphenateStyleName(string) {
-    return hyphenate(string).replace(msPattern, "-ms-");
-  }
-
-  // node_modules/dom-helpers/esm/isTransform.js
-  var supportedTransforms = /^((translate|rotate|scale)(X|Y|Z|3d)?|matrix(3d)?|perspective|skew(X|Y)?)$/i;
-  function isTransform(value) {
-    return !!(value && supportedTransforms.test(value));
-  }
-
-  // node_modules/dom-helpers/esm/css.js
-  function style(node, property) {
-    var css = "";
-    var transforms = "";
-    if (typeof property === "string") {
-      return node.style.getPropertyValue(hyphenateStyleName(property)) || getComputedStyle2(node).getPropertyValue(hyphenateStyleName(property));
-    }
-    Object.keys(property).forEach(function(key) {
-      var value = property[key];
-      if (!value && value !== 0) {
-        node.style.removeProperty(hyphenateStyleName(key));
-      } else if (isTransform(key)) {
-        transforms += key + "(" + value + ") ";
-      } else {
-        css += hyphenateStyleName(key) + ": " + value + ";";
-      }
-    });
-    if (transforms) {
-      css += "transform: " + transforms + ";";
-    }
-    node.style.cssText += ";" + css;
-  }
-  var css_default = style;
-
-  // node_modules/dom-helpers/esm/canUseDOM.js
-  var canUseDOM_default = !!(typeof window !== "undefined" && window.document && window.document.createElement);
-
-  // node_modules/dom-helpers/esm/addEventListener.js
-  var optionsSupported = false;
-  var onceSupported = false;
-  try {
-    options = {
-      get passive() {
-        return optionsSupported = true;
-      },
-      get once() {
-        return onceSupported = optionsSupported = true;
-      }
-    };
-    if (canUseDOM_default) {
-      window.addEventListener("test", options, options);
-      window.removeEventListener("test", options, true);
-    }
-  } catch (e) {
-  }
-  var options;
-  function addEventListener2(node, eventName, handler, options) {
-    if (options && typeof options !== "boolean" && !onceSupported) {
-      var once = options.once, capture = options.capture;
-      var wrappedHandler = handler;
-      if (!onceSupported && once) {
-        wrappedHandler = handler.__once || function onceHandler(event) {
-          this.removeEventListener(eventName, onceHandler, capture);
-          handler.call(this, event);
-        };
-        handler.__once = wrappedHandler;
-      }
-      node.addEventListener(eventName, wrappedHandler, optionsSupported ? options : capture);
-    }
-    node.addEventListener(eventName, handler, options);
-  }
-  var addEventListener_default = addEventListener2;
-
-  // node_modules/dom-helpers/esm/removeEventListener.js
-  function removeEventListener(node, eventName, handler, options) {
-    var capture = options && typeof options !== "boolean" ? options.capture : options;
-    node.removeEventListener(eventName, handler, capture);
-    if (handler.__once) {
-      node.removeEventListener(eventName, handler.__once, capture);
-    }
-  }
-  var removeEventListener_default = removeEventListener;
-
-  // node_modules/dom-helpers/esm/listen.js
-  function listen(node, eventName, handler, options) {
-    addEventListener_default(node, eventName, handler, options);
-    return function() {
-      removeEventListener_default(node, eventName, handler, options);
-    };
-  }
-  var listen_default = listen;
-
-  // node_modules/dom-helpers/esm/triggerEvent.js
-  function triggerEvent(node, eventName, bubbles, cancelable) {
-    if (bubbles === void 0) {
-      bubbles = false;
-    }
-    if (cancelable === void 0) {
-      cancelable = true;
-    }
-    if (node) {
-      var event = document.createEvent("HTMLEvents");
-      event.initEvent(eventName, bubbles, cancelable);
-      node.dispatchEvent(event);
-    }
-  }
-
-  // node_modules/dom-helpers/esm/transitionEnd.js
-  function parseDuration(node) {
-    var str = css_default(node, "transitionDuration") || "";
-    var mult = str.indexOf("ms") === -1 ? 1e3 : 1;
-    return parseFloat(str) * mult;
-  }
-  function emulateTransitionEnd(element, duration, padding) {
-    if (padding === void 0) {
-      padding = 5;
-    }
-    var called = false;
-    var handle = setTimeout(function() {
-      if (!called)
-        triggerEvent(element, "transitionend", true);
-    }, duration + padding);
-    var remove = listen_default(element, "transitionend", function() {
-      called = true;
-    }, {
-      once: true
-    });
-    return function() {
-      clearTimeout(handle);
-      remove();
-    };
-  }
-  function transitionEnd(element, handler, duration, padding) {
-    if (duration == null)
-      duration = parseDuration(element) || 0;
-    var removeEmulate = emulateTransitionEnd(element, duration, padding);
-    var remove = listen_default(element, "transitionend", handler);
-    return function() {
-      removeEmulate();
-      remove();
-    };
-  }
-
-  // node_modules/react-bootstrap/esm/transitionEndListener.js
-  function parseDuration2(node, property) {
-    var str = css_default(node, property) || "";
-    var mult = str.indexOf("ms") === -1 ? 1e3 : 1;
-    return parseFloat(str) * mult;
-  }
-  function transitionEndListener(element, handler) {
-    var duration = parseDuration2(element, "transitionDuration");
-    var delay = parseDuration2(element, "transitionDelay");
-    var remove = transitionEnd(element, function(e) {
-      if (e.target === element) {
-        remove();
-        handler(e);
-      }
-    }, duration + delay);
-  }
-
-  // node_modules/react-bootstrap/esm/triggerBrowserReflow.js
-  function triggerBrowserReflow(node) {
-    node.offsetHeight;
-  }
-
-  // node_modules/react-bootstrap/esm/Fade.js
-  var _excluded = ["className", "children"];
-  var _fadeStyles;
-  var defaultProps = {
-    in: false,
-    timeout: 300,
-    mountOnEnter: false,
-    unmountOnExit: false,
-    appear: false
-  };
-  var fadeStyles = (_fadeStyles = {}, _fadeStyles[ENTERING] = "show", _fadeStyles[ENTERED2] = "show", _fadeStyles);
-  var Fade = /* @__PURE__ */ import_react30.default.forwardRef(function(_ref, ref) {
-    var className = _ref.className, children = _ref.children, props = _objectWithoutPropertiesLoose(_ref, _excluded);
-    var handleEnter = (0, import_react30.useCallback)(function(node) {
-      triggerBrowserReflow(node);
-      if (props.onEnter)
-        props.onEnter(node);
-    }, [props]);
-    return /* @__PURE__ */ import_react30.default.createElement(Transition_default, _extends({
-      ref,
-      addEndListener: transitionEndListener
-    }, props, {
-      onEnter: handleEnter
-    }), function(status, innerProps) {
-      return /* @__PURE__ */ import_react30.default.cloneElement(children, _extends({}, innerProps, {
-        className: (0, import_classnames9.default)("fade", className, children.props.className, fadeStyles[status])
-      }));
-    });
-  });
-  Fade.defaultProps = defaultProps;
-  Fade.displayName = "Fade";
-  var Fade_default = Fade;
-
-  // node_modules/react-bootstrap/esm/ToastHeader.js
-  var import_classnames11 = __toESM(require_classnames());
-  var import_react36 = __toESM(require_react());
-
-  // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useEventCallback.js
-  var import_react32 = __toESM(require_react());
-
-  // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useCommittedRef.js
-  var import_react31 = __toESM(require_react());
-  function useCommittedRef(value) {
-    var ref = (0, import_react31.useRef)(value);
-    (0, import_react31.useEffect)(function() {
-      ref.current = value;
-    }, [value]);
-    return ref;
-  }
-  var useCommittedRef_default = useCommittedRef;
-
-  // node_modules/react-bootstrap/node_modules/@restart/hooks/esm/useEventCallback.js
-  function useEventCallback(fn) {
-    var ref = useCommittedRef_default(fn);
-    return (0, import_react32.useCallback)(function() {
-      return ref.current && ref.current.apply(ref, arguments);
-    }, [ref]);
-  }
-
-  // node_modules/react-bootstrap/esm/ThemeProvider.js
-  var import_react33 = __toESM(require_react());
-  var ThemeContext = /* @__PURE__ */ import_react33.default.createContext({});
-  var Consumer = ThemeContext.Consumer;
-  var Provider2 = ThemeContext.Provider;
-  function useBootstrapPrefix(prefix, defaultPrefix) {
-    var prefixes = (0, import_react33.useContext)(ThemeContext);
-    return prefix || prefixes[defaultPrefix] || defaultPrefix;
-  }
-
-  // node_modules/react-bootstrap/esm/CloseButton.js
-  var import_prop_types3 = __toESM(require_prop_types());
-  var import_react34 = __toESM(require_react());
-  var import_classnames10 = __toESM(require_classnames());
-  var _excluded2 = ["label", "onClick", "className"];
-  var propTypes = {
-    label: import_prop_types3.default.string.isRequired,
-    onClick: import_prop_types3.default.func
-  };
-  var defaultProps2 = {
-    label: "Close"
-  };
-  var CloseButton = /* @__PURE__ */ import_react34.default.forwardRef(function(_ref, ref) {
-    var label = _ref.label, onClick = _ref.onClick, className = _ref.className, props = _objectWithoutPropertiesLoose(_ref, _excluded2);
-    return /* @__PURE__ */ import_react34.default.createElement("button", _extends({
-      ref,
-      type: "button",
-      className: (0, import_classnames10.default)("close", className),
-      onClick
-    }, props), /* @__PURE__ */ import_react34.default.createElement("span", {
-      "aria-hidden": "true"
-    }, "\xD7"), /* @__PURE__ */ import_react34.default.createElement("span", {
-      className: "sr-only"
-    }, label));
-  });
-  CloseButton.displayName = "CloseButton";
-  CloseButton.propTypes = propTypes;
-  CloseButton.defaultProps = defaultProps2;
-  var CloseButton_default = CloseButton;
-
-  // node_modules/react-bootstrap/esm/ToastContext.js
-  var import_react35 = __toESM(require_react());
-  var ToastContext = /* @__PURE__ */ import_react35.default.createContext({
-    onClose: function onClose() {
-    }
-  });
-  var ToastContext_default = ToastContext;
-
-  // node_modules/react-bootstrap/esm/ToastHeader.js
-  var _excluded3 = ["bsPrefix", "closeLabel", "closeButton", "className", "children"];
-  var defaultProps3 = {
-    closeLabel: "Close",
-    closeButton: true
-  };
-  var ToastHeader = /* @__PURE__ */ import_react36.default.forwardRef(function(_ref, ref) {
-    var bsPrefix = _ref.bsPrefix, closeLabel = _ref.closeLabel, closeButton = _ref.closeButton, className = _ref.className, children = _ref.children, props = _objectWithoutPropertiesLoose(_ref, _excluded3);
-    bsPrefix = useBootstrapPrefix(bsPrefix, "toast-header");
-    var context4 = (0, import_react36.useContext)(ToastContext_default);
-    var handleClick = useEventCallback(function(e) {
-      if (context4 && context4.onClose) {
-        context4.onClose(e);
-      }
-    });
-    return /* @__PURE__ */ import_react36.default.createElement("div", _extends({
-      ref
-    }, props, {
-      className: (0, import_classnames11.default)(bsPrefix, className)
-    }), children, closeButton && /* @__PURE__ */ import_react36.default.createElement(CloseButton_default, {
-      label: closeLabel,
-      onClick: handleClick,
-      className: "ml-2 mb-1",
-      "data-dismiss": "toast"
-    }));
-  });
-  ToastHeader.displayName = "ToastHeader";
-  ToastHeader.defaultProps = defaultProps3;
-  var ToastHeader_default = ToastHeader;
-
-  // node_modules/react-bootstrap/esm/createWithBsPrefix.js
-  var import_classnames12 = __toESM(require_classnames());
-
-  // node_modules/dom-helpers/esm/camelize.js
-  var rHyphen = /-(.)/g;
-  function camelize(string) {
-    return string.replace(rHyphen, function(_, chr) {
-      return chr.toUpperCase();
-    });
-  }
-
-  // node_modules/react-bootstrap/esm/createWithBsPrefix.js
-  var import_react37 = __toESM(require_react());
-  var _excluded4 = ["className", "bsPrefix", "as"];
-  var pascalCase = function pascalCase2(str) {
-    return str[0].toUpperCase() + camelize(str).slice(1);
-  };
-  function createWithBsPrefix(prefix, _temp) {
-    var _ref = _temp === void 0 ? {} : _temp, _ref$displayName = _ref.displayName, displayName = _ref$displayName === void 0 ? pascalCase(prefix) : _ref$displayName, Component = _ref.Component, defaultProps6 = _ref.defaultProps;
-    var BsComponent = /* @__PURE__ */ import_react37.default.forwardRef(function(_ref2, ref) {
-      var className = _ref2.className, bsPrefix = _ref2.bsPrefix, _ref2$as = _ref2.as, Tag2 = _ref2$as === void 0 ? Component || "div" : _ref2$as, props = _objectWithoutPropertiesLoose(_ref2, _excluded4);
-      var resolvedPrefix = useBootstrapPrefix(bsPrefix, prefix);
-      return /* @__PURE__ */ import_react37.default.createElement(Tag2, _extends({
-        ref,
-        className: (0, import_classnames12.default)(className, resolvedPrefix)
-      }, props));
-    });
-    BsComponent.defaultProps = defaultProps6;
-    BsComponent.displayName = displayName;
-    return BsComponent;
-  }
-
-  // node_modules/react-bootstrap/esm/ToastBody.js
-  var ToastBody_default = createWithBsPrefix("toast-body");
-
-  // node_modules/react-bootstrap/esm/Toast.js
-  var _excluded5 = ["bsPrefix", "className", "children", "transition", "show", "animation", "delay", "autohide", "onClose"];
-  var Toast = /* @__PURE__ */ import_react38.default.forwardRef(function(_ref, ref) {
-    var bsPrefix = _ref.bsPrefix, className = _ref.className, children = _ref.children, _ref$transition = _ref.transition, Transition2 = _ref$transition === void 0 ? Fade_default : _ref$transition, _ref$show = _ref.show, show = _ref$show === void 0 ? true : _ref$show, _ref$animation = _ref.animation, animation = _ref$animation === void 0 ? true : _ref$animation, _ref$delay = _ref.delay, delay = _ref$delay === void 0 ? 3e3 : _ref$delay, _ref$autohide = _ref.autohide, autohide = _ref$autohide === void 0 ? false : _ref$autohide, onClose2 = _ref.onClose, props = _objectWithoutPropertiesLoose(_ref, _excluded5);
-    bsPrefix = useBootstrapPrefix(bsPrefix, "toast");
-    var delayRef = (0, import_react38.useRef)(delay);
-    var onCloseRef = (0, import_react38.useRef)(onClose2);
-    (0, import_react38.useEffect)(function() {
-      delayRef.current = delay;
-      onCloseRef.current = onClose2;
-    }, [delay, onClose2]);
-    var autohideTimeout = useTimeout();
-    var autohideToast = !!(autohide && show);
-    var autohideFunc = (0, import_react38.useCallback)(function() {
-      if (autohideToast) {
-        onCloseRef.current == null ? void 0 : onCloseRef.current();
-      }
-    }, [autohideToast]);
-    (0, import_react38.useEffect)(function() {
-      autohideTimeout.set(autohideFunc, delayRef.current);
-    }, [autohideTimeout, autohideFunc]);
-    var toastContext = (0, import_react38.useMemo)(function() {
-      return {
-        onClose: onClose2
-      };
-    }, [onClose2]);
-    var hasAnimation = !!(Transition2 && animation);
-    var toast = /* @__PURE__ */ import_react38.default.createElement("div", _extends({}, props, {
-      ref,
-      className: (0, import_classnames13.default)(bsPrefix, className, !hasAnimation && (show ? "show" : "hide")),
-      role: "alert",
-      "aria-live": "assertive",
-      "aria-atomic": "true"
-    }), children);
-    return /* @__PURE__ */ import_react38.default.createElement(ToastContext_default.Provider, {
-      value: toastContext
-    }, hasAnimation && Transition2 ? /* @__PURE__ */ import_react38.default.createElement(Transition2, {
-      in: show,
-      unmountOnExit: true
-    }, toast) : toast);
-  });
-  Toast.displayName = "Toast";
-  var Toast_default = Object.assign(Toast, {
-    Body: ToastBody_default,
-    Header: ToastHeader_default
-  });
 
   // src/components/diagramList/diagramList.js
   var import_react51 = __toESM(require_react());
@@ -25176,7 +25200,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, /* @__PURE__ */ import_react52.default.createElement(Toast_default, {
       show: showToast,
       onClose: toggleToast,
-      className: "toasty"
+      className: "toasty",
+      delay: 3e3,
+      autohide: true
     }, /* @__PURE__ */ import_react52.default.createElement(Toast_default.Header, {
       style: {
         background: "red",
@@ -29018,6 +29044,10 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // src/utils/deviceInfo.js
   function deviceIsMobile() {
+    console.info(
+      "isMobile:",
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)
+    );
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
   }
 
@@ -29968,7 +29998,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     const solution = props.solution;
     const onChange = props.onChange;
     return /* @__PURE__ */ import_react78.default.createElement(DndProvider, {
-      backend: deviceIsMobile() ? HTML5Backend : TouchBackend
+      backend: deviceIsMobile() ? TouchBackend : HTML5Backend
     }, /* @__PURE__ */ import_react78.default.createElement("div", {
       className: "Diagrammer"
     }, {
@@ -30045,7 +30075,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }), /* @__PURE__ */ import_react79.default.createElement(Toast_default, {
       show: showToast,
       onClose: toggleToast,
-      className: "toasty"
+      className: "toasty",
+      delay: 3e3,
+      autohide: true
     }, /* @__PURE__ */ import_react79.default.createElement(Toast_default.Header, {
       style: {
         background: "red",
@@ -30136,9 +30168,14 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       style: { padding: 0 }
     }, /* @__PURE__ */ import_react82.default.createElement("div", {
       className: "diagramExample",
-      style: { flexDirection: "row", justifyContent: "center" }
+      style: {
+        flexDirection: "row",
+        justifyContent: "center",
+        maxWidth: "initial"
+      }
     }, /* @__PURE__ */ import_react82.default.createElement("div", {
-      className: "diagramBox"
+      className: "diagramBox",
+      style: { maxWidth: 300 }
     }, /* @__PURE__ */ import_react82.default.createElement("div", {
       className: "diagramMultipleItem diagramMultipleStart"
     }, /* @__PURE__ */ import_react82.default.createElement("div", {
@@ -30205,9 +30242,14 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       style: { padding: 0 }
     }, /* @__PURE__ */ import_react83.default.createElement("div", {
       className: "diagramExample",
-      style: { flexDirection: "row", justifyContent: "center" }
+      style: {
+        flexDirection: "row",
+        justifyContent: "center",
+        maxWidth: "initial"
+      }
     }, /* @__PURE__ */ import_react83.default.createElement("div", {
-      className: "diagramCombineBox"
+      className: "diagramCombineBox",
+      style: { maxWidth: 300 }
     }, /* @__PURE__ */ import_react83.default.createElement("div", {
       className: "diagramCombineTop"
     }, "Total", /* @__PURE__ */ import_react83.default.createElement("input", {
@@ -30249,7 +30291,13 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       style: { padding: 0 }
     }, /* @__PURE__ */ import_react84.default.createElement("div", {
       className: "diagramExample",
-      style: { flexDirection: "row", justifyContent: "center" }
+      style: {
+        flexDirection: "row",
+        justifyContent: "center",
+        maxWidth: "initial"
+      }
+    }, /* @__PURE__ */ import_react84.default.createElement("div", {
+      style: { maxWidth: 300 }
     }, /* @__PURE__ */ import_react84.default.createElement("div", {
       className: "diagramChangeArrowBox"
     }, /* @__PURE__ */ import_react84.default.createElement("svg", {
@@ -30303,7 +30351,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       value: solution.diagram.change.end,
       className: "inputField",
       readOnly: true
-    })))))));
+    }))))))));
   }
 
   // src/components/diagrammer/equalGroupsDisplay.js
@@ -30319,9 +30367,14 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       style: { padding: 0 }
     }, /* @__PURE__ */ import_react85.default.createElement("div", {
       className: "diagramExample",
-      style: { flexDirection: "row", justifyContent: "center" }
+      style: {
+        flexDirection: "row",
+        justifyContent: "center",
+        maxWidth: "initial"
+      }
     }, /* @__PURE__ */ import_react85.default.createElement("div", {
-      className: "diagramBox"
+      className: "diagramBox",
+      style: { maxWidth: 300 }
     }, /* @__PURE__ */ import_react85.default.createElement("div", {
       className: "diagramEqualItem diagramMultipleStart"
     }, /* @__PURE__ */ import_react85.default.createElement("div", {
@@ -30410,7 +30463,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, /* @__PURE__ */ import_react86.default.createElement(Toast_default, {
       show: showToast,
       onClose: toggleToast,
-      className: "toasty"
+      className: "toasty",
+      delay: 3e3,
+      autohide: true
     }, /* @__PURE__ */ import_react86.default.createElement(Toast_default.Header, {
       style: {
         background: "red",
@@ -31098,7 +31153,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       ref: explanation,
       value: solution.explanation,
       onChange: handleExplanation,
-      placeholder: "Explain your answer",
+      placeholder: "Enter your answer here",
       rows: "4",
       maxRows: "10",
       animate: "true",
@@ -31113,13 +31168,15 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // src/stepViews/explainerView/explainerView.js
   function ExplainerView(props) {
+    const problem = props.problem;
     const solution = props.solution;
     const onChange = props.onChange;
+    const step = problem.steps.find((step2) => step2.type === "EXPLAINER");
     const [showToast, setShowToast] = (0, import_react97.useState)(false);
     const toggleToast = () => setShowToast(!showToast);
     const { handleStep } = useWizard();
     handleStep(() => {
-      if (!solution.explanation.length) {
+      if (!solution.explanation || solution.explanation.length < step.correct) {
         toggleToast();
         throw "Don't know where to catch this. If I throw an error object, the app crashes.  This causes an error in the console, but allows me to display the toast and prevent going to next page.";
       } else {
@@ -31139,7 +31196,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, /* @__PURE__ */ import_react97.default.createElement(Toast_default, {
       show: showToast,
       onClose: toggleToast,
-      className: "toasty"
+      className: "toasty",
+      delay: 3e3,
+      autohide: true
     }, /* @__PURE__ */ import_react97.default.createElement(Toast_default.Header, {
       style: {
         background: "red",
@@ -31148,8 +31207,8 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       }
     }, /* @__PURE__ */ import_react97.default.createElement("strong", {
       className: "me-auto"
-    }, "Explain your Answer")), /* @__PURE__ */ import_react97.default.createElement(Toast_default.Body, null, "You must answer the original question in plain language before proceding!")), /* @__PURE__ */ import_react97.default.createElement(DndProvider, {
-      backend: HTML5Backend
+    }, "Explain your Answer")), /* @__PURE__ */ import_react97.default.createElement(Toast_default.Body, null, "You must answer the original question in plain language before proceding in a minimum of ", step.correct, " characters!")), /* @__PURE__ */ import_react97.default.createElement(DndProvider, {
+      backend: deviceIsMobile() ? TouchBackend : HTML5Backend
     }, /* @__PURE__ */ import_react97.default.createElement(Explainer, {
       solution,
       onChange
@@ -31194,7 +31253,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       ref: review,
       value: solution.review,
       onChange: handleReview,
-      placeholder: "Discuss how your answer makes sense",
+      placeholder: "Enter your answer here",
       rows: "4",
       maxRows: "10",
       animate: "true",
@@ -31209,13 +31268,16 @@ For more info, visit https://fb.me/react-mock-scheduler`);
 
   // src/stepViews/reviewerView/reviewerView.js
   function ReviewerView(props) {
+    const problem = props.problem;
     const solution = props.solution;
+    const step = problem.steps.find((step2) => step2.type === "REVIEWER");
     const onChange = props.onChange;
     const [showToast, setShowToast] = (0, import_react99.useState)(false);
     const toggleToast = () => setShowToast(!showToast);
     const { handleStep } = useWizard();
     handleStep(() => {
-      if (!solution.explanation.length) {
+      console.info("reviewer handleStep");
+      if (!solution.review.length) {
         toggleToast();
         throw "Don't know where to catch this. If I throw an error object, the app crashes.  This causes an error in the console, but allows me to display the toast and prevent going to next page.";
       } else {
@@ -31224,6 +31286,12 @@ For more info, visit https://fb.me/react-mock-scheduler`);
           payload: { contentType: props.contentType, timeStamp: Date.now() }
         });
       }
+    });
+    const handleChange = (details) => {
+      onChange(details);
+    };
+    (0, import_react99.useEffect)(() => {
+      document.getElementById("WizButtonSubmit").disabled = solution.review.length < step.correct ? true : false;
     });
     return /* @__PURE__ */ import_react99.default.createElement("div", {
       className: "Reviewer"
@@ -31235,7 +31303,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, /* @__PURE__ */ import_react99.default.createElement(Toast_default, {
       show: showToast,
       onClose: toggleToast,
-      className: "toasty"
+      className: "toasty",
+      delay: 3e3,
+      autohide: true
     }, /* @__PURE__ */ import_react99.default.createElement(Toast_default.Header, {
       style: {
         background: "red",
@@ -31245,10 +31315,10 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, /* @__PURE__ */ import_react99.default.createElement("strong", {
       className: "me-auto"
     }, "Does your Answer Make Sense?")), /* @__PURE__ */ import_react99.default.createElement(Toast_default.Body, null, "You must explain how your answer makes sense!")), /* @__PURE__ */ import_react99.default.createElement(DndProvider, {
-      backend: HTML5Backend
+      backend: deviceIsMobile() ? TouchBackend : HTML5Backend
     }, /* @__PURE__ */ import_react99.default.createElement(Reviewer, {
       solution,
-      onChange
+      onChange: handleChange
     }))));
   }
 
@@ -31274,7 +31344,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       maxRows: "10",
       resize: "false",
       animate: "true",
-      placeholder: "type your analysis here...",
+      placeholder: "Enter your answer here",
       defaultValue: current,
       theme: "filled",
       onChange: updateAnalysis
@@ -31285,13 +31355,14 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   // src/stepViews/diagramAnalyzeView/diagramAnalyzeView.js
   function DiagramAnalyzeView(props) {
     const problem = props.problem;
+    const step = problem.steps.find((step2) => step2.type === "DIAGRAMANALYZE");
     const solution = props.solution;
     const onChange = props.onChange;
     const [showToast, setShowToast] = (0, import_react101.useState)(false);
     const toggleToast = () => setShowToast(!showToast);
     const { handleStep } = useWizard();
     handleStep(() => {
-      if (!solution.diagramAnalysis || solution.diagramAnalysis.length < 10) {
+      if (!solution.diagramAnalysis || solution.diagramAnalysis.length < step.correct) {
         toggleToast();
         throw "Don't know where to catch this. If I throw an error object, the app crashes.  This causes an error in the console, but allows me to display the toast and prevent going to next page.";
       } else {
@@ -31309,7 +31380,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, /* @__PURE__ */ import_react101.default.createElement(Toast_default, {
       show: showToast,
       onClose: toggleToast,
-      className: "toasty"
+      className: "toasty",
+      delay: 3e3,
+      autohide: true
     }, /* @__PURE__ */ import_react101.default.createElement(Toast_default.Header, {
       style: {
         background: "red",
@@ -31318,7 +31391,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       }
     }, /* @__PURE__ */ import_react101.default.createElement("strong", {
       className: "me-auto"
-    }, "Analyze Which Diagram")), /* @__PURE__ */ import_react101.default.createElement(Toast_default.Body, null, "You must provide your analysis of which type of problem this is!")), /* @__PURE__ */ import_react101.default.createElement(diagramAnalysis_default, {
+    }, "Analyze Which Diagram")), /* @__PURE__ */ import_react101.default.createElement(Toast_default.Body, null, "You must provide your analysis of which type of problem this is in a minimum of ", step.correct, " characters!")), /* @__PURE__ */ import_react101.default.createElement(diagramAnalysis_default, {
       current: solution.diagramAnalysis,
       onChange
     })));
@@ -31410,7 +31483,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     function handleLabel(event) {
       onChange({ type: "identifyLabel", payload: event.target.value });
     }
-    return /* @__PURE__ */ import_react103.default.createElement("div", {
+    return /* @__PURE__ */ import_react103.default.createElement("div", null, /* @__PURE__ */ import_react103.default.createElement("p", {
+      style: { textAlign: "center", marginTop: "20px", fontSize: "24px" }
+    }, solution.stepWise.stepDetails[solution.stepWise.stepDetails.length - 1].mathML), /* @__PURE__ */ import_react103.default.createElement("div", {
       className: "IdentifierFields"
     }, /* @__PURE__ */ import_react103.default.createElement("input", {
       id: "number",
@@ -31425,7 +31500,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       onChange: handleLabel,
       placeholder: "Label",
       className: "Label"
-    }));
+    })));
   }
 
   // src/stepViews/identifierView/identifierView.js
@@ -31456,7 +31531,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, /* @__PURE__ */ import_react104.default.createElement(Toast_default, {
       show: showToast,
       onClose: toggleToast,
-      className: "toasty"
+      className: "toasty",
+      delay: 3e3,
+      autohide: true
     }, /* @__PURE__ */ import_react104.default.createElement(Toast_default.Header, {
       style: {
         background: "red",
@@ -31594,9 +31671,17 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       },
       disabled: isLoading
     }), isLastStep && /* @__PURE__ */ import_react107.default.createElement(button_default, {
+      id: "WizButtonSubmit",
       className: "WizButton",
       label: "Submit",
       onClick: () => {
+        props.onChange({
+          type: "markTime",
+          payload: {
+            contentType: props.problem.steps[props.problem.steps.length - 1].type,
+            timeStamp: Date.now()
+          }
+        });
         props.onSubmit(props.solution);
       },
       disabled: isLoading
@@ -31622,7 +31707,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
       footer: /* @__PURE__ */ import_react108.default.createElement(powerFooter_default, {
         problem: work.problem,
         solution: work.solution,
-        dispatcher: workDispatch,
+        onChange: workDispatch,
         onSubmit
       })
     }, work.problem.steps.map((step, i) => {
