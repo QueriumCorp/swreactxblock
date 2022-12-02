@@ -13,6 +13,8 @@ swpwrxblock/public/robots.txt
 swpwrxblock/public/assets/app.css
 swpwrxblock/public/assets/app.css.bak
 swpwrxblock/public/assets/app.js
+swpwrxblock/public/assets/app.js-decimal-point
+swpwrxblock/public/assets/app.js-kent
 swpwrxblock/public/assets/app.js.bak
 swpwrxblock/public/assets/app.js.good
 swpwrxblock/static/README.txt
