@@ -824,7 +824,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 label = "Prepare",
                 mnemonicIndex  = 0,
                 instruction = "What type of problem is this?",
-                longInstruction = 'What type of problem do you think this is? Explain your answer. (Not graded)',
+                longInstruction = 'What type of problem do you think this is? Explain your answer. Enter at least 20 characters. (Not graded)',
                 type = "DIAGRAMANALYZE",
                 correct = 20,
                 valid = 0
@@ -874,7 +874,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 label = "Explain the Answer",
                 mnemonicIndex = 3,
                 instruction = "Write a Sentence",
-                longInstruction = 'Write a sentence to answer the original question.',
+                longInstruction = 'Write a sentence to answer the original question. Minimum of 20 characters.',
                 type = "EXPLAINER",
                 correct = 20,
                 valid = 0
@@ -883,7 +883,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 label = "Review and Revise",
                 mnemonicIndex = 4,
                 instruction = "Does your answer make sense?",
-                longInstruction = 'Is your answer reasonable? Explain why or why not.',
+                longInstruction = 'Is your answer reasonable? Explain why or why not. Minimum of 20 characters.',
                 type = "REVIEWER",
                 correct = 20,
                 valid = 0
