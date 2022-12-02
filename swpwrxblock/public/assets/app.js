@@ -29452,10 +29452,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, "3")), /* @__PURE__ */ import_react74.default.createElement(KeyRow, null, /* @__PURE__ */ import_react74.default.createElement(Key, {
       onClick: handleSoftKeyPress,
       retKey: "0"
-    }, "0"), /* @__PURE__ */ import_react74.default.createElement(Key, {
-      onClick: handleSoftKeyPress,
-      retKey: "."
-    }, ".")))))));
+    }, "0")))))));
   }
 
   // src/components/diagrammer/combine.js
@@ -29616,10 +29613,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, "3")), /* @__PURE__ */ import_react75.default.createElement(KeyRow, null, /* @__PURE__ */ import_react75.default.createElement(Key, {
       onClick: handleSoftKeyPress,
       retKey: "0"
-    }, "0"), /* @__PURE__ */ import_react74.default.createElement(Key, {
-      onClick: handleSoftKeyPress,
-      retKey: "."
-    }, ".")))))));
+    }, "0")), " ")))));
   }
 
   // src/components/diagrammer/equalGroups.js
@@ -29807,10 +29801,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, "3")), /* @__PURE__ */ import_react76.default.createElement(KeyRow, null, /* @__PURE__ */ import_react76.default.createElement(Key, {
       onClick: handleSoftKeyPress,
       retKey: "0"
-    }, "0"), /* @__PURE__ */ import_react74.default.createElement(Key, {
-      onClick: handleSoftKeyPress,
-      retKey: "."
-    }, ".")))))));
+    }, "0")), " ")))));
   }
 
   // src/components/diagrammer/multiplyTimes.js
@@ -29998,10 +29989,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     }, "3")), /* @__PURE__ */ import_react77.default.createElement(KeyRow, null, /* @__PURE__ */ import_react77.default.createElement(Key, {
       onClick: handleSoftKeyPress,
       retKey: "0"
-    }, "0"), /* @__PURE__ */ import_react74.default.createElement(Key, {
-      onClick: handleSoftKeyPress,
-      retKey: "."
-    }, ".")))))));
+    }, "0")), " ")))));
   }
 
   // src/components/diagrammer/diagrammer.js
