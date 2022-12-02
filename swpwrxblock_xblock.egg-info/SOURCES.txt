@@ -14,6 +14,7 @@ swpwrxblock/public/assets/app.css
 swpwrxblock/public/assets/app.css.bak
 swpwrxblock/public/assets/app.js
 swpwrxblock/public/assets/app.js.bak
+swpwrxblock/public/assets/app.js.good
 swpwrxblock/static/README.txt
 swpwrxblock/static/css/swpwrxauthor.css
 swpwrxblock/static/css/swpwrxstudent.css
