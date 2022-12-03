@@ -874,7 +874,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 label = "Explain the Answer",
                 mnemonicIndex = 3,
                 instruction = "Write a Sentence",
-                longInstruction = 'Write a sentence to answer the original question. Minimum of 20 characters.',
+                longInstruction = 'Write a sentence to answer the original question. Enter at least 20 characters.',
                 type = "EXPLAINER",
                 correct = 20,
                 valid = 0
@@ -883,7 +883,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 label = "Review and Revise",
                 mnemonicIndex = 4,
                 instruction = "Does your answer make sense?",
-                longInstruction = 'Is your answer reasonable? Explain why or why not. Minimum of 20 characters.',
+                longInstruction = 'Is your answer reasonable? Explain why or why not. Enter at least 20 characters.',
                 type = "REVIEWER",
                 correct = 20,
                 valid = 0
