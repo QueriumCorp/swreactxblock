@@ -842,7 +842,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 label = "Organize",
                 mnemonicIndex = 1,
                 instruction = "Fill in the Diagram",
-                longInstruction = "Fill in the diagram with information from the problem. You can click in each box and type the information using your keyboard, or you can drag and drop the important information that you selected earlier. If an amount is unknown, enter 'unknown'.",
+                longInstruction = "Fill in the diagram with information from the problem. You can click in each box and type the information using your keyboard, or you can drag and drop the important information that you selected earlier. Click and hold the button for 1 second before you drag and drop. If an amount is unknown, enter 'unknown'.",
                 type = "DIAGRAMMER",
                 valid = 0
               ),
