@@ -284,7 +284,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         try:
             temp_invalid_schemas = self.invalid_schemas
         except (NameError,AttributeError) as e:
-            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_weight was not defined in this instance: {e}'.format(e=e))
+            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_invalid_schemas was not defined in this instance: {e}'.format(e=e))
             temp_invalid_schemas = ""
         if DEBUG: logger.info('SWPWRXBlock student_view() temp_invalid_schemas: {t}'.format(t=temp_invalid_schemas))
 
