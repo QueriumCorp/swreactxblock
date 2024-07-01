@@ -207,7 +207,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         when viewing courses.  We set up the question parameters (referring to course-wide settings), then launch
         the javascript StepWise client.
         """
-        if DEBUG: logger.info('SWPWRXBlock student_view() entered. context={context}'.format(context=context))
+        if DEBUG: logger.info('SWPWRXBlock student_view() entered. Hi Kent 2024-7-1 17:28 context={context}'.format(context=context))
 
         if DEBUG: logger.info("SWPWRXBlock student_view() self={a}".format(a=self))
         if DEBUG: logger.info("SWPWRXBlock student_view() self.runtime={a}".format(a=self.runtime))
@@ -1023,7 +1023,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
     # SAVE
     def save(self):
-        if DEBUG: logger.info("SWPWRXBlock save() self{s}".format(s=self))
+        if DEBUG: logger.info("SWPWRXBlock Hi Kent 2024-7-1 17:25 save() self{s}".format(s=self))
         XBlock.save(self)       # Call parent class save()
         # if DEBUG: logger.info("SWPWRXBlock save() back from parent save. self.solution={s}".format(s=self.solution))
 
@@ -1295,7 +1295,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
 
     def studio_view(self, context=None):
-        if DEBUG: logger.info('SWPWRXBlock studio_view() entered')
+        if DEBUG: logger.info('SWPWRXBlock studio_view() entered. Hi Kent 2024-7-1 17:29')
         """
         The STUDIO view of the SWPWRXBlock, shown to instructors
         when authoring courses.
@@ -1310,7 +1310,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
 
     def author_view(self, context=None):
-        if DEBUG: logger.info('SWPWRXBlock author_view() entered')
+        if DEBUG: logger.info('SWPWRXBlock author_view() entered Hi Kent 2024-7-1 17:27')
         """
         The AUTHOR view of the SWPWRXBlock, shown to instructors
         when previewing courses.
