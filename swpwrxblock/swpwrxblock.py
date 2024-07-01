@@ -99,7 +99,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
     # Rank choices should be "newb" or "cadet" or "learner" or "ranger"
     default_rank = "cadet"
-    q_rank = String(display_name="Student rank for this question", help="SWPWR Student rank for this question", default=default_rank,Scope.user_state)
+    q_rank = String(display_name="Student rank for this question", help="SWPWR Student rank for this question", default=default_rank,Scope.content)
 
     q_grade_showme_ded = Float(display_name="Point deduction for using Show Solution",help="SWPWR Raw points deducted from 3.0 (Default: 3.0)", default=3.0, scope=Scope.content)
     q_grade_hints_count = Integer(help="SWPWR Number of Hints before deduction", default=2, scope=Scope.content)
