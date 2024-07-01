@@ -94,6 +94,13 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         enforce_type=True
     )
 
+    # Invalid schema choices should be "TOTAL", "DIFFERENCE", "CHANGEINCREASE", "CHANGEDECREASE", "EQUALGROUPS", and "COMPARE"
+    q_invalid_schemas = String(display_name="Comma-separated list of unallowed schema names", help="SWPWR Comma-seprated list of unallowed schema names", default="",Scope.user_state)
+
+    # Rank choices should be "newb" or "cadet" or "learner" or "ranger"
+    default_rank = "cadet"
+    q_rank = String(display_name="Student rank for this question", help="SWPWR Student rank for this question", default=default_rank,Scope.user_state)
+
     q_grade_showme_ded = Float(display_name="Point deduction for using Show Solution",help="SWPWR Raw points deducted from 3.0 (Default: 3.0)", default=3.0, scope=Scope.content)
     q_grade_hints_count = Integer(help="SWPWR Number of Hints before deduction", default=2, scope=Scope.content)
     q_grade_hints_ded = Float(help="SWPWR Point deduction for using excessive Hints", default=1.0, scope=Scope.content)
@@ -219,6 +226,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         # For per-xblock settings
         temp_weight = -1
+        temp_invalid_schemas = ""
+        temp_rank = ""
         temp_max_attempts = -1
         temp_option_hint = -1
         temp_option_showme = -1
@@ -268,8 +277,24 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         self.my_grade_errors_ded = -1
         self.my_grade_min_steps_count = -1
         self.my_grade_min_steps_ded = -1
+        self.my_invalid_schemas = ""
+        self.my_rank = ""
 
         # Fetch the xblock-specific settings if they exist, otherwise create a default
+        try:
+            temp_invalid_schemas = self.invalid_schemas
+        except (NameError,AttributeError) as e:
+            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_weight was not defined in this instance: {e}'.format(e=e))
+            temp_invalid_schemas = ""
+        if DEBUG: logger.info('SWPWRXBlock student_view() temp_invalid_schemas: {t}'.format(t=temp_invalid_schemas))
+
+        try:
+            temp_rank = self.rank
+        except (NameError,AttributeError) as e:
+            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_rank was not defined in this instance: {e}'.format(e=e))
+            temp_rank = default_rank
+        if DEBUG: logger.info('SWPWRXBlock student_view() temp_rank: {t}'.format(t=temp_rank))
+
         try:
             temp_weight = self.q_weight
         except (NameError,AttributeError) as e:
