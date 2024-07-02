@@ -38,6 +38,8 @@ function SWPWRXStudio(runtime, element, question) {
             swpwr_organize_1_schema_name : $('#swpwr_organize_1_schema_name', element).val(),
             swpwr_explain_2_correct : $('#swpwr_explain_2_correct', element).val(),
             swpwr_review_1_correct : $('#swpwr_review_1_correct', element).val(),
+            swpwr_rank : $('#swpwr_rank', element).val(),
+            swpwr_invalid_schemas : $('#swpwr_invalid_schemas', element).val(),
 
         }
 

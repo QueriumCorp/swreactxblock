@@ -94,13 +94,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         enforce_type=True
     )
 
-    # Invalid schema choices should be "TOTAL", "DIFFERENCE", "CHANGEINCREASE", "CHANGEDECREASE", "EQUALGROUPS", and "COMPARE"
-    q_invalid_schemas = String(display_name="Comma-separated list of unallowed schema names", help="SWPWR Comma-seprated list of unallowed schema names", default="",scope=Scope.content)
-
-    # Rank choices should be "newb" or "cadet" or "learner" or "ranger"
-    default_rank = "cadet"
-    q_rank = String(display_name="Student rank for this question", help="SWPWR Student rank for this question", default=default_rank, scope=Scope.content)
-
     q_grade_showme_ded = Float(display_name="Point deduction for using Show Solution",help="SWPWR Raw points deducted from 3.0 (Default: 3.0)", default=3.0, scope=Scope.content)
     q_grade_hints_count = Integer(help="SWPWR Number of Hints before deduction", default=2, scope=Scope.content)
     q_grade_hints_ded = Float(help="SWPWR Point deduction for using excessive Hints", default=1.0, scope=Scope.content)
@@ -138,6 +131,13 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     q_swpwr_review_1_correct = Integer(help='SWPWR Review 1 Min Length', default=20, scope=Scope.content)
     # STUDENT'S QUESTION PERFORMANCE FIELDS
     swpwr_results = String(help="SWPWR The student's SWPWR Solution structure", default="", scope=Scope.user_state)
+    # Invalid schema choices should be "TOTAL", "DIFFERENCE", "CHANGEINCREASE", "CHANGEDECREASE", "EQUALGROUPS", and "COMPARE"
+    q_swpwr_invalid_schemas = String(display_name="Comma-separated list of unallowed schema names", help="SWPWR Comma-seprated list of unallowed schema names", default="",scope=Scope.content)
+
+    # Rank choices should be "newb" or "cadet" or "learner" or "ranger"
+    default_rank = "cadet"
+    q_swpwr_rank = String(display_name="Student rank for this question", help="SWPWR Student rank for this question", default=default_rank, scope=Scope.content)
+
     xb_user_email = String(help="SWPWR The user's email addr", default="", scope=Scope.user_state)
     grade = Float(help="SWPWR The student's grade", default=-1, scope=Scope.user_state)
     solution = Dict(help="SWPWR The student's last stepwise solution", default={}, scope=Scope.user_state)
@@ -284,14 +284,14 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         try:
             temp_invalid_schemas = self.invalid_schemas
         except (NameError,AttributeError) as e:
-            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_invalid_schemas was not defined in this instance: {e}'.format(e=e))
+            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_invalid_schemas was not defined in this instance: {e}'.format(e=e))
             temp_invalid_schemas = ""
         if DEBUG: logger.info('SWPWRXBlock student_view() temp_invalid_schemas: {t}'.format(t=temp_invalid_schemas))
 
         try:
             temp_rank = self.rank
         except (NameError,AttributeError) as e:
-            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_rank was not defined in this instance: {e}'.format(e=e))
+            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_rank was not defined in this instance: {e}'.format(e=e))
             temp_rank = default_rank
         if DEBUG: logger.info('SWPWRXBlock student_view() temp_rank: {t}'.format(t=temp_rank))
 
