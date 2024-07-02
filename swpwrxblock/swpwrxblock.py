@@ -137,7 +137,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     q_swpwr_explain_2_correct = Integer(help='SWPWR Explain 2 Min Length', default=20, scope=Scope.content)
     q_swpwr_review_1_correct = Integer(help='SWPWR Review 1 Min Length', default=20, scope=Scope.content)
     # STUDENT'S QUESTION PERFORMANCE FIELDS
-    swpwr_results = String(help="SWPWR The student's SWPWR Solution structure", default={}, scope=Scope.user_state)
+    swpwr_results = String(help="SWPWR The student's SWPWR Solution structure", default="", scope=Scope.user_state)
     xb_user_email = String(help="SWPWR The user's email addr", default="", scope=Scope.user_state)
     grade = Float(help="SWPWR The student's grade", default=-1, scope=Scope.user_state)
     solution = Dict(help="SWPWR The student's last stepwise solution", default={}, scope=Scope.user_state)
@@ -1062,7 +1062,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         try: swpwr_results = self.swpwr_results
         except (NameError,AttributeError) as e:
              if DEBUG: logger.info('SWPWRXBlock save_grade() self.swpwr_results was not defined: {e}'.format(e=e))
-             swpwr_results = {}
+             swpwr_results = ""
 
         try: q_weight = self.q_weight
         except (NameError,AttributeError) as e:
