@@ -1368,7 +1368,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         self.q_swpwr_explain_2_correct = data['swpwr_explain_2_correct']
         self.q_swpwr_review_1_correct = data['swpwr_review_1_correct']
         self.q_swpwr_rank = data['swpwr_rank']
-        self.q_swpwr_invalid_schemas = data['swpwr_invalid_schemas']]
+        self.q_swpwr_invalid_schemas = data['swpwr_invalid_schemas']
 
         self.display_name = "Step-by-Step POWER"
 
