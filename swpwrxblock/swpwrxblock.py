@@ -948,26 +948,37 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         frag.add_javascript(self.resource_string("static/js/src/final_callback.js"))    # Final submit callback code and define swpwr_problems[]
 
-        # Emit the Python dict into the HTML as Javascript object
-        json_string = json.dumps(swpwr_problem_template,separators=(',', ':'))
-        javascript_string = '      window.swpwr_problem_template = '+json_string+';'
-        javascript_string = javascript_string+'window.swpwr_problems.push(window.swpwr_problem_template);console.info("window.swpwr_problems.length=",window.swpwr_problems.length);'
-        if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template final javascript={j}".format(j=javascript_string))
-        frag.add_javascript(javascript_string)     # SWPWR problem to work.
+        test_mode=True
 
-        # Load up the React app bundle js, and wrap it as needed so it does not run until after the DOM is completely loaded
-        bundle_string = self.resource_string("public/assets/app.js")
+        if (test_mode):
+            if DEBUG: logger.info("SWPWRXBlock student_view() test_mode={e}".format(e=test_mode))
+            frag.add_javascript_url("//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/public/main.tsx")
+            # DONT NEED frag.add_javascript_url("//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/public/App.tsx")
+            # DONT NEED frag.add_css_url("//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/public/App.css")
+            snippet_string = 'window.swpwr = { options: { swapiUrl: "https://swapi2.onrender.com/", gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/", }, };'
+            frag.add_javascript(snippet_string)
+        else:
+            # Emit the Python dict into the HTML as Javascript object
+            json_string = json.dumps(swpwr_problem_template,separators=(',', ':'))
+            javascript_string = '      window.swpwr_problem_template = '+json_string+';'
+            javascript_string = javascript_string+'window.swpwr_problems.push(window.swpwr_problem_template);console.info("window.swpwr_problems.length=",window.swpwr_problems.length);'
+            if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template final javascript={j}".format(j=javascript_string))
+            frag.add_javascript(javascript_string)     # SWPWR problem to work.
 
-        if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string head={e}".format(e=bundle_string[0:100]))
-        if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string tail={e}".format(e=bundle_string[len(bundle_string)-100:]))
-        # Wrap the bundle js in a jQuery function so it runs after the DOM finishes loading, to emulate the 'defer' action of a <script> tag in the React index.html
-        mid_string = '$(function() {'+bundle_string     # Add jQuery function start
-        if DEBUG: logger.info("SWPWRXBlock student_view() mid_string head={e}".format(e=mid_string[0:100]))
-        if DEBUG: logger.info("SWPWRXBlock student_view() mid_string tail={e}".format(e=mid_string[len(mid_string)-100:]))
-        # Add jQuery function ending.
-        final_string = mid_string+'});'                 # Adds final '});' for the jQuery function
-        if DEBUG: logger.info("SWPWRXBlock student_view() final_string head={e}".format(e=final_string[0:100]))
-        if DEBUG: logger.info("SWPWRXBlock student_view() final_string tail={e}".format(e=final_string[len(final_string)-100:]))
+            # Load up the React app bundle js, and wrap it as needed so it does not run until after the DOM is completely loaded
+            bundle_string = self.resource_string("public/assets/app.js")
+
+            if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string head={e}".format(e=bundle_string[0:100]))
+            if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string tail={e}".format(e=bundle_string[len(bundle_string)-100:]))
+            # Wrap the bundle js in a jQuery function so it runs after the DOM finishes loading, to emulate the 'defer' action of a <script> tag in the React index.html
+            mid_string = '$(function() {'+bundle_string     # Add jQuery function start
+            if DEBUG: logger.info("SWPWRXBlock student_view() mid_string head={e}".format(e=mid_string[0:100]))
+            if DEBUG: logger.info("SWPWRXBlock student_view() mid_string tail={e}".format(e=mid_string[len(mid_string)-100:]))
+            # Add jQuery function ending.
+            final_string = mid_string+'});'                 # Adds final '});' for the jQuery function
+            if DEBUG: logger.info("SWPWRXBlock student_view() final_string head={e}".format(e=final_string[0:100]))
+            if DEBUG: logger.info("SWPWRXBlock student_view() final_string tail={e}".format(e=final_string[len(final_string)-100:]))
+
         frag.add_resource(final_string,'application/javascript','foot')
 
         stepwise_setup_string = '''
