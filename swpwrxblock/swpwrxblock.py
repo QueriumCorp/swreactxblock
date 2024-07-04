@@ -978,8 +978,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             final_string = mid_string+'});'                 # Adds final '});' for the jQuery function
             if DEBUG: logger.info("SWPWRXBlock student_view() final_string head={e}".format(e=final_string[0:100]))
             if DEBUG: logger.info("SWPWRXBlock student_view() final_string tail={e}".format(e=final_string[len(final_string)-100:]))
-
-        frag.add_resource(final_string,'application/javascript','foot')
+            frag.add_resource(final_string,'application/javascript','foot')
 
         stepwise_setup_string = '''
           var options = {
