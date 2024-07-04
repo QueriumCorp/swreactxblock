@@ -55,7 +55,7 @@ logger = getLogger(__name__)
 # DEBUG=False
 DEBUG=True
 
-DEFAULT_RANK="cadet  # What we'll use for a rank if not modified by the user/defau"
+DEFAULT_RANK="cadet"  # What we'll use for a rank if not modified by the user/default
 
 """
 The general idea is that we'll determine which question parameters to pass to the StepWise client before invoking it,
