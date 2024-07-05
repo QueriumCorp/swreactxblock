@@ -806,7 +806,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_css(self.resource_string("static/css/swpwrxstudent.css"))
         frag.add_javascript(self.resource_string("static/js/src/swpwrxstudent.js"))
 
-        frag.add_content('<script>querium.qEvalLogging=true;</script>')
+#WASIN2022        frag.add_content('<script>querium.qEvalLogging=true;</script>')
 
 # Now we can finally add the React app bundle assets
 
@@ -981,9 +981,12 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             # frag.add_resource('<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>','text/html','head')
             # frag.add_resource('<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>','text/html','head')
             # frag.add_resource('<meta name="viewport" content="width=device-width, initial-scale=1.0" />','text/html','head')
-            frag.add_javascript_url("//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/assets/index-CIesktn4.js")
             snippet_string = 'window.swpwr = { options: { swapiUrl: "https://swapi2.onrender.com/", gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/", }, };'
-            frag.add_javascript(snippet_string)
+            # mid_string = '$(function() {'+snippt_string     # Add jQuery function start
+            # final_string = mid_string+'});'                 # Adds final '});' for the jQuery function
+            # frag.add_resource(final_string,'application/javascript','foot')
+            frag.add_resource(snippet_string,'application/javascript','head')
+            frag.add_javascript_url("//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/assets/index-CIesktn4.js")
             html_string = '<div id="root"></div>'
             frag.add_content(html_string)
         else:
