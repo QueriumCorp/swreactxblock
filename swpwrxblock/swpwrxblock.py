@@ -952,11 +952,40 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         if (test_mode):
             if DEBUG: logger.info("SWPWRXBlock student_view() test_mode={e}".format(e=test_mode))
-            frag.add_javascript_url("//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/public/main.tsx")
-            # DONT NEED frag.add_javascript_url("//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/public/App.tsx")
-            # DONT NEED frag.add_css_url("//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/public/App.css")
+            ###
+            # Resources from index.html
+            # <html lang="en">
+            #   <head>
+            #     <meta charset="UTF-8" />
+            #     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+            #     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+            #     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+            #     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            #     <title>testReactxBlock</title>
+            #     <script>
+            #       window.swpwr = {
+            #         options: {
+            #           swapiUrl: "https://swapi2.onrender.com/",
+            #           gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/",
+            #         },
+            #       };
+            #     </script>
+            #   </head>
+            #   <body>
+            #     <div id="root"></div>
+            #     <script type="module" src="/public/main.tsx"></script>
+            #   </body>
+            # </html>
+            ###
+            # frag.add_resource('<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>','text/html','head')
+            # frag.add_resource('<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>','text/html','head')
+            # frag.add_resource('<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>','text/html','head')
+            # frag.add_resource('<meta name="viewport" content="width=device-width, initial-scale=1.0" />','text/html','head')
+            frag.add_javascript_url("//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/assets/index-CIesktn4.js")
             snippet_string = 'window.swpwr = { options: { swapiUrl: "https://swapi2.onrender.com/", gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/", }, };'
             frag.add_javascript(snippet_string)
+            html_string = '<div id="root"></div>'
+            frag.add_content(html_string)
         else:
             # Emit the Python dict into the HTML as Javascript object
             json_string = json.dumps(swpwr_problem_template,separators=(',', ':'))
