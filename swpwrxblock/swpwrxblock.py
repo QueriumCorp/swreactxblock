@@ -991,12 +991,12 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           'fullName: "' + 'SAMPLE SAMPLE' + '", ' + \
                                           'familiarName: "' + 'SAMPLE' + '"' + \
                                         ' },' + \
-                             ' problem: { appKey: "' + 'StepWiseAPI' + '", ' + \
+                             ' problem: { appKey: "' + 'jiraTestPage' + '", ' + \
                                           'policyId: "' + '$A1$' + '", ' + \
                                           'problemId: "' + 'SAMPLE' + '", ' + \
                                           'title: "' + 'SAMPLE' + '", ' + \
                                           'stimulus: "' + self.q_stimulus + '", ' + \
-                                          'topic: "' + '' + '", ' + \
+                                          'topic: "' + 'gradeBasicAlgebra' + '", ' + \
                                           'definition: "' + self.q_definition + '", ' + \
                                           'hints: "' + '[]' + '"' + \
                                         ' },' + \
