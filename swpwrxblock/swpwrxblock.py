@@ -56,6 +56,7 @@ logger = getLogger(__name__)
 DEBUG=True
 
 DEFAULT_RANK="cadet"  # What we'll use for a rank if not modified by the user/default
+TEST_MODE=False
 
 """
 The general idea is that we'll determine which question parameters to pass to the StepWise client before invoking it,
@@ -605,6 +606,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         user_service = self.runtime.service( self, 'user')
         xb_user = user_service.get_current_user()
+        if DEBUG: logger.info('SWPWRXBlock student_view() xbuser: {e}'.format(e=xb_user))
         self.xb_user_email = xb_user.emails[0]
 
         # Determine which stepwise variant to use
@@ -814,228 +816,242 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
 #NOTINJVR        frag.add_resource('<base href="/testq_assets/"/>','text/html','head')		# Needed so react code can find its pages. Don't do earlier or impacts relative pathnames of resources
 
-        # The swpwr problem template as a Python dict
-        swpwr_problem_template = dict(
-            qId = "sample",                  # Name of the root DOM for the React app for this problem
-            label = "the problem label",
-            description = "a desc",
-            my_class = "sampleWord",
-            stimulus = 'I am the sample problem stimulus',
-            stepsMnemonic = "POWER",
-            steps = [
-              dict(
-                label = "Prepare",
-                mnemonicIndex = 0,
-                instruction = "Read the Problem",
-                longInstruction = 'Take two deep breaths. Read the word problem carefully. Think about these two questions: What is the problem about? What does it ask you to find?',
-                type =  "READ",
-                valid = 1
-              ),
-              dict(
-                label = "Prepare",
-                mnemonicIndex =  0,
-                instruction = "Identify Important Information",
-                longInstruction = 'Identify the key facts in the problem. Select these important pieces of information. This will allow you to quickly paste the information as you work the problem.',
-                type = "TAG",
-                correct = 0,
-                valid = 0
-              ),
-              dict(
-                label = "Prepare",
-                mnemonicIndex  = 0,
-                instruction = "What type of problem is this?",
-                longInstruction = 'What type of problem do you think this is? Explain your answer. Enter at least 20 characters. (Not graded)',
-                type = "DIAGRAMANALYZE",
-                correct = 20,
-                valid = 0
-              ),
-              dict(
-                label = "Organize",
-                mnemonicIndex = 1,
-                instruction = "What type of problem is this?",
-                longInstruction = 'Scroll through the list below and choose the correct problem type.',
-                type =  "DIAGRAMSELECT",
-                correct = "COMBINE",   # "COMBINE", "MULTIPLYTIMES", "EQUALGROUPS", "CHANGE"
-                valid = 0
-              ),
-              dict(
-                label = "Organize",
-                mnemonicIndex = 1,
-                instruction = "Fill in the Diagram",
-                longInstruction = "Fill in the diagram with information from the problem. You can click in each box and type the information using your keyboard, or you can drag and drop the important information that you selected earlier. Click and hold the button for 1 second before you drag and drop. If an amount is unknown, enter 'unknown'.",
-                type = "DIAGRAMMER",
-                valid = 0
-              ),
-              dict(
-                label = "Work the Problem",
-                mnemonicIndex = 2,
-                instruction = "Set Up and Solve an Equation",
-                longInstruction = "Use your diagram to write an equation. Then solve. Take as many steps as you need.",
-                type = "STEPWISE",
-                swlabel = "QUES-6011X",
-                description = "Solve by addition, foolish defaultProblem.  \\begin{array}{c}7x-2y=3 \\\\4x+5y=3.25\\end{array}",
-                definition = "SolveFor[7x-2y=3 && 4x+5y=3.25, {x,y}, EliminationMethod]",
-                mathml = "\\(\\)",
-                swtype = "gradeBasicAlgebra",
-                hint1 = "",
-                hint2 = "",
-                hint3 = "",
-                valid = 0
-              ),
-              dict(
-                label = "Explain the Answer",
-                mnemonicIndex = 3,
-                instruction = "Give the Final Answer",
-                longInstruction = 'The final answer has two parts, a number and a label. Give both parts in the boxes below.',
-                type = "IDENTIFIER",
-                valid = 0
-              ),
-              dict(
-                label = "Explain the Answer",
-                mnemonicIndex = 3,
-                instruction = "Write a Sentence",
-                longInstruction = 'Write a sentence to answer the original question. Enter at least 20 characters.',
-                type = "EXPLAINER",
-                correct = 20,
-                valid = 0
-              ),
-              dict(
-                label = "Review and Revise",
-                mnemonicIndex = 4,
-                instruction = "Does your answer make sense?",
-                longInstruction = 'Is your answer reasonable? Explain why or why not. Enter at least 20 characters.',
-                type = "REVIEWER",
-                correct = 20,
-                valid = 0
-              )
-            ]
-          )
+#WASIN2022         # The swpwr problem template as a Python dict
+#WASIN2022         swpwr_problem_template = dict(
+#WASIN2022             qId = "sample",                  # Name of the root DOM for the React app for this problem
+#WASIN2022             label = "the problem label",
+#WASIN2022             description = "a desc",
+#WASIN2022             my_class = "sampleWord",
+#WASIN2022             stimulus = 'I am the sample problem stimulus',
+#WASIN2022             stepsMnemonic = "POWER",
+#WASIN2022             steps = [
+#WASIN2022               dict(
+#WASIN2022                 label = "Prepare",
+#WASIN2022                 mnemonicIndex = 0,
+#WASIN2022                 instruction = "Read the Problem",
+#WASIN2022                 longInstruction = 'Take two deep breaths. Read the word problem carefully. Think about these two questions: What is the problem about? What does it ask you to find?',
+#WASIN2022                 type =  "READ",
+#WASIN2022                 valid = 1
+#WASIN2022               ),
+#WASIN2022               dict(
+#WASIN2022                 label = "Prepare",
+#WASIN2022                 mnemonicIndex =  0,
+#WASIN2022                 instruction = "Identify Important Information",
+#WASIN2022                 longInstruction = 'Identify the key facts in the problem. Select these important pieces of information. This will allow you to quickly paste the information as you work the problem.',
+#WASIN2022                 type = "TAG",
+#WASIN2022                 correct = 0,
+#WASIN2022                 valid = 0
+#WASIN2022               ),
+#WASIN2022               dict(
+#WASIN2022                 label = "Prepare",
+#WASIN2022                 mnemonicIndex  = 0,
+#WASIN2022                 instruction = "What type of problem is this?",
+#WASIN2022                 longInstruction = 'What type of problem do you think this is? Explain your answer. Enter at least 20 characters. (Not graded)',
+#WASIN2022                 type = "DIAGRAMANALYZE",
+#WASIN2022                 correct = 20,
+#WASIN2022                 valid = 0
+#WASIN2022               ),
+#WASIN2022               dict(
+#WASIN2022                 label = "Organize",
+#WASIN2022                 mnemonicIndex = 1,
+#WASIN2022                 instruction = "What type of problem is this?",
+#WASIN2022                 longInstruction = 'Scroll through the list below and choose the correct problem type.',
+#WASIN2022                 type =  "DIAGRAMSELECT",
+#WASIN2022                 correct = "COMBINE",   # "COMBINE", "MULTIPLYTIMES", "EQUALGROUPS", "CHANGE"
+#WASIN2022                 valid = 0
+#WASIN2022               ),
+#WASIN2022               dict(
+#WASIN2022                 label = "Organize",
+#WASIN2022                 mnemonicIndex = 1,
+#WASIN2022                 instruction = "Fill in the Diagram",
+#WASIN2022                 longInstruction = "Fill in the diagram with information from the problem. You can click in each box and type the information using your keyboard, or you can drag and drop the important information that you selected earlier. Click and hold the button for 1 second before you drag and drop. If an amount is unknown, enter 'unknown'.",
+#WASIN2022                 type = "DIAGRAMMER",
+#WASIN2022                 valid = 0
+#WASIN2022               ),
+#WASIN2022               dict(
+#WASIN2022                 label = "Work the Problem",
+#WASIN2022                 mnemonicIndex = 2,
+#WASIN2022                 instruction = "Set Up and Solve an Equation",
+#WASIN2022                 longInstruction = "Use your diagram to write an equation. Then solve. Take as many steps as you need.",
+#WASIN2022                 type = "STEPWISE",
+#WASIN2022                 swlabel = "QUES-6011X",
+#WASIN2022                 description = "Solve by addition, foolish defaultProblem.  \\begin{array}{c}7x-2y=3 \\\\4x+5y=3.25\\end{array}",
+#WASIN2022                 definition = "SolveFor[7x-2y=3 && 4x+5y=3.25, {x,y}, EliminationMethod]",
+#WASIN2022                 mathml = "\\(\\)",
+#WASIN2022                 swtype = "gradeBasicAlgebra",
+#WASIN2022                 hint1 = "",
+#WASIN2022                 hint2 = "",
+#WASIN2022                 hint3 = "",
+#WASIN2022                 valid = 0
+#WASIN2022               ),
+#WASIN2022               dict(
+#WASIN2022                 label = "Explain the Answer",
+#WASIN2022                 mnemonicIndex = 3,
+#WASIN2022                 instruction = "Give the Final Answer",
+#WASIN2022                 longInstruction = 'The final answer has two parts, a number and a label. Give both parts in the boxes below.',
+#WASIN2022                 type = "IDENTIFIER",
+#WASIN2022                 valid = 0
+#WASIN2022               ),
+#WASIN2022               dict(
+#WASIN2022                 label = "Explain the Answer",
+#WASIN2022                 mnemonicIndex = 3,
+#WASIN2022                 instruction = "Write a Sentence",
+#WASIN2022                 longInstruction = 'Write a sentence to answer the original question. Enter at least 20 characters.',
+#WASIN2022                 type = "EXPLAINER",
+#WASIN2022                 correct = 20,
+#WASIN2022                 valid = 0
+#WASIN2022               ),
+#WASIN2022               dict(
+#WASIN2022                 label = "Review and Revise",
+#WASIN2022                 mnemonicIndex = 4,
+#WASIN2022                 instruction = "Does your answer make sense?",
+#WASIN2022                 longInstruction = 'Is your answer reasonable? Explain why or why not. Enter at least 20 characters.',
+#WASIN2022                 type = "REVIEWER",
+#WASIN2022                 correct = 20,
+#WASIN2022                 valid = 0
+#WASIN2022               )
+#WASIN2022             ]
+#WASIN2022           )
+#WASIN2022
+#WASIN2022         # We now modify the problem template here, and pass it in already modified for this particular question.
+#WASIN2022
+#WASIN2022         # Fields in the 'steps' array in the Dict (zero-based)
+#WASIN2022         PREPPHASE1 = 0  # Prepare (1 of 3)
+#WASIN2022         PREPPHASE2 = 1  # Prepare (2 of 3)
+#WASIN2022         PREPPHASE3 = 2  # Prepare (3 of 3)
+#WASIN2022         ORGPHASE1  = 3  # Organize (1 of 2)
+#WASIN2022         ORGPHASE2  = 4  # Organize (2 of 2)
+#WASIN2022         WORKPHASE1 = 5  # Work (1 of 1): Element of the steps array for the StepWise question
+#WASIN2022         EXPPHASE1  = 6	# Explain (1 of 2)
+#WASIN2022         EXPPHASE2  = 7	# Explain (2 of 2)
+#WASIN2022         REVPHASE1  = 8	# Review (1 of 1)
+#WASIN2022
+#WASIN2022         # StepWise problem data goes in swpwr_problem_template['steps'][WORKPHASE1]
+#WASIN2022         if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template original json={j}".format(j=json.dumps(swpwr_problem_template,separators=(',',':'))))
+#WASIN2022         if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template template before stimulus={s}".format(s=swpwr_problem_template['stimulus']))
+#WASIN2022         if DEBUG: logger.info("SWPWRXBlock student_view() self.q_swpwr_problem={s}".format(s=self.q_swpwr_problem))
+#WASIN2022         swpwr_problem_template['stimulus'] = self.q_swpwr_problem
+#WASIN2022         if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template template after stimulus={s}".format(s=swpwr_problem_template['stimulus']))
+#WASIN2022         swpwr_problem_template['qId'] = self.q_swpwr_id    # This is used as the ID value for the root DOM for React, it it must be unique in an assignment
+#WASIN2022         swpwr_problem_template['steps'][PREPPHASE2]['correct'] = self.q_swpwr_prepare_2_correct
+#WASIN2022         swpwr_problem_template['steps'][PREPPHASE3]['correct'] = self.q_swpwr_prepare_3_correct
+#WASIN2022         swpwr_problem_template['steps'][ORGPHASE1]['correct'] = self.q_swpwr_organize_1_schema_name
+#WASIN2022         swpwr_problem_template['steps'][WORKPHASE1]['swlabel'] = self.q_label
+#WASIN2022         swpwr_problem_template['steps'][WORKPHASE1]['description'] = self.q_stimulus
+#WASIN2022         swpwr_problem_template['steps'][WORKPHASE1]['definition'] = self.q_definition
+#WASIN2022         swpwr_problem_template['steps'][WORKPHASE1]['swtype'] = self.q_type
+#WASIN2022         swpwr_problem_template['steps'][WORKPHASE1]['hint1'] = self.q_hint1
+#WASIN2022         swpwr_problem_template['steps'][WORKPHASE1]['hint2'] = self.q_hint2
+#WASIN2022         swpwr_problem_template['steps'][WORKPHASE1]['hint3'] = self.q_hint3
+#WASIN2022         swpwr_problem_template['steps'][EXPPHASE2]['correct'] = self.q_swpwr_explain_2_correct
+#WASIN2022         swpwr_problem_template['steps'][REVPHASE1]['correct'] = self.q_swpwr_review_1_correct
+#WASIN2022         swpwr_problem_template['rank'] = self.q_swpwr_rank
+#WASIN2022         swpwr_problem_template['invalid_schemas'] = self.q_swpwr_invalid_schemas
+#WASIN2022
+#WASIN2022         frag.add_javascript(self.resource_string("static/js/src/final_callback.js"))    # Final submit callback code and define swpwr_problems[]
 
-        # We now modify the problem template here, and pass it in already modified for this particular question.
-
-        # Fields in the 'steps' array in the Dict (zero-based)
-        PREPPHASE1 = 0  # Prepare (1 of 3)
-        PREPPHASE2 = 1  # Prepare (2 of 3)
-        PREPPHASE3 = 2  # Prepare (3 of 3)
-        ORGPHASE1  = 3  # Organize (1 of 2)
-        ORGPHASE2  = 4  # Organize (2 of 2)
-        WORKPHASE1 = 5  # Work (1 of 1): Element of the steps array for the StepWise question
-        EXPPHASE1  = 6	# Explain (1 of 2)
-        EXPPHASE2  = 7	# Explain (2 of 2)
-        REVPHASE1  = 8	# Review (1 of 1)
-
-        # StepWise problem data goes in swpwr_problem_template['steps'][WORKPHASE1]
-        if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template original json={j}".format(j=json.dumps(swpwr_problem_template,separators=(',',':'))))
-        if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template template before stimulus={s}".format(s=swpwr_problem_template['stimulus']))
-        if DEBUG: logger.info("SWPWRXBlock student_view() self.q_swpwr_problem={s}".format(s=self.q_swpwr_problem))
-        swpwr_problem_template['stimulus'] = self.q_swpwr_problem
-        if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template template after stimulus={s}".format(s=swpwr_problem_template['stimulus']))
-        swpwr_problem_template['qId'] = self.q_swpwr_id    # This is used as the ID value for the root DOM for React, it it must be unique in an assignment
-        swpwr_problem_template['steps'][PREPPHASE2]['correct'] = self.q_swpwr_prepare_2_correct
-        swpwr_problem_template['steps'][PREPPHASE3]['correct'] = self.q_swpwr_prepare_3_correct
-        swpwr_problem_template['steps'][ORGPHASE1]['correct'] = self.q_swpwr_organize_1_schema_name
-        swpwr_problem_template['steps'][WORKPHASE1]['swlabel'] = self.q_label
-        swpwr_problem_template['steps'][WORKPHASE1]['description'] = self.q_stimulus
-        swpwr_problem_template['steps'][WORKPHASE1]['definition'] = self.q_definition
-        swpwr_problem_template['steps'][WORKPHASE1]['swtype'] = self.q_type
-        swpwr_problem_template['steps'][WORKPHASE1]['hint1'] = self.q_hint1
-        swpwr_problem_template['steps'][WORKPHASE1]['hint2'] = self.q_hint2
-        swpwr_problem_template['steps'][WORKPHASE1]['hint3'] = self.q_hint3
-        swpwr_problem_template['steps'][EXPPHASE2]['correct'] = self.q_swpwr_explain_2_correct
-        swpwr_problem_template['steps'][REVPHASE1]['correct'] = self.q_swpwr_review_1_correct
-        swpwr_problem_template['rank'] = self.q_swpwr_rank
-        swpwr_problem_template['invalid_schemas'] = self.q_swpwr_invalid_schemas
-
-        frag.add_javascript(self.resource_string("static/js/src/final_callback.js"))    # Final submit callback code and define swpwr_problems[]
-
-        test_mode=True
-
-        if (test_mode):
-            if DEBUG: logger.info("SWPWRXBlock student_view() test_mode={e}".format(e=test_mode))
-            ###
-            # Resources from index.html
-            # <html lang="en">
-            #   <head>
-            #     <meta charset="UTF-8" />
-            #     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-            #     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-            #     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-            #     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            #     <title>testReactxBlock</title>
-            #     <script>
-            #       window.swpwr = {
-            #         options: {
-            #           swapiUrl: "https://swapi2.onrender.com/",
-            #           gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/",
-            #         },
-            #       };
-            #     </script>
-            #   </head>
-            #   <body>
-            #     <div id="root"></div>
-            #     <script type="module" src="/public/main.tsx"></script>
-            #   </body>
-            # </html>
-            ###
-            # frag.add_resource('<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>','text/html','head')
-            # frag.add_resource('<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>','text/html','head')
-            # frag.add_resource('<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>','text/html','head')
-            # frag.add_resource('<meta name="viewport" content="width=device-width, initial-scale=1.0" />','text/html','head')
-            snippet_string = 'window.swpwr = { options: { swapiUrl: "https://swapi2.onrender.com/", gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/", }, };'
-            # mid_string = '$(function() {'+snippt_string     # Add jQuery function start
-            # final_string = mid_string+'});'                 # Adds final '});' for the jQuery function
-            # frag.add_resource(final_string,'application/javascript','foot')
-            frag.add_resource(snippet_string,'application/javascript','head')
+        if DEBUG: logger.info("SWPWRXBlock student_view() TEST_MODE={e}".format(e=TEST_MODE))
+        if (TEST_MODE):
+            swpwr_string = 'window.swpwr = { options: { swapiUrl: "https://swapi2.onrender.com/", gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/", }, };'
+            frag.add_resource(swpwr_string,'application/javascript','head')
             frag.add_javascript_url("//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/assets/index-CIesktn4.js")
             html_string = '<div id="root"></div>'
             frag.add_content(html_string)
         else:
-            # Emit the Python dict into the HTML as Javascript object
-            json_string = json.dumps(swpwr_problem_template,separators=(',', ':'))
-            javascript_string = '      window.swpwr_problem_template = '+json_string+';'
-            javascript_string = javascript_string+'window.swpwr_problems.push(window.swpwr_problem_template);console.info("window.swpwr_problems.length=",window.swpwr_problems.length);'
-            if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template final javascript={j}".format(j=javascript_string))
-            frag.add_javascript(javascript_string)     # SWPWR problem to work.
+            # export const OptionsSchema: z.ZodObject<{
+            # swapiUrl: z.ZodOptional<z.ZodString>;
+            # gltfUrl: z.ZodOptional<z.ZodString>;
+            # rank: z.ZodOptional<z.ZodString>;
+            # disabledSchemas: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+            # },
+            # export const StudentSchema = z.object({
+            # studentId: z.string().min(5),
+            # fullName: z.string().optional(),
+            # familiarName: z.string().min(1).optional(),
+            # }) satisfies z.ZodType<Student>;
+            #
+            # export const ProblemSchema = z.object({
+            # appKey: z.string().min(5),
+            # policyId: z.string().min(5).optional(),
+            # problemId: z.string().min(5),
+            # title: z.string().optional(),
+            # stimulus: z.string().optional(),
+            # latex: z.string().optional(),
+            # topic: z.string(),
+            # definition: z.string().min(5),
+            # hints: z.array(z.string().min(5)).max(3).optional(),
+            # }) satisfies z.ZodType<Problem>;
+            swpwr_string = 'window.swpwr = {' +
+                             ' options: { swapiUrl: "https://swapi2.onrender.com/", ' +
+                                          'gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/", ' +
+                                          'rank: "' + self.q_swpwr_rank + '", ' +
+                                          'disabledSchemas: "' + self.q_swpwr_invalid_schemas + '"' +
+                                          ' }, ' +
+                             ' student: { studentId: "' + self.xb_user_email + '", ' +
+                                          'fullName: "' + 'SAMPLE SAMPLE' + '", ' +
+                                          'familiarName: "' + 'SAMPLE' + '"' +
+                                          ' },' +
+                             ' problem: { appKey: "' + self.xb_user_email + '", ' +
+                                          'policyId: "' + '$A1$' + '", ' +
+                                          'problemId: "' + 'SAMPLE' + '", ' +
+                                          'title: "' + 'SAMPLE' + '", ' +
+                                          'stimulus: "' + self.q_stimulus + '", ' +
+                                          'topic: "' + '' + '", ' +
+                                          'definition: "' + self.q_definition + '", ' +
+                                          'hints: "' + '[]' + '"' +
+                                          ' },' +
+                             ' };'
+            if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_string={e}".format(e=swpwr_string))
+            frag.add_resource(swpwr_string,'application/javascript','head')
+            frag.add_javascript_url("//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/assets/index-xQGfimpM.js")
+            html_string = '<div id="root"></div>'
+            frag.add_content(html_string)
+            # NOT NEEDED: Emit the Python dict into the HTML as Javascript object
+            # NOT NEEDED: json_string = json.dumps(swpwr_problem_template,separators=(',', ':'))
+            # NOT NEEDED: javascript_string = '      window.swpwr_problem_template = '+json_string+';'
+            # NOT NEEDED: javascript_string = javascript_string+'window.swpwr_problems.push(window.swpwr_problem_template);console.info("window.swpwr_problems.length=",window.swpwr_problems.length);'
+            # NOT NEEDED: if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template final javascript={j}".format(j=javascript_string))
+            # NOT NEEDED: frag.add_javascript(javascript_string)     # SWPWR problem to work.
 
-            # Load up the React app bundle js, and wrap it as needed so it does not run until after the DOM is completely loaded
-            bundle_string = self.resource_string("public/assets/app.js")
+            # NOT NEEDED: Load up the React app bundle js, and wrap it as needed so it does not run until after the DOM is completely loaded
+            # NOT NEEDED: bundle_string = self.resource_string("public/assets/app.js")
 
-            if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string head={e}".format(e=bundle_string[0:100]))
-            if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string tail={e}".format(e=bundle_string[len(bundle_string)-100:]))
-            # Wrap the bundle js in a jQuery function so it runs after the DOM finishes loading, to emulate the 'defer' action of a <script> tag in the React index.html
-            mid_string = '$(function() {'+bundle_string     # Add jQuery function start
-            if DEBUG: logger.info("SWPWRXBlock student_view() mid_string head={e}".format(e=mid_string[0:100]))
-            if DEBUG: logger.info("SWPWRXBlock student_view() mid_string tail={e}".format(e=mid_string[len(mid_string)-100:]))
-            # Add jQuery function ending.
-            final_string = mid_string+'});'                 # Adds final '});' for the jQuery function
-            if DEBUG: logger.info("SWPWRXBlock student_view() final_string head={e}".format(e=final_string[0:100]))
-            if DEBUG: logger.info("SWPWRXBlock student_view() final_string tail={e}".format(e=final_string[len(final_string)-100:]))
-            frag.add_resource(final_string,'application/javascript','foot')
+            # NOT NEEDED: if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string head={e}".format(e=bundle_string[0:100]))
+            # NOT NEEDED: if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string tail={e}".format(e=bundle_string[len(bundle_string)-100:]))
+            # NOT NEEDED: # Wrap the bundle js in a jQuery function so it runs after the DOM finishes loading, to emulate the 'defer' action of a <script> tag in the React index.html
+            # NOT NEEDED: mid_string = '$(function() {'+bundle_string     # Add jQuery function start
+            # NOT NEEDED: if DEBUG: logger.info("SWPWRXBlock student_view() mid_string head={e}".format(e=mid_string[0:100]))
+            # NOT NEEDED: if DEBUG: logger.info("SWPWRXBlock student_view() mid_string tail={e}".format(e=mid_string[len(mid_string)-100:]))
+            # NOT NEEDED: # Add jQuery function ending.
+            # NOT NEEDED: final_string = mid_string+'});'                 # Adds final '});' for the jQuery function
+            # NOT NEEDED: if DEBUG: logger.info("SWPWRXBlock student_view() final_string head={e}".format(e=final_string[0:100]))
+            # NOT NEEDED: if DEBUG: logger.info("SWPWRXBlock student_view() final_string tail={e}".format(e=final_string[len(final_string)-100:]))
+            # NOT NEEDED: frag.add_resource(final_string,'application/javascript','foot')
 
-        stepwise_setup_string = '''
-          var options = {
-            hideMenu: true,
-            readySet: false,
-            issueSubmit: true,
-            showMe: false,
-            hint: true,
-            scribbles: false
-          };
-          querium.appID = "SW4WPapp";
-          console.info("querium.appID = " + querium.appID);
-          querium.student = "SW4WPuser";
-          console.info("querium.student = " + querium.student);
-          querium.options = options;
-          console.info("querium.options.hideMenu = " + querium.options.hideMenu);
-          console.info("querium.options.readySet = " + querium.options.readySet);
-          console.info("querium.options.issueSubmit = " + querium.options.issueSubmit);
-          console.info("querium.options.showMe = " + querium.options.showMe);
-          console.info("querium.options.hint = " + querium.options.hint);
-          console.info("querium.options.scribbles = " + querium.options.scribbles);
-          querium.serverURL = localStorage.getItem('server');
-          console.info("querium.serverURL = " + querium.serverURL);
-        '''
-        frag.add_resource(stepwise_setup_string,'application/javascript','foot')
+#WASIN2022         stepwise_setup_string = '''
+#WASIN2022           var options = {
+#WASIN2022             hideMenu: true,
+#WASIN2022             readySet: false,
+#WASIN2022             issueSubmit: true,
+#WASIN2022             showMe: false,
+#WASIN2022             hint: true,
+#WASIN2022             scribbles: false
+#WASIN2022           };
+#WASIN2022           querium.appID = "SW4WPapp";
+#WASIN2022           console.info("querium.appID = " + querium.appID);
+#WASIN2022           querium.student = "SW4WPuser";
+#WASIN2022           console.info("querium.student = " + querium.student);
+#WASIN2022           querium.options = options;
+#WASIN2022           console.info("querium.options.hideMenu = " + querium.options.hideMenu);
+#WASIN2022           console.info("querium.options.readySet = " + querium.options.readySet);
+#WASIN2022           console.info("querium.options.issueSubmit = " + querium.options.issueSubmit);
+#WASIN2022           console.info("querium.options.showMe = " + querium.options.showMe);
+#WASIN2022           console.info("querium.options.hint = " + querium.options.hint);
+#WASIN2022           console.info("querium.options.scribbles = " + querium.options.scribbles);
+#WASIN2022           querium.serverURL = localStorage.getItem('server');
+#WASIN2022           console.info("querium.serverURL = " + querium.serverURL);
+#WASIN2022         '''
+#WASIN2022         frag.add_resource(stepwise_setup_string,'application/javascript','foot')
 
         if DEBUG: logger.info("SWPWRXBlock student_view() head={e}".format(e=frag.head_html()))
         if DEBUG: logger.info("SWPWRXBlock student_view() body={e}".format(e=frag.body_html()))
