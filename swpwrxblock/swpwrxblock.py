@@ -981,25 +981,25 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             # definition: z.string().min(5),
             # hints: z.array(z.string().min(5)).max(3).optional(),
             # }) satisfies z.ZodType<Problem>;
-            swpwr_string = 'window.swpwr = {' +
-                             ' options: { swapiUrl: "https://swapi2.onrender.com/", ' +
-                                          'gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/", ' +
-                                          'rank: "' + self.q_swpwr_rank + '", ' +
-                                          'disabledSchemas: "' + self.q_swpwr_invalid_schemas + '"' +
-                                          ' }, ' +
-                             ' student: { studentId: "' + self.xb_user_email + '", ' +
-                                          'fullName: "' + 'SAMPLE SAMPLE' + '", ' +
-                                          'familiarName: "' + 'SAMPLE' + '"' +
-                                          ' },' +
-                             ' problem: { appKey: "' + self.xb_user_email + '", ' +
-                                          'policyId: "' + '$A1$' + '", ' +
-                                          'problemId: "' + 'SAMPLE' + '", ' +
-                                          'title: "' + 'SAMPLE' + '", ' +
-                                          'stimulus: "' + self.q_stimulus + '", ' +
-                                          'topic: "' + '' + '", ' +
-                                          'definition: "' + self.q_definition + '", ' +
-                                          'hints: "' + '[]' + '"' +
-                                          ' },' +
+            swpwr_string = 'window.swpwr = {' + \
+                             ' options: { swapiUrl: "https://swapi2.onrender.com/", ' + \
+                                          'gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/", ' + \
+                                          'rank: "' + self.q_swpwr_rank + '", ' + \
+                                          'disabledSchemas: "' + self.q_swpwr_invalid_schemas + '"' + \
+                                        ' }, ' + \
+                             ' student: { studentId: "' + self.xb_user_email + '", ' + \
+                                          'fullName: "' + 'SAMPLE SAMPLE' + '", ' + \
+                                          'familiarName: "' + 'SAMPLE' + '"' + \
+                                        ' },' + \
+                             ' problem: { appKey: "' + self.xb_user_email + '", ' + \
+                                          'policyId: "' + '$A1$' + '", ' + \
+                                          'problemId: "' + 'SAMPLE' + '", ' + \
+                                          'title: "' + 'SAMPLE' + '", ' + \
+                                          'stimulus: "' + self.q_stimulus + '", ' + \
+                                          'topic: "' + '' + '", ' + \
+                                          'definition: "' + self.q_definition + '", ' + \
+                                          'hints: "' + '[]' + '"' + \
+                                        ' },' + \
                              ' };'
             if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_string={e}".format(e=swpwr_string))
             frag.add_resource(swpwr_string,'application/javascript','head')
@@ -1187,7 +1187,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         Count the total number of VALID steps the student input.
         Used to determine if they get full credit for entering at least a min number of good steps.
         """
-        valid_steps = 0;
+        valid_steps = 0
 
         if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps data={d}".format(d=data))
         step_details = data['stepDetails']
