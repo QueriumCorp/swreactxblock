@@ -991,7 +991,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           'fullName: "' + 'SAMPLE SAMPLE' + '", ' + \
                                           'familiarName: "' + 'SAMPLE' + '"' + \
                                         ' },' + \
-                             ' problem: { appKey: "' + self.xb_user_email + '", ' + \
+                             ' problem: { appKey: "' + 'StepWiseAPI' + '", ' + \
                                           'policyId: "' + '$A1$' + '", ' + \
                                           'problemId: "' + 'SAMPLE' + '", ' + \
                                           'title: "' + 'SAMPLE' + '", ' + \
