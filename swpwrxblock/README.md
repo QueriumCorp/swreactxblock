@@ -1,3 +1,5 @@
+# Creating xblock assets in S3
+
 To copy the necessary React assets from the swpwr app for use by this xblock, here are the steps:
 
 1. In the swpwr repo build directory (e.g. /home/kent/src/swpwr):
