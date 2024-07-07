@@ -812,7 +812,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
 # Now we can finally add the React app bundle assets
 
-        frag.add_css(self.resource_string("public/assets/app.css"))
+#WASIN2022         frag.add_css(self.resource_string("public/assets/app.css"))
 
 #NOTINJVR        frag.add_resource('<base href="/testq_assets/"/>','text/html','head')		# Needed so react code can find its pages. Don't do earlier or impacts relative pathnames of resources
 
