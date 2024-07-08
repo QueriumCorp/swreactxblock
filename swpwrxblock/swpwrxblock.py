@@ -1015,6 +1015,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             # mid_string = '$(function() {'+snippet_string     # Add jQuery function start
             # final_string = mid_string+'});'                 # Adds final '});' for the jQuery function
             # frag.add_resource(final_string,'application/javascript','foot')
+            # frag.add_javascript_url("//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/assets/index-CIesktn4.js")
+            frag.add_javascript_url("dist/index-YyiH-LRh.js") # Need to update any time swpwr gets rebuilt
+            # html_string = '<div id="root"></div>'
+            # frag.add_content(html_string)
+        else:
             swpwr_string = 'window.swpwr = {' + \
                              ' options: { swapiUrl: "https://swapi2.onrender.com/", ' + \
                                           'gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/", ' + \
@@ -1037,63 +1042,58 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                              ' };'
             if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_string={e}".format(e=swpwr_string))
             frag.add_resource(swpwr_string,'application/javascript','head')
-            # frag.add_javascript_url("//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/assets/index-CIesktn4.js")
-            frag.add_javascript_url("dist/index-YyiH-LRh.js") # Need to update any time swpwr gets rebuilt
-            # html_string = '<div id="root"></div>'
-            # frag.add_content(html_string)
-        else:
             # Emit the Python dict into the HTML as Javascript object
-            json_string = json.dumps(swpwr_problem_template,separators=(',', ':'))
-            javascript_string = '      window.swpwr_problem_template = '+json_string+';'
-            javascript_string = javascript_string+'window.swpwr_problems.push(window.swpwr_problem_template);console.info("window.swpwr_problems.length=",window.swpwr_problems.length);'
-            if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template final javascript={j}".format(j=javascript_string))
-            frag.add_javascript(javascript_string)     # SWPWR problem to work.
+            # json_string = json.dumps(swpwr_problem_template,separators=(',', ':'))
+            # javascript_string = '      window.swpwr_problem_template = '+json_string+';'
+            # javascript_string = javascript_string+'window.swpwr_problems.push(window.swpwr_problem_template);console.info("window.swpwr_problems.length=",window.swpwr_problems.length);'
+            # if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template final javascript={j}".format(j=javascript_string))
+            # frag.add_javascript(javascript_string)     # SWPWR problem to work.
 
             # Load up the React app bundle js, and wrap it as needed so it does not run until after the DOM is completely loaded
-            bundle_string = self.resource_string("public/assets/app.js")
+            # bundle_string = self.resource_string("public/assets/app.js")
 
-            if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string head={e}".format(e=bundle_string[0:100]))
-            if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string tail={e}".format(e=bundle_string[len(bundle_string)-100:]))
-            # Wrap the bundle js in a jQuery function so it runs after the DOM finishes loading, to emulate the 'defer' action of a <script> tag in the React index.html
-            mid_string = '$(function() {'+bundle_string     # Add jQuery function start
-            if DEBUG: logger.info("SWPWRXBlock student_view() mid_string head={e}".format(e=mid_string[0:100]))
-            if DEBUG: logger.info("SWPWRXBlock student_view() mid_string tail={e}".format(e=mid_string[len(mid_string)-100:]))
-            # Add jQuery function ending.
-            final_string = mid_string+'});'                 # Adds final '});' for the jQuery function
-            if DEBUG: logger.info("SWPWRXBlock student_view() final_string head={e}".format(e=final_string[0:100]))
-            if DEBUG: logger.info("SWPWRXBlock student_view() final_string tail={e}".format(e=final_string[len(final_string)-100:]))
+            # if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string head={e}".format(e=bundle_string[0:100]))
+            # if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string tail={e}".format(e=bundle_string[len(bundle_string)-100:]))
+            # # Wrap the bundle js in a jQuery function so it runs after the DOM finishes loading, to emulate the 'defer' action of a <script> tag in the React index.html
+            # mid_string = '$(function() {'+bundle_string     # Add jQuery function start
+            # if DEBUG: logger.info("SWPWRXBlock student_view() mid_string head={e}".format(e=mid_string[0:100]))
+            # if DEBUG: logger.info("SWPWRXBlock student_view() mid_string tail={e}".format(e=mid_string[len(mid_string)-100:]))
+            # # Add jQuery function ending.
+            # final_string = mid_string+'});'                 # Adds final '});' for the jQuery function
+            # if DEBUG: logger.info("SWPWRXBlock student_view() final_string head={e}".format(e=final_string[0:100]))
+            # if DEBUG: logger.info("SWPWRXBlock student_view() final_string tail={e}".format(e=final_string[len(final_string)-100:]))
             frag.add_javascript_url("dist/index-YyiH-LRh.js") # Need to update any time swpwr gets rebuilt
             frag.add_resource(final_string,'application/javascript','foot')
 
-        stepwise_setup_string = '''
-          var options = {
-            hideMenu: true,
-            readySet: false,
-            issueSubmit: true,
-            showMe: false,
-            hint: true,
-            scribbles: false
-          };
-          querium.appID = "SW4WPapp";
-          console.info("querium.appID = " + querium.appID);
-          querium.student = "SW4WPuser";
-          console.info("querium.student = " + querium.student);
-          querium.options = options;
-          console.info("querium.options.hideMenu = " + querium.options.hideMenu);
-          console.info("querium.options.readySet = " + querium.options.readySet);
-          console.info("querium.options.issueSubmit = " + querium.options.issueSubmit);
-          console.info("querium.options.showMe = " + querium.options.showMe);
-          console.info("querium.options.hint = " + querium.options.hint);
-          console.info("querium.options.scribbles = " + querium.options.scribbles);
-          querium.serverURL = localStorage.getItem('server');
-          console.info("querium.serverURL = " + querium.serverURL);
-        '''
-        frag.add_resource(stepwise_setup_string,'application/javascript','foot')
-
-        if DEBUG: logger.info("SWPWRXBlock student_view() head={e}".format(e=frag.head_html()))
-        if DEBUG: logger.info("SWPWRXBlock student_view() body={e}".format(e=frag.body_html()))
-        if DEBUG: logger.info("SWPWRXBlock student_view() foot={e}".format(e=frag.foot_html()))
-        if DEBUG: logger.info("SWPWRXBlock student_view() calling frag.initialize_js")
+#NOTYET         stepwise_setup_string = '''
+#NOTYET           var options = {
+#NOTYET             hideMenu: true,
+#NOTYET             readySet: false,
+#NOTYET             issueSubmit: true,
+#NOTYET             showMe: false,
+#NOTYET             hint: true,
+#NOTYET             scribbles: false
+#NOTYET           };
+#NOTYET           querium.appID = "SW4WPapp";
+#NOTYET           console.info("querium.appID = " + querium.appID);
+#NOTYET           querium.student = "SW4WPuser";
+#NOTYET           console.info("querium.student = " + querium.student);
+#NOTYET           querium.options = options;
+#NOTYET           console.info("querium.options.hideMenu = " + querium.options.hideMenu);
+#NOTYET           console.info("querium.options.readySet = " + querium.options.readySet);
+#NOTYET           console.info("querium.options.issueSubmit = " + querium.options.issueSubmit);
+#NOTYET           console.info("querium.options.showMe = " + querium.options.showMe);
+#NOTYET           console.info("querium.options.hint = " + querium.options.hint);
+#NOTYET           console.info("querium.options.scribbles = " + querium.options.scribbles);
+#NOTYET           querium.serverURL = localStorage.getItem('server');
+#NOTYET           console.info("querium.serverURL = " + querium.serverURL);
+#NOTYET         '''
+#NOTYET         frag.add_resource(stepwise_setup_string,'application/javascript','foot')
+#NOTYET
+#NOTYET         if DEBUG: logger.info("SWPWRXBlock student_view() head={e}".format(e=frag.head_html()))
+#NOTYET         if DEBUG: logger.info("SWPWRXBlock student_view() body={e}".format(e=frag.body_html()))
+#NOTYET         if DEBUG: logger.info("SWPWRXBlock student_view() foot={e}".format(e=frag.foot_html()))
+#NOTYET         if DEBUG: logger.info("SWPWRXBlock student_view() calling frag.initialize_js")
         frag.initialize_js('SWPWRXStudent', {})  # Call the entry point
         return frag
 
