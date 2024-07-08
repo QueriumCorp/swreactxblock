@@ -655,7 +655,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
 # Build content programatticaly that looks like the above HTML
 
-        html = self.resource_string("static/html/swpwrxstudent.html",'text/html')
+        html = self.resource_string("static/html/swpwrxstudent.html")
         frag = Fragment(html.format(self=self))
         frag.add_resource('<meta charset="utf-8"/>','text/html','head')
         frag.add_resource('<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />','text/html','head')
