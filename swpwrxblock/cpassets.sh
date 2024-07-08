@@ -17,6 +17,9 @@ if [ ! -d "dist/assets" ]; then
   mkdir dist/assets
 fi
 
+if [ ! -d "public" ]; then
+  mkdir public
+fi
 # Which precache manifest to copy
 # c=precache-manifest.8c5268b68a90c8397a5eb1681f40011c.js
 
@@ -27,7 +30,8 @@ ls $b | grep '\.woff2$' | sed -e "s#^#cp $b/#" -e 's#$# dist/assets/#' | sh
 # exit
 
 # Which asset javascript files to copy
-js1=index-xQGfimpM.js
+js1=`ls -t $b | head -1`
+# js1=index-xQGfimpM.js
 
 # Which asset css files to copy
 cs1=index-BlBmDmqs.css
@@ -52,3 +56,7 @@ cp $s/assets/react.svg public/
 cp $b/${js1} dist/
 #
 cp $b/${cs1} dist/
+
+echo "Top-level Javascript file is $js1"
+echo "Be sure to update that filename in swpwrxblock.py:"
+echo "frag.add_javascript_url(\"dist/${js1}\") # Need to update any time swpwr gets rebuilt"
