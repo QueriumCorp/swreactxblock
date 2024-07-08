@@ -890,7 +890,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                              ' };'
             if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_string={e}".format(e=swpwr_string))
             frag.add_resource(swpwr_string,'application/javascript','head')
-            frag.add_javascript_url("dist/index-xQGfimpM.js")
+            frag.add_javascript_url("dist/index-YyiH-LRh.js") # Need to update any time swpwr gets rebuilt
             # NOT NEEDED: html_string = '<div id="root"></div>'
             # NOT NEEDED: frag.add_content(html_string)
             # NOT NEEDED: Emit the Python dict into the HTML as Javascript object
