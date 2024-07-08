@@ -1063,7 +1063,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             # if DEBUG: logger.info("SWPWRXBlock student_view() final_string head={e}".format(e=final_string[0:100]))
             # if DEBUG: logger.info("SWPWRXBlock student_view() final_string tail={e}".format(e=final_string[len(final_string)-100:]))
             frag.add_javascript_url("dist/index-YyiH-LRh.js") # Need to update any time swpwr gets rebuilt
-            frag.add_resource(final_string,'application/javascript','foot')
+            # frag.add_resource(final_string,'application/javascript','foot')
 
 #NOTYET         stepwise_setup_string = '''
 #NOTYET           var options = {
