@@ -10,12 +10,19 @@ b=$i/dist/assets
 p=$i/public
 s=$i/src
 
+if [ ! -d "dist" ]; then
+  mkdir dist
+fi
+if [ ! -d "dist/assets" ]; then
+  mkdir dist/assets
+fi
+
 # Which precache manifest to copy
 # c=precache-manifest.8c5268b68a90c8397a5eb1681f40011c.js
 
 ls $b | grep '\.js$' | sed -e "s#^#cp $b/#" -e 's#$# dist/#' | sh
-ls $b | grep '\.woff2$' | sed -e "s#^#cp $b/#" -e 's#$# dist/#' | sh
 ls $b | grep '\.css$' | sed -e "s#^#cp $b/#" -e 's#$# dist/#' | sh
+ls $b | grep '\.woff2$' | sed -e "s#^#cp $b/#" -e 's#$# dist/assets/#' | sh
 
 # exit
 
@@ -42,9 +49,6 @@ sed -I -e 's#gltfUrl: "/models/"#gltfUrl: "https://s3.amazonaws.com/stepwise-edi
 cp $s/assets/react.svg public/
 # cp $s/models/foxy/model.tsx public/
 #
-if [ ! -d "dist" ]; then
-  mkdir dist
-fi
 cp $b/${js1} dist/
 #
 cp $b/${cs1} dist/
