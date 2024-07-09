@@ -37,6 +37,6 @@ setup(
             'swpwrxblock = swpwrxblock:SWPWRXBlock',
         ]
     },
-    package_data=package_data("swpwrxblock", ["swpwrxblock/static/media","swpwrxblock/static","static", "public", "public/assets", "public/assets/js", "public/assets/css", "static/media", "media","dist"]),
+    package_data=package_data("swpwrxblock", ["swpwrxblock/static/media","swpwrxblock/static","static", "public", "public/assets", "public/assets/js", "public/assets/css", "static/media", "media"]),
     include_package_data=True,
 )

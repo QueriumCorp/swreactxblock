@@ -1,14 +1,1 @@
-dist/DailyMotion-*.js
-dist/Facebook-*.js
-dist/FilePlayer-*.js
-dist/Kaltura-*.js
-dist/Mixcloud-*.js
-dist/Mux-*.js
-dist/Preview-*.js
-dist/SoundCloud-*.js
-dist/Streamable-*.js
-dist/Twitch-*.js
-dist/Vidyard-*.js
-dist/Vimeo-*.js
-dist/YouTube-*.js
-dist/index-*.js
+dist/

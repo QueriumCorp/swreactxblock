@@ -1061,9 +1061,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             # final_string = mid_string+'});'                 # Adds final '});' for the jQuery function
             # if DEBUG: logger.info("SWPWRXBlock student_view() final_string head={e}".format(e=final_string[0:100]))
             # if DEBUG: logger.info("SWPWRXBlock student_view() final_string tail={e}".format(e=final_string[len(final_string)-100:]))
-            # frag.add_javascript_url("//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/index-YyiH-LRh.js")  # This gets a CORB error
-            # frag.add_javascript_url("dist/index-YyiH-LRh.js") # Need to update any time swpwr gets rebuilt
-            frag.add_javascript(self.resource_string("dist/index-YyiH-LRh.js")) # Need to update any time swpwr gets rebuilt
+            # frag.add_javascript_url("//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/public/index-YyiH-LRh.js")  # This gets a CORB error
+            # frag.add_javascript_url("public/index-YyiH-LRh.js") # Need to update any time swpwr gets rebuilt
+            frag.add_javascript(self.resource_string("public/index-YyiH-LRh.js")) # Need to update any time swpwr gets rebuilt
             # frag.add_resource(final_string,'application/javascript','foot')
 
 #NOTYET         stepwise_setup_string = '''
