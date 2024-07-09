@@ -1118,8 +1118,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     # SAVE
     def save(self):
         if DEBUG: logger.info("SWPWRXBlock Hi Kent 2024-7-1 17:25 save() self{s}".format(s=self))
-        XBlock.save(self)       # Call parent class save()
-        # if DEBUG: logger.info("SWPWRXBlock save() back from parent save. self.solution={s}".format(s=self.solution))
+        try:
+            XBlock.save(self)       # Call parent class save()
+        except (NameError,AttributeError,InvalidScopeError) as e:
+            logger.info('SWPWRXBlock save() had an error: {e}'.format(e=e))
+        if DEBUG: logger.info("SWPWRXBlock save() back from parent save. self.solution={s}".format(s=self.solution))
 
 
     # GET_DATA: RETURN DATA FOR THIS QUESTION
