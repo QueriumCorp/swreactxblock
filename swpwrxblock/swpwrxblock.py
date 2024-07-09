@@ -1015,8 +1015,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             # mid_string = '$(function() {'+snippet_string     # Add jQuery function start
             # final_string = mid_string+'});'                 # Adds final '});' for the jQuery function
             # frag.add_resource(final_string,'application/javascript','foot')
-            # frag.add_javascript_url("//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/assets/index-CIesktn4.js")
-            frag.add_javascript_url("dist/index-YyiH-LRh.js") # Need to update any time swpwr gets rebuilt
+            frag.add_javascript_url("//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/assets/index-CIesktn4.js")
             # html_string = '<div id="root"></div>'
             # frag.add_content(html_string)
         else:
@@ -1062,7 +1061,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             # final_string = mid_string+'});'                 # Adds final '});' for the jQuery function
             # if DEBUG: logger.info("SWPWRXBlock student_view() final_string head={e}".format(e=final_string[0:100]))
             # if DEBUG: logger.info("SWPWRXBlock student_view() final_string tail={e}".format(e=final_string[len(final_string)-100:]))
-            frag.add_javascript_url("dist/index-YyiH-LRh.js") # Need to update any time swpwr gets rebuilt
+            frag.add_javascript_url("//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/index-YyiH-LRh.js")
+            # frag.add_javascript_url("dist/assets/index-YyiH-LRh.js") # Need to update any time swpwr gets rebuilt
             # frag.add_resource(final_string,'application/javascript','foot')
 
 #NOTYET         stepwise_setup_string = '''
