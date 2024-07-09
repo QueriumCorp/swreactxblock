@@ -806,7 +806,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         # frag.add_content(html_string)
 
         # Force a script tag of module type to hold the main React app file
-        html_string = '<script type="module" src="/public/index-YyiH-LRh.js"></script>'
+        html_string = '<script type="module" src="public/index-YyiH-LRh.js"></script>'
         frag.add_content(html_string)
 
 # Apparently jQuery already loaded
