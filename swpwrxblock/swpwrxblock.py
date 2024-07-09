@@ -805,6 +805,10 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         # html_string = '<div id="root"></div>'
         # frag.add_content(html_string)
 
+        # Force a script tag of module type to hold the main React app file
+        html_string = '<script type="module" src="/public/index-YyiH-LRh.js"></script>'
+        frag.add_content(html_string)
+
 # Apparently jQuery already loaded
 #HIDEME        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
 #NOTYET        frag.add_javascript_url("//stepwise.querium.com/libs/mathquill/mathquill.js")
@@ -1064,7 +1068,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             # frag.add_javascript_url("//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/public/index-YyiH-LRh.js")  # This gets a CORB error
             # frag.add_javascript_url("public/index-YyiH-LRh.js") # Need to update any time swpwr gets rebuilt
             # frag.add_javascript(self.resource_string("public/index-YyiH-LRh.js")) # Need to update any time swpwr gets rebuilt
-            frag.add_resource('<script type="module" src="/public/index-YyiH-LRh.js"></script>','application/javascript','head')
+            # This script module apparently cannot be generated using the Fragment library, so we'll next try hard coding it into the page template.
+            # frag.add_resource('<script type="module" src="/public/index-YyiH-LRh.js"></script>','application/javascript','head')
             # frag.add_resource(final_string,'application/javascript','foot')
 
 #NOTYET         stepwise_setup_string = '''
