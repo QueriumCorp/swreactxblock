@@ -1063,7 +1063,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             # if DEBUG: logger.info("SWPWRXBlock student_view() final_string tail={e}".format(e=final_string[len(final_string)-100:]))
             # frag.add_javascript_url("//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/public/index-YyiH-LRh.js")  # This gets a CORB error
             # frag.add_javascript_url("public/index-YyiH-LRh.js") # Need to update any time swpwr gets rebuilt
-            frag.add_javascript(self.resource_string("public/index-YyiH-LRh.js")) # Need to update any time swpwr gets rebuilt
+            # frag.add_javascript(self.resource_string("public/index-YyiH-LRh.js")) # Need to update any time swpwr gets rebuilt
+            frag.add_resource('<script type="module" src="' + self.resource_string("public/index-YyiH-LRh.js") + '"></script>'
             # frag.add_resource(final_string,'application/javascript','foot')
 
 #NOTYET         stepwise_setup_string = '''
