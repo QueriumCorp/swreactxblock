@@ -10,6 +10,7 @@ b=$i/dist/assets
 p=$i/public
 s=$i/src
 d=$i/dist
+m=$d/models
 
 if [ ! -d "dist" ]; then
   mkdir dist
@@ -21,6 +22,11 @@ fi
 if [ ! -d "public" ]; then
   mkdir public
 fi
+
+if [ ! -d "public/models" ]; then
+  mkdir public/models
+fi
+
 # Which precache manifest to copy
 # c=precache-manifest.8c5268b68a90c8397a5eb1681f40011c.js
 
@@ -47,6 +53,8 @@ cp $p/favicon.ico public/
 cp $p/vite.svg public/
 #
 cp $d/site.webmanifest public/
+#
+cp $m/foxy.glb public/models/
 #
 cp $i/index.html public/
 sed -I -e 's#/src/main.tsx#/public/main.tsx#' public/index.html

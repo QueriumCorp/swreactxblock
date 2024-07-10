@@ -29,6 +29,7 @@ include swpwrxblock/public/index.html-e
 include swpwrxblock/public/logo192.png
 include swpwrxblock/public/logo512.png
 include swpwrxblock/public/manifest.json
+include swpwrxblock/public/models/foxy.glb
 include swpwrxblock/public/react.svg
 include swpwrxblock/public/robots.txt
 include swpwrxblock/public/site.webmanifest
