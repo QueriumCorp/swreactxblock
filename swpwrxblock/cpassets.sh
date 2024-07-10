@@ -9,6 +9,7 @@ i=~/src/$x
 b=$i/dist/assets
 p=$i/public
 s=$i/src
+d=$i/dist
 
 if [ ! -d "dist" ]; then
   mkdir dist
@@ -44,6 +45,8 @@ cp $p/favicon-16x16.png public/
 cp $p/favicon-32x32.png public/
 cp $p/favicon.ico public/
 cp $p/vite.svg public/
+#
+cp $d/site.webmanifest public/
 #
 cp $i/index.html public/
 sed -I -e 's#/src/main.tsx#/public/main.tsx#' public/index.html
