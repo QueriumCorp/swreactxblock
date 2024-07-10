@@ -17,3 +17,6 @@ Specifically, you should look at the code in swpwrxblock/swpwrxblock.py that use
 the student's HTML content view.
 
 You can use the swpwrxblock/cpassets.sh script to fetch specific build asset files from a swpwr repo installation.
+
+You may also need to run swpwrxblock/modifyreactassets.sh to modify the app.js and app.css assets so they begin full-screen and maximized.
+We did this in Phase 1 in 2022.
