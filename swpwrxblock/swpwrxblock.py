@@ -764,6 +764,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
 # Build content programatticaly that looks like the above HTML
 
+        # NOTE: The following page now includes the script tag that loads the module for the main React app
         html = self.resource_string("static/html/swpwrxstudent.html")
         frag = Fragment(html.format(self=self))
 
