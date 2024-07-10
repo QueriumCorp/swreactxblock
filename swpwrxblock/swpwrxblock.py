@@ -806,10 +806,10 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         # frag.add_content(html_string)
 
         resource_string = self.resource_string("public/assets/app.js")
-        if DEBUG: logger.info('SWPWRXBlock student_view() KENT resource_string={r}'.format(r=resource_string))
+        if DEBUG: logger.info('SWPWRXBlock student_view() KENT example resource_string={r}'.format(r=resource_string))
         # Force a script tag of module type to hold the main React app file
-        html_string = '<script type="module" src="public/index-YyiH-LRh.js"></script>'
-        frag.add_content(html_string)
+        # html_string = '<script type="module" src="public/index-YyiH-LRh.js"></script>'
+        # frag.add_content(html_string)
 
 # Apparently jQuery already loaded
 #HIDEME        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
