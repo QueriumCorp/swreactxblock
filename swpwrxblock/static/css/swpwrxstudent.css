@@ -1,5 +1,10 @@
 /* CSS for SWPWRXBlock */
 
+/* Ensure that kettu doesn't grow forever */
+#content {
+  max-height:1024px;
+}
+
 .swpwrxblock_block {
     position: relative;
     transition: min-height 0.35s ease-out;
