@@ -3,6 +3,13 @@
 /* Ensure that kettu doesn't grow forever */
 #content {
   max-height:1024px;
+  padding: 0px;
+  margin: 0px;
+}
+
+# avoid padding by openedx
+.course-wrapper main {
+  padding: 0px !important
 }
 
 .swpwrxblock_block {
