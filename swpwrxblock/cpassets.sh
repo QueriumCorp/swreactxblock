@@ -71,5 +71,8 @@ cp $b/${js1} public/
 cp $b/${cs1} public/
 
 echo "Top-level Javascript file is $js1"
-echo "Be sure to update that filename in swpwrxblock.py:"
-echo "frag.add_javascript_url(\"public/${js1}\") # Need to update any time swpwr gets rebuilt"
+echo "Top-level CSS file is $cs1"
+echo "Be sure to update those filenames that are loaded in static/html/swpwrxstudent.html:"
+echo "    <!-- Load main React app filename -->"
+echo "    <script type="module" crossorigin src="/static/xblock/resources/swpwrxblock/public/${js1}"></script>"
+echo "    <link rel="stylesheet" crossorigin href="/static/xblock/resources/swpwrxblock/public/${cs1}">"
