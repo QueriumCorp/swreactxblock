@@ -23,6 +23,24 @@ this detailed scoring data down to the Javascript code.  It may be possible for 
 the scoring details to the Javascript code for display, but this is not currently done.  Thus, if you need to update the scoring logic
 here in Python, you need to check the Javascript source in js/src/swpwrxstudent.js to make sure you don't also have to change the score display
 logic there.
+
+The swpwr_problem_hints field is optional, and looks like this:
+swpwr.problem.wpHints = [
+  {
+    pageId: “newbWorkProblem”,
+    hints:[
+        “helpful hint”,
+        “Even more helpful”,
+        “Fricken enlightenment “
+    ]
+  },
+  { // another page
+  },
+  {
+    // yet another page
+  },
+]
+
 """
 
 # Python stuff
@@ -136,7 +154,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     q_swpwr_invalid_schemas = String(display_name="Comma-separated list of unallowed schema names", help="SWPWR Comma-seprated list of unallowed schema names", default="",scope=Scope.content)
     # Rank choices should be "newb" or "cadet" or "learner" or "ranger"
     q_swpwr_rank = String(display_name="Student rank for this question", help="SWPWR Student rank for this question", default=DEFAULT_RANK, scope=Scope.content)
-    q_swpwr_problem_hints = String(display_name="Problem-specific hints (JSON)", help="SWPWR optional problem-specific hints (JSON)", default="", scope=Scope.content)
+    q_swpwr_problem_hints = String(display_name="Problem-specific hints (JSON)", help="SWPWR optional problem-specific hints (JSON)", default="[]", scope=Scope.content)
     # STUDENT'S QUESTION PERFORMANCE FIELDS
     swpwr_results = String(help="SWPWR The student's SWPWR Solution structure", default="", scope=Scope.user_state)
 
@@ -607,7 +625,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             temp_value = self.q_swpwr_problem_hints
         except (NameError,AttributeError) as e:
             if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_problem_hints was not defined in this instance: {e}'.format(e=e))
-            self.q_swpwr_problem_hints = ""
+            self.q_swpwr_problem_hints = "[]"
         if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_problem_hints: {t}'.format(t=self.q_swpwr_problem_hints))
 
         # Save an identifier for the user
@@ -1052,8 +1070,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           'stimulus: "' + self.q_stimulus + '", ' + \
                                           'topic: "' + 'gradeBasicAlgebra' + '", ' + \
                                           'definition: "' + self.q_definition + '", ' + \
-                                          'hints: "' + '[]' + '",' + \
-                                          'problemHints: "' + self.q_swpwr_problem_hints + '"' + \
+                                          'mathHints: "' + '[]' + '",' + \
+                                          'wpHints: "' + self.q_swpwr_problem_hints + '"' + \
                                         ' },' + \
                              ' };'
             if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_string={e}".format(e=swpwr_string))
