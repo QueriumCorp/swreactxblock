@@ -7,7 +7,6 @@
   margin: 0px;
 }
 
-# avoid padding by openedx
 .course-wrapper main {
   padding: 0px !important
 }
