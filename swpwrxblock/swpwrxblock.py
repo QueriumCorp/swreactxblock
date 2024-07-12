@@ -136,6 +136,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     q_swpwr_invalid_schemas = String(display_name="Comma-separated list of unallowed schema names", help="SWPWR Comma-seprated list of unallowed schema names", default="",scope=Scope.content)
     # Rank choices should be "newb" or "cadet" or "learner" or "ranger"
     q_swpwr_rank = String(display_name="Student rank for this question", help="SWPWR Student rank for this question", default=DEFAULT_RANK, scope=Scope.content)
+    q_swpwr_problem_hints = String(display_name="Problem-specific hints (JSON)", help="SWPWR optional problem-specific hints (JSON)", default="", scope=Scope.content)
     # STUDENT'S QUESTION PERFORMANCE FIELDS
     swpwr_results = String(help="SWPWR The student's SWPWR Solution structure", default="", scope=Scope.user_state)
 
@@ -602,6 +603,13 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_rank was not defined in this instance: {e}'.format(e=e))
             self.q_swpwr_rank = DEFAULT_RANK
         if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_rank: {t}'.format(t=self.q_swpwr_rank))
+        try:
+            temp_value = self.q_swpwr_problem_hints
+        except (NameError,AttributeError) as e:
+            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_problem_hints was not defined in this instance: {e}'.format(e=e))
+            self.q_swpwr_problem_hints = ""
+        if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_problem_hints: {t}'.format(t=self.q_swpwr_problem_hints))
+
         # Save an identifier for the user
 
         user_service = self.runtime.service( self, 'user')
@@ -984,6 +992,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         swpwr_problem_template['steps'][REVPHASE1]['correct'] = self.q_swpwr_review_1_correct
         swpwr_problem_template['rank'] = self.q_swpwr_rank
         swpwr_problem_template['invalid_schemas'] = self.q_swpwr_invalid_schemas
+        swpwr_problem_template['problem_hints'] = self.q_swpwr_problem_hints
 
         frag.add_javascript(self.resource_string("static/js/src/final_callback.js"))    # Final submit callback code and define swpwr_problems[]
 
@@ -1043,7 +1052,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           'stimulus: "' + self.q_stimulus + '", ' + \
                                           'topic: "' + 'gradeBasicAlgebra' + '", ' + \
                                           'definition: "' + self.q_definition + '", ' + \
-                                          'hints: "' + '[]' + '"' + \
+                                          'hints: "' + '[]' + '",' + \
+                                          'problemHints: "' + self.q_swpwr_problem_hints + '"' + \
                                         ' },' + \
                              ' };'
             if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_string={e}".format(e=swpwr_string))
@@ -1478,6 +1488,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         self.q_swpwr_review_1_correct = data['swpwr_review_1_correct']
         self.q_swpwr_rank = data['swpwr_rank']
         self.q_swpwr_invalid_schemas = data['swpwr_invalid_schemas']
+        self.q_swpwr_problem_hints = data['swpwr_problem_hints']
 
         self.display_name = "Step-by-Step POWER"
 
@@ -1718,6 +1729,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             "q_swpwr_review_1_correct": self.q_swpwr_review_1_correct,
             "q_swpwr_rank": self.q_swpwr_rank,
             "q_swpwr_invalid_schemas": self.q_swpwr_invalid_schemas,
+            "q_swpwr_problem_hints": self.q_swpwr_problem_hints,
             "q_weight" :  self.my_weight,
             "q_max_attempts" : self.my_max_attempts,
             "q_option_hint" : self.my_option_hint,

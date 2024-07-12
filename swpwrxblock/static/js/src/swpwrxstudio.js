@@ -40,6 +40,7 @@ function SWPWRXStudio(runtime, element, question) {
             swpwr_review_1_correct : $('#swpwr_review_1_correct', element).val(),
             swpwr_rank : $('#swpwr_rank', element).val(),
             swpwr_invalid_schemas : $('#swpwr_invalid_schemas', element).val(),
+            swpwr_problem_hints : $('#swpwr_problem_hints', element).val(),
 
         }
 

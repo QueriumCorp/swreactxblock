@@ -56,8 +56,9 @@ function SWPWRXStudent(runtime, element) {
             var min_steps_ded = question.q_grade_min_steps_ded;
             var swpwr_problem = question.swpwr_problem;
             var swpwr_id = question.q_swpwr_id;
-            // var swpwr_rank = question.q_swpwr_rank;
-            // var swpwr_invalid_schemas = question.q_swpwr_invalid_schemas;
+            var swpwr_rank = question.q_swpwr_rank;
+            var swpwr_invalid_schemas = question.q_swpwr_invalid_schemas;
+            var swpwr_problem_hints = question.q_swpwr_problem_hints;
 
             console.info("SWPWRXStudent question",question);
             console.info("SWPWRXStudent swpwr_problem",swpwr_problem);
@@ -72,8 +73,9 @@ function SWPWRXStudent(runtime, element) {
             console.info("SWPWRXStudent min steps dec",min_steps_ded);
             console.info("SWPWRXStudent grade",grade);
             console.info("SWPWRXStudent swpwr_id",swpwr_id);
-            // console.info("SWPWRXStudent swpwr_rank ",swpwr_rank);
-            // console.info("SWPWRXStudent swpwr_invalid_schemas ",swpwr_invalid_schemas);
+            console.info("SWPWRXStudent swpwr_rank ",swpwr_rank);
+            console.info("SWPWRXStudent swpwr_invalid_schemas ",swpwr_invalid_schemas);
+            console.info("SWPWRXStudent swpwr_problem_hints ",swpwr_problem_hints);
 
             // DON'T Replace the React root div id KAFROOT with the swpwr problem ID: Use one xblock per assignment
             // document.getElementById("KAFROOT").setAttribute("id", swpwr_id);
