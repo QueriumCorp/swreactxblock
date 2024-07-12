@@ -76,3 +76,6 @@ echo "Be sure to update those filenames that are loaded in static/html/swpwrxstu
 echo "    <!-- Load main React app filename -->"
 echo "    <script type="module" crossorigin src="/static/xblock/resources/swpwrxblock/public/${js1}"></script>"
 echo "    <link rel="stylesheet" crossorigin href="/static/xblock/resources/swpwrxblock/public/${cs1}">"
+echo "Also, don't forget to run:"
+echo "./fixcssurl.sh"
+echo "./fixjsurl.sh
