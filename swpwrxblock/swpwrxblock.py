@@ -27,11 +27,11 @@ logic there.
 The swpwr_problem_hints field is optional, and looks like this:
 swpwr.problem.wpHints = [
   {
-    pageId: “newbWorkProblem”,
-    hints:[
-        “helpful hint”,
-        “Even more helpful”,
-        “Fricken enlightenment “
+    "pageId": "newbWorkProblem",
+    "hints":[
+        "helpful hint",
+        "Even more helpful",
+        "Fricken enlightenment"
     ]
   },
   { // another page
