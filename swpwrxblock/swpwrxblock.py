@@ -143,13 +143,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     q_hint2 = String(help="SWPWR Second Hint", default='', scope=Scope.content)
     q_hint3 = String(help="SWPWR Third Hint", default='', scope=Scope.content)
     q_swpwr_problem = String(help="SWPWR SWPWR Problem", default='', scope=Scope.content)
-    q_swpwr_id = String(help="SWPWR Question ID", default="", scope=Scope.content)
-    # New on Nov 7, 2022
-    q_swpwr_prepare_2_correct = Integer(help='SWPWR Prepare 2 Min Length', default=0, scope=Scope.content)
-    q_swpwr_prepare_3_correct = Integer(help='SWPWR Prepare 3 Min Length', default=20, scope=Scope.content)
-    q_swpwr_organize_1_schema_name = String(help='SWPWR Organize 1 Schema Name one of COMBINE, MULTIPLYTIMES, EQUALGROUPS, CHANGE', default='COMBINE', scope=Scope.content)
-    q_swpwr_explain_2_correct = Integer(help='SWPWR Explain 2 Min Length', default=20, scope=Scope.content)
-    q_swpwr_review_1_correct = Integer(help='SWPWR Review 1 Min Length', default=20, scope=Scope.content)
     # Invalid schema choices should be a CSV list of one or more of these: "TOTAL", "DIFFERENCE", "CHANGEINCREASE", "CHANGEDECREASE", "EQUALGROUPS", and "COMPARE"
     q_swpwr_invalid_schemas = String(display_name="Comma-separated list of unallowed schema names", help="SWPWR Comma-seprated list of unallowed schema names", default="",scope=Scope.content)
     # Rank choices should be "newb" or "cadet" or "learner" or "ranger"
@@ -564,52 +557,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         # Fetch the new xblock-specific attributes if they exist, otherwise set them to a default
         try:
-            temp_value = self.q_swpwr_id
-        except (NameError,AttributeError) as e:
-            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_id was not defined in this instance: {e}'.format(e=e))
-            self.q_swpwr_id = 'ROOT'	# Default for React app.  Better have only one of these per assignment to avoid dup IDs
-        if (self.q_swpwr_id == ""):
-            self.q_swpwr_id = 'ROOT'
-        if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_id: {t}'.format(t=self.q_swpwr_id))
-
-        # New fields on Nov 7, 2022
-        # q_swpwr_prepare_2_correct = Integer(help='SWPWR Prepare 2 Min Length', default=0, scope=Scope.content)
-        # q_swpwr_prepare_3_correct = Integer(help='SWPWR Prepare 3 Min Length', default=0, scope=Scope.content)
-        # q_swpwr_organize_1_schema_name = String(help='SWPWR Organize 1 Schema Name', default='COMBINE', scope=Scope.content)
-        # q_swpwr_explain_2_correct = Integer(help='SWPWR Explain 1 Min Length', default=0, scope=Scope.content)
-        # q_swpwr_review_1_correct = Integer(help='SWPWR Review 1 Min Length', default=0, scope=Scope.content)
-
-        try:
-            temp_value = self.q_swpwr_prepare_2_correct
-        except (NameError,AttributeError) as e:
-            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_prepare_2_correct was not defined in this instance: {e}'.format(e=e))
-            self.q_swpwr_prepare_2_correct = 0
-        if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_prepare_2_correct: {t}'.format(t=self.q_swpwr_prepare_2_correct))
-        try:
-            temp_value = self.q_swpwr_prepare_3_correct
-        except (NameError,AttributeError) as e:
-            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_prepare_3_correct was not defined in this instance: {e}'.format(e=e))
-            self.q_swpwr_prepare_3_correct = 20
-        if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_prepare_3_correct: {t}'.format(t=self.q_swpwr_prepare_3_correct))
-        try:
-            temp_value = self.q_swpwr_organize_1_schema_name
-        except (NameError,AttributeError) as e:
-            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_organize_1_schema_name was not defined in this instance: {e}'.format(e=e))
-            self.q_swpwr_organize_1_schema_name = 'COMBINE'
-        if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_organize_1_schema_name: {t}'.format(t=self.q_swpwr_organize_1_schema_name))
-        try:
-            temp_value = self.q_swpwr_explain_2_correct
-        except (NameError,AttributeError) as e:
-            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_explain_2_correct was not defined in this instance: {e}'.format(e=e))
-            self.q_swpwr_explain_2_correct = 20
-        if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_explain_2_correct: {t}'.format(t=self.q_swpwr_explain_2_correct))
-        try:
-            temp_value = self.q_swpwr_review_1_correct
-        except (NameError,AttributeError) as e:
-            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_review_1_correct was not defined in this instance: {e}'.format(e=e))
-            self.q_swpwr_review_1_correct = 20
-        if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_review_1_correct: {t}'.format(t=self.q_swpwr_review_1_correct))
-        try:
             temp_value = self.q_swpwr_invalid_schemas
         except (NameError,AttributeError) as e:
             if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_invalid_schemas was not defined in this instance: {e}'.format(e=e))
@@ -979,39 +926,22 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         # We now modify the problem template here, and pass it in already modified for this particular question.
 
         # Fields in the 'steps' array in the Dict (zero-based)
-        PREPPHASE1 = 0  # Prepare (1 of 3)
-        PREPPHASE2 = 1  # Prepare (2 of 3)
-        PREPPHASE3 = 2  # Prepare (3 of 3)
-        ORGPHASE1  = 3  # Organize (1 of 2)
-        ORGPHASE2  = 4  # Organize (2 of 2)
-        WORKPHASE1 = 5  # Work (1 of 1): Element of the steps array for the StepWise question
-        EXPPHASE1  = 6	# Explain (1 of 2)
-        EXPPHASE2  = 7	# Explain (2 of 2)
-        REVPHASE1  = 8	# Review (1 of 1)
+        # PREPPHASE1 = 0  # Prepare (1 of 3)
+        # PREPPHASE2 = 1  # Prepare (2 of 3)
+        # PREPPHASE3 = 2  # Prepare (3 of 3)
+        # ORGPHASE1  = 3  # Organize (1 of 2)
+        # ORGPHASE2  = 4  # Organize (2 of 2)
+        # WORKPHASE1 = 5  # Work (1 of 1): Element of the steps array for the StepWise question
+        # EXPPHASE1  = 6	# Explain (1 of 2)
+        # EXPPHASE2  = 7	# Explain (2 of 2)
+        # REVPHASE1  = 8	# Review (1 of 1)
 
-        # StepWise problem data goes in swpwr_problem_template['steps'][WORKPHASE1]
-        if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template original json={j}".format(j=json.dumps(swpwr_problem_template,separators=(',',':'))))
-        if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template template before stimulus={s}".format(s=swpwr_problem_template['stimulus']))
-        if DEBUG: logger.info("SWPWRXBlock student_view() self.q_swpwr_problem={s}".format(s=self.q_swpwr_problem))
-        swpwr_problem_template['stimulus'] = self.q_swpwr_problem
-        if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template template after stimulus={s}".format(s=swpwr_problem_template['stimulus']))
-        swpwr_problem_template['qId'] = self.q_swpwr_id    # This is used as the ID value for the root DOM for React, it it must be unique in an assignment
-        swpwr_problem_template['steps'][PREPPHASE2]['correct'] = self.q_swpwr_prepare_2_correct
-        swpwr_problem_template['steps'][PREPPHASE3]['correct'] = self.q_swpwr_prepare_3_correct
-        swpwr_problem_template['steps'][ORGPHASE1]['correct'] = self.q_swpwr_organize_1_schema_name
-        swpwr_problem_template['steps'][WORKPHASE1]['swlabel'] = self.q_label
-        swpwr_problem_template['steps'][WORKPHASE1]['description'] = self.q_stimulus
-        swpwr_problem_template['steps'][WORKPHASE1]['definition'] = self.q_definition
-        swpwr_problem_template['steps'][WORKPHASE1]['swtype'] = self.q_type
-        swpwr_problem_template['steps'][WORKPHASE1]['hint1'] = self.q_hint1
-        swpwr_problem_template['steps'][WORKPHASE1]['hint2'] = self.q_hint2
-        swpwr_problem_template['steps'][WORKPHASE1]['hint3'] = self.q_hint3
-        swpwr_problem_template['steps'][EXPPHASE2]['correct'] = self.q_swpwr_explain_2_correct
-        swpwr_problem_template['steps'][REVPHASE1]['correct'] = self.q_swpwr_review_1_correct
-        swpwr_problem_template['rank'] = self.q_swpwr_rank
-        swpwr_problem_template['invalid_schemas'] = self.q_swpwr_invalid_schemas
-        swpwr_problem_template['problem_hints'] = self.q_swpwr_problem_hints
-
+        # # StepWise problem data goes in swpwr_problem_template['steps'][WORKPHASE1]
+        # if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template original json={j}".format(j=json.dumps(swpwr_problem_template,separators=(',',':'))))
+        # if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template template before stimulus={s}".format(s=swpwr_problem_template['stimulus']))
+        # if DEBUG: logger.info("SWPWRXBlock student_view() self.q_swpwr_problem={s}".format(s=self.q_swpwr_problem))
+        # swpwr_problem_template['stimulus'] = self.q_swpwr_problem
+        # if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template template after stimulus={s}".format(s=swpwr_problem_template['stimulus']))
         frag.add_javascript(self.resource_string("static/js/src/final_callback.js"))    # Final submit callback code and define swpwr_problems[]
 
         if (TEST_MODE):
@@ -1498,15 +1428,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         self.q_hint2 = data['hint2']
         self.q_hint3 = data['hint3']
         self.q_swpwr_problem = data['swpwr_problem']
-        self.q_swpwr_id = data['swpwr_id']
-        self.q_swpwr_prepare_2_correct = data['swpwr_prepare_2_correct']
-        self.q_swpwr_prepare_3_correct = data['swpwr_prepare_3_correct']
-        self.q_swpwr_organize_1_schema_name = data['swpwr_organize_1_schema_name']
-        self.q_swpwr_explain_2_correct = data['swpwr_explain_2_correct']
-        self.q_swpwr_review_1_correct = data['swpwr_review_1_correct']
-        self.q_swpwr_rank = data['swpwr_rank']
-        self.q_swpwr_invalid_schemas = data['swpwr_invalid_schemas']
-        self.q_swpwr_problem_hints = data['swpwr_problem_hints']
 
         self.display_name = "Step-by-Step POWER"
 
@@ -1719,7 +1640,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                     break
 
         if tries>=max_tries:
-            if DEBUG: logger.error("pick_variant() could not find an unattempted variant of {i} {l} in {m} tries! clearing self.variants_attempted.".format(i=self.q_swpwr_id,l=self.q_label,m=max_tries))
+            if DEBUG: logger.error("pick_variant() could not find an unattempted variant of {l} in {m} tries! clearing self.variants_attempted.".format(l=self.q_label,m=max_tries))
             q_index = 0		# Default
             self.variants_attempted = 0;
 
@@ -1728,7 +1649,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         # Note: we won't set self.variants_attempted for this variant until they actually begin work on it (see start_attempt() below)
 
         question = {
-            "q_swpwr_id" : self.q_swpwr_id,
             "q_user" : self.xb_user_email,
             "q_index" : 0,
             "q_label" : self.q_label,
@@ -1740,11 +1660,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             "q_hint2" :  self.q_hint2,
             "q_hint3" :  self.q_hint3,
             "q_swpwr_problem" : self.q_swpwr_problem,
-            "q_swpwr_prepare_2_correct": self.q_swpwr_prepare_2_correct,
-            "q_swpwr_prepare_3_correct": self.q_swpwr_prepare_3_correct,
-            "q_swpwr_organize_1_schema_name": self.q_swpwr_organize_1_schema_name,
-            "q_swpwr_explain_2_correct": self.q_swpwr_explain_2_correct,
-            "q_swpwr_review_1_correct": self.q_swpwr_review_1_correct,
+            # "q_swpwr_prepare_2_correct": self.q_swpwr_prepare_2_correct,
+            # "q_swpwr_prepare_3_correct": self.q_swpwr_prepare_3_correct,
+            # "q_swpwr_organize_1_schema_name": self.q_swpwr_organize_1_schema_name,
+            # "q_swpwr_explain_2_correct": self.q_swpwr_explain_2_correct,
+            # "q_swpwr_review_1_correct": self.q_swpwr_review_1_correct,
             "q_swpwr_rank": self.q_swpwr_rank,
             "q_swpwr_invalid_schemas": self.q_swpwr_invalid_schemas,
             "q_swpwr_problem_hints": self.q_swpwr_problem_hints,
