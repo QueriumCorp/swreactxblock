@@ -77,12 +77,17 @@ cp $b/${js1} public/
 #
 cp $b/${cs1} public/
 
-echo "Top-level Javascript file is $js1"
-echo "Top-level CSS file is $cs1"
-echo "Be sure to update those filenames that are loaded in static/html/swpwrxstudent.html:"
+# Remember swpwr version info
+v=`grep '^  "version":' $i/package.json | sed -e 's/,//' -e 's/^/{/' -e 's/$/}/'`
+echo "$v" > public/swpwr_version.json
+
+echo "We are incorporating swpwr $v"
+echo "The top-level Javascript file is $js1"
+echo "The top-level CSS file is $cs1"
+echo "Be sure to edit static/html/swpwrxstudent.html to update those filenames:"
 echo "    <!-- Load main React app filename -->"
 echo "    <script type="module" crossorigin src="/static/xblock/resources/swpwrxblock/public/${js1}"></script>"
 echo "    <link rel="stylesheet" crossorigin href="/static/xblock/resources/swpwrxblock/public/${cs1}">"
-echo "Also, don't forget to run:"
+echo "Also, be sure to run:"
 echo "./fixcssurl.sh $cs1"
 echo "./fixjsurl.sh $js1"
