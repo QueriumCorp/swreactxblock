@@ -15,10 +15,14 @@ npm run build
 cpassets.sh
 ```
 This will copy the assets from the swpwr build directory into the swpwrxblock build directory.
+The output of cpassets.sh will tell you what else you need to do:
+(a) Edit static/html/swxpwrxstudent.html to change the filenames of the main javscript and css files.
+(b) Run fixjsurl.sh.
+(c) Run fixcssurl.sh
 
 3. You can then run 'tardist.sh' to copy these assets to stepwise-editorial.querium.com.  You'll need to be able to connect to stepwise-editorial.querium.com as root using rsh for the following command to work:
 ```
-./tardist.sh
+./tarscppublic.sh
 ```
 
 4. You need to use ssh to login to stepwise-editorial.querium.com and 'rotate' the dist and public directories so they'll be correct in the S3 bucket when they synch up at the top of each hour.
@@ -28,10 +32,7 @@ ssh root@stepwise-editorial.querium.com
 # Then on stepwise-editorial as root:
 ```
 cd /var/www/swpwr
-rm -rf dist public # Unlink old version of dist and public
-tar xvfz dist-YYYYMMDDHHMM.tar.gz
-mv dist dist-YYYYMMDDHHMM
-ln -s dist-YYYYMMDDHHMM dist
+rm -rf public # Unlink old version of public
 
 tar xvfz public-YYYYMMDDHHMM.tar.gz
 mv public public-YYYYMMDDHHMM
