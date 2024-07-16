@@ -23,6 +23,10 @@ if [ ! -d "public" ]; then
   mkdir public
 fi
 
+if [ ! -d "public/assets" ]; then
+  mkdir public/assets
+fi
+
 if [ ! -d "public/models" ]; then
   mkdir public/models
 fi
@@ -38,12 +42,15 @@ ls $b | grep '\.woff2$' | sed -e "s#^#cp $b/#" -e 's#$# public/assets/#' | sh
 # exit
 
 # Which asset javascript files to copy.  Use the most recent one.
-js1=`ls -t $b/*.js | head -1`
+js1=`ls -t $b/*.js | sed -e 's#^.*/##g' | head -1`
+# echo js1=$js1
 # js1=index-xQGfimpM.js
 
 # Which asset css files to copy.  Use the most recent one.
-cs1=`ls -t $b/*.css | head -1`
+cs1=`ls -t $b/*.css | sed -e 's#^.*/##g' | head -1`
 # cs1=index-BlBmDmqs.css
+# echo cs1=$cs1
+
 cp $p/android-chrome-192x192.png public/
 cp $p/android-chrome-512x512.png public/
 cp $p/apple-touch-icon.png public/
@@ -77,5 +84,5 @@ echo "    <!-- Load main React app filename -->"
 echo "    <script type="module" crossorigin src="/static/xblock/resources/swpwrxblock/public/${js1}"></script>"
 echo "    <link rel="stylesheet" crossorigin href="/static/xblock/resources/swpwrxblock/public/${cs1}">"
 echo "Also, don't forget to run:"
-echo "./fixcssurl.sh"
-echo "./fixjsurl.sh
+echo "./fixcssurl.sh $cs1"
+echo "./fixjsurl.sh $js1"
