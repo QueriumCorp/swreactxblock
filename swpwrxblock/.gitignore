@@ -1,5 +1,4 @@
 dist/
-public/
 dist-*.tar.gz
 public-*.tar.gz
 swpwrxblock-0708.py
