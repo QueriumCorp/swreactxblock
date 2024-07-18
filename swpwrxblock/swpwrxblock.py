@@ -1400,6 +1400,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     @XBlock.json_handler
     def save_question(self, data, suffix=''):
         if DEBUG: logger.info('SWPWRXBlock save_question() entered')
+        if DEBUG: logger.info('SWPWRXBlock save_question() data={d}'format(d=data))
         self.q_max_attempts = int(data['q_max_attempts'])
         self.q_weight = float(data['q_weight'])
         if data['q_option_showme'].lower() == u'true':
