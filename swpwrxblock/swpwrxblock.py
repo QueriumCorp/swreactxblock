@@ -1084,11 +1084,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     # SAVE
     def save(self):
         if DEBUG: logger.info("SWPWRXBlock Hi Kent 2024-7-1 17:25 save() self{s}".format(s=self))
-        try:
-            XBlock.save(self)       # Call parent class save()
+        # try:
+        XBlock.save(self)       # Call parent class save()
         # except (NameError,AttributeError,InvalidScopeError) as e:
-        except Exception as e:
-            logger.info('SWPWRXBlock save() had an error: {e}'.format(e=e))
+        # except Exception as e:
+        #     logger.info('SWPWRXBlock save() had an error: {e}'.format(e=e))
         if DEBUG: logger.info("SWPWRXBlock save() back from parent save. self.solution={s}".format(s=self.solution))
 
 
@@ -1428,6 +1428,10 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         self.q_hint2 = data['hint2']
         self.q_hint3 = data['hint3']
         self.q_swpwr_problem = data['swpwr_problem']
+        self.q_swpwr_rank = data['swpwr_rank']
+        self.q_swpwr_invalid_schemas = data['swpwr_invalid_schemas']
+        self.q_swpwr_problem_hints = data['swpwr_problem_hints']
+
 
         self.display_name = "Step-by-Step POWER"
 
