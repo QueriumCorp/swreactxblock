@@ -106,7 +106,8 @@
     <li class="field comp-setting-entry metadata_entry">
       <div class="wrapper-comp-setting">
         <label for="definition" class="label setting-label">Definition</label>
-        <input id='definition' type="text" name="definition" value="{self.q_definition}" class="input setting-input">
+        <!-- value= in apostrophes to make it easier to hold a JSON string with double quotes -->
+        <input id='definition' type="text" name="definition" value='{self.q_definition}' class="input setting-input">
       </div>
       <span class="tip setting-help">The StepWise definition of the math question.</span>
     </li>
