@@ -999,7 +999,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           'title: "' + 'SAMPLE' + '", ' + \
                                           'stimulus: "' + self.q_stimulus + '", ' + \
                                           'topic: "' + 'gradeBasicAlgebra' + '", ' + \
-                                          'definition: "' + self.q_definition + '", ' + \
+                                          'definition: \'' + self.q_definition + '\', ' + \
                                           'mathHints: "' + '[]' + '",' + \
                                           'wpHints: "' + self.q_swpwr_problem_hints + '"' + \
                                         ' },' + \
