@@ -9,8 +9,55 @@
     <div id="root" style="height: 100vh; width:100vw;"><h2>This app is not supported on this browser.</h2></div>
 
     <!-- Load main React app filename -->
-    <script type=module crossorigin src=/static/xblock/resources/swpwrxblock/public/index-CEfF5pcE.js></script>
-    <link rel=stylesheet crossorigin href=/static/xblock/resources/swpwrxblock/public/index-DTqT3aEQ.css>
+    <script type=module crossorigin src=/static/xblock/resources/swpwrxblock/public/index-E6PNcuyo.js></script>
+    <link rel=stylesheet crossorigin href=/static/xblock/resources/swpwrxblock/public/index-DaUPfx0b.css>
+
+    <script>
+    const swapiUrl = "https://swapi2.onrender.com";
+    
+    var gltfUrl;
+
+    const problem = {
+      appKey: "JiraTestPage",
+      policyId: "$A9$",
+      problemId: "QUES-30533",
+      title: "Sticker Book Cost",
+      stimulus:
+        "Kent spent $6.25 on 5 sticker books to give his nephews. Find the cost of each sticker book.",
+      class: "gradeBasicAlgebra",
+      question:
+        'SolveWordProblemAns[{"Minh spent $6.25 on 5 sticker books to give his nephews. Find the cost of each sticker book."}]',
+      hints: [],
+    };
+
+    const student = {
+      studentId: "KentFuka",
+      studentName: "Kent Fuka",
+    };
+    
+    // get rank from url
+    let params = new URLSearchParams(window.location.search);
+    let urlRank = params.get("rank");
+
+    const options = {
+      swapiUrl,
+      gltfUrl,
+      rank: urlRank || import.meta.env.VITE_RANK || "newb",
+      disabledSchemas: [],
+    };
+
+    ReactDOM.createRoot(document.getElementById("root")!).render(
+      <React.StrictMode>
+        <div className="w-dvw h-dvh overflow-hidden relative">
+          <StepWisePower
+            className="absolute top-0 left-0 right-0 bottom-0 flex flex-col"
+            problem={problem}
+            student={student}
+            options={options}
+          />
+        </div>
+      </React.StrictMode>,
+    );
 
     <!-- ### START OF STEPWISE STUFF ### -->
     <!-- The following div holds the SW component off screen -->
