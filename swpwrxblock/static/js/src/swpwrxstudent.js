@@ -80,7 +80,7 @@ function SWPWRXStudent(runtime, element) {
             /* PAGE LOAD EVENT */
             $(function ($) {
             });
-
+        } //end of success block
     });
     console.info("SWPWRXStudent end");
 }
