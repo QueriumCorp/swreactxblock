@@ -21,9 +21,9 @@
     <script>
       window.swpwr = {
         options: {
-          swapiUrl: "https://swapi2.onrender.com/",
+          swapiUrl: "https://swapi2.onrender.com",
           gltfUrl:
-            "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/",
+            "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models",
           rank: "newb",
           disabledSchemas: [],
         },
