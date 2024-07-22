@@ -998,7 +998,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           'policyId: "' + '$A9$' + '", ' + \
                                           'problemId: "' + 'SAMPLE' + '", ' + \
                                           'title: "' + 'SAMPLE' + '", ' + \
-                                          'stimulus: "' + self.q_stimulus + '", ' + \
+                                          'stimulus: \'' + str(self.q_stimulus).replace('\'', '&apos;') + '\', ' + \
                                           'topic: "' + 'gradeBasicAlgebra' + '", ' + \
                                           'definition: \'' + str(self.q_definition).replace('\'', '&apos;') + '\', ' + \
                                           'mathHints: "' + '[]' + '",' + \
