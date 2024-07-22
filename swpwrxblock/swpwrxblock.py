@@ -960,7 +960,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             #     <script>
             #       window.swpwr = {
             #         options: {
-            #           swapiUrl: "https://swapi2.onrender.com/",
+            #           swapiUrl: "https://swapi2.onrender.com",
             #           gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/",
             #         },
             #       };
@@ -985,7 +985,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             # frag.add_content(html_string)
         else:
             swpwr_string = 'window.swpwr = {' + \
-                             ' options: { swapiUrl: "https://swapi2.onrender.com/", ' + \
+                             ' options: { swapiUrl: "https://swapi2.onrender.com", ' + \
                                           'gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/", ' + \
                                           'rank: "' + self.q_swpwr_rank + '", ' + \
                                           'disabledSchemas: "' + self.q_swpwr_invalid_schemas + '"' + \

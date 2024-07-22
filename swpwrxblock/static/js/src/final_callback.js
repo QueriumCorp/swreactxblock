@@ -23,7 +23,7 @@
           }
         });
         // Hide the React app and show the problem complete msg
-        // $('.SWPowerComponent').hide();  // Hide React app root div
+        $('.SWPowerComponent').hide();  // Hide React app root div
         $('.problem-complete').show();  // Show the 'problem is complete' message
         $('.sequence-bottom').show();   // Show the problem navigation buttons again
       };
