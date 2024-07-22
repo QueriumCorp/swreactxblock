@@ -1005,7 +1005,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                         ' },' + \
                              ' handlers: {' + \
                                           'onComplete: () => {' + \
-                                          'console.info("I'm an external onComplete Handler");' + \
+                                          'console.info("I\'m an external onComplete Handler");' + \
                                               ' },' + \
                                         ' },' + \
                              ' };'
