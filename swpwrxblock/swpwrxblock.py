@@ -1005,7 +1005,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           'wpHints: "' + self.q_swpwr_problem_hints + '"' + \
                                         ' },' + \
                              ' handlers: {' + \
-                                          'onComplete: returnPowerResults' + \
+                                          'onComplete: returnPowerResults()' + \
                                         ' },' + \
                              ' };'
             if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_string={e}".format(e=swpwr_string))
