@@ -1005,8 +1005,28 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           'wpHints: "' + self.q_swpwr_problem_hints + '"' + \
                                         ' },' + \
                              ' handlers: {' + \
-                                          'onComplete: returnPowerResults()' + \
+                                          'onComplete: () => {' + \
+                                          '  console.info("returnPowerResults solution",solution);' + \
+                                          '  var solution_string = JSON.stringify(solution);' + \
+                                          '  console.info("returnPowerResults solution string",solution_string);' + \
+                                          '  $.ajax({' + \
+                                          '    type: "POST",' + \
+                                          '    url: handlerUrlSwpwrResults,' + \
+                                          '    data: solution_string,' + \
+                                          '    success: function (data,msg) {' + \
+                                          '      console.info("returnPowerResults solution POST success");' + \
+                                          '      console.info("returnPowerResults solution POST data",data);' + \
+                                          '       console.info("returnPowerResults solution POST ",msg);' + \
+                                          '    },' + \
+                                          '    error: function(XMLHttpRequest, textStatus, errorThrown) {' + \
+                                          '      console.info("returnPowerResults solution POST error textStatus=",textStatus," errorThrown=",errorThrown);' + \
+                                          '    }' + \
+                                          '  });' + \
+                                          '  $('.SWPowerComponent').hide();' + \
+                                          '  $('.problem-complete').show();' + \
+                                          '  $('.sequence-bottom').show();' + \
                                         ' },' + \
+                                 '  }' + \
                              ' };'
             if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_string={e}".format(e=swpwr_string))
             frag.add_resource(swpwr_string,'application/javascript','foot')
