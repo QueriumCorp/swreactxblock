@@ -1022,9 +1022,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           '      console.info("returnPowerResults solution POST error textStatus=",textStatus," errorThrown=",errorThrown);' + \
                                           '    }' + \
                                           '  });' + \
-                                          '  $('.SWPowerComponent').hide();' + \
-                                          '  $('.problem-complete').show();' + \
-                                          '  $('.sequence-bottom').show();' + \
+                                          '  $(\'.SWPowerComponent\').hide();' + \
+                                          '  $(\'.problem-complete\').show();' + \
+                                          '  $(\'.sequence-bottom\').show();' + \
                                         ' },' + \
                                  '  }' + \
                              ' };'
