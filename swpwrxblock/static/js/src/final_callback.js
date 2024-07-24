@@ -5,26 +5,25 @@
 
       // Final callback to submit SWPWR React app results
 
-      returnPowerResults(solution){
-        console.info("returnPowerResults solution",solution);
-        var solution_string = JSON.stringify(solution);
-        console.info("returnPowerResults solution string",solution_string);
-        $.ajax({
-          type: "POST",
-          url: handlerUrlSwpwrResults,
-          data: solution_string,
-          success: function (data,msg) {
-            console.info("returnPowerResults solution POST success");
-            console.info("returnPowerResults solution POST data",data);
-            console.info("returnPowerResults solution POST ",msg);
-          },
-          error: function(XMLHttpRequest, textStatus, errorThrown) {
-            console.info("returnPowerResults solution POST error textStatus=",textStatus," errorThrown=",errorThrown);
-          }
-        });
-        // Hide the React app and show the problem complete msg
-        $('.SWPowerComponent').hide();  // Hide React app root div
-        $('.problem-complete').show();  // Show the 'problem is complete' message
-        $('.sequence-bottom').show();   // Show the problem navigation buttons again
-      };
-
+//NOTYET      returnPowerResults(solution){
+//NOTYET        console.info("returnPowerResults solution",solution);
+//NOTYET        var solution_string = JSON.stringify(solution);
+//NOTYET        console.info("returnPowerResults solution string",solution_string);
+//NOTYET        $.ajax({
+//NOTYET          type: "POST",
+//NOTYET          url: handlerUrlSwpwrResults,
+//NOTYET          data: solution_string,
+//NOTYET          success: function (data,msg) {
+//NOTYET            console.info("returnPowerResults solution POST success");
+//NOTYET            console.info("returnPowerResults solution POST data",data);
+//NOTYET            console.info("returnPowerResults solution POST ",msg);
+//NOTYET          },
+//NOTYET          error: function(XMLHttpRequest, textStatus, errorThrown) {
+//NOTYET            console.info("returnPowerResults solution POST error textStatus=",textStatus," errorThrown=",errorThrown);
+//NOTYET          }
+//NOTYET        });
+//NOTYET        // Hide the React app and show the problem complete msg
+//NOTYET        $('.SWPowerComponent').hide();  // Hide React app root div
+//NOTYET        $('.problem-complete').show();  // Show the 'problem is complete' message
+//NOTYET        $('.sequence-bottom').show();   // Show the problem navigation buttons again
+//NOTYET      };
