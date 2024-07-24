@@ -1024,7 +1024,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           '  });' + \
                                           '  $(\'.SWPowerComponent\').hide();' + \
                                           '  $(\'.problem-complete\').show();' + \
-                                          '  $(\'.sequence-bottom\').show();' + \
+                                          '  $(\'.unit-navigation\').show();' + \
                                         ' },' + \
                                  '  }' + \
                              ' };'
