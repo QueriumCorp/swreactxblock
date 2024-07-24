@@ -2,7 +2,7 @@
 
 /* Ensure that kettu doesn't grow forever */
 #content {
-  max-height:100dvh;
+  max-height:1024px;
   padding: 0px;
   margin: 0px;
 }
