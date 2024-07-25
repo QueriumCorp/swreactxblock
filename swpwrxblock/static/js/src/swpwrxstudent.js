@@ -10,6 +10,19 @@ function SWPWRXStudent(runtime, element) {
     console.info("SWPWRXStudent start");
     console.info("SWPWRXStudent element",element);
 
+    // Set height to 100dvh for the iframe we are inside
+    $('iframe').each(function(){
+        function injectCSS(){
+            $iframe.contents().find('head').append(
+                $("<style type='text/css'> #unit-iframe { height:100dvh; } </style>")
+            );
+        }
+
+        var $iframe = $(this);
+        $iframe.on('load', injectCSS);
+        injectCSS();
+    });
+
     var handlerUrlGetData = runtime.handlerUrl(element, 'get_data');
 
     handlerUrlSwpwrResults = runtime.handlerUrl(element, 'save_swpwr_results');   // Leave a handlerUrl for the SWPWR onSubmit callback
