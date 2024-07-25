@@ -14,13 +14,15 @@ function SWPWRXStudent(runtime, element) {
     $('iframe').each(function(){
         function injectCSS(){
             $iframe.contents().find('head').append(
-                $("<style type='text/css'> #unit-iframe { height:100dvh; } </style>")
+                $("<style type='text/css'> #unit-iframe { height: 100dvh; } </style>")
             );
+            console.info("SWPWRXStudent injectCSS added");
         }
 
         var $iframe = $(this);
         $iframe.on('load', injectCSS);
         injectCSS();
+        console.info("SWPWRXStudent injectCSS returned");
     });
 
     var handlerUrlGetData = runtime.handlerUrl(element, 'get_data');
