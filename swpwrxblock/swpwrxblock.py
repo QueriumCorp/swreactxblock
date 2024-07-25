@@ -1009,6 +1009,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           '  console.info("returnPowerResults solution",solution);' + \
                                           '  var solution_string = JSON.stringify(solution);' + \
                                           '  console.info("returnPowerResults solution string",solution_string);' + \
+                                          '  console.info("returnPowerResults handlerUrlSwpwrResults",handlerUrlSwpwrResults);' + \
                                           '  $.ajax({' + \
                                           '    type: "POST",' + \
                                           '    url: handlerUrlSwpwrResults,' + \
