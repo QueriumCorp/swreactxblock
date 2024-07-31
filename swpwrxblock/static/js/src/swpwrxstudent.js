@@ -17,9 +17,10 @@ function SWPWRXStudent(runtime, element) {
     // parent - gets the parent of the window
     // document - gets the document of the parent
     // querySelector('iframe') - gets a reference to the first iframe in the parent document
-    var theIframe = window.parent.document.querySelector('iframe');
 
-    theIframe.style.setProperty('height', '100dvh')
+    // THIS WON'T WORK.  YOU CAN'T MARCH UP THE DOM TO window.parent :-(
+    // var theIframe = window.parent.document.querySelector('iframe');
+    // theIframe.style.setProperty('height', '100dvh')
 
     var handlerUrlGetData = runtime.handlerUrl(element, 'get_data');
 
