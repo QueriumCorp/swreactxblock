@@ -21,10 +21,10 @@
     <script>
       window.swpwr = {
         options: {
-          swapiUrl: "https://swapi2.onrender.com",
+          swapiUrl: "http://localhost:4000", // https://swapi2.onrender.com
           gltfUrl:
             "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models",
-          rank: "newb",
+          rank: "ranger",
           disabledSchemas: [],
         },
         student: {
@@ -46,8 +46,10 @@
           wpHints: [],
         },
         handlers: {
-          onComplete: () => {
+          onComplete: (session, studentLog) => {
             console.info("I'm an external onComplete Handler");
+            console.info("session", session);
+            console.info("studentLog", studentLog);
           },
         },
       };
