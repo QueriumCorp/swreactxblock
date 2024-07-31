@@ -1009,6 +1009,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           '  console.info("returnPowerResults solution",solution);' + \
                                           '  var solution_string = JSON.stringify(solution);' + \
                                           '  console.info("returnPowerResults solution string",solution_string);' + \
+                                          '  console.info("returnPowerResults handlerUrlSwpwrResults",handlerUrlSwpwrResults);' + \
                                           '  $.ajax({' + \
                                           '    type: "POST",' + \
                                           '    url: handlerUrlSwpwrResults,' + \
@@ -1024,7 +1025,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           '  });' + \
                                           '  $(\'.SWPowerComponent\').hide();' + \
                                           '  $(\'.problem-complete\').show();' + \
-                                          '  $(\'.sequence-bottom\').show();' + \
+                                          '  $(\'.unit-navigation\').show();' + \
                                         ' },' + \
                                  '  }' + \
                              ' };'

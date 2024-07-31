@@ -10,18 +10,26 @@ function SWPWRXStudent(runtime, element) {
     console.info("SWPWRXStudent start");
     console.info("SWPWRXStudent element",element);
 
+    // Set height to 100dvh for the iframe we are inside
+    // note - assumes there is only one iframe on the page or the xBlock is in the first iframe
+    // note - only works if the parent doc and the iframe'd doc are served from the same place (they are)
+    // window - gets the window object of the iframe'd doc
+    // parent - gets the parent of the window
+    // document - gets the document of the parent
+    // querySelector('iframe') - gets a reference to the first iframe in the parent document
+    var theIframe = window.parent.document.querySelector('iframe');
+
+    theIframe.style.setProperty('height', '100dvh')
+
     var handlerUrlGetData = runtime.handlerUrl(element, 'get_data');
 
     handlerUrlSwpwrResults = runtime.handlerUrl(element, 'save_swpwr_results');   // Leave a handlerUrl for the SWPWR onSubmit callback
 
     console.info("SWPWRXStudent calling get_data at ",handlerUrlGetData);
 
-    // Now we do the question manipulation in swpwrxblock.py
-    // const SWPHASE = 5;          // Which element of the POWER steps array in window.swpwr_problem contains the StepWise UI?
-
     $('.SWPowerComponent').show();  // Show React app root div
 
-    $('.sequence-bottom').hide();   // Don't show the EdX sequential navigation buttons that lie on top of the react div
+    $('.unit-navigation').hide();   // Don't show the EdX sequential navigation buttons that lie on top of the react div
     $('.problem-complete').hide();  // Don't show the 'problem is complete' message
 
     get_data_data = {}		// don't need to sent any data to get_data
