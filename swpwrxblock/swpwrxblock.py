@@ -996,13 +996,13 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                         ' },' + \
                              ' problem: { appKey: "' + 'jiraTestPage' + '", ' + \
                                           'policyId: "' + '$A9$' + '", ' + \
-                                          'problemId: "' + 'SAMPLE' + '", ' + \
+                                          'problemId: "' + self.q_id + '", ' + \
                                           'title: "' + 'SAMPLE' + '", ' + \
                                           'stimulus: \'' + str(self.q_stimulus).replace('\'', '&apos;') + '\', ' + \
                                           'topic: "' + 'gradeBasicAlgebra' + '", ' + \
                                           'definition: \'' + str(self.q_definition).replace('\'', '&apos;') + '\', ' + \
-                                          'mathHints: "' + '[]' + '",' + \
-                                          'wpHints: "' + self.q_swpwr_problem_hints + '"' + \
+                                          'mathHints: \'' + str('[]').replace('\'', '&apos;') + '\',' + \
+                                          'wpHints: \'' + str(self.q_swpwr_problem_hints).replace('\'', '&apos;') + '\'' + \
                                         ' },' + \
                              ' handlers: {' + \
                                           'onComplete: (solution) => {' + \
