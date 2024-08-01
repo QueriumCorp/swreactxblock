@@ -10,18 +10,6 @@ function SWPWRXStudent(runtime, element) {
     console.info("SWPWRXStudent start");
     console.info("SWPWRXStudent element",element);
 
-    // Set height to 100dvh for the iframe we are inside
-    // note - assumes there is only one iframe on the page or the xBlock is in the first iframe
-    // note - only works if the parent doc and the iframe'd doc are served from the same place (they are)
-    // window - gets the window object of the iframe'd doc
-    // parent - gets the parent of the window
-    // document - gets the document of the parent
-    // querySelector('iframe') - gets a reference to the first iframe in the parent document
-
-    // THIS WON'T WORK.  YOU CAN'T MARCH UP THE DOM TO window.parent :-(
-    // var theIframe = window.parent.document.querySelector('iframe');
-    // theIframe.style.setProperty('height', '100dvh')
-
     var handlerUrlGetData = runtime.handlerUrl(element, 'get_data');
 
     handlerUrlSwpwrResults = runtime.handlerUrl(element, 'save_swpwr_results');   // Leave a handlerUrl for the SWPWR onSubmit callback
@@ -58,21 +46,18 @@ function SWPWRXStudent(runtime, element) {
             var count_attempts = data_obj.count_attempts;
             var variants_count = data_obj.variants_count;
             var max_attempts = data_obj.max_attempts;
-            // var enable_showme = question.q_option_showme;
-            // var enable_hint = question.q_option_hint;
             var weight = question.q_weight;
             var min_steps = question.q_grade_min_steps_count;
             var min_steps_ded = question.q_grade_min_steps_ded;
             var swpwr_problem = question.swpwr_problem;
-            // var swpwr_id = question.q_swpwr_id;
+            var swpwr_id = question.q_id;
             var swpwr_rank = question.q_swpwr_rank;
             var swpwr_invalid_schemas = question.q_swpwr_invalid_schemas;
             var swpwr_problem_hints = question.q_swpwr_problem_hints;
 
+            console.info("SWPWRXStudent question ID",swpwr_id);
             console.info("SWPWRXStudent question",question);
             console.info("SWPWRXStudent swpwr_problem",swpwr_problem);
-            // console.info("SWPWRXStudent enable_showme",enable_showme);
-            // console.info("SWPWRXStudent enable_hint",enable_hint);
             console.info("SWPWRXStudent solution",solution);
             console.info("SWPWRXStudent count_attempts",count_attempts);
             console.info("SWPWRXStudent variants_counnt",variants_count);
@@ -81,7 +66,6 @@ function SWPWRXStudent(runtime, element) {
             console.info("SWPWRXStudent min steps",min_steps);
             console.info("SWPWRXStudent min steps dec",min_steps_ded);
             console.info("SWPWRXStudent grade",grade);
-            // console.info("SWPWRXStudent swpwr_id",swpwr_id);
             console.info("SWPWRXStudent swpwr_rank ",swpwr_rank);
             console.info("SWPWRXStudent swpwr_invalid_schemas ",swpwr_invalid_schemas);
             console.info("SWPWRXStudent swpwr_problem_hints ",swpwr_problem_hints);
