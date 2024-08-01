@@ -1562,6 +1562,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         # Note: we won't set self.variants_attempted for this variant until they actually begin work on it (see start_attempt() below)
 
         question = {
+            "q_id" : self.q_id,
             "q_user" : self.xb_user_email,
             "q_index" : 0,
             "q_label" : self.q_label,
@@ -1573,11 +1574,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             "q_hint2" :  self.q_hint2,
             "q_hint3" :  self.q_hint3,
             "q_swpwr_problem" : self.q_swpwr_problem,
-            # "q_swpwr_prepare_2_correct": self.q_swpwr_prepare_2_correct,
-            # "q_swpwr_prepare_3_correct": self.q_swpwr_prepare_3_correct,
-            # "q_swpwr_organize_1_schema_name": self.q_swpwr_organize_1_schema_name,
-            # "q_swpwr_explain_2_correct": self.q_swpwr_explain_2_correct,
-            # "q_swpwr_review_1_correct": self.q_swpwr_review_1_correct,
             "q_swpwr_rank": self.q_swpwr_rank,
             "q_swpwr_invalid_schemas": self.q_swpwr_invalid_schemas,
             "q_swpwr_problem_hints": self.q_swpwr_problem_hints,
