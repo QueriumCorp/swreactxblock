@@ -888,22 +888,24 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           'wpHints: \'' + str(self.q_swpwr_problem_hints).replace('\'', '&apos;') + '\'' + \
                                         ' },' + \
                              ' handlers: {' + \
-                                          'onComplete: (solution) => {' + \
-                                          '  console.info("returnPowerResults solution",solution);' + \
+                                          'onComplete: (session,log) => {' + \
+                                          '  console.info("onComplete session",session);' + \
+                                          '  console.info("onComplete log",log);' + \
+                                          '  console.info("onComplete handlerUrlSwpwrResults",handlerUrlSwpwrResults);' + \
+                                          '  const solution = [session,log];' + \
                                           '  var solution_string = JSON.stringify(solution);' + \
-                                          '  console.info("returnPowerResults solution string",solution_string);' + \
-                                          '  console.info("returnPowerResults handlerUrlSwpwrResults",handlerUrlSwpwrResults);' + \
+                                          '  console.info("onComplete solution_string",solution_string);' + \
                                           '  $.ajax({' + \
                                           '    type: "POST",' + \
                                           '    url: handlerUrlSwpwrResults,' + \
                                           '    data: solution_string,' + \
                                           '    success: function (data,msg) {' + \
-                                          '      console.info("returnPowerResults solution POST success");' + \
-                                          '      console.info("returnPowerResults solution POST data",data);' + \
-                                          '       console.info("returnPowerResults solution POST ",msg);' + \
+                                          '      console.info("onComplete solution POST success");' + \
+                                          '      console.info("onComplete solution POST data",data);' + \
+                                          '      console.info("onComplete solution POST msg",msg);' + \
                                           '    },' + \
                                           '    error: function(XMLHttpRequest, textStatus, errorThrown) {' + \
-                                          '      console.info("returnPowerResults solution POST error textStatus=",textStatus," errorThrown=",errorThrown);' + \
+                                          '      console.info("onComplete solution POST error textStatus=",textStatus," errorThrown=",errorThrown);' + \
                                           '    }' + \
                                           '  });' + \
                                           '  $(\'.SWPowerComponent\').hide();' + \
