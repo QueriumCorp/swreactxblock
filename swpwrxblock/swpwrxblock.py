@@ -892,7 +892,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           '  console.info("onComplete session",session);' + \
                                           '  console.info("onComplete log",log);' + \
                                           '  console.info("onComplete handlerUrlSwpwrResults",handlerUrlSwpwrResults);' + \
-                                          '  const solution = [session,log];' + \
+                                          '  const solution = \'HOWDY_KENT\';' + \
                                           '  var solution_string = JSON.stringify(solution);' + \
                                           '  console.info("onComplete solution_string",solution_string);' + \
                                           '  $.ajax({' + \
