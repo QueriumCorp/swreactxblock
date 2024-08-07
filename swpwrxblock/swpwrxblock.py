@@ -892,7 +892,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           '  console.info("onComplete session",session);' + \
                                           '  console.info("onComplete log",log);' + \
                                           '  console.info("onComplete handlerUrlSwpwrResults",handlerUrlSwpwrResults);' + \
-                                          '  const solution = \'HOWDY_KENT\';' + \
+                                          '  const solution = [session,log];' + \
                                           '  var solution_string = JSON.stringify(solution);' + \
                                           '  console.info("onComplete solution_string",solution_string);' + \
                                           '  $.ajax({' + \
@@ -1357,6 +1357,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if DEBUG: logger.info("SWPWRXBlock save_swpwr_results() data={d}".format(d=data))
         self.swpwr_results = json.dumps(data, separators=(',', ':'))
         if DEBUG: logger.info("SWPWRXBlock save_swpwr_results() self.swpwr_results={r}".format(r=self.swpwr_results))
+        self.save()     # Time to persist our state!!!
+        if DEBUG: logger.info("SWPWRXBlock save_swpwr_results() back from save")
         return {'result': 'success'}
 
     # Do necessary overrides from ScorableXBlockMixin
