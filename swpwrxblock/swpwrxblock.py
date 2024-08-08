@@ -877,7 +877,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           'fullName: "' + 'SAMPLE SAMPLE' + '", ' + \
                                           'familiarName: "' + 'SAMPLE' + '"' + \
                                         ' },' + \
-                             ' problem: { appKey: "' + 'jiraTestPage' + '", ' + \
+                             ' problem: { appKey: "' + 'JiraTestPage' + '", ' + \
                                           'policyId: "' + '$A9$' + '", ' + \
                                           'problemId: "' + self.q_id + '", ' + \
                                           'title: "' + 'SAMPLE' + '", ' + \
