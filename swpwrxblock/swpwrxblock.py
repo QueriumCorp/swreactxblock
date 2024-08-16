@@ -916,12 +916,12 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           '  $(\'.unit-navigation\').show();' + \
                                           '},' + \
                                         '}' + \
-                                     '};' + ' \
+                                     '};' + \
                              ' try { ' + \
                              '   window.swpwr.problem.wpHints = JSON.parse(self.q_swpwr_problem_hints);' + \
-                             '   console.log( "wpHints data is ",window.swpwr.problem.wpHints );'+ \
-                             ' } catch(e) {'+ \
-                             '   console.log( "Could not decode wpHints string",e.message );'+ \
+                             '   console.log( "wpHints data is ",window.swpwr.problem.wpHints );' + \
+                             ' } catch(e) {' + \
+                             '   console.log( "Could not decode wpHints string",e.message );' + \
                              ' };'
             if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_string={e}".format(e=swpwr_string))
             frag.add_resource(swpwr_string,'application/javascript','foot')
