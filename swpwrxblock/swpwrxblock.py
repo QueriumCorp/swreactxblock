@@ -872,11 +872,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           'gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/", ' + \
                                           'rank: "' + self.q_swpwr_rank + '", ' + \
                                           'disabledSchemas: "' + self.q_swpwr_invalid_schemas + '"' + \
-                                        ' }, ' + \
+                                       '}, ' + \
                              ' student: { studentId: "' + self.xb_user_email + '", ' + \
                                           'fullName: "' + 'SAMPLE SAMPLE' + '", ' + \
                                           'familiarName: "' + 'SAMPLE' + '"' + \
-                                        ' },' + \
+                                       '},' + \
                              ' problem: { appKey: "' + 'JiraTestPage' + '", ' + \
                                           'policyId: "' + '$A9$' + '", ' + \
                                           'problemId: "' + self.q_id + '", ' + \
@@ -885,11 +885,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           'topic: "' + 'gradeBasicAlgebra' + '", ' + \
                                           'definition: \'' + str(self.q_definition).replace('\'', '&apos;') + '\', ' + \
                                           'mathHints: [' + \
-                                          '  " + str(self.q_hint1).replace('\'', '&apos;').replace('\"', '&quot;') + '\",' + \
-                                          '  " + str(self.q_hint2).replace('\'', '&apos;').replace('\"', '&quot;') + '\",' + \
-                                          '  " + str(self.q_hint3).replace('\'', '&apos;').replace('\"', '&quot;') + '\"' + \
+                                          '  "' + str(self.q_hint1).replace('\'', '&apos;').replace('\"', '&quot;') + '",' + \
+                                          '  "' + str(self.q_hint2).replace('\'', '&apos;').replace('\"', '&quot;') + '",' + \
+                                          '  "' + str(self.q_hint3).replace('\'', '&apos;').replace('\"', '&quot;') + '"' + \
                                           ']' + \
-                                        ' },' + \
+                                       '},' + \
                              ' handlers: {' + \
                                           'onComplete: (session,log) => {' + \
                                           '  console.info("onComplete session",session);' + \
@@ -914,9 +914,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           '  $(\'.SWPowerComponent\').hide();' + \
                                           '  $(\'.problem-complete\').show();' + \
                                           '  $(\'.unit-navigation\').show();' + \
-                                        ' },' + \
-                                 '  }' + \
-                             ' };' + ' \
+                                          '},' + \
+                                        '}' + \
+                                     '};' + ' \
                              ' try { ' + \
                              '   window.swpwr.problem.wpHints = JSON.parse(self.q_swpwr_problem_hints);' + \
                              '   console.log( "wpHints data is ",window.swpwr.problem.wpHints );'+ \
