@@ -139,9 +139,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     q_definition = String(help="SWPWR Definition", default='SolveFor[5a+4=2a-5,a]', scope=Scope.content)
     q_type = String(help="SWPWR Type", default='gradeBasicAlgebra', scope=Scope.content)
     q_display_math = String(help="SWPWR Display Math", default='\\(\\)', scope=Scope.content)
-    q_hint1 = String(help="SWPWR First Hint", default='', scope=Scope.content)
-    q_hint2 = String(help="SWPWR Second Hint", default='', scope=Scope.content)
-    q_hint3 = String(help="SWPWR Third Hint", default='', scope=Scope.content)
+    q_hint1 = String(help="SWPWR First Math Hint", default='', scope=Scope.content)
+    q_hint2 = String(help="SWPWR Second Math Hint", default='', scope=Scope.content)
+    q_hint3 = String(help="SWPWR Third Math Hint", default='', scope=Scope.content)
     q_swpwr_problem = String(help="SWPWR SWPWR Problem", default='', scope=Scope.content)
     # Invalid schema choices should be a CSV list of one or more of these: "TOTAL", "DIFFERENCE", "CHANGEINCREASE", "CHANGEDECREASE", "EQUALGROUPS", and "COMPARE"
     q_swpwr_invalid_schemas = String(display_name="Comma-separated list of unallowed schema names", help="SWPWR Comma-seprated list of unallowed schema names", default="",scope=Scope.content)
@@ -884,8 +884,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           'stimulus: \'' + str(self.q_stimulus).replace('\'', '&apos;') + '\', ' + \
                                           'topic: "' + 'gradeBasicAlgebra' + '", ' + \
                                           'definition: \'' + str(self.q_definition).replace('\'', '&apos;') + '\', ' + \
-                                          'mathHints: \'' + str('[]').replace('\'', '&apos;') + '\',' + \
-                                          'wpHints: \'' + str(self.q_swpwr_problem_hints).replace('\'', '&apos;') + '\'' + \
+                                          'mathHints: [' + \
+                                          '  " + str(self.q_hint1).replace('\'', '&apos;').replace('\"', '&quot;') + '\",' + \
+                                          '  " + str(self.q_hint2).replace('\'', '&apos;').replace('\"', '&quot;') + '\",' + \
+                                          '  " + str(self.q_hint3).replace('\'', '&apos;').replace('\"', '&quot;') + '\"' + \
+                                          ']' + \
                                         ' },' + \
                              ' handlers: {' + \
                                           'onComplete: (session,log) => {' + \
@@ -913,6 +916,12 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           '  $(\'.unit-navigation\').show();' + \
                                         ' },' + \
                                  '  }' + \
+                             ' };' + ' \
+                             ' try { ' + \
+                             '   window.swpwr.problem.wpHints = JSON.parse(self.q_swpwr_problem_hints);' + \
+                             '   console.log( "wpHints data is ",window.swpwr.problem.wpHints );'+ \
+                             ' } catch(e) {'+ \
+                             '   console.log( "Could not decode wpHints string",e.message );'+ \
                              ' };'
             if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_string={e}".format(e=swpwr_string))
             frag.add_resource(swpwr_string,'application/javascript','foot')
