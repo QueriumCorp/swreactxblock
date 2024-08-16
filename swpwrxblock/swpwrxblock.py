@@ -884,6 +884,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           'stimulus: \'' + str(self.q_stimulus).replace('\'', '&apos;') + '\', ' + \
                                           'topic: "' + 'gradeBasicAlgebra' + '", ' + \
                                           'definition: \'' + str(self.q_definition).replace('\'', '&apos;') + '\', ' + \
+                                          'wpHintsString: \'' + str(self.q_swpwr_problem_hints).replace('\'', '&apos;') + '\', ' + \
                                           'mathHints: [' + \
                                           '  "' + str(self.q_hint1).replace('\'', '&apos;').replace('\"', '&quot;') + '",' + \
                                           '  "' + str(self.q_hint2).replace('\'', '&apos;').replace('\"', '&quot;') + '",' + \
@@ -918,7 +919,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                         '}' + \
                                      '};' + \
                              ' try { ' + \
-                             '   window.swpwr.problem.wpHints = JSON.parse(self.q_swpwr_problem_hints);' + \
+                             '   console.log( "before JSON.parse wpHintsString ",window.swpwr.problem.wpHintsString);' + \
+                             '   window.swpwr.problem.wpHints = JSON.parse(window.swpwr.problem.wpHintsString);' + \
                              '   console.log( "wpHints data is ",window.swpwr.problem.wpHints );' + \
                              ' } catch(e) {' + \
                              '   console.log( "Could not decode wpHints string",e.message );' + \
