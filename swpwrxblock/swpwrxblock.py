@@ -139,9 +139,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     q_definition = String(help="SWPWR Definition", default='SolveFor[5a+4=2a-5,a]', scope=Scope.content)
     q_type = String(help="SWPWR Type", default='gradeBasicAlgebra', scope=Scope.content)
     q_display_math = String(help="SWPWR Display Math", default='\\(\\)', scope=Scope.content)
-    q_hint1 = String(help="SWPWR First Math Hint", default='', scope=Scope.content)
-    q_hint2 = String(help="SWPWR Second Math Hint", default='', scope=Scope.content)
-    q_hint3 = String(help="SWPWR Third Math Hint", default='', scope=Scope.content)
+    q_hint1 = String(help="SWPWR First Hint", default='', scope=Scope.content)
+    q_hint2 = String(help="SWPWR Second Hint", default='', scope=Scope.content)
+    q_hint3 = String(help="SWPWR Third Hint", default='', scope=Scope.content)
     q_swpwr_problem = String(help="SWPWR SWPWR Problem", default='', scope=Scope.content)
     # Invalid schema choices should be a CSV list of one or more of these: "TOTAL", "DIFFERENCE", "CHANGEINCREASE", "CHANGEDECREASE", "EQUALGROUPS", and "COMPARE"
     q_swpwr_invalid_schemas = String(display_name="Comma-separated list of unallowed schema names", help="SWPWR Comma-seprated list of unallowed schema names", default="",scope=Scope.content)
@@ -220,7 +220,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         when viewing courses.  We set up the question parameters (referring to course-wide settings), then launch
         the javascript StepWise client.
         """
-        if DEBUG: logger.info('SWPWRXBlock student_view() entered. context={context}'.format(context=context))
+        if DEBUG: logger.info('SWPWRXBlock student_view() entered. Hi Kent 2024-7-1 17:28 context={context}'.format(context=context))
 
         if DEBUG: logger.info("SWPWRXBlock student_view() self={a}".format(a=self))
         if DEBUG: logger.info("SWPWRXBlock student_view() self.runtime={a}".format(a=self.runtime))
@@ -826,6 +826,122 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
 #NOTINJVR        frag.add_resource('<base href="/testq_assets/"/>','text/html','head')		# Needed so react code can find its pages. Don't do earlier or impacts relative pathnames of resources
 
+        # The swpwr problem template as a Python dict
+        swpwr_problem_template = dict(
+            qId = "sample",                  # Name of the root DOM for the React app for this problem
+            label = "the problem label",
+            description = "a desc",
+            my_class = "sampleWord",
+            stimulus = 'I am the sample problem stimulus',
+            stepsMnemonic = "POWER",
+            steps = [
+              dict(
+                label = "Prepare",
+                mnemonicIndex = 0,
+                instruction = "Read the Problem",
+                longInstruction = 'Take two deep breaths. Read the word problem carefully. Think about these two questions: What is the problem about? What does it ask you to find?',
+                type =  "READ",
+                valid = 1
+              ),
+              dict(
+                label = "Prepare",
+                mnemonicIndex =  0,
+                instruction = "Identify Important Information",
+                longInstruction = 'Identify the key facts in the problem. Select these important pieces of information. This will allow you to quickly paste the information as you work the problem.',
+                type = "TAG",
+                correct = 0,
+                valid = 0
+              ),
+              dict(
+                label = "Prepare",
+                mnemonicIndex  = 0,
+                instruction = "What type of problem is this?",
+                longInstruction = 'What type of problem do you think this is? Explain your answer. Enter at least 20 characters. (Not graded)',
+                type = "DIAGRAMANALYZE",
+                correct = 20,
+                valid = 0
+              ),
+              dict(
+                label = "Organize",
+                mnemonicIndex = 1,
+                instruction = "What type of problem is this?",
+                longInstruction = 'Scroll through the list below and choose the correct problem type.',
+                type =  "DIAGRAMSELECT",
+                correct = "COMBINE",   # "COMBINE", "MULTIPLYTIMES", "EQUALGROUPS", "CHANGE"
+                valid = 0
+              ),
+              dict(
+                label = "Organize",
+                mnemonicIndex = 1,
+                instruction = "Fill in the Diagram",
+                longInstruction = "Fill in the diagram with information from the problem. You can click in each box and type the information using your keyboard, or you can drag and drop the important information that you selected earlier. Click and hold the button for 1 second before you drag and drop. If an amount is unknown, enter 'unknown'.",
+                type = "DIAGRAMMER",
+                valid = 0
+              ),
+              dict(
+                label = "Work the Problem",
+                mnemonicIndex = 2,
+                instruction = "Set Up and Solve an Equation",
+                longInstruction = "Use your diagram to write an equation. Then solve. Take as many steps as you need.",
+                type = "STEPWISE",
+                swlabel = "QUES-6011X",
+                description = "Solve by addition, foolish defaultProblem.  \\begin{array}{c}7x-2y=3 \\\\4x+5y=3.25\\end{array}",
+                definition = "SolveFor[7x-2y=3 && 4x+5y=3.25, {x,y}, EliminationMethod]",
+                mathml = "\\(\\)",
+                swtype = "gradeBasicAlgebra",
+                hint1 = "",
+                hint2 = "",
+                hint3 = "",
+                valid = 0
+              ),
+              dict(
+                label = "Explain the Answer",
+                mnemonicIndex = 3,
+                instruction = "Give the Final Answer",
+                longInstruction = 'The final answer has two parts, a number and a label. Give both parts in the boxes below.',
+                type = "IDENTIFIER",
+                valid = 0
+              ),
+              dict(
+                label = "Explain the Answer",
+                mnemonicIndex = 3,
+                instruction = "Write a Sentence",
+                longInstruction = 'Write a sentence to answer the original question. Enter at least 20 characters.',
+                type = "EXPLAINER",
+                correct = 20,
+                valid = 0
+              ),
+              dict(
+                label = "Review and Revise",
+                mnemonicIndex = 4,
+                instruction = "Does your answer make sense?",
+                longInstruction = 'Is your answer reasonable? Explain why or why not. Enter at least 20 characters.',
+                type = "REVIEWER",
+                correct = 20,
+                valid = 0
+              )
+            ]
+          )
+
+        # We now modify the problem template here, and pass it in already modified for this particular question.
+
+        # Fields in the 'steps' array in the Dict (zero-based)
+        # PREPPHASE1 = 0  # Prepare (1 of 3)
+        # PREPPHASE2 = 1  # Prepare (2 of 3)
+        # PREPPHASE3 = 2  # Prepare (3 of 3)
+        # ORGPHASE1  = 3  # Organize (1 of 2)
+        # ORGPHASE2  = 4  # Organize (2 of 2)
+        # WORKPHASE1 = 5  # Work (1 of 1): Element of the steps array for the StepWise question
+        # EXPPHASE1  = 6	# Explain (1 of 2)
+        # EXPPHASE2  = 7	# Explain (2 of 2)
+        # REVPHASE1  = 8	# Review (1 of 1)
+
+        # # StepWise problem data goes in swpwr_problem_template['steps'][WORKPHASE1]
+        # if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template original json={j}".format(j=json.dumps(swpwr_problem_template,separators=(',',':'))))
+        # if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template template before stimulus={s}".format(s=swpwr_problem_template['stimulus']))
+        # if DEBUG: logger.info("SWPWRXBlock student_view() self.q_swpwr_problem={s}".format(s=self.q_swpwr_problem))
+        # swpwr_problem_template['stimulus'] = self.q_swpwr_problem
+        # if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template template after stimulus={s}".format(s=swpwr_problem_template['stimulus']))
         frag.add_javascript(self.resource_string("static/js/src/final_callback.js"))    # Final submit callback code and define swpwr_problems[]
 
         if (TEST_MODE):
@@ -843,7 +959,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             #     <script>
             #       window.swpwr = {
             #         options: {
-            #           swapiUrl: "https://swapi2.onrender.com",
+            #           swapiUrl: "https://swapi2.onrender.com/",
             #           gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/",
             #         },
             #       };
@@ -868,65 +984,28 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             # frag.add_content(html_string)
         else:
             swpwr_string = 'window.swpwr = {' + \
-                             ' options: { swapiUrl: "https://swapi2.onrender.com", ' + \
+                             ' options: { swapiUrl: "https://swapi2.onrender.com/", ' + \
                                           'gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/", ' + \
                                           'rank: "' + self.q_swpwr_rank + '", ' + \
                                           'disabledSchemas: "' + self.q_swpwr_invalid_schemas + '"' + \
-                                       '}, ' + \
+                                        ' }, ' + \
                              ' student: { studentId: "' + self.xb_user_email + '", ' + \
                                           'fullName: "' + 'SAMPLE SAMPLE' + '", ' + \
                                           'familiarName: "' + 'SAMPLE' + '"' + \
-                                       '},' + \
-                             ' problem: { appKey: "' + 'JiraTestPage' + '", ' + \
+                                        ' },' + \
+                             ' problem: { appKey: "' + 'jiraTestPage' + '", ' + \
                                           'policyId: "' + '$A9$' + '", ' + \
-                                          'problemId: "' + self.q_id + '", ' + \
+                                          'problemId: "' + 'SAMPLE' + '", ' + \
                                           'title: "' + 'SAMPLE' + '", ' + \
-                                          'stimulus: \'' + str(self.q_stimulus).replace('\'', '&apos;') + '\', ' + \
+                                          'stimulus: "' + self.q_stimulus + '", ' + \
                                           'topic: "' + 'gradeBasicAlgebra' + '", ' + \
-                                          'definition: \'' + str(self.q_definition).replace('\'', '&apos;') + '\', ' + \
-                                          'wpHintsString: \'' + str(self.q_swpwr_problem_hints).replace('\'', '&apos;') + '\', ' + \
-                                          'mathHints: [' + \
-                                          '  "' + str(self.q_hint1).replace('\'', '&apos;').replace('\"', '&quot;') + '",' + \
-                                          '  "' + str(self.q_hint2).replace('\'', '&apos;').replace('\"', '&quot;') + '",' + \
-                                          '  "' + str(self.q_hint3).replace('\'', '&apos;').replace('\"', '&quot;') + '"' + \
-                                          ']' + \
-                                       '},' + \
-                             ' handlers: {' + \
-                                          'onComplete: (session,log) => {' + \
-                                          '  console.info("onComplete session",session);' + \
-                                          '  console.info("onComplete log",log);' + \
-                                          '  console.info("onComplete handlerUrlSwpwrResults",handlerUrlSwpwrResults);' + \
-                                          '  const solution = [session,log];' + \
-                                          '  var solution_string = JSON.stringify(solution);' + \
-                                          '  console.info("onComplete solution_string",solution_string);' + \
-                                          '  $.ajax({' + \
-                                          '    type: "POST",' + \
-                                          '    url: handlerUrlSwpwrResults,' + \
-                                          '    data: solution_string,' + \
-                                          '    success: function (data,msg) {' + \
-                                          '      console.info("onComplete solution POST success");' + \
-                                          '      console.info("onComplete solution POST data",data);' + \
-                                          '      console.info("onComplete solution POST msg",msg);' + \
-                                          '    },' + \
-                                          '    error: function(XMLHttpRequest, textStatus, errorThrown) {' + \
-                                          '      console.info("onComplete solution POST error textStatus=",textStatus," errorThrown=",errorThrown);' + \
-                                          '    }' + \
-                                          '  });' + \
-                                          '  $(\'.SWPowerComponent\').hide();' + \
-                                          '  $(\'.problem-complete\').show();' + \
-                                          '  $(\'.unit-navigation\').show();' + \
-                                          '},' + \
-                                        '}' + \
-                                     '};' + \
-                             ' try { ' + \
-                             '   console.log( "before JSON.parse wpHintsString ",window.swpwr.problem.wpHintsString);' + \
-                             '   window.swpwr.problem.wpHints = JSON.parse(window.swpwr.problem.wpHintsString);' + \
-                             '   console.log( "wpHints data is ",window.swpwr.problem.wpHints );' + \
-                             ' } catch(e) {' + \
-                             '   console.log( "Could not decode wpHints string",e.message );' + \
+                                          'definition: "' + self.q_definition + '", ' + \
+                                          'mathHints: "' + '[]' + '",' + \
+                                          'wpHints: "' + self.q_swpwr_problem_hints + '"' + \
+                                        ' },' + \
                              ' };'
             if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_string={e}".format(e=swpwr_string))
-            frag.add_resource(swpwr_string,'application/javascript','foot')
+            frag.add_resource(swpwr_string,'application/javascript','head')
             # Emit the Python dict into the HTML as Javascript object
             # json_string = json.dumps(swpwr_problem_template,separators=(',', ':'))
             # javascript_string = '      window.swpwr_problem_template = '+json_string+';'
@@ -1004,12 +1083,12 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
     # SAVE
     def save(self):
-        if DEBUG: logger.info("SWPWRXBlock save() self{s}".format(s=self))
-        # try:
-        XBlock.save(self)       # Call parent class save()
+        if DEBUG: logger.info("SWPWRXBlock Hi Kent 2024-7-1 17:25 save() self{s}".format(s=self))
+        try:
+            XBlock.save(self)       # Call parent class save()
         # except (NameError,AttributeError,InvalidScopeError) as e:
-        # except Exception as e:
-        #     logger.info('SWPWRXBlock save() had an error: {e}'.format(e=e))
+        except Exception as e:
+            logger.info('SWPWRXBlock save() had an error: {e}'.format(e=e))
         if DEBUG: logger.info("SWPWRXBlock save() back from parent save. self.solution={s}".format(s=self.solution))
 
 
@@ -1280,7 +1359,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
 
     def studio_view(self, context=None):
-        if DEBUG: logger.info('SWPWRXBlock studio_view() entered.')
+        if DEBUG: logger.info('SWPWRXBlock studio_view() entered. Hi Kent 2024-7-1 17:29')
         """
         The STUDIO view of the SWPWRXBlock, shown to instructors
         when authoring courses.
@@ -1295,7 +1374,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
 
     def author_view(self, context=None):
-        if DEBUG: logger.info('SWPWRXBlock author_view() entered')
+        if DEBUG: logger.info('SWPWRXBlock author_view() entered Hi Kent 2024-7-1 17:27')
         """
         The AUTHOR view of the SWPWRXBlock, shown to instructors
         when previewing courses.
@@ -1321,7 +1400,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     @XBlock.json_handler
     def save_question(self, data, suffix=''):
         if DEBUG: logger.info('SWPWRXBlock save_question() entered')
-        if DEBUG: logger.info('SWPWRXBlock save_question() data={d}'.format(d=data))
         self.q_max_attempts = int(data['q_max_attempts'])
         self.q_weight = float(data['q_weight'])
         if data['q_option_showme'].lower() == u'true':
@@ -1350,10 +1428,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         self.q_hint2 = data['hint2']
         self.q_hint3 = data['hint3']
         self.q_swpwr_problem = data['swpwr_problem']
-        self.q_swpwr_rank = data['swpwr_rank']
-        self.q_swpwr_invalid_schemas = data['swpwr_invalid_schemas']
-        self.q_swpwr_problem_hints = data['swpwr_problem_hints']
-
 
         self.display_name = "Step-by-Step POWER"
 
@@ -1368,8 +1442,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if DEBUG: logger.info("SWPWRXBlock save_swpwr_results() data={d}".format(d=data))
         self.swpwr_results = json.dumps(data, separators=(',', ':'))
         if DEBUG: logger.info("SWPWRXBlock save_swpwr_results() self.swpwr_results={r}".format(r=self.swpwr_results))
-        self.save()     # Time to persist our state!!!
-        if DEBUG: logger.info("SWPWRXBlock save_swpwr_results() back from save")
         return {'result': 'success'}
 
     # Do necessary overrides from ScorableXBlockMixin
@@ -1577,7 +1649,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         # Note: we won't set self.variants_attempted for this variant until they actually begin work on it (see start_attempt() below)
 
         question = {
-            "q_id" : self.q_id,
             "q_user" : self.xb_user_email,
             "q_index" : 0,
             "q_label" : self.q_label,
@@ -1589,6 +1660,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             "q_hint2" :  self.q_hint2,
             "q_hint3" :  self.q_hint3,
             "q_swpwr_problem" : self.q_swpwr_problem,
+            # "q_swpwr_prepare_2_correct": self.q_swpwr_prepare_2_correct,
+            # "q_swpwr_prepare_3_correct": self.q_swpwr_prepare_3_correct,
+            # "q_swpwr_organize_1_schema_name": self.q_swpwr_organize_1_schema_name,
+            # "q_swpwr_explain_2_correct": self.q_swpwr_explain_2_correct,
+            # "q_swpwr_review_1_correct": self.q_swpwr_review_1_correct,
             "q_swpwr_rank": self.q_swpwr_rank,
             "q_swpwr_invalid_schemas": self.q_swpwr_invalid_schemas,
             "q_swpwr_problem_hints": self.q_swpwr_problem_hints,
