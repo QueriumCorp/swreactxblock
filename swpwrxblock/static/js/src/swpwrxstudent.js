@@ -22,6 +22,7 @@ function SWPWRXStudent(runtime, element) {
     $('.SWPowerComponent').show();  // Show React app root div
 
     $('.sequence-bottom').hide();   // Don't show the EdX sequential navigation buttons that lie on top of the react div
+    $('.unit-navigation').hide();   // Don't show the EdX sequential navigation buttons that lie on top of the react div
     $('.problem-complete').hide();  // Don't show the 'problem is complete' message
 
     get_data_data = {}		// don't need to sent any data to get_data
@@ -55,11 +56,12 @@ function SWPWRXStudent(runtime, element) {
             var min_steps = question.q_grade_min_steps_count;
             var min_steps_ded = question.q_grade_min_steps_ded;
             var swpwr_problem = question.swpwr_problem;
-            // var swpwr_id = question.q_swpwr_id;
+            var swpwr_id = question.q_id;
             var swpwr_rank = question.q_swpwr_rank;
             var swpwr_invalid_schemas = question.q_swpwr_invalid_schemas;
             var swpwr_problem_hints = question.q_swpwr_problem_hints;
 
+            console.info("SWPWRXStudent question ID",swpwr_id);
             console.info("SWPWRXStudent question",question);
             console.info("SWPWRXStudent swpwr_problem",swpwr_problem);
             // console.info("SWPWRXStudent enable_showme",enable_showme);
@@ -80,7 +82,7 @@ function SWPWRXStudent(runtime, element) {
             /* PAGE LOAD EVENT */
             $(function ($) {
             });
-
+        } // end of success block
     });
     console.info("SWPWRXStudent end");
 }
