@@ -918,13 +918,14 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                                           '},' + \
                                         '}' + \
                                      '};' + \
-                             ' try { ' + \
-                             '   console.log( "before JSON.parse wpHintsString ",window.swpwr.problem.wpHintsString);' + \
-                             '   window.swpwr.problem.wpHints = JSON.parse(window.swpwr.problem.wpHintsString);' + \
-                             '   console.log( "wpHints data is ",window.swpwr.problem.wpHints );' + \
-                             ' } catch(e) {' + \
-                             '   console.log( "Could not decode wpHints string",e.message );' + \
-                             ' };'
+                                  '};' + \
+                           'try { ' + \
+                           '   console.log( "before JSON.parse wpHintsString ",window.swpwr.problem.wpHintsString);' + \
+                           '   window.swpwr.problem.wpHints = JSON.parse(window.swpwr.problem.wpHintsString);' + \
+                           '   console.log( "wpHints data is ",window.swpwr.problem.wpHints );' + \
+                           ' } catch(e) {' + \
+                           '   console.log( "Could not decode wpHints string",e.message );' + \
+                           ' };'
             if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_string={e}".format(e=swpwr_string))
             frag.add_resource(swpwr_string,'application/javascript','foot')
             # Emit the Python dict into the HTML as Javascript object
