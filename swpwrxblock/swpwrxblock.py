@@ -868,63 +868,66 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             # frag.add_content(html_string)
         else:
             swpwr_string = 'window.swpwr = {' + \
-                             ' options: { swapiUrl: "https://swapi2.onrender.com", ' + \
-                                          'gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/", ' + \
-                                          'rank: "' + self.q_swpwr_rank + '", ' + \
-                                          'disabledSchemas: "' + self.q_swpwr_invalid_schemas + '"' + \
-                                       '}, ' + \
-                             ' student: { studentId: "' + self.xb_user_email + '", ' + \
-                                          'fullName: "' + 'SAMPLE SAMPLE' + '", ' + \
-                                          'familiarName: "' + 'SAMPLE' + '"' + \
-                                       '},' + \
-                             ' problem: { appKey: "' + 'JiraTestPage' + '", ' + \
-                                          'policyId: "' + '$A9$' + '", ' + \
-                                          'problemId: "' + self.q_id + '", ' + \
-                                          'title: "' + 'SAMPLE' + '", ' + \
-                                          'stimulus: \'' + str(self.q_stimulus).replace('\'', '&apos;') + '\', ' + \
-                                          'topic: "' + 'gradeBasicAlgebra' + '", ' + \
-                                          'definition: \'' + str(self.q_definition).replace('\'', '&apos;') + '\', ' + \
-                                          'wpHintsString: \'' + str(self.q_swpwr_problem_hints).replace('\'', '&apos;') + '\', ' + \
-                                          'mathHints: [' + \
+                           '    options: {' + \
+                           '        swapiUrl: "https://swapi2.onrender.com", ' + \
+                           '        gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/", ' + \
+                           '        rank: "' + self.q_swpwr_rank + '", ' + \
+                           '        disabledSchemas: "' + self.q_swpwr_invalid_schemas + '"' + \
+                           '    }, ' + \
+                           '    student: { ' + \
+                           '        studentId: "' + self.xb_user_email + '", ' + \
+                           '        fullName: "' + 'SAMPLE SAMPLE' + '", ' + \
+                           '        familiarName: "' + 'SAMPLE' + '"' + \
+                           '    },' + \
+                           '    problem: { ' + \
+                           '        appKey: "' + 'JiraTestPage' + '", ' + \
+                           '        policyId: "' + '$A9$' + '", ' + \
+                           '        problemId: "' + self.q_id + '", ' + \
+                           '        title: "' + 'SAMPLE' + '", ' + \
+                           '        stimulus: \'' + str(self.q_stimulus).replace('\'', '&apos;') + '\', ' + \
+                           '        topic: "' + 'gradeBasicAlgebra' + '", ' + \
+                           '        definition: \'' + str(self.q_definition).replace('\'', '&apos;') + '\', ' + \
+			   '        wpHintsString: \'' + str(self.q_swpwr_problem_hints).replace('\'', '&apos;') + '\', ' + \
+                           '        mathHints: [' + \
                                           '  "' + str(self.q_hint1).replace('\'', '&apos;').replace('\"', '&quot;') + '",' + \
                                           '  "' + str(self.q_hint2).replace('\'', '&apos;').replace('\"', '&quot;') + '",' + \
                                           '  "' + str(self.q_hint3).replace('\'', '&apos;').replace('\"', '&quot;') + '"' + \
                                           ']' + \
-                                       '},' + \
-                             ' handlers: {' + \
-                                          'onComplete: (session,log) => {' + \
-                                          '  console.info("onComplete session",session);' + \
-                                          '  console.info("onComplete log",log);' + \
-                                          '  console.info("onComplete handlerUrlSwpwrResults",handlerUrlSwpwrResults);' + \
-                                          '  const solution = [session,log];' + \
-                                          '  var solution_string = JSON.stringify(solution);' + \
-                                          '  console.info("onComplete solution_string",solution_string);' + \
-                                          '  $.ajax({' + \
-                                          '    type: "POST",' + \
-                                          '    url: handlerUrlSwpwrResults,' + \
-                                          '    data: solution_string,' + \
-                                          '    success: function (data,msg) {' + \
-                                          '      console.info("onComplete solution POST success");' + \
-                                          '      console.info("onComplete solution POST data",data);' + \
-                                          '      console.info("onComplete solution POST msg",msg);' + \
-                                          '    },' + \
-                                          '    error: function(XMLHttpRequest, textStatus, errorThrown) {' + \
-                                          '      console.info("onComplete solution POST error textStatus=",textStatus," errorThrown=",errorThrown);' + \
-                                          '    }' + \
-                                          '  });' + \
-                                          '  $(\'.SWPowerComponent\').hide();' + \
-                                          '  $(\'.problem-complete\').show();' + \
-                                          '  $(\'.unit-navigation\').show();' + \
-                                          '},' + \
-                                        '}' + \
-                                     '};' + \
-                             ' try { ' + \
-                             '   console.log( "before JSON.parse wpHintsString ",window.swpwr.problem.wpHintsString);' + \
-                             '   window.swpwr.problem.wpHints = JSON.parse(window.swpwr.problem.wpHintsString);' + \
-                             '   console.log( "wpHints data is ",window.swpwr.problem.wpHints );' + \
-                             ' } catch(e) {' + \
-                             '   console.log( "Could not decode wpHints string",e.message );' + \
-                             ' };'
+                           '    },' + \
+                           '    handlers: {' + \
+                           '        onComplete: (session,log) => {' + \
+                           '            console.info("onComplete session",session);' + \
+                           '            console.info("onComplete log",log);' + \
+                           '            console.info("onComplete handlerUrlSwpwrResults",handlerUrlSwpwrResults);' + \
+                           '            const solution = [session,log];' + \
+                           '            var solution_string = JSON.stringify(solution);' + \
+                           '            console.info("onComplete solution_string",solution_string);' + \
+                           '            $.ajax({' + \
+                           '                type: "POST",' + \
+                           '                url: handlerUrlSwpwrResults,' + \
+                           '                data: solution_string,' + \
+                           '                success: function (data,msg) {' + \
+                           '                    console.info("onComplete solution POST success");' + \
+                           '                    console.info("onComplete solution POST data",data);' + \
+                           '                    console.info("onComplete solution POST msg",msg);' + \
+                           '                },' + \
+                           '                error: function(XMLHttpRequest, textStatus, errorThrown) {' + \
+                           '                    console.info("onComplete solution POST error textStatus=",textStatus," errorThrown=",errorThrown);' + \
+                           '                }' + \
+                           '            });' + \
+                           '            $(\'.SWPowerComponent\').hide();' + \
+                           '            $(\'.problem-complete\').show();' + \
+                           '            $(\'.unit-navigation\').show();' + \
+                           '        };' + \
+                           '    };' + \
+                           '};' + \
+                           'try { ' + \
+                           '   console.log( "before JSON.parse wpHintsString ",window.swpwr.problem.wpHintsString);' + \
+                           '   window.swpwr.problem.wpHints = JSON.parse(window.swpwr.problem.wpHintsString);' + \
+                           '   console.log( "wpHints data is ",window.swpwr.problem.wpHints );' + \
+                           '} catch(e) {' + \
+                           '   console.log( "Could not decode wpHints string",e.message );' + \
+                           '};'
             if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_string={e}".format(e=swpwr_string))
             frag.add_resource(swpwr_string,'application/javascript','foot')
             # Emit the Python dict into the HTML as Javascript object
