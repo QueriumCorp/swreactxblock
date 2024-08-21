@@ -918,8 +918,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                            '            $(\'.SWPowerComponent\').hide();' + \
                            '            $(\'.problem-complete\').show();' + \
                            '            $(\'.unit-navigation\').show();' + \
-                           '        };' + \
-                           '    };' + \
+                           '        }' + \
+                           '    }' + \
                            '};' + \
                            'try { ' + \
                            '    console.log( "before JSON.parse wpHintsString ",window.swpwr.problem.wpHintsString);' + \
