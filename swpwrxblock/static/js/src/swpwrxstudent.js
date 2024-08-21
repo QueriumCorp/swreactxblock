@@ -16,8 +16,12 @@ function SWPWRXStudent(runtime, element) {
 
     console.info("SWPWRXStudent calling get_data at ",handlerUrlGetData);
 
+    // Now we do the question manipulation in swpwrxblock.py
+    // const SWPHASE = 5;          // Which element of the POWER steps array in window.swpwr_problem contains the StepWise UI?
+
     $('.SWPowerComponent').show();  // Show React app root div
 
+    $('.sequence-bottom').hide();   // Don't show the EdX sequential navigation buttons that lie on top of the react div
     $('.unit-navigation').hide();   // Don't show the EdX sequential navigation buttons that lie on top of the react div
     $('.problem-complete').hide();  // Don't show the 'problem is complete' message
 
@@ -46,6 +50,8 @@ function SWPWRXStudent(runtime, element) {
             var count_attempts = data_obj.count_attempts;
             var variants_count = data_obj.variants_count;
             var max_attempts = data_obj.max_attempts;
+            // var enable_showme = question.q_option_showme;
+            // var enable_hint = question.q_option_hint;
             var weight = question.q_weight;
             var min_steps = question.q_grade_min_steps_count;
             var min_steps_ded = question.q_grade_min_steps_ded;
@@ -58,6 +64,8 @@ function SWPWRXStudent(runtime, element) {
             console.info("SWPWRXStudent question ID",swpwr_id);
             console.info("SWPWRXStudent question",question);
             console.info("SWPWRXStudent swpwr_problem",swpwr_problem);
+            // console.info("SWPWRXStudent enable_showme",enable_showme);
+            // console.info("SWPWRXStudent enable_hint",enable_hint);
             console.info("SWPWRXStudent solution",solution);
             console.info("SWPWRXStudent count_attempts",count_attempts);
             console.info("SWPWRXStudent variants_counnt",variants_count);
@@ -66,6 +74,7 @@ function SWPWRXStudent(runtime, element) {
             console.info("SWPWRXStudent min steps",min_steps);
             console.info("SWPWRXStudent min steps dec",min_steps_ded);
             console.info("SWPWRXStudent grade",grade);
+            // console.info("SWPWRXStudent swpwr_id",swpwr_id);
             console.info("SWPWRXStudent swpwr_rank ",swpwr_rank);
             console.info("SWPWRXStudent swpwr_invalid_schemas ",swpwr_invalid_schemas);
             console.info("SWPWRXStudent swpwr_problem_hints ",swpwr_problem_hints);
@@ -73,7 +82,7 @@ function SWPWRXStudent(runtime, element) {
             /* PAGE LOAD EVENT */
             $(function ($) {
             });
-        } //end of success block
+        } // end of success block
     });
     console.info("SWPWRXStudent end");
 }

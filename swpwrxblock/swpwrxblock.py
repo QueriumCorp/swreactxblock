@@ -843,7 +843,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             #     <script>
             #       window.swpwr = {
             #         options: {
-            #           swapiUrl: "https://swapi2.onrender.com",
+            #           swapiUrl: "https://swapi2.onrender.com/",
             #           gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/",
             #         },
             #       };
@@ -889,10 +889,10 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                            '        definition: \'' + str(self.q_definition).replace('\'', '&apos;') + '\', ' + \
 			   '        wpHintsString: \'' + str(self.q_swpwr_problem_hints).replace('\'', '&apos;') + '\', ' + \
                            '        mathHints: [' + \
-                                          '  "' + str(self.q_hint1).replace('\'', '&apos;').replace('\"', '&quot;') + '",' + \
-                                          '  "' + str(self.q_hint2).replace('\'', '&apos;').replace('\"', '&quot;') + '",' + \
-                                          '  "' + str(self.q_hint3).replace('\'', '&apos;').replace('\"', '&quot;') + '"' + \
-                                          ']' + \
+                           '                   "' + str(self.q_hint1).replace('\'', '&apos;').replace('\"', '&quot;') + '",' + \
+                           '                   "' + str(self.q_hint2).replace('\'', '&apos;').replace('\"', '&quot;') + '",' + \
+                           '                   "' + str(self.q_hint3).replace('\'', '&apos;').replace('\"', '&quot;') + '"' + \
+                           '                   ]' + \
                            '    },' + \
                            '    handlers: {' + \
                            '        onComplete: (session,log) => {' + \
@@ -922,11 +922,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                            '    };' + \
                            '};' + \
                            'try { ' + \
-                           '   console.log( "before JSON.parse wpHintsString ",window.swpwr.problem.wpHintsString);' + \
-                           '   window.swpwr.problem.wpHints = JSON.parse(window.swpwr.problem.wpHintsString);' + \
-                           '   console.log( "wpHints data is ",window.swpwr.problem.wpHints );' + \
+                           '    console.log( "before JSON.parse wpHintsString ",window.swpwr.problem.wpHintsString);' + \
+                           '    window.swpwr.problem.wpHints = JSON.parse(window.swpwr.problem.wpHintsString);' + \
+                           '    console.log( "wpHints data is ",window.swpwr.problem.wpHints );' + \
                            '} catch(e) {' + \
-                           '   console.log( "Could not decode wpHints string",e.message );' + \
+                           '    console.log( "Could not decode wpHints string",e.message );' + \
                            '};'
             if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_string={e}".format(e=swpwr_string))
             frag.add_resource(swpwr_string,'application/javascript','foot')
@@ -1008,11 +1008,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     # SAVE
     def save(self):
         if DEBUG: logger.info("SWPWRXBlock save() self{s}".format(s=self))
-        # try:
-        XBlock.save(self)       # Call parent class save()
+        try:
+            XBlock.save(self)       # Call parent class save()
         # except (NameError,AttributeError,InvalidScopeError) as e:
-        # except Exception as e:
-        #     logger.info('SWPWRXBlock save() had an error: {e}'.format(e=e))
+        except Exception as e:
+            logger.info('SWPWRXBlock save() had an error: {e}'.format(e=e))
         if DEBUG: logger.info("SWPWRXBlock save() back from parent save. self.solution={s}".format(s=self.solution))
 
 
@@ -1357,7 +1357,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         self.q_swpwr_invalid_schemas = data['swpwr_invalid_schemas']
         self.q_swpwr_problem_hints = data['swpwr_problem_hints']
 
-
         self.display_name = "Step-by-Step POWER"
 
         # mcdaniel jul-2020: fix syntax error in print statement
@@ -1371,7 +1370,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if DEBUG: logger.info("SWPWRXBlock save_swpwr_results() data={d}".format(d=data))
         self.swpwr_results = json.dumps(data, separators=(',', ':'))
         if DEBUG: logger.info("SWPWRXBlock save_swpwr_results() self.swpwr_results={r}".format(r=self.swpwr_results))
-        self.save()     # Time to persist our state!!!
+        self.save() # Time to persist our state!!!
         if DEBUG: logger.info("SWPWRXBlock save_swpwr_results() back from save")
         return {'result': 'success'}
 
