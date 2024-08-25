@@ -581,6 +581,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         xb_user = user_service.get_current_user()
         if DEBUG: logger.info('SWPWRXBlock student_view() xbuser: {e}'.format(e=xb_user))
         self.xb_user_email = xb_user.emails[0]
+        if DEBUG: logger.info('SWPWRXBlock student_view() xb_user_email: {e}'.format(e=self.xb_user_email))
 
         # Determine which stepwise variant to use
 
