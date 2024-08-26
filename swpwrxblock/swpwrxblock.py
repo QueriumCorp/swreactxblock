@@ -957,35 +957,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             # frag.add_resource('<script type="module" src="/public/index-YyiH-LRh.js"></script>','application/javascript','head')
             # frag.add_resource(final_string,'application/javascript','foot')
 
-#NOTYET         stepwise_setup_string = '''
-#NOTYET           var options = {
-#NOTYET             hideMenu: true,
-#NOTYET             readySet: false,
-#NOTYET             issueSubmit: true,
-#NOTYET             showMe: false,
-#NOTYET             hint: true,
-#NOTYET             scribbles: false
-#NOTYET           };
-#NOTYET           querium.appID = "SW4WPapp";
-#NOTYET           console.info("querium.appID = " + querium.appID);
-#NOTYET           querium.student = "SW4WPuser";
-#NOTYET           console.info("querium.student = " + querium.student);
-#NOTYET           querium.options = options;
-#NOTYET           console.info("querium.options.hideMenu = " + querium.options.hideMenu);
-#NOTYET           console.info("querium.options.readySet = " + querium.options.readySet);
-#NOTYET           console.info("querium.options.issueSubmit = " + querium.options.issueSubmit);
-#NOTYET           console.info("querium.options.showMe = " + querium.options.showMe);
-#NOTYET           console.info("querium.options.hint = " + querium.options.hint);
-#NOTYET           console.info("querium.options.scribbles = " + querium.options.scribbles);
-#NOTYET           querium.serverURL = localStorage.getItem('server');
-#NOTYET           console.info("querium.serverURL = " + querium.serverURL);
-#NOTYET         '''
-#NOTYET         frag.add_resource(stepwise_setup_string,'application/javascript','foot')
-#NOTYET
-#NOTYET         if DEBUG: logger.info("SWPWRXBlock student_view() head={e}".format(e=frag.head_html()))
-#NOTYET         if DEBUG: logger.info("SWPWRXBlock student_view() body={e}".format(e=frag.body_html()))
-#NOTYET         if DEBUG: logger.info("SWPWRXBlock student_view() foot={e}".format(e=frag.foot_html()))
-#NOTYET         if DEBUG: logger.info("SWPWRXBlock student_view() calling frag.initialize_js")
         frag.initialize_js('SWPWRXStudent', {})  # Call the entry point
         return frag
 
