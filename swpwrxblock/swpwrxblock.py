@@ -915,7 +915,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                            '                    console.info("onComplete solution POST error textStatus=",textStatus," errorThrown=",errorThrown);' + \
                            '                }' + \
                            '            });' + \
-                           '            $(\'.SWPowerComponent\').hide();' + \
                            '            $(\'.problem-complete\').show();' + \
                            '            $(\'.unit-navigation\').show();' + \
                            '        }' + \
