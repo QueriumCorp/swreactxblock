@@ -144,6 +144,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     q_hint3 = String(help="SWPWR Third Math Hint", default='', scope=Scope.content)
     q_swpwr_problem = String(help="SWPWR SWPWR Problem", default='', scope=Scope.content)
     # Invalid schema choices should be a CSV list of one or more of these: "TOTAL", "DIFFERENCE", "CHANGEINCREASE", "CHANGEDECREASE", "EQUALGROUPS", and "COMPARE"
+    # Invalid schema choices can also be the official names: "additiveTotalSchema", "additiveDifferenceSchema", "addititiveChangeSchema", "subtractiveChangeSchema", "multiplicativeEqualGroupsSchema", and "multiplicativeCompareSchema"
+    # This Xblock converts the upper-case names to the official names when constructing the launch code for the React app, so you can mix these names.
+    # Note that this code doesn't validate these schema names, so Caveat Utilitor.
     q_swpwr_invalid_schemas = String(display_name="Comma-separated list of unallowed schema names", help="SWPWR Comma-seprated list of unallowed schema names", default="",scope=Scope.content)
     # Rank choices should be "newb" or "cadet" or "learner" or "ranger"
     q_swpwr_rank = String(display_name="Student rank for this question", help="SWPWR Student rank for this question", default=DEFAULT_RANK, scope=Scope.content)
@@ -868,12 +871,16 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             # html_string = '<div id="root"></div>'
             # frag.add_content(html_string)
         else:
+            # Invalid schema choices should be a CSV list of one or more of these: "TOTAL", "DIFFERENCE", "CHANGEINCREASE", "CHANGEDECREASE", "EQUALGROUPS", and "COMPARE"
+            # Invalid schema choices can also be the official names: "additiveTotalSchema", "additiveDifferenceSchema", "addititiveChangeSchema", "subtractiveChangeSchema", "multiplicativeEqualGroupsSchema", and "multiplicativeCompareSchema"
+            # Convert the upper-case names to the 'official' names. NB: The order of .replace() calls might matter if one of these schema names is a substring of another name.
+            invalid_schemas_js = self.q_swpwr_invalid_schemas.replace('TOTAL','additiveTotalSchema').replace('DIFFERENCE','additiveDifferenceSchema').replace('CHANGEINCREASE','addititiveChangeSchema').replace('CHANGEDECREASE','subtractiveChangeSchema').replace('EQUALGROUPS','multiplicativeEqualGroupsSchema').replace('COMPARE','multiplicativeCompareSchema')
             swpwr_string = 'window.swpwr = {' + \
                            '    options: {' + \
                            '        swapiUrl: "https://swapi2.onrender.com", ' + \
                            '        gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/", ' + \
                            '        rank: "' + self.q_swpwr_rank + '", ' + \
-                           '        disabledSchemas: "' + self.q_swpwr_invalid_schemas + '"' + \
+                           '        disabledSchemas: "' + invalid_schemas_js + '"' + \
                            '    }, ' + \
                            '    student: { ' + \
                            '        studentId: "' + self.xb_user_email + '", ' + \
