@@ -874,7 +874,13 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             # Invalid schema choices should be a CSV list of one or more of these: "TOTAL", "DIFFERENCE", "CHANGEINCREASE", "CHANGEDECREASE", "EQUALGROUPS", and "COMPARE"
             # Invalid schema choices can also be the official names: "additiveTotalSchema", "additiveDifferenceSchema", "addititiveChangeSchema", "subtractiveChangeSchema", "multiplicativeEqualGroupsSchema", and "multiplicativeCompareSchema"
             # Convert the upper-case names to the 'official' names. NB: The order of .replace() calls might matter if one of these schema names is a substring of another name.
-            invalid_schemas_js = self.q_swpwr_invalid_schemas.replace('TOTAL','additiveTotalSchema').replace('DIFFERENCE','additiveDifferenceSchema').replace('CHANGEINCREASE','addititiveChangeSchema').replace('CHANGEDECREASE','subtractiveChangeSchema').replace('EQUALGROUPS','multiplicativeEqualGroupsSchema').replace('COMPARE','multiplicativeCompareSchema')
+            invalid_schemas_js = self.q_swpwr_invalid_schemas
+            if DEBUG: logger.info("SWPWRXBlock student_view() before mapping loop invalid_schemas_js={e}".format(e=invalid_schemas_js))
+            mapping = { "TOTAL":"additiveTotalSchema", "DIFFERENCE":"additiveDifferenceSchema", "CHANGEINCREASE":"addititiveChangeSchema", "CHANGEDECREASE":"subtractiveChangeSchema", "EQUALGROUPS":"multiplicativeEqualGroupsSchema", "COMPARE":"multiplicativeCompareSchema" }
+            for schema_key, schema_value in mapping.items():
+                invalid_schemas_js = invalid_schemas_js.replace(schema_key, schema_value)
+                if DEBUG: logger.info("SWPWRXBlock student_view() in mapping loop schema_key={k} schema_value={v} invalid_schemas_js={e}".format(k=schema_key,v=schema_value,e=invalid_schemas_js))
+
             swpwr_string = 'window.swpwr = {' + \
                            '    options: {' + \
                            '        swapiUrl: "https://swapi2.onrender.com", ' + \
