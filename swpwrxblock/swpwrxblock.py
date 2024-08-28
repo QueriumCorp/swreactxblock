@@ -144,7 +144,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     q_hint3 = String(help="SWPWR Third Math Hint", default='', scope=Scope.content)
     q_swpwr_problem = String(help="SWPWR SWPWR Problem", default='', scope=Scope.content)
     # Invalid schema choices should be a CSV list of one or more of these: "TOTAL", "DIFFERENCE", "CHANGEINCREASE", "CHANGEDECREASE", "EQUALGROUPS", and "COMPARE"
-    # Invalid schema choices can also be the official names: "additiveTotalSchema", "additiveDifferenceSchema", "addititiveChangeSchema", "subtractiveChangeSchema", "multiplicativeEqualGroupsSchema", and "multiplicativeCompareSchema"
+    # Invalid schema choices can also be the official names: "additiveTotalSchema", "additiveDifferenceSchema", "additiveChangeSchema", "subtractiveChangeSchema", "multiplicativeEqualGroupsSchema", and "multiplicativeCompareSchema"
     # This Xblock converts the upper-case names to the official names when constructing the launch code for the React app, so you can mix these names.
     # Note that this code doesn't validate these schema names, so Caveat Utilitor.
     q_swpwr_invalid_schemas = String(display_name="Comma-separated list of unallowed schema names", help="SWPWR Comma-seprated list of unallowed schema names", default="",scope=Scope.content)
@@ -872,11 +872,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             # frag.add_content(html_string)
         else:
             # Invalid schema choices should be a CSV list of one or more of these: "TOTAL", "DIFFERENCE", "CHANGEINCREASE", "CHANGEDECREASE", "EQUALGROUPS", and "COMPARE"
-            # Invalid schema choices can also be the official names: "additiveTotalSchema", "additiveDifferenceSchema", "addititiveChangeSchema", "subtractiveChangeSchema", "multiplicativeEqualGroupsSchema", and "multiplicativeCompareSchema"
+            # Invalid schema choices can also be the official names: "additiveTotalSchema", "additiveDifferenceSchema", "additiveChangeSchema", "subtractiveChangeSchema", "multiplicativeEqualGroupsSchema", and "multiplicativeCompareSchema"
             # Convert the upper-case names to the 'official' names. NB: The order of .replace() calls might matter if one of these schema names is a substring of another name.
             invalid_schemas_js = self.q_swpwr_invalid_schemas
             if DEBUG: logger.info("SWPWRXBlock student_view() before mapping loop invalid_schemas_js={e}".format(e=invalid_schemas_js))
-            mapping = { "TOTAL":"additiveTotalSchema", "DIFFERENCE":"additiveDifferenceSchema", "CHANGEINCREASE":"addititiveChangeSchema", "CHANGEDECREASE":"subtractiveChangeSchema", "EQUALGROUPS":"multiplicativeEqualGroupsSchema", "COMPARE":"multiplicativeCompareSchema" }
+            mapping = { "TOTAL":"additiveTotalSchema", "DIFFERENCE":"additiveDifferenceSchema", "CHANGEINCREASE":"additiveChangeSchema", "CHANGEDECREASE":"subtractiveChangeSchema", "EQUALGROUPS":"multiplicativeEqualGroupsSchema", "COMPARE":"multiplicativeCompareSchema" }
             for schema_key, schema_value in mapping.items():
                 invalid_schemas_js = invalid_schemas_js.replace(schema_key, schema_value)
                 if DEBUG: logger.info("SWPWRXBlock student_view() in mapping loop schema_key={k} schema_value={v} invalid_schemas_js={e}".format(k=schema_key,v=schema_value,e=invalid_schemas_js))
