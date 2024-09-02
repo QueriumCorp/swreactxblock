@@ -80,6 +80,42 @@
             },
           },
         }
+      } else if (urlRank === 'cadet') {
+        window.swpwr = {
+          options: {
+            gltfUrl:
+              'https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models',
+            rank: 'newb',
+            disabledSchemas: [],
+          },
+          student: {
+            studentId: 'Calvin Hobbes',
+            fullName: 'Spaceman Spiff',
+            familiarName: 'Spiff',
+          },
+          problem: {
+            appKey: 'JiraTestPage',
+            policyId: '$A9$',
+            problemId: 'QUES-30533',
+            stimulus:
+              'Minh spent $6.25 on 5  sticker books to give his nephews. Find the cost of each sticker book.',
+            topic: 'gradeBasicAlgebra',
+            definition:
+              'SolveWordProblemAns[{"Minh spent $6.25 on 5 sticker books to give his nephews. Find the cost of each sticker book."}]',
+            mathHints: [],
+            wpHints: [
+              { page: 'newb:FindFacts', hints: ['wpHint1', 'wbHint2'] },
+              { page: 'ranger:ReadProblem', hints: ['wpHint1', 'wbHint2'] },
+            ],
+          },
+          handlers: {
+            onComplete: (session, studentLog) => {
+              console.info("I'm an external onComplete Handler")
+              console.info('session', session)
+              console.info('studentLog', studentLog)
+            },
+          },
+        }
       } else {
         window.swpwr = {
           options: {
