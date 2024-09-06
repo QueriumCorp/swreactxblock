@@ -32,7 +32,7 @@ if [ ! -d "public/models" ]; then
 fi
 
 if [ ! -d "public/BabyFox" ]; then
-  mkdir publicBabyFox
+  mkdir public/BabyFox
 fi
 
 # Which precache manifest to copy
