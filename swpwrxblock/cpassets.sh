@@ -31,6 +31,10 @@ if [ ! -d "public/models" ]; then
   mkdir public/models
 fi
 
+if [ ! -d "public/BabyFox" ]; then
+  mkdir public/BabyFox
+fi
+
 # Which precache manifest to copy
 # c=precache-manifest.8c5268b68a90c8397a5eb1681f40011c.js
 
@@ -62,6 +66,8 @@ cp $p/vite.svg public/
 cp $d/site.webmanifest public/
 #
 cp $m/foxy.glb public/models/
+cp $p/BabyFox.svg public/BabyFox.svg
+cp $p/BabyFox/BabyFox.svg public/BabyFox/BabyFox.svg
 #
 cp $i/index.html public/
 sed -I -e 's#/src/main.tsx#/public/main.tsx#' public/index.html
