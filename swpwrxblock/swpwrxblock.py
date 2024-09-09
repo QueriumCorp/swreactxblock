@@ -123,6 +123,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     q_grade_errors_ded = Float(help="SWPWR Point deduction for excessive Errors", default=1.0, scope=Scope.content)
     q_grade_min_steps_count = Integer(help="SWPWR Minimum valid steps in solution for full credit", default=3, scope=Scope.content)
     q_grade_min_steps_ded = Float(help="SWPWR Point deduction for fewer than minimum valid steps", default=0.25, scope=Scope.content)
+    q_app_key = String(help="SWPWR question app key", default="SBIRPhase2", scope=Scope.content);
 
     # PER-QUESTION HINTS/SHOW SOLUTION OPTIONS
     q_option_hint = Boolean(help='SWPWR Display Hint button if "True"', default=True, scope=Scope.content)
@@ -178,6 +179,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     my_grade_errors_ded  = Integer(help="SWPWR Remember grade_errors_ded course setting vs question setting", default=-1, scope=Scope.user_state)
     my_grade_min_steps_count  = Integer(help="SWPWR Remember grade_min_steps_count course setting vs question setting", default=-1, scope=Scope.user_state)
     my_grade_min_steps_ded  = Integer(help="SWPWR Remember grade_min_steps_ded course setting vs question setting", default=-1, scope=Scope.user_state)
+    my_app_key  = String(help="SWPWR Remember app_key course setting vs question setting", default=-1, scope=Scope.user_state)
 
     # variant_attempted: Remembers the set of variant q_index values the student has already attempted.
     # We can't add a Set to Scope.user_state, or we get get runtime errors whenever we update this field:
@@ -253,6 +255,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         temp_grade_errors_ded = -1
         temp_grade_min_steps_count = -1
         temp_grade_min_steps_ded = -1
+        temp_app_key = ""
 
         # For course-wide settings
         temp_course_stepwise_weight = -1
@@ -266,6 +269,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         temp_course_stepwise_grade_errors_ded = -1
         temp_course_stepwise_grade_min_steps_count = -1
         temp_course_stepwise_grade_min_steps_ded = -1
+        temp_course_stepwise_app_key = ""
 
         # Defaults For course-wide settings if they aren't defined for this course
         def_course_stepwise_weight = 1.0
@@ -279,6 +283,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         def_course_stepwise_grade_errors_ded = 1.0
         def_course_stepwise_grade_min_steps_count = 3
         def_course_stepwise_grade_min_steps_ded = 0.25
+        def_course_stepwise_app_key = "SBIRPhase2"
 
         # after application of course-wide settings
         self.my_weight = -1
@@ -292,6 +297,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         self.my_grade_errors_ded = -1
         self.my_grade_min_steps_count = -1
         self.my_grade_min_steps_ded = -1
+        self.my_app_key = ""
 
         # Fetch the xblock-specific settings if they exist, otherwise create a default
       
@@ -373,6 +379,13 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             temp_grade_min_steps_ded = -1
         if DEBUG: logger.info('SWPWRXBlock student_view() temp_grade_min_steps_ded: {t}'.format(t=temp_grade_min_steps_ded))
 
+        try:
+            temp_app_key = self.q_app_key
+        except (NameError,AttributeError) as e:
+            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_app_key was not defined in this instance: {e}'.format(e=e))
+            temp_app_key = ""
+        if DEBUG: logger.info('SWPWRXBlock student_view() temp_app_key: {t}'.format(t=temp_app_key))
+
         # Fetch the course-wide settings if they exist, otherwise create a default
 
         try:
@@ -451,6 +464,13 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             if DEBUG: logger.info('SWPWRXBlock student_view() course.stepwise_grade_min_steps_ded was not defined in this instance: {e}'.format(e=e))
             temp_course_stepwise_grade_min_steps_ded = -1
         if DEBUG: logger.info('SWPWRXBlock student_view() temp_course_stepwise_grade_min_steps_ded: {s}'.format(s=temp_course_stepwise_grade_min_steps_ded))
+
+        try:
+            temp_course_stepwise_app_key = course.stepwise_app_key
+        except (NameError,AttributeError) as e:
+            if DEBUG: logger.info('SWPWRXBlock student_view() course.stepwise_app_key was not defined in this instance: {e}'.format(e=e))
+            temp_course_stepwise_app_key = -1
+        if DEBUG: logger.info('SWPWRXBlock student_view() temp_course_stepwise_app_key: {s}'.format(s=temp_course_stepwise_app_key))
 
         # Enforce course-wide grading options here.
         # We prefer the per-question setting to the course setting.
@@ -557,6 +577,15 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         else:
             self.my_grade_min_steps_ded = def_course_stepwise_grade_min_steps_ded
         if DEBUG: logger.info('SWPWRXBlock student_view() self.my_grade_min_steps_ded={m}'.format(m=self.my_grade_min_steps_ded))
+
+        if (temp_app_key != ""):
+            self.my_app_key = temp_app_key
+        elif (temp_course_stepwise_app_key != ""):
+            self.my_app_key = temp_course_stepwise_app_key
+        else:
+            self.my_app_key = def_course_stepwise_app_key
+
+        if DEBUG: logger.info('SWPWRXBlock student_view() self.my_app_key={m}'.format(m=self.my_app_key))
 
 
         # Fetch the new xblock-specific attributes if they exist, otherwise set them to a default
@@ -1077,6 +1106,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
              if DEBUG: logger.info('SWPWRXBlock save_grade() self.q_grade_min_steps_ded was not defined: {e}'.format(e=e))
              q_grade_min_steps_ded = -1
 
+        try: q_app_key = self.q_app_key
+        except (NameError,AtrributeError) as e:
+             if DEBUG: logger.info('SWPWRXBlock save_grade() self.q_app_key was not defined: {e}'.format(e=e))
+             q_app_key = "SBIRPhase2"
+
         # Apply grading defaults
 
         if q_weight == -1:
@@ -1100,6 +1134,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if q_grade_min_steps_ded == -1:
             if DEBUG: logger.info('SWPWRXBlock save_grade() min_steps_ded default set to 0.25')
             q_grade_min_steps_ded = 0.25
+        if q_app_key == "":
+            if DEBUG: logger.info('SWPWRXBlock save_grade() app_key default set to SBIRPhase2')
+            q_app_key = "SBIRPhase2"
 
         """
         Count the total number of VALID steps the student input.
@@ -1146,7 +1183,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         
         # Don't subtract min_steps points on a MatchSpec problem or DomainOf
         self.my_q_definition = data['answered_question']['q_definition']
-        if DEBUG: logger.info('SWPWRXBlock save_grade() check on min_steps deduction grade={g} max_grade={m} q_grade_min_steps_count={c} q_grade_min_steps_ded={d} self.my_q_definition={q}'.format(g=grade,m=max_grade,c=q_grade_min_steps_count,d=q_grade_min_steps_ded,q=self.my_q_definition))
+        if DEBUG: logger.info('SWPWRXBlock save_grade() check on min_steps deduction grade={g} max_grade={m} q_grade_min_steps_count={c} q_grade_min_steps_ded={d} self.my_q_definition={q} self.q_app_key={k}'.format(g=grade,m=max_grade,c=q_grade_min_steps_count,d=q_grade_min_steps_ded,q=self.my_q_definition,k=self.q_app_key))
         if (grade >= max_grade and valid_steps < q_grade_min_steps_count and self.my_q_definition.count('MatchSpec') == 0 and self.my_q_definition.count('DomainOf') == 0 ):
             grade=grade-q_grade_min_steps_ded
             if DEBUG: logger.info('SWPWRXBlock save_grade() took min_steps deduction after grade={g}'.format(g=grade))
@@ -1327,6 +1364,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         self.q_grade_errors_ded = float(data['q_grade_errors_ded'])
         self.q_grade_min_steps_count = int(data['q_grade_min_steps_count'])
         self.q_grade_min_steps_ded = float(data['q_grade_min_steps_ded'])
+        self.q_app_key = str(data['q_app_key'])
 
         self.q_id = data['id']
         self.q_label = data['label']
@@ -1590,6 +1628,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             "q_grade_errors_ded" : self.my_grade_errors_ded,
             "q_grade_min_steps_count" : self.my_grade_min_steps_count,
             "q_grade_min_steps_ded" : self.my_grade_min_steps_ded,
+            "q_app_key" : self.my_app_key
         }
 
         if DEBUG: logger.info("SWPWRXBlock pick_variant() returned question q_index={i} question={q}".format(i=question['q_index'],q=question))
