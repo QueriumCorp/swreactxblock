@@ -5,6 +5,13 @@
     <h2>Question Options</h2>
     <li class="field comp-setting-entry metadata_entry">
       <div class="wrapper-comp-setting">
+        <label for="q_app_key" class="label setting-label">App Key</label>
+        <input id='q_app_key' type="text" name="q_app_key" value="{self.q_app_key}" class="input setting-input">
+      </div>
+      <span class="tip setting-help">App Key to use for the POWER React app.</span>
+    </li>
+    <li class="field comp-setting-entry metadata_entry">
+      <div class="wrapper-comp-setting">
         <label for="q_weight" class="label setting-label">Weight</label>
         <input id='q_weight' type="text" name="q_weight" value="{self.q_weight}" class="input setting-input">
       </div>
@@ -79,13 +86,6 @@
         <input id='q_grade_min_steps_ded' type="text" name="q_grade_min_steps_ded" value="{self.q_grade_min_steps_ded}" class="input setting-input">
       </div>
       <span class="tip setting-help">Point deduction for having less than &apos;Minimum Valid Steps&apos; if there would otherwise be full credit.</span>
-    </li>
-    <li class="field comp-setting-entry metadata_entry">
-      <div class="wrapper-comp-setting">
-        <label for="q_app_key" class="label setting-label">App Key</label>
-        <input id='q_app_key' type="text" name="q_app_key" value="{self.q_app_key}" class="input setting-input">
-      </div>
-      <span class="tip setting-help">App Key to use for the POWER React app.</span>
     </li>
     <h2>Base Question Specification</h2>
     <li class="field comp-setting-entry metadata_entry">
