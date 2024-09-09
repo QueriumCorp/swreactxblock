@@ -21,6 +21,8 @@
     <script>
       let params = new URLSearchParams(window.location.search)
       let urlRank = params.get('rank')
+      let urlAppKey = params.get('appKey')
+
       if (urlRank === 'newb') {
         window.swpwr = {
           options: {
@@ -41,7 +43,7 @@
             familiarName: 'Robert',
           },
           problem: {
-            appKey: 'JiraTestPage',
+            appKey: urlAppKey || 'JiraTestPage',
             policyId: '$A9$',
             problemId: 'Fall2024Newb',
             title: 'Fall2024Newb',
@@ -94,7 +96,7 @@
             familiarName: 'Spiff',
           },
           problem: {
-            appKey: 'JiraTestPage',
+            appKey: urlAppKey || 'JiraTestPage',
             policyId: '$A9$',
             problemId: 'QUES-30533',
             stimulus:
@@ -130,7 +132,7 @@
             familiarName: 'Win',
           },
           problem: {
-            appKey: 'JiraTestPage',
+            appKey: urlAppKey || 'JiraTestPage',
             policyId: '$A9$',
             problemId: 'QUES-30533',
             title: 'Sticker Book Cost',
