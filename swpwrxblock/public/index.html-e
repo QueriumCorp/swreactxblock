@@ -30,11 +30,11 @@
               'https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models',
             rank: 'newb',
             disabledSchemas: [
-              'DIFFERENCE',
-              'CHANGEINCREASE',
-              'CHANGEDECREASE',
-              'EQUALGROUPS',
-              'COMPARE',
+              'additiveDifferenceSchema',
+              'additiveChangeSchema',
+              'subtractiveChangeSchema',
+              'multiplicativeEqualGroupsSchema',
+              'multiplicativeCompareSchema',
             ],
           },
           student: {
