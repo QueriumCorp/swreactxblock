@@ -48,16 +48,16 @@
             problemId: 'Fall2024Newb',
             title: 'Fall2024Newb',
             stimulus:
-              'Mark rode his bicycle 9 miles on Saturday. He rode 3 miles on Sunday. In all, he rode 12 miles over the weekend.',
+              'Mark rode his bicycle 9 miles on Saturday. He rode 3 miles on Sunday. In all, he rode 12 miles over the weekend?',
             topic: 'gradeBasicAlgebra',
             definition:
-              'SolveWordProblemAns[{"Mark rode his bicycle 9 miles on Saturday. He rode 3 miles on Sunday. In all, he rode 12 miles over the weekend."}]',
+              'SolveWordProblemNewb[{"Mark rode his bicycle 9 miles on Saturday. He rode 3 miles on Sunday. In all, he rode 12 miles over the weekend."}]',
             mathHints: [],
             wpHints: [
               {
                 pageId: 'newbFindFacts',
                 hints: [
-                  'The first known amount is "9 miles". Do you see it up above? Highlight it. Then pull it out and place it under Known.',
+                  'The first known amount is "9 miles".&#10;&#10;Do you see it up above? Highlight it. Then pull it out and place it under Known.',
                   'The next known amount is "3 miles". Highlight it, pull it out, and place it under Known.',
                   'The next known amount is "12 miles". Put it under Known, too.',
                   "That's the last known amount. Click me to see what's next.",
