@@ -157,6 +157,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     swpwr_results = String(help="SWPWR The student's SWPWR Solution structure", default="", scope=Scope.user_state)
 
     xb_user_username = String(help="SWPWR The user's username", default="", scope=Scope.user_state)
+    xb_user_fullname = String(help="SWPWR The user's fullname", default="", scope=Scope.user_state)
     grade = Float(help="SWPWR The student's grade", default=-1, scope=Scope.user_state)
     solution = Dict(help="SWPWR The student's last stepwise solution", default={}, scope=Scope.user_state)
     question = Dict(help="SWPWR The student's current stepwise question", default={}, scope=Scope.user_state)
@@ -608,12 +609,25 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             self.q_swpwr_problem_hints = "[]"
         if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_problem_hints: {t}'.format(t=self.q_swpwr_problem_hints))
 
-        # Save an identifier for the user
+        # Save an identifier for the user and their full name
 
         user_service = self.runtime.service( self, 'user')
         xb_user = user_service.get_current_user()
         self.xb_user_username = user_service.get_current_user().opt_attrs.get('edx-platform.username')
-        if DEBUG: logger.info('SWPWRXBlock student_view() xbuser: {e}'.format(e=xb_user))
+        if self.xb_user_username is None:
+            if DEBUG: logger.error('SWPWRXBlock self.xb_user_username was None')
+            self.xb_user_username = 'FIXME'
+        if self.xb_user_username == "":
+            if DEBUG: logger.error('SWPWRXBlock self.xb_user_username was empty')
+            self.xb_user_username = 'FIXME'
+        self.xb_user_fullname = xb_user.full_name
+        if self.xb_user_fullname is None:
+            if DEBUG: logger.error('SWPWRXBlock self.xb_user_fullname was None')
+            self.xb_user_fullname = 'FIXME FIXME'
+        if self.xb_user_fullname == "":
+            if DEBUG: logger.error('SWPWRXBlock self.xb_user_fullname was empty')
+            self.xb_user_username = 'FIXME FIXME'
+        if DEBUG: logger.info('SWPWRXBlock student_view() self.xb_user_username: {e} self.xb_user_fullname: {f}'.format(e=self.xb_user_username,f=self.xb_user_fullname))
 
         # Determine which stepwise variant to use
 
@@ -920,8 +934,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                            '    }, ' + \
                            '    student: { ' + \
                            '        studentId: "' + self.xb_user_username + '", ' + \
-                           '        fullName: "' + 'SAMPLE SAMPLE' + '", ' + \
-                           '        familiarName: "' + 'SAMPLE' + '"' + \
+                           '        fullName: "' + self.xb_user_fullname + '", ' + \
+                           '        familiarName: "' + 'NONE' + '"' + \
                            '    },' + \
                            '    problem: { ' + \
                            '        appKey: "' + self.q_grade_app_key + '", ' + \
