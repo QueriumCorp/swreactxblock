@@ -156,7 +156,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     # STUDENT'S QUESTION PERFORMANCE FIELDS
     swpwr_results = String(help="SWPWR The student's SWPWR Solution structure", default="", scope=Scope.user_state)
 
-    xb_user_email = String(help="SWPWR The user's email addr", default="", scope=Scope.user_state)
+    xb_user_username = String(help="SWPWR The user's username", default="", scope=Scope.user_state)
     grade = Float(help="SWPWR The student's grade", default=-1, scope=Scope.user_state)
     solution = Dict(help="SWPWR The student's last stepwise solution", default={}, scope=Scope.user_state)
     question = Dict(help="SWPWR The student's current stepwise question", default={}, scope=Scope.user_state)
@@ -614,8 +614,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         xb_user = user_service.get_current_user()
         self.xb_user_username = user_service.get_current_user().opt_attrs.get('edx-platform.username')
         if DEBUG: logger.info('SWPWRXBlock student_view() xbuser: {e}'.format(e=xb_user))
-        # self.xb_user_email = xb_user.emails[0]
-        # if DEBUG: logger.info('SWPWRXBlock student_view() xb_user_email: {e}'.format(e=self.xb_user_email))
 
         # Determine which stepwise variant to use
 
@@ -1605,7 +1603,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         question = {
             "q_id" : self.q_id,
-            "q_user" : self.xb_user_email,
+            "q_user" : self.xb_user_username,
             "q_index" : 0,
             "q_label" : self.q_label,
             "q_stimulus" : self.q_stimulus,
