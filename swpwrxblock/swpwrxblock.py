@@ -802,7 +802,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_resource('<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />','text/html','head')
         frag.add_resource('<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />','text/html','head')
         frag.add_resource('<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />','text/html','head')
-        frag.add_resource('<link rel="manifest" href="/site.webmanifest" />','text/html','head')
+        # Don't add site.webmanifest to eliminate 404 error since we need to give a deep path in the xblock static assets on the LMS server
+        # frag.add_resource('<link rel="manifest" href="/site.webmanifest" />','text/html','head')
         frag.add_resource('<meta name="viewport" content="width=device-width,initial-scale=1.0"/>','text/html','head')
         frag.add_resource('<link rel="preconnect" href="https://fonts.googleapis.com" />','text/html','head')
         frag.add_resource('<link rel="preconnect" href="https://fonts.googleapis.com" />','text/html','head')
