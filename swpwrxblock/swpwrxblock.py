@@ -612,9 +612,10 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         user_service = self.runtime.service( self, 'user')
         xb_user = user_service.get_current_user()
+        self.xb_user_username = user_service.get_current_user().opt_attrs.get('edx-platform.username')
         if DEBUG: logger.info('SWPWRXBlock student_view() xbuser: {e}'.format(e=xb_user))
-        self.xb_user_email = xb_user.emails[0]
-        if DEBUG: logger.info('SWPWRXBlock student_view() xb_user_email: {e}'.format(e=self.xb_user_email))
+        # self.xb_user_email = xb_user.emails[0]
+        # if DEBUG: logger.info('SWPWRXBlock student_view() xb_user_email: {e}'.format(e=self.xb_user_email))
 
         # Determine which stepwise variant to use
 
@@ -920,7 +921,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                            '        disabledSchemas: "' + invalid_schemas_js + '"' + \
                            '    }, ' + \
                            '    student: { ' + \
-                           '        studentId: "' + self.xb_user_email + '", ' + \
+                           '        studentId: "' + self.xb_user_username + '", ' + \
                            '        fullName: "' + 'SAMPLE SAMPLE' + '", ' + \
                            '        familiarName: "' + 'SAMPLE' + '"' + \
                            '    },' + \
