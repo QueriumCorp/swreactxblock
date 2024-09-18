@@ -90,23 +90,23 @@
               'SolveWordProblemNewb[{"Mark rode his bicycle 9 miles on Saturday. He rode 3 miles on Sunday. In all, he rode 12 miles over the weekend."}]',
             hints: ['', '', ''],
             wpHints: [
-              {
-                page: 'newbFindFacts',
-                hints: [
-                  'The first known amount is **9 miles**. Do you see it up above? Highlight it. Then pull it out and place it under Known.',
-                  'The next known amount is **3 miles**. Highlight it, pull it out, and place it under Known.',
-                  'The next known amount is **12 miles**. Put it under Known, too.',
-                  'That&apos;s the last known amount. Now let&apos;s look for unknown amounts.',
-                  'If you think there are no unknown amounts... you&apos;re right!&#10;In this story, all of the amounts are known. So don&apos;t put anything under Unknown. We&apos;ll learn more about unknown amounts later on.',
-                  'For this one, we&apos;re all done pulling it apart. Click → and I&apos;ll just double check your work before we move on.',
-                ],
-              },
-              {
-                page: 'newbProblemType',
-                hints: [
-                  'The problem has two parts, 9 miles on Saturday and 3 miles on Sunday.&#10;Those parts are put together to make the total, 12 miles.&#10;Pick the Total problem type. Then click →.',
-                ],
-              },
+              // {
+              //   page: 'newbFindFacts',
+              //   hints: [
+              //     'The first known amount is **9 miles**. Do you see it up above? Highlight it. Then pull it out and place it under Known.',
+              //     'The next known amount is **3 miles**. Highlight it, pull it out, and place it under Known.',
+              //     'The next known amount is **12 miles**. Put it under Known, too.',
+              //     'That&apos;s the last known amount. Now let&apos;s look for unknown amounts.',
+              //     'If you think there are no unknown amounts... you&apos;re right!&#10;In this story, all of the amounts are known. So don&apos;t put anything under Unknown. We&apos;ll learn more about unknown amounts later on.',
+              //     'For this one, we&apos;re all done pulling it apart. Click → and I&apos;ll just double check your work before we move on.',
+              //   ],
+              // },
+              // {
+              //   page: 'newbProblemType',
+              //   hints: [
+              //     'The problem has two parts, 9 miles on Saturday and 3 miles on Sunday.&#10;Those parts are put together to make the total, 12 miles.&#10;Pick the Total problem type. Then click →.',
+              //   ],
+              // },
             ],
           },
           handlers: {
@@ -141,11 +141,11 @@
               'SolveWordProblemAns[{"Minh spent $6.25 on 5 sticker books to give his nephews. Find the cost of each sticker book."}]',
             mathHints: [],
             wpHints: [
-              {
-                page: 'cadetFindFacts',
-                hints: ['Line1&#10;&#10;Line2', 'wbHint2'],
-              },
-              { page: 'cadetReadProblem', hints: ['wpHint1', 'wbHint2'] },
+              // {
+              //   page: 'cadetFindFacts',
+              //   hints: ['Line1&#10;&#10;Line2', 'wbHint2'],
+              // },
+              // { page: 'cadetReadProblem', hints: ['wpHint1', 'wbHint2'] },
             ],
           },
           handlers: {
@@ -181,8 +181,8 @@
               'SolveWordProblemAns[{"Minh spent $6.25 on 5 sticker books to give his nephews. Find the cost of each sticker book."}]',
             mathHints: [],
             wpHints: [
-              { page: 'newb:FindFacts', hints: ['wpHint1', 'wbHint2'] },
-              { page: 'ranger:ReadProblem', hints: ['wpHint1', 'wbHint2'] },
+              // { page: 'newb:FindFacts', hints: ['wpHint1', 'wbHint2'] },
+              // { page: 'ranger:ReadProblem', hints: ['wpHint1', 'wbHint2'] },
             ],
           },
           handlers: {
