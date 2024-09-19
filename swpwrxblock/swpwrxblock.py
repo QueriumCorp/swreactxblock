@@ -44,7 +44,8 @@ from web_fragments.fragment import Fragment
 from xblock.scorable import ScorableXBlockMixin, Score
 from xblockutils.studio_editable import StudioEditableXBlockMixin
 from lms.djangoapps.courseware.courses import get_course_by_id
-from xblock.mixins import ScopedStorageMixin
+# KAF Sept 2024 this is deprecated
+# from xblock.mixins import ScopedStorageMixin
 
 
 UNSET = object()
