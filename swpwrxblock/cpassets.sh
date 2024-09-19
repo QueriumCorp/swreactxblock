@@ -10,7 +10,8 @@ b=$i/dist/assets
 p=$i/public
 s=$i/src
 d=$i/dist
-m=$d/models
+# we no longer have foxy.glb in models as of Sept 19, 2024
+# m=$d/models
 
 if [ ! -d "dist" ]; then
   mkdir dist
@@ -27,9 +28,9 @@ if [ ! -d "public/assets" ]; then
   mkdir public/assets
 fi
 
-if [ ! -d "public/models" ]; then
-  mkdir public/models
-fi
+# if [ ! -d "public/models" ]; then
+#   mkdir public/models
+# fi
 
 if [ ! -d "public/BabyFox" ]; then
   mkdir public/BabyFox
@@ -65,7 +66,8 @@ cp $p/vite.svg public/
 #
 cp $d/site.webmanifest public/
 #
-cp $m/foxy.glb public/models/
+# We are not using foxy.glb as of Sept 19, 2024 to remove 25MB of payload from the swpwrxblock assets and not to try to download the file from S3
+# cp $m/foxy.glb public/models/
 cp $p/BabyFox.svg public/BabyFox.svg
 cp $p/BabyFox/BabyFox.svg public/BabyFox/BabyFox.svg
 #
