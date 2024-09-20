@@ -183,7 +183,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     my_grade_errors_ded  = Integer(help="SWPWR Remember grade_errors_ded course setting vs question setting", default=-1, scope=Scope.user_state)
     my_grade_min_steps_count  = Integer(help="SWPWR Remember grade_min_steps_count course setting vs question setting", default=-1, scope=Scope.user_state)
     my_grade_min_steps_ded  = Integer(help="SWPWR Remember grade_min_steps_ded course setting vs question setting", default=-1, scope=Scope.user_state)
-    my_grade_app_key  = String(help="SWPWR Remember app_key course setting vs question setting", default=-1, scope=Scope.user_state)
+    my_grade_app_key  = String(help="SWPWR Remember app_key course setting vs question setting", default="SBIRPhase2", scope=Scope.user_state)
 
     # variant_attempted: Remembers the set of variant q_index values the student has already attempted.
     # We can't add a Set to Scope.user_state, or we get get runtime errors whenever we update this field:
