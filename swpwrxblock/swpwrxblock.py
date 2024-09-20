@@ -48,7 +48,10 @@ import pkg_resources
 import random
 import json
 import re
+import uuid
+
 from logging import getLogger
+
 
 # Django Stuff
 from django.conf import settings
@@ -156,7 +159,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     # STUDENT'S QUESTION PERFORMANCE FIELDS
     swpwr_results = String(help="SWPWR The student's SWPWR Solution structure", default="", scope=Scope.user_state)
 
-    xb_user_email = String(help="SWPWR The user's email addr", default="", scope=Scope.user_state)
+    xb_user_username = String(help="SWPWR The user's username", default="", scope=Scope.user_state)
+    xb_user_fullname = String(help="SWPWR The user's fullname", default="", scope=Scope.user_state)
     grade = Float(help="SWPWR The student's grade", default=-1, scope=Scope.user_state)
     solution = Dict(help="SWPWR The student's last stepwise solution", default={}, scope=Scope.user_state)
     question = Dict(help="SWPWR The student's current stepwise question", default={}, scope=Scope.user_state)
@@ -179,7 +183,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     my_grade_errors_ded  = Integer(help="SWPWR Remember grade_errors_ded course setting vs question setting", default=-1, scope=Scope.user_state)
     my_grade_min_steps_count  = Integer(help="SWPWR Remember grade_min_steps_count course setting vs question setting", default=-1, scope=Scope.user_state)
     my_grade_min_steps_ded  = Integer(help="SWPWR Remember grade_min_steps_ded course setting vs question setting", default=-1, scope=Scope.user_state)
-    my_grade_app_key  = String(help="SWPWR Remember app_key course setting vs question setting", default=-1, scope=Scope.user_state)
+    my_grade_app_key  = String(help="SWPWR Remember app_key course setting vs question setting", default="SBIRPhase2", scope=Scope.user_state)
 
     # variant_attempted: Remembers the set of variant q_index values the student has already attempted.
     # We can't add a Set to Scope.user_state, or we get get runtime errors whenever we update this field:
@@ -607,13 +611,25 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             self.q_swpwr_problem_hints = "[]"
         if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_problem_hints: {t}'.format(t=self.q_swpwr_problem_hints))
 
-        # Save an identifier for the user
+        # Save an identifier for the user and their full name
 
         user_service = self.runtime.service( self, 'user')
         xb_user = user_service.get_current_user()
-        if DEBUG: logger.info('SWPWRXBlock student_view() xbuser: {e}'.format(e=xb_user))
-        self.xb_user_email = xb_user.emails[0]
-        if DEBUG: logger.info('SWPWRXBlock student_view() xb_user_email: {e}'.format(e=self.xb_user_email))
+        self.xb_user_username = user_service.get_current_user().opt_attrs.get('edx-platform.username')
+        if self.xb_user_username is None:
+            if DEBUG: logger.error('SWPWRXBlock self.xb_user_username was None')
+            self.xb_user_username = 'FIXME'
+        if self.xb_user_username == "":
+            if DEBUG: logger.error('SWPWRXBlock self.xb_user_username was empty')
+            self.xb_user_username = 'FIXME'
+        self.xb_user_fullname = xb_user.full_name
+        if self.xb_user_fullname is None:
+            if DEBUG: logger.error('SWPWRXBlock self.xb_user_fullname was None')
+            self.xb_user_fullname = 'FIXME FIXME'
+        if self.xb_user_fullname == "":
+            if DEBUG: logger.error('SWPWRXBlock self.xb_user_fullname was empty')
+            self.xb_user_username = 'FIXME FIXME'
+        if DEBUG: logger.info('SWPWRXBlock student_view() self.xb_user_username: {e} self.xb_user_fullname: {f}'.format(e=self.xb_user_username,f=self.xb_user_fullname))
 
         # Determine which stepwise variant to use
 
@@ -919,9 +935,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                            '        disabledSchemas: "' + invalid_schemas_js + '"' + \
                            '    }, ' + \
                            '    student: { ' + \
-                           '        studentId: "' + self.xb_user_email + '", ' + \
-                           '        fullName: "' + 'SAMPLE SAMPLE' + '", ' + \
-                           '        familiarName: "' + 'SAMPLE' + '"' + \
+                           '        studentId: "' + self.xb_user_username + '", ' + \
+                           '        fullName: "' + self.xb_user_fullname + '", ' + \
+                           '        familiarName: "' + 'NONE' + '"' + \
                            '    },' + \
                            '    problem: { ' + \
                            '        appKey: "' + self.q_grade_app_key + '", ' + \
@@ -1022,6 +1038,21 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     # SAVE
     def save(self):
         if DEBUG: logger.info("SWPWRXBlock save() self{s}".format(s=self))
+        # If we don't have a url_name for this xblock defined to make the xblock unique, assign ourselves a unique UUID4 as a hex string.
+        # Otherwise course imports can confuse multiple swpwrxblocks with url_name == "NONE" (the default)
+        # We don't currently allow authors to specify a value for this field in studio since we don't want to burden them with assigning UUIDs.
+        # There was also a long period of time prior to September 2024 where we didn't assign any value to this field, so we try to catch
+        # such swpwrxblocks and correct this at the time of the next save()
+        try:
+            self.url_name
+        except NameError as e:
+            logger.info('SWPWRXBlock save() self.url_name was undefined: {e}'.format(e=e))
+            self.url_name = 'NONE'
+        if self.url_name == '' or self.url_name == "NONE":
+            self.url_name = str(uuid.uuid4().hex)
+            if DEBUG: logger.info('SWPWRXBlock save() defined self.url_name as {s}'.format(s=self.url_name))
+        else:
+            if DEBUG: logger.info('SWPWRXBlock save() there is an existing url_name {s}'.format(s=self.url_name))
         try:
             XBlock.save(self)       # Call parent class save()
         # except (NameError,AttributeError,InvalidScopeError) as e:
@@ -1603,7 +1634,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         question = {
             "q_id" : self.q_id,
-            "q_user" : self.xb_user_email,
+            "q_user" : self.xb_user_username,
             "q_index" : 0,
             "q_label" : self.q_label,
             "q_stimulus" : self.q_stimulus,
