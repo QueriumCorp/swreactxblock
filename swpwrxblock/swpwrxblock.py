@@ -48,7 +48,10 @@ import pkg_resources
 import random
 import json
 import re
+import uuid
+
 from logging import getLogger
+
 
 # Django Stuff
 from django.conf import settings
@@ -1036,6 +1039,21 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     # SAVE
     def save(self):
         if DEBUG: logger.info("SWPWRXBlock save() self{s}".format(s=self))
+        # If we don't have a url_name for this xblock defined to make the xblock unique, assign ourselves a unique UUID4 as a hex string.
+        # Otherwise course imports can confuse multiple swpwrxblocks with url_name == "NONE" (the default)
+        # We don't currently allow authors to specify a value for this field in studio since we don't want to burden them with assigning UUIDs.
+        # There was also a long period of time prior to September 2024 where we didn't assign any value to this field, so we try to catch
+        # such swpwrxblocks and correct this at the time of the next save()
+        try:
+            self.url_name
+        except NameError as e:
+            logger.info('SWPWRXBlock save() self.url_name was undefined: {e}'.format(e=e))
+            self.url_name = 'NONE'
+        if self.url_name == '' or self.url_name == "NONE":
+            self.url_name = str(uuid.uuid4().hex)
+            if DEBUG: logger.info('SWPWRXBlock save() defined self.url_name as {s}'.format(s=self.url_name))
+        else:
+            if DEBUG: logger.info('SWPWRXBlock save() there is an existing url_name {s}'.format(s=self.url_name))
         try:
             XBlock.save(self)       # Call parent class save()
         # except (NameError,AttributeError,InvalidScopeError) as e:
