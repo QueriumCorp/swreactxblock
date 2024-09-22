@@ -628,7 +628,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             self.xb_user_fullname = 'FIXME FIXME'
         if self.xb_user_fullname == "":
             if DEBUG: logger.error('SWPWRXBlock self.xb_user_fullname was empty')
-            self.xb_user_username = 'FIXME FIXME'
+            self.xb_user_fullname = 'FIXME FIXME'
         if DEBUG: logger.info('SWPWRXBlock student_view() self.xb_user_username: {e} self.xb_user_fullname: {f}'.format(e=self.xb_user_username,f=self.xb_user_fullname))
 
         # Determine which stepwise variant to use
