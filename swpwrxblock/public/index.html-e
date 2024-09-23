@@ -122,7 +122,7 @@
           options: {
             gltfUrl:
               'https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models',
-            rank: 'newb',
+            rank: 'cadet',
             disabledSchemas: [],
           },
           student: {
@@ -135,7 +135,7 @@
             policyId: '$A9$',
             problemId: 'TiledFloor',
             stimulus:
-              'A patio floor has 8 rows of tiles. There are 14 tiles in each row. What is the total number of tiles?',
+              'A patio floor has 8 rows of tiles. There are 14 tiles in each row. What is the total number of 14 3/32s tiles?',
             topic: 'gradeBasicAlgebra',
             definition:
               'SolveWordProblemAns[{"A patio floor has 8 rows of tiles. There are 14 tiles in each row. What is the total number of tiles?"}]',
@@ -161,7 +161,7 @@
           options: {
             gltfUrl:
               'https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models',
-            rank: 'newb',
+            rank: 'ranger',
             disabledSchemas: [],
           },
           student: {
