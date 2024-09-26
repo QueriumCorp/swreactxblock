@@ -84,7 +84,7 @@
             problemId: 'Fall2024Newb',
             title: 'SAMPLE',
             stimulus:
-              'Mark rode his bicycle 9 miles on Saturday. He rode 3 miles on Sunday. In all, he rode 12 miles over the weekend.',
+              'Mark rode his bicycle 9/10 miles on Saturday. He rode 3/10 miles on Sunday. In all, he rode 12/10 miles over the weekend.',
             topic: 'gradeBasicAlgebra',
             definition:
               'SolveWordProblemNewb[{"Mark rode his bicycle 9 miles on Saturday. He rode 3 miles on Sunday. In all, he rode 12 miles over the weekend."}]',
@@ -140,7 +140,7 @@
             policyId: '$A9$',
             problemId: 'TiledFloor',
             stimulus:
-              'A patio floor has 8 rows of tiles. There are 14 tiles in each row. What is the total number of 14 3/32s tiles?',
+              'A patio floor has 8/1 rows of tiles. There are 14/1 tiles in each row. What is the total number of 14 3/32s tiles?',
             topic: 'gradeBasicAlgebra',
             definition:
               'SolveWordProblemAns[{"A patio floor has 8 rows of tiles. There are 14 tiles in each row. What is the total number of tiles?"}]',
