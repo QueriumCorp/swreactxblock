@@ -978,6 +978,27 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                            '            });' + \
                            '            $(\'.problem-complete\').show();' + \
                            '            $(\'.unit-navigation\').show();' + \
+                           '        },' + \
+                           '        onStep: (session,log) => {' + \
+                           '            console.info("onStep session",session);' + \
+                           '            console.info("onStep log",log);' + \
+                           '            console.info("onStep handlerUrlSwpwrResults",handlerUrlSwpwrResults);' + \
+                           '            const solution = [session,log];' + \
+                           '            var solution_string = JSON.stringify(solution);' + \
+                           '            console.info("onStep solution_string",solution_string);' + \
+                           '            $.ajax({' + \
+                           '                type: "POST",' + \
+                           '                url: handlerUrlSwpwrResults,' + \
+                           '                data: solution_string,' + \
+                           '                success: function (data,msg) {' + \
+                           '                    console.info("onStep solution POST success");' + \
+                           '                    console.info("onStep solution POST data",data);' + \
+                           '                    console.info("onStep solution POST msg",msg);' + \
+                           '                },' + \
+                           '                error: function(XMLHttpRequest, textStatus, errorThrown) {' + \
+                           '                    console.info("onStep solution POST error textStatus=",textStatus," errorThrown=",errorThrown);' + \
+                           '                }' + \
+                           '            });' + \
                            '        }' + \
                            '    }' + \
                            '};' + \
