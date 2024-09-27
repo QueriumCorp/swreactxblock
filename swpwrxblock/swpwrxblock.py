@@ -146,13 +146,17 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         enforce_type=True
     )
 
-    q_grade_showme_ded = Float(display_name="Point deduction for using Show Solution",help="SWPWR Raw points deducted from 3.0 (Default: 3.0)", default=3.0, scope=Scope.content)
+# NOTE: Don't assume 3 points per problem in swpwrxblock
+    # q_grade_showme_ded = Float(display_name="Point deduction for using Show Solution",help="SWPWR Raw points deducted from 3.0 (Default: 3.0)", default=3.0, scope=Scope.content)
+    q_grade_showme_ded = Float(display_name="Point deduction for using Show Solution",help="SWPWR Raw points deducted from 1.0 (Default: 0.25)", default=0.25, scope=Scope.content)
     q_grade_hints_count = Integer(help="SWPWR Number of Hints before deduction", default=2, scope=Scope.content)
     q_grade_hints_ded = Float(help="SWPWR Point deduction for using excessive Hints", default=1.0, scope=Scope.content)
     q_grade_errors_count = Integer(help="SWPWR Number of Errors before deduction", default=2, scope=Scope.content)
     q_grade_errors_ded = Float(help="SWPWR Point deduction for excessive Errors", default=1.0, scope=Scope.content)
     q_grade_min_steps_count = Integer(help="SWPWR Minimum valid steps in solution for full credit", default=3, scope=Scope.content)
     q_grade_min_steps_ded = Float(help="SWPWR Point deduction for fewer than minimum valid steps", default=0.25, scope=Scope.content)
+# NOTE: Don't assume 3 points per problem in swpwrxblock, so don't deduct 0.25 in swpwrxblock for min steps
+    # q_grade_min_steps_ded = Float(help="SWPWR Point deduction for fewer than minimum valid steps", default=0.25, scope=Scope.content)
     q_grade_app_key = String(help="SWPWR question app key", default="SBIRPhase2", scope=Scope.content);
 
     # PER-QUESTION HINTS/SHOW SOLUTION OPTIONS
@@ -194,7 +198,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     # count_attempts keeps track of the number of attempts of this question by this student so we can
     # compare to course.max_attempts which is inherited as an per-question setting or a course-wide setting.
     count_attempts = Integer(help="SWPWR Counted number of questions attempts", default=0, scope=Scope.user_state)
-    raw_possible = Float(help="SWPWR Number of possible points", default=3,scope=Scope.user_state)
+    raw_possible = Float(help="SWPWR Number of possible points", default=1,scope=Scope.user_state)
+# NOTE: Don't assume 3 points per problem in swpwrxblock
+    # raw_possible = Float(help="SWPWR Number of possible points", default=3,scope=Scope.user_state)
     # The following 'weight' is examined by the standard scoring code, so needs to be set once we determine which weight value to use
     # (per-Q or per-course). Also used in rescoring by override_score_module_state.
     weight = Float(help="SWPWR Defines the number of points the problem is worth.", default=1, scope=Scope.user_state)
@@ -307,13 +313,17 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         def_course_stepwise_max_attempts = None
         def_course_stepwise_option_hint = True
         def_course_stepwise_option_showme = True
-        def_course_stepwise_grade_showme_ded = 3.0
+        def_course_stepwise_grade_showme_ded = 0.25
+# NOTE: Don't assume 3 points per problem in swpwrxblock
+        # def_course_stepwise_grade_showme_ded = 3.0
         def_course_stepwise_grade_hints_count = 2
         def_course_stepwise_grade_hints_ded = 1.0
         def_course_stepwise_grade_errors_count = 2
         def_course_stepwise_grade_errors_ded = 1.0
         def_course_stepwise_grade_min_steps_count = 3
-        def_course_stepwise_grade_min_steps_ded = 0.25
+        def_course_stepwise_grade_min_steps_ded = 0.0
+# NOTE: Don't assume a min steps deduction in swpwrxblock
+        # def_course_stepwise_grade_min_steps_ded = 0.25
         def_course_stepwise_grade_app_key = "SBIRPhase2"
 
         # after application of course-wide settings
@@ -1218,63 +1228,74 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             if DEBUG: logger.info('SWPWRXBlock save_grade() app_key default set to SBIRPhase2')
             q_grade_app_key = "SBIRPhase2"
 
-        """
-        Count the total number of VALID steps the student input.
-        Used to determine if they get full credit for entering at least a min number of good steps.
-        """
-        valid_steps = 0
+#
+# NOTE: Don't count min_steps on the POWER xblock
+#         """
+#         Count the total number of VALID steps the student input.
+#         Used to determine if they get full credit for entering at least a min number of good steps.
+#         """
+#         valid_steps = 0
+#         if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps data={d}".format(d=data))
+#         step_details = data['stepDetails']
+#         if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps step_details={d}".format(d=step_details))
+#         if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps len(step_details)={l}".format(l=len(step_details)))
+#         for c in range(len(step_details)):
+#             if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps begin examine step c={c} step_details[c]={d}".format(c=c,d=step_details[c]))
+#             for i in range (len(step_details[c]['info'])):
+#                 if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps examine step c={c} i={i} step_details[c]['info']={s}".format(c=c,i=i,s=step_details[c]['info']))
+#                 if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps examine step c={c} i={i} step_details[c]['info'][i]={s}".format(c=c,i=i,s=step_details[c]['info'][i]))
+#                 step_status = step_details[c]['info'][i]['status']
+#                 if (step_status == 0):       # victory valid_steps += 1
+#                     valid_steps += 1
+#                     if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps c={c} i={i} victory step found".format(c=c,i=i))
+#                 elif (step_status == 1):     # valid step
+#                     valid_steps += 1
+#                     if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps c={c} i={i} valid step found".format(c=c,i=i))
+#                 elif (step_status == 3):     # invalid step
+#                     valid_steps += 0         # don't count invalid steps
+#                 else:
+#                     if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps c={c} i={i} ignoring step_status={s}".format(c=c,i=i,s=step_status))
+#                 if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps examine step c={c} i={i} step_status={s} valid_steps={v}".format(c=c,i=i,s=step_status,v=valid_steps))
+#         if DEBUG: logger.info("SWPWRXBlock save_grade() final valid_steps={v}".format(v=valid_steps))
+#
+#         grade=3.0
+#         max_grade=grade
 
-        if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps data={d}".format(d=data))
-        step_details = data['stepDetails']
-        if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps step_details={d}".format(d=step_details))
-        if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps len(step_details)={l}".format(l=len(step_details)))
-        for c in range(len(step_details)):
-            if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps begin examine step c={c} step_details[c]={d}".format(c=c,d=step_details[c]))
-            for i in range (len(step_details[c]['info'])):
-                if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps examine step c={c} i={i} step_details[c]['info']={s}".format(c=c,i=i,s=step_details[c]['info']))
-                if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps examine step c={c} i={i} step_details[c]['info'][i]={s}".format(c=c,i=i,s=step_details[c]['info'][i]))
-                step_status = step_details[c]['info'][i]['status']
-                if (step_status == 0):       # victory valid_steps += 1
-                    valid_steps += 1
-                    if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps c={c} i={i} victory step found".format(c=c,i=i))
-                elif (step_status == 1):     # valid step
-                    valid_steps += 1
-                    if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps c={c} i={i} valid step found".format(c=c,i=i))
-                elif (step_status == 3):     # invalid step
-                    valid_steps += 0         # don't count invalid steps
-                else:
-                    if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps c={c} i={i} ignoring step_status={s}".format(c=c,i=i,s=step_status))
-                if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps examine step c={c} i={i} step_status={s} valid_steps={v}".format(c=c,i=i,s=step_status,v=valid_steps))
-        if DEBUG: logger.info("SWPWRXBlock save_grade() final valid_steps={v}".format(v=valid_steps))
-
-        grade=3.0
-        max_grade=grade
-
-        if DEBUG: logger.info('SWPWRXBlock save_grade() initial grade={a} errors={b} errors_count={c} hints={d} hints_count={e} showme={f} min_steps={g} valid_steps={h}'.format(a=grade,b=data['errors'],c=q_grade_errors_count,d=data['hints'],e=q_grade_hints_count,f=data['usedShowMe'],g=q_grade_min_steps_count,h=valid_steps))
-        if data['errors']>q_grade_errors_count:
-            grade=grade-q_grade_errors_ded
-            if DEBUG: logger.info('SWPWRXBlock save_grade() errors test errors_ded={a} grade={b}'.format(a=q_grade_errors_ded,b=grade))
-        if data['hints']>q_grade_hints_count:
-            grade=grade-q_grade_hints_ded
-            if DEBUG: logger.info('SWPWRXBlock save_grade() hints test hints_ded={a} grade={b}'.format(a=q_grade_hints_ded,b=grade))
-        if data['usedShowMe']:
-            grade=grade-q_grade_showme_ded
-            if DEBUG: logger.info('SWPWRXBlock save_grade() showme test showme_ded={a} grade={b}'.format(a=q_grade_showme_ded,b=grade))
-        
-        # Don't subtract min_steps points on a MatchSpec problem or DomainOf
-        self.my_q_definition = data['answered_question']['q_definition']
-        if DEBUG: logger.info('SWPWRXBlock save_grade() check on min_steps deduction grade={g} max_grade={m} q_grade_min_steps_count={c} q_grade_min_steps_ded={d} self.my_q_definition={q} self.q_grade_app_key={k}'.format(g=grade,m=max_grade,c=q_grade_min_steps_count,d=q_grade_min_steps_ded,q=self.my_q_definition,k=self.q_grade_app_key))
-        if (grade >= max_grade and valid_steps < q_grade_min_steps_count and self.my_q_definition.count('MatchSpec') == 0 and self.my_q_definition.count('DomainOf') == 0 ):
-            grade=grade-q_grade_min_steps_ded
-            if DEBUG: logger.info('SWPWRXBlock save_grade() took min_steps deduction after grade={g}'.format(g=grade))
+        # Track whether they've completed it or not and assign 1.0 points if they have completed the problem
+        if self.is_answered:
+            grade=1.0
         else:
-            if DEBUG: logger.info('SWPWRXBlock save_grade() did not take min_steps deduction after grade={g}'.format(g=grade))
-
-        if grade<0.0:
-            logger.info('SWPWRXBlock save_grade() zero negative grade')
             grade=0.0
+        max_grade=1.0
 
-        if DEBUG: logger.info("SWPWRXBlock save_grade() final grade={a} q_weight={b}".format(a=grade,b=q_weight))
+#
+# NOTE: Don't count the number of errors in the swpwrxblock
+#
+#         if DEBUG: logger.info('SWPWRXBlock save_grade() initial grade={a} errors={b} errors_count={c} hints={d} hints_count={e} showme={f} min_steps={g} valid_steps={h}'.format(a=grade,b=data['errors'],c=q_grade_errors_count,d=data['hints'],e=q_grade_hints_count,f=data['usedShowMe'],g=q_grade_min_steps_count,h=valid_steps))
+#         if data['errors']>q_grade_errors_count:
+#             grade=grade-q_grade_errors_ded
+#             if DEBUG: logger.info('SWPWRXBlock save_grade() errors test errors_ded={a} grade={b}'.format(a=q_grade_errors_ded,b=grade))
+#         if data['hints']>q_grade_hints_count:
+#             grade=grade-q_grade_hints_ded
+#             if DEBUG: logger.info('SWPWRXBlock save_grade() hints test hints_ded={a} grade={b}'.format(a=q_grade_hints_ded,b=grade))
+#         if data['usedShowMe']:
+#             grade=grade-q_grade_showme_ded
+#             if DEBUG: logger.info('SWPWRXBlock save_grade() showme test showme_ded={a} grade={b}'.format(a=q_grade_showme_ded,b=grade))
+#
+#         # Don't subtract min_steps points on a MatchSpec problem or DomainOf
+#         self.my_q_definition = data['answered_question']['q_definition']
+#         if DEBUG: logger.info('SWPWRXBlock save_grade() check on min_steps deduction grade={g} max_grade={m} q_grade_min_steps_count={c} q_grade_min_steps_ded={d} self.my_q_definition={q} self.q_grade_app_key={k}'.format(g=grade,m=max_grade,c=q_grade_min_steps_count,d=q_grade_min_steps_ded,q=self.my_q_definition,k=self.q_grade_app_key))
+#         if (grade >= max_grade and valid_steps < q_grade_min_steps_count and self.my_q_definition.count('MatchSpec') == 0 and self.my_q_definition.count('DomainOf') == 0 ):
+#             grade=grade-q_grade_min_steps_ded
+#             if DEBUG: logger.info('SWPWRXBlock save_grade() took min_steps deduction after grade={g}'.format(g=grade))
+#         else:
+#             if DEBUG: logger.info('SWPWRXBlock save_grade() did not take min_steps deduction after grade={g}'.format(g=grade))
+#
+#         if grade<0.0:
+#             logger.info('SWPWRXBlock save_grade() zero negative grade')
+#             grade=0.0
+#
+#         if DEBUG: logger.info("SWPWRXBlock save_grade() final grade={a} q_weight={b}".format(a=grade,b=q_weight))
 
         # The following now handled below by publish_grade() after save() is complete:
         # self.runtime.publish(self, 'grade',
@@ -1282,7 +1303,10 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         #         'max_value': 1.0*weight
         #     })
 
-        self.raw_earned = (grade/3.0)*weight
+# NOTE: Don't assume 3 points per problem in swpwrxblock
+#         self.raw_earned = (grade/3.0)*weight
+        self.raw_earned = grade
+
         if DEBUG: logger.info("SWPWRXBlock save_grade() raw_earned={a}".format(a=self.raw_earned))
 
         if DEBUG: logger.info("SWPWRXBlock save_grade() final data={a}".format(a=data))
