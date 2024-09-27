@@ -1131,7 +1131,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         return json_data
 
     # SAVE GRADE
-    @XBlock.json_handler
+    ### @XBlock.json_handler	# We're just calling it directly now, not in a callback.
     def save_grade(self, data, suffix=''):
         if DEBUG: logger.info('SWPWRXBlock save_grade() entered')
         if DEBUG: logger.info("SWPWRXBlock save_grade() self.max_attempts={a}".format(a=self.max_attempts))
