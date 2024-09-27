@@ -41,6 +41,33 @@ swpwr.problem.wpHints = [
   },
 ]
 
+The flow of saving results is:
+   swpwrxstudent.js sets the callback URLs for saving partial results (per step), and saving final results (on problem complete).
+   For save_swpwr_final_results(data), we do:
+        (A) set self.swpwr_results = json.dumps(data)
+        (B) set self.is_answered=True
+        (C) call save_grade(data), which should
+            (1) set self.solution=data
+            (2) set self.grade=grade
+            (3) call self.save() , which does:
+                (a) sets the url_name field with a UUID so we have a unique identifier
+                (b) calls XBlock.save() to persist our object data
+        (D) publish_grade,  which should call
+              self.runtime.publish
+
+    save_swpwr_partial_results(data) does the same as save_swpwr_final_results(),
+        except it sets self.is_answered=False
+
+NOTE: the url_name field in this xblock records a UUID for this xblock instance. This url_name field was added so this xblock looks like every other
+      standard type of xblock to the OpenEdX runtime (e.g chapter, sequential, vertical, problem).
+      Having the url_name field in the xblock makes it easier to generate unique xblocks via software, e.g. from StepWise questions defined in Jira.
+      If a url_name field exists in the xblock, then OpenEdX apparently uses that field value to uniquely identify the object.
+      Without filling in a value in this field, course imports of XML swpwrxblock data will mess up and all xblocks with a blank value for url_name
+      will be assumed to be the same xblock, which causes the import to mangle the swpwrxblocks in the course import.
+      To ensure that we have a unique value for url_field, the save() routine checks the url_name field and if it is blank, we generate a UUID to 
+      provide a value for that field.  Doing the creation of this field in this manner means that we don't have to expose the url_name field in
+      The studio view and make a question author invent a unique url_name value for their question.
+
 """
 
 # Python stuff
@@ -958,13 +985,13 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                            '        onComplete: (session,log) => {' + \
                            '            console.info("onComplete session",session);' + \
                            '            console.info("onComplete log",log);' + \
-                           '            console.info("onComplete handlerUrlSwpwrResults",handlerUrlSwpwrResults);' + \
+                           '            console.info("onComplete handlerUrlSwpwrFinalResults",handlerUrlSwpwrFinalResults);' + \
                            '            const solution = [session,log];' + \
                            '            var solution_string = JSON.stringify(solution);' + \
                            '            console.info("onComplete solution_string",solution_string);' + \
                            '            $.ajax({' + \
                            '                type: "POST",' + \
-                           '                url: handlerUrlSwpwrResults,' + \
+                           '                url: handlerUrlSwpwrFinalResults,' + \
                            '                data: solution_string,' + \
                            '                success: function (data,msg) {' + \
                            '                    console.info("onComplete solution POST success");' + \
@@ -977,6 +1004,27 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                            '            });' + \
                            '            $(\'.problem-complete\').show();' + \
                            '            $(\'.unit-navigation\').show();' + \
+                           '        },' + \
+                           '        onStep: (session,log) => {' + \
+                           '            console.info("onStep session",session);' + \
+                           '            console.info("onStep log",log);' + \
+                           '            console.info("onStep handlerUrlSwpwrPartialResults",handlerUrlSwpwrPartialResults);' + \
+                           '            const solution = [session,log];' + \
+                           '            var solution_string = JSON.stringify(solution);' + \
+                           '            console.info("onStep solution_string",solution_string);' + \
+                           '            $.ajax({' + \
+                           '                type: "POST",' + \
+                           '                url: handlerUrlSwpwrPartialResults,' + \
+                           '                data: solution_string,' + \
+                           '                success: function (data,msg) {' + \
+                           '                    console.info("onStep solution POST success");' + \
+                           '                    console.info("onStep solution POST data",data);' + \
+                           '                    console.info("onStep solution POST msg",msg);' + \
+                           '                },' + \
+                           '                error: function(XMLHttpRequest, textStatus, errorThrown) {' + \
+                           '                    console.info("onStep solution POST error textStatus=",textStatus," errorThrown=",errorThrown);' + \
+                           '                }' + \
+                           '            });' + \
                            '        }' + \
                            '    }' + \
                            '};' + \
@@ -1023,16 +1071,16 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     # PUBLISH_GRADE
     # For rescoring events
     def publish_grade(self):
-        if DEBUG: logger.info("SWPWRXBlock publish_grade() self.raw_earned={e} self.weight={w}".format(e=self.raw_earned,w=self.weight))
+        if DEBUG: logger.info("SWPWRXBlock publish_grade() pretrimmed self.raw_earned={e} self.weight={w}".format(e=self.raw_earned,w=self.weight))
         if self.raw_earned < 0.0:
            self.raw_earned = 0.0
         if self.raw_earned > self.weight:
            self.raw_earned = self.weight
+        if DEBUG: logger.info("SWPWRXBlock publish_grade() posttrimmed self.raw_earned={e} self.weight={w}".format(e=self.raw_earned,w=self.weight))
         self.runtime.publish(self, 'grade',
-             {   'value': self.raw_earned,
-                 'max_value': self.weight
+             {   'value': self.raw_earned*1.0,
+                 'max_value': self.weight*1.0
              })
-
 
 
     # SAVE
@@ -1227,15 +1275,20 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         if DEBUG: logger.info("SWPWRXBlock save_grade() final grade={a} q_weight={b}".format(a=grade,b=q_weight))
 
-        self.runtime.publish(self, 'grade',
-            {   'value': (grade/3.0)*q_weight,
-                'max_value': 1.0*q_weight
-            })
+        # The following now handled below by publish_grade() after save() is complete:
+        # self.runtime.publish(self, 'grade',
+        #     {   'value': (grade/3.0)*weight,
+        #         'max_value': 1.0*weight
+        #     })
+
+        self.raw_earned = (grade/3.0)*weight
+        if DEBUG: logger.info("SWPWRXBlock save_grade() raw_earned={a}".format(a=self.raw_earned))
 
         if DEBUG: logger.info("SWPWRXBlock save_grade() final data={a}".format(a=data))
         self.solution = data
-        self.grade = grade
         if DEBUG: logger.info("SWPWRXBlock save_grade() final self.solution={a}".format(a=self.solution))
+        self.grade = grade
+        if DEBUG: logger.info("SWPWRXBlock save_grade() grade={a}".format(a=self.grade))
 
         # Don't increment attempts on save grade.  We want to increment them when the student starts
         # a question, not when they finish.  Otherwise people can start the question as many times
@@ -1254,6 +1307,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             if DEBUG: logger.warning('SWPWRXBlock save_grade() self.q_index was not defined: {e}'.format(e=e))
 
         self.save()     # Time to persist our state!!!
+
+        self.publish_grade()     # Now publish our grade results to persist them into the grading database
 
         # if DEBUG: logger.info("SWPWRXBlock save_grade() final self={a}".format(a=self))
         if DEBUG: logger.info("SWPWRXBlock save_grade() final self.count_attempts={a}".format(a=self.count_attempts))
@@ -1418,14 +1473,26 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         return {'result': 'success'}
 
 
-# SWPWR RESULTS: Save the final results of the SWPWR React app as a stringified structure.
+# SWPWR FINAL RESULTS: Save the final results of the SWPWR React app as a stringified structure.
     @XBlock.json_handler
-    def save_swpwr_results(self, data, suffix=''):
-        if DEBUG: logger.info("SWPWRXBlock save_swpwr_results() data={d}".format(d=data))
+    def save_swpwr_final_results(self, data, suffix=''):
+        if DEBUG: logger.info("SWPWRXBlock save_swpwr_final_results() data={d}".format(d=data))
         self.swpwr_results = json.dumps(data, separators=(',', ':'))
-        if DEBUG: logger.info("SWPWRXBlock save_swpwr_results() self.swpwr_results={r}".format(r=self.swpwr_results))
-        self.save() # Time to persist our state!!!
-        if DEBUG: logger.info("SWPWRXBlock save_swpwr_results() back from save")
+        self.is_answered = True		# We are now done
+        if DEBUG: logger.info("SWPWRXBlock save_swpwr_final_results() self.swpwr_results={r}".format(r=self.swpwr_results))
+        self.save_grade(data)		# Includes publishing out results to persist them
+        if DEBUG: logger.info("SWPWRXBlock save_swpwr_final_results() back from save_grade")
+        return {'result': 'success'}
+
+# SWPWR PARTIAL RESULTS: Save the interim results of the SWPWR React app as a stringified structure.
+    @XBlock.json_handler
+    def save_swpwr_partial_results(self, data, suffix=''):
+        if DEBUG: logger.info("SWPWRXBlock save_swpwr_partial_results() data={d}".format(d=data))
+        self.swpwr_results = json.dumps(data, separators=(',', ':'))
+        self.is_answered = False	# We are not done yet
+        if DEBUG: logger.info("SWPWRXBlock save_swpwr_partial_results() self.swpwr_results={r}".format(r=self.swpwr_results))
+        self.save_grade(data)		# Includes publishing out results to persist them
+        if DEBUG: logger.info("SWPWRXBlock save_swpwr_partial_results() back from save_grade")
         return {'result': 'success'}
 
     # Do necessary overrides from ScorableXBlockMixin
