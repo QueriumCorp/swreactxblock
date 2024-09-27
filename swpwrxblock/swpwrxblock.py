@@ -858,9 +858,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         # frag.add_resource('<link rel="manifest" href="/site.webmanifest" />','text/html','head')
         frag.add_resource('<meta name="viewport" content="width=device-width,initial-scale=1.0"/>','text/html','head')
         frag.add_resource('<link rel="preconnect" href="https://fonts.googleapis.com" />','text/html','head')
-        frag.add_resource('<link rel="preconnect" href="https://fonts.googleapis.com" />','text/html','head')
         frag.add_resource('<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />','text/html','head')
-        frag.add_resource('<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Irish+Grover&family=Sura:wght@400;700&display=swap" rel="stylesheet" />','text/html','head')
+        frag.add_resource('<link href="https://fonts.googleapis.com/css2?family=Capriola&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Irish+Grover&display=swap" rel="stylesheet" />','text/html','head')
         frag.add_resource('<title>Querium StepWise Power</title>','text/html','head')
         # root div is in swpwrxstudent.html
         # html_string = '<div id="root"></div>'
