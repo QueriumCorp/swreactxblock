@@ -3,7 +3,8 @@
  *        Disble Hint and ShowMe buttons if options are set.
  */
 
-var handlerUrlSwpwrResults;  // Define this globally where it can be found by the React swpwr onSubmit code
+var handlerUrlSwpwrFinalResults;  // Define this globally where it can be found by the React swpwr onComplete code
+var handlerUrlSwpwrPartialResults;  // Define this globally where it can be found by the React swpwr onStep code
 
 function SWPWRXStudent(runtime, element) {
 
@@ -12,7 +13,8 @@ function SWPWRXStudent(runtime, element) {
 
     var handlerUrlGetData = runtime.handlerUrl(element, 'get_data');
 
-    handlerUrlSwpwrResults = runtime.handlerUrl(element, 'save_swpwr_results');   // Leave a handlerUrl for the SWPWR onSubmit callback
+    handlerUrlSwpwrFinalResults = runtime.handlerUrl(element, 'save_swpwr_final_results');   // Leave a handlerUrl for the SWPWR onSubmit callback
+    handlerUrlSwpwrPartialResults = runtime.handlerUrl(element, 'save_swpwr_partial_results');   // Leave a handlerUrl for the SWPWR onSubmit callback
 
     console.info("SWPWRXStudent calling get_data at ",handlerUrlGetData);
 
