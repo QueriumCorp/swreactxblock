@@ -49,7 +49,7 @@ The flow of saving results is:
         (C) call save_grade(data), which should
             (1) set self.solution=data
             (2) set self.grade=grade
-            (2) call self.save() , which does:
+            (3) call self.save() , which does:
                 (a) sets the url_name field with a UUID so we have a unique identifier
                 (b) calls XBlock.save() to persist our object data
         (D) publish_grade,  which should call
