@@ -1110,6 +1110,15 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             if DEBUG: logger.info('SWPWRXBlock save() defined self.url_name as {s}'.format(s=self.url_name))
         else:
             if DEBUG: logger.info('SWPWRXBlock save() there is an existing url_name {s}'.format(s=self.url_name))
+        # if we managed to store a two-element list in the solution Dict, fix it
+        if isinstance(self.solution, list):
+	    my_dict['session'] = self.solution[0]
+            if len(self.solution) > 1:
+	        my_dict['log'] = self.solution[1]
+            else:
+                my_dict['log'] = []
+	    self.solution = my_dict
+            logger.info('SWPWRXBlock save() solution converted list to Dict: {e}'.format(e=self.solution))
         try:
             XBlock.save(self)       # Call parent class save()
         # except (NameError,AttributeError,InvalidScopeError) as e:
@@ -1129,9 +1138,10 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         logger.info("SWPWRXBlock get_data() self.solution={a}".format(a=self.solution))
 
         try:
-            solution = self.solution[0]
+	    # Should be [session,log]
+            solution = {self.solution[session],self.solution[log]}
         except TypeError as e:
-            logger.error("SWPWRXBlock get_data() TypeError: {e}".format(e=e))
+            logger.error("SWPWRXBlock get_data() solution TypeError: {e}".format(e=e))
             solution = {}
 
         data = {
