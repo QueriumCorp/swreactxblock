@@ -1,4 +1,4 @@
-xºxº"""
+"""
 StepWise Power xblock questions can contain up to 10 variants.  The xblock remembers which variants the student has attempted and if the student
 requests a new variant, we will try to assign one that has not yet been attempted. Once the student has attempted all available variants,
 if they request another variant, we will clear the list of attempted variants and start assigning variants over again.
