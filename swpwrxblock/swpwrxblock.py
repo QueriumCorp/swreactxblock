@@ -1,4 +1,4 @@
-"""
+xºxº"""
 StepWise Power xblock questions can contain up to 10 variants.  The xblock remembers which variants the student has attempted and if the student
 requests a new variant, we will try to assign one that has not yet been attempted. Once the student has attempted all available variants,
 if they request another variant, we will clear the list of attempted variants and start assigning variants over again.
@@ -1126,10 +1126,18 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if self.my_max_attempts is None:
             self.my_max_attempts = -1
 
+        logger.info("SWPWRXBlock get_data() self.solution={a}".format(a=self.solution))
+
+        try:
+            solution = self.solution[0]
+        except TypeError as e:
+            logger.error("SWPWRXBlock get_data() TypeError: {e}".format(e=e))
+            solution = {}
+
         data = {
             "question" : self.question,
             "grade" : self.grade,
-            "solution" : self.solution,
+            "solution" : solution,
             "count_attempts" : self.count_attempts,
             "variants_count" : self.variants_count,
             "max_attempts" : self.my_max_attempts
