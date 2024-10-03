@@ -46,8 +46,10 @@ ln -s public-YYYYMMDDHHMM public
 ```
 updateme1.sh
 # Then do step 2 above by hand (edit swpwrxblock.html, run fixjsurl.sh, run fixcssurl.sh).
+# Then run this:
 updateme2.sh
+# The above will commit the results to open-release/palm.master branch on github.
 # If updateme2.sh seems to work to update the results in open-release/palm.master, you can then run:
 updateme3.sh
-# This final of the 3 scripts merges the changes into the open-release/redwood.master and master branches.
+# This final of the 3 scripts merges the changes made to open-release/palm.master into the open-release/redwood.master and main branches.
 ```
