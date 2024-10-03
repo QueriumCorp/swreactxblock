@@ -1135,19 +1135,14 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if self.my_max_attempts is None:
             self.my_max_attempts = -1
 
-        logger.info("SWPWRXBlock get_data() self.solution={a}".format(a=self.solution))
+        if DEBUG: logger.info("SWPWRXBlock get_data() self.solution={a}".format(a=self.solution))
 
-        try:
-	    # Should be [session,log]
-            solution = {self.solution[session],self.solution[log]}
-        except TypeError as e:
-            logger.error("SWPWRXBlock get_data() solution TypeError: {e}".format(e=e))
-            solution = {}
-
+        # NOTE: swpwr app does not need to be passed the solution
+        #       to our previous attempt at this problem
         data = {
             "question" : self.question,
             "grade" : self.grade,
-            "solution" : solution,
+            "solution" : {},
             "count_attempts" : self.count_attempts,
             "variants_count" : self.variants_count,
             "max_attempts" : self.my_max_attempts
