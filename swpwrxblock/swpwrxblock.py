@@ -1111,7 +1111,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         else:
             if DEBUG: logger.info('SWPWRXBlock save() there is an existing url_name {s}'.format(s=self.url_name))
         # if we managed to store a two-element list in the solution Dict, fix it
-        if isinstance(self.solution, list):
+        if type(self.solution) in [list,tuple]:
             my_dict['session'] = self.solution[0]
             if len(self.solution) > 1:
                 my_dict['log'] = self.solution[1]
