@@ -1112,12 +1112,12 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             if DEBUG: logger.info('SWPWRXBlock save() there is an existing url_name {s}'.format(s=self.url_name))
         # if we managed to store a two-element list in the solution Dict, fix it
         if isinstance(self.solution, list):
-	    my_dict['session'] = self.solution[0]
+            my_dict['session'] = self.solution[0]
             if len(self.solution) > 1:
-	        my_dict['log'] = self.solution[1]
+                my_dict['log'] = self.solution[1]
             else:
                 my_dict['log'] = []
-	    self.solution = my_dict
+            self.solution = my_dict
             logger.info('SWPWRXBlock save() solution converted list to Dict: {e}'.format(e=self.solution))
         try:
             XBlock.save(self)       # Call parent class save()
