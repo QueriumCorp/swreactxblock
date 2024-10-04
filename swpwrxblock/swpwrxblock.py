@@ -47,7 +47,7 @@ The flow of saving results is:
         (A) set self.swpwr_results = json.dumps(data)
         (B) set self.is_answered=True
         (C) call save_grade(data), which should
-            (1) set self.solution=data
+            (1) set self.solution=data    # We commented out solution for now
             (2) set self.grade=grade
             (3) call self.save() , which does:
                 (a) sets the url_name field with a UUID so we have a unique identifier
@@ -193,7 +193,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     xb_user_username = String(help="SWPWR The user's username", default="", scope=Scope.user_state)
     xb_user_fullname = String(help="SWPWR The user's fullname", default="", scope=Scope.user_state)
     grade = Float(help="SWPWR The student's grade", default=-1, scope=Scope.user_state)
-    solution = Dict(help="SWPWR The student's last stepwise solution", default={}, scope=Scope.user_state)
+    # solution = Dict(help="SWPWR The student's last stepwise solution", default={}, scope=Scope.user_state)
     question = Dict(help="SWPWR The student's current stepwise question", default={}, scope=Scope.user_state)
     # count_attempts keeps track of the number of attempts of this question by this student so we can
     # compare to course.max_attempts which is inherited as an per-question setting or a course-wide setting.
@@ -1110,8 +1110,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             if DEBUG: logger.info('SWPWRXBlock save() defined self.url_name as {s}'.format(s=self.url_name))
         else:
             if DEBUG: logger.info('SWPWRXBlock save() there is an existing url_name {s}'.format(s=self.url_name))
+	# We no longer need to store solution. Disable tis temporarily.
+	# self.solution = {}
         # if we managed to store a two-element list in the solution Dict, fix it
-	self.solution = {}
         # if type(self.solution) in [list,tuple]:
         #     my_dict['session'] = self.solution[0]
         #     if len(self.solution) > 1:
@@ -1125,7 +1126,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         # except (NameError,AttributeError,InvalidScopeError) as e:
         except Exception as e:
             logger.info('SWPWRXBlock save() had an error: {e}'.format(e=e))
-        if DEBUG: logger.info("SWPWRXBlock save() back from parent save. self.solution={s}".format(s=self.solution))
+        # if DEBUG: logger.info("SWPWRXBlock save() back from parent save. self.solution={s}".format(s=self.solution))
+        if DEBUG: logger.info("SWPWRXBlock save() back from parent save. self.swpwr_results={s}".format(s=self.swpwr_results))
 
 
     # GET_DATA: RETURN DATA FOR THIS QUESTION
@@ -1136,14 +1138,14 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if self.my_max_attempts is None:
             self.my_max_attempts = -1
 
-        if DEBUG: logger.info("SWPWRXBlock get_data() self.solution={a}".format(a=self.solution))
+        # if DEBUG: logger.info("SWPWRXBlock get_data() self.solution={a}".format(a=self.solution))
 
         # NOTE: swpwr app does not need to be passed the solution
         #       to our previous attempt at this problem
         data = {
             "question" : self.question,
             "grade" : self.grade,
-            "solution" : {},
+            # "solution" : {},
             "count_attempts" : self.count_attempts,
             "variants_count" : self.variants_count,
             "max_attempts" : self.my_max_attempts
@@ -1322,8 +1324,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if DEBUG: logger.info("SWPWRXBlock save_grade() raw_earned={a}".format(a=self.raw_earned))
 
         if DEBUG: logger.info("SWPWRXBlock save_grade() final data={a}".format(a=data))
-        self.solution = data
-        if DEBUG: logger.info("SWPWRXBlock save_grade() final self.solution={a}".format(a=self.solution))
+        # self.solution = data
+        # if DEBUG: logger.info("SWPWRXBlock save_grade() final self.solution={a}".format(a=self.solution))
         self.grade = grade
         if DEBUG: logger.info("SWPWRXBlock save_grade() grade={a}".format(a=self.grade))
 
@@ -1349,7 +1351,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         # if DEBUG: logger.info("SWPWRXBlock save_grade() final self={a}".format(a=self))
         if DEBUG: logger.info("SWPWRXBlock save_grade() final self.count_attempts={a}".format(a=self.count_attempts))
-        if DEBUG: logger.info("SWPWRXBlock save_grade() final self.solution={a}".format(a=self.solution))
+        # if DEBUG: logger.info("SWPWRXBlock save_grade() final self.solution={a}".format(a=self.solution))
         if DEBUG: logger.info("SWPWRXBlock save_grade() final self.grade={a}".format(a=self.grade))
         if DEBUG: logger.info("SWPWRXBlock save_grade() final self.weight={a}".format(a=self.weight))
         if DEBUG: logger.info("SWPWRXBlock save_grade() final self.variants_attempted={v}".format(v=self.variants_attempted))
