@@ -31,7 +31,7 @@
     "title": "SAMPLE",
     "stimulus": "Mark rode his bicycle 9 miles on Saturday. He rode 3 miles on Sunday. In all, he rode 12 miles over the weekend.",
     "class": "gradeBasicAlgebra",
-    "question": "SolveWordProblemNewb[{\"Mark rode his bicycle 9 miles on Saturday. He rode 3 miles on Sunday. In all, he rode 12 miles over the weekend.\"}]",
+    "question": "SolveWordProblemNewb[{"Mark rode his bicycle 9 miles on Saturday. He rode 3 miles on Sunday. In all, he rode 12 miles over the weekend."}]",
     "hints": [
         "",
         "",
@@ -45,14 +45,14 @@
                 "The next known amount is **3 miles**. Highlight it, pull it out, and place it under Known.",
                 "The next known amount is **12 miles**. Put it under Known, too.",
                 "That&apos;s the last known amount. Now let&apos;s look for unknown amounts.",
-                "If you think there are no unknown amounts... you&apos;re right!&#10;In this story, all of the amounts are known. So don&apos;t put anything under Unknown. We&apos;ll learn more about unknown amounts later on.",
+                "If you think there are no unknown amounts... you&apos;re right!✓In this story, all of the amounts are known. So don&apos;t put anything under Unknown. We&apos;ll learn more about unknown amounts later on.",
                 "For this one, we&apos;re all done pulling it apart. Click → and I&apos;ll just double check your work before we move on."
             ]
         },
         {
             "page": "newbProblemType",
             "hints": [
-                "The problem has two parts, 9 miles on Saturday and 3 miles on Sunday.&#10;Those parts are put together to make the total, 12 miles.&#10;Pick the Total problem type. Then click →."
+                "The problem has two parts, 9 miles on Saturday and 3 miles on Sunday.✓Those parts are put together to make the total, 12 miles.✓Pick the Total problem type. Then click →."
             ]
         }
     ]
@@ -90,25 +90,52 @@
               'SolveWordProblemNewb[{"Mark rode his bicycle 9 miles on Saturday. He rode 3 miles on Sunday. In all, he rode 12 miles over the weekend."}]',
             hints: ['', '', ''],
             wpHints: [
-              // {
-              //   page: 'newbFindFacts',
-              //   hints: [
-              //     'The first known amount is **9 miles**. Do you see it up above? Highlight it. Then pull it out and place it under Known.',
-              //     'The next known amount is **3 miles**. Highlight it, pull it out, and place it under Known.',
-              //     'The next known amount is **12 miles**. Put it under Known, too.',
-              //     'That&apos;s the last known amount. Now let&apos;s look for unknown amounts.',
-              //     'If you think there are no unknown amounts... you&apos;re right!&#10;In this story, all of the amounts are known. So don&apos;t put anything under Unknown. We&apos;ll learn more about unknown amounts later on.',
-              //     'For this one, we&apos;re all done pulling it apart. Click → and I&apos;ll just double check your work before we move on.',
-              //   ],
-              // },
-              // {
-              //   page: 'newbProblemType',
-              //   hints: [
-              //     'The problem has two parts, 9 miles on Saturday and 3 miles on Sunday.&#10;Those parts are put together to make the total, 12 miles.&#10;Pick the Total problem type. Then click →.',
-              //   ],
-              // },
+              {
+                pageId: 'newbFindFacts',
+                hints: [
+                  `The first known amount is **9 miles**. Do you see it in the story up above?
+                  
+When you find an amount, highlight it. There might be more than one way to do that.`,
+                  `You can highlight **9 miles** or **9 miles on Saturday**. You can even highlight the whole sentence **Mark rode his bicycle 9 miles on Saturday**.
+Just don&apos;t highlight more than one amount at a time.`,
+                  `Highlight **9 miles** in the story.
+                
+Then pull it out and and put it under Known, just like you saw in the video.
+
+Click [MORE] when you&apos;re done.`,
+                  `The next known amount is **3 miles**.
+                
+Highlight that amount. Then pull it out and put it under Known.
+
+Click [MORE] when you&apos;re done.`,
+                  `Next is **12 miles**.
+                
+Pull out that amount and put it under Known, too.
+
+That&apos;s the last known amount. Now let&apos;s look for unknown amounts. Click [MORE].`,
+                  `If you think there are no unknown amounts... you&apos;re right!
+
+In this story, all amounts are known. So don&apos;t put anything under Unknown. We'll learn about unknown amounts later. Click [MORE] to see what&apos;s next.`,
+                  `For this one, we&apos;re done pulling it apart.
+
+See ✔ next to me? When it&apos;s green, you can click it. Then I&apos;ll check your work. If everything is correct, ✔ turns into → and you can move on.
+
+Go ahead and click ✔ now.`,
+                ],
+              },
+              {
+                pageId: 'newbNewbProblemType',
+                hints: [
+                  `There are two parts, 9 miles and 3 miles.
+            
+They&apos;re put together to make the total, 12 miles.
+
+Choose Total. Then click ✔.`,
+                ],
+              },
             ],
           },
+
           handlers: {
             onComplete: (session, studentLog) => {
               console.info("I'm an external onComplete Handler")
@@ -128,7 +155,13 @@
             gltfUrl:
               'https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models',
             rank: 'cadet',
-            disabledSchemas: [],
+            disabledSchemas: [
+              'additiveDifferenceSchema',
+              'additiveChangeSchema',
+              'subtractiveChangeSchema',
+              'multiplicativeEqualGroupsSchema',
+              'multiplicativeCompareSchema',
+            ],
           },
           student: {
             studentId: 'Calvin Hobbes',
@@ -138,19 +171,65 @@
           problem: {
             appKey: urlAppKey || 'JiraTestPage',
             policyId: '$A9$',
-            problemId: 'TiledFloor',
+            problemId: 'Bananas',
             stimulus:
-              'A patio floor has 8 rows of tiles. There are 14 tiles in each row. What is the total number of tiles?',
+              'Ava buys a bunch of 6 bananas. She buys a second bunch that has 5 bananas. In all, how many bananas does Ava buy?',
             topic: 'gradeBasicAlgebra',
             definition:
-              'SolveWordProblemAns[{"A patio floor has 8 rows of tiles. There are 14 tiles in each row. What is the total number of tiles?"}]',
+              'SolveWordProblemAns[{"Ava buys a bunch of 6 bananas. She buys a second bunch that has 5 bananas. In all, how many bananas does Ava buy?"}]',
             mathHints: [],
             wpHints: [
               {
-                page: 'cadetFindFacts',
-                hints: ['cadetFindFacts Hint1', 'cadetFindFacts Hint2'],
+                pageId: 'cadetFindFacts',
+                hints: [
+                  `There are two known amounts.
+
+This time, there's an unknown amount, too. Let's start there. Click [MORE].`,
+                  `Here&apos;s a tip. In a word problem, look for the sentence that asks a question. That sentence always describes the unknown amount.
+
+Highlight the question sentence in the problem above. Then click [MORE].`,
+                  `Do you see how the question tells us the unknown amount? What's unknown is how many bananas Ava buys in all.
+
+Pull the question out. Put it under Unknown. Then click [MORE].`,
+                  `Now pull out the known amounts. You already know how to do that. Put them under Known.
+
+Click ✔ when you're all done.`,
+                ],
               },
-              { page: 'cadetReadProblem', hints: ['wpHint1', 'wbHint2'] },
+              {
+                pageId: 'cadetSelectDiagram',
+                hints: [
+                  `We still know only one problem type, Total.
+
+Lucky for us, this is a Total problem! Click [MORE] to learn why.`,
+                  `Each bunch is a part. They're put together to make the total number of bananas.
+
+Choose Total. Then click ✔.`,
+                ],
+              },
+              {
+                pageId: 'cadetFillDiagram',
+                hints: [
+                  `We know it's a Total problem. So we use the Total equation, Part1 + Part2 = Total.
+
+Our job now is to put the known and unknown amounts in the equation.`,
+                  `We have two known amounts.
+
+Where do they go in the equation? Are they parts or the total?`,
+                  `**6 bananas** describes one bunch. It's Part 1. Drag it from Known to P1.
+
+**5 bananas** describes the other bunch. It's Part 2. Drag it from Known to P2. Then click [MORE].`,
+                  `There's one amount left, the unknown amount. Here, the unknown amount is the total.
+
+Drag the question sentence from Unknown to T. Then click [MORE].`,
+                  `Did you see what happened? Look at the equation.
+
+There's no number in the box for T. It's just the letter T. Click [MORE] to learn why.`,
+                  `We don't know the total. It's unknown. So we just call it T for now.
+
+The equation is 6 + 5 = T. Click ✔ and I'll check that you've got it right.`,
+                ],
+              },
             ],
           },
           handlers: {
