@@ -124,6 +124,39 @@ Go ahead and click ✔ now.`,
                 ],
               },
               {
+                pageId: 'devFindFacts',
+                hints: [
+                  `The first known amount is **9 miles**. Do you see it in the story up above?
+                  
+When you find an amount, highlight it. There might be more than one way to do that.`,
+                  `You can highlight **9 miles** or **9 miles on Saturday**. You can even highlight the whole sentence **Mark rode his bicycle 9 miles on Saturday**.
+Just don&apos;t highlight more than one amount at a time.`,
+                  `Highlight **9 miles** in the story.
+                
+Then pull it out and and put it under Known, just like you saw in the video.
+
+Click [MORE] when you&apos;re done.`,
+                  `The next known amount is **3 miles**.
+                
+Highlight that amount. Then pull it out and put it under Known.
+
+Click [MORE] when you&apos;re done.`,
+                  `Next is **12 miles**.
+                
+Pull out that amount and put it under Known, too.
+
+That&apos;s the last known amount. Now let&apos;s look for unknown amounts. Click [MORE].`,
+                  `If you think there are no unknown amounts... you&apos;re right!
+
+In this story, all amounts are known. So don&apos;t put anything under Unknown. We'll learn about unknown amounts later. Click [MORE] to see what&apos;s next.`,
+                  `For this one, we&apos;re done pulling it apart.
+
+See ✔ next to me? When it&apos;s green, you can click it. Then I&apos;ll check your work. If everything is correct, ✔ turns into ➜ and you can move on.
+
+Go ahead and click ✔ now.`,
+                ],
+              },
+              {
                 pageId: 'newbNewbProblemType',
                 hints: [
                   `There are two parts, 9 miles and 3 miles.
