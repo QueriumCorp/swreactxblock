@@ -41,6 +41,33 @@ swpwr.problem.wpHints = [
   },
 ]
 
+The flow of saving results is:
+   swpwrxstudent.js sets the callback URLs for saving partial results (per step), and saving final results (on problem complete).
+   For save_swpwr_final_results(data), we do:
+        (A) set self.swpwr_results = json.dumps(data)
+        (B) set self.is_answered=True
+        (C) call save_grade(data), which should
+            (1) set self.solution=data    # We commented out solution for now
+            (2) set self.grade=grade
+            (3) call self.save() , which does:
+                (a) sets the url_name field with a UUID so we have a unique identifier
+                (b) calls XBlock.save() to persist our object data
+        (D) publish_grade,  which should call
+              self.runtime.publish
+
+    save_swpwr_partial_results(data) does the same as save_swpwr_final_results(),
+        except it sets self.is_answered=False
+
+NOTE: the url_name field in this xblock records a UUID for this xblock instance. This url_name field was added so this xblock looks like every other
+      standard type of xblock to the OpenEdX runtime (e.g chapter, sequential, vertical, problem).
+      Having the url_name field in the xblock makes it easier to generate unique xblocks via software, e.g. from StepWise questions defined in Jira.
+      If a url_name field exists in the xblock, then OpenEdX apparently uses that field value to uniquely identify the object.
+      Without filling in a value in this field, course imports of XML swpwrxblock data will mess up and all xblocks with a blank value for url_name
+      will be assumed to be the same xblock, which causes the import to mangle the swpwrxblocks in the course import.
+      To ensure that we have a unique value for url_field, the save() routine checks the url_name field and if it is blank, we generate a UUID to 
+      provide a value for that field.  Doing the creation of this field in this manner means that we don't have to expose the url_name field in
+      The studio view and make a question author invent a unique url_name value for their question.
+
 """
 
 # Python stuff
@@ -48,7 +75,10 @@ import pkg_resources
 import random
 import json
 import re
+import uuid
+
 from logging import getLogger
+
 
 # Django Stuff
 from django.conf import settings
@@ -62,7 +92,8 @@ from web_fragments.fragment import Fragment
 from xblock.scorable import ScorableXBlockMixin, Score
 from xblockutils.studio_editable import StudioEditableXBlockMixin
 from lms.djangoapps.courseware.courses import get_course_by_id
-from xblock.mixins import ScopedStorageMixin
+# Fuka sep-2024 this is deprecated
+# from xblock.mixins import ScopedStorageMixin
 
 
 UNSET = object()
@@ -115,13 +146,18 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         enforce_type=True
     )
 
-    q_grade_showme_ded = Float(display_name="Point deduction for using Show Solution",help="SWPWR Raw points deducted from 3.0 (Default: 3.0)", default=3.0, scope=Scope.content)
+# NOTE: Don't assume 3 points per problem in swpwrxblock
+    # q_grade_showme_ded = Float(display_name="Point deduction for using Show Solution",help="SWPWR Raw points deducted from 3.0 (Default: 3.0)", default=3.0, scope=Scope.content)
+    q_grade_showme_ded = Float(display_name="Point deduction for using Show Solution",help="SWPWR Raw points deducted from 1.0 (Default: 0.25)", default=0.25, scope=Scope.content)
     q_grade_hints_count = Integer(help="SWPWR Number of Hints before deduction", default=2, scope=Scope.content)
     q_grade_hints_ded = Float(help="SWPWR Point deduction for using excessive Hints", default=1.0, scope=Scope.content)
     q_grade_errors_count = Integer(help="SWPWR Number of Errors before deduction", default=2, scope=Scope.content)
     q_grade_errors_ded = Float(help="SWPWR Point deduction for excessive Errors", default=1.0, scope=Scope.content)
     q_grade_min_steps_count = Integer(help="SWPWR Minimum valid steps in solution for full credit", default=3, scope=Scope.content)
     q_grade_min_steps_ded = Float(help="SWPWR Point deduction for fewer than minimum valid steps", default=0.25, scope=Scope.content)
+# NOTE: Don't assume 3 points per problem in swpwrxblock, so don't deduct 0.25 in swpwrxblock for min steps
+    # q_grade_min_steps_ded = Float(help="SWPWR Point deduction for fewer than minimum valid steps", default=0.25, scope=Scope.content)
+    q_grade_app_key = String(help="SWPWR question app key", default="SBIRPhase2", scope=Scope.content);
 
     # PER-QUESTION HINTS/SHOW SOLUTION OPTIONS
     q_option_hint = Boolean(help='SWPWR Display Hint button if "True"', default=True, scope=Scope.content)
@@ -154,14 +190,17 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     # STUDENT'S QUESTION PERFORMANCE FIELDS
     swpwr_results = String(help="SWPWR The student's SWPWR Solution structure", default="", scope=Scope.user_state)
 
-    xb_user_email = String(help="SWPWR The user's email addr", default="", scope=Scope.user_state)
+    xb_user_username = String(help="SWPWR The user's username", default="", scope=Scope.user_state)
+    xb_user_fullname = String(help="SWPWR The user's fullname", default="", scope=Scope.user_state)
     grade = Float(help="SWPWR The student's grade", default=-1, scope=Scope.user_state)
-    solution = Dict(help="SWPWR The student's last stepwise solution", default={}, scope=Scope.user_state)
+    # solution = Dict(help="SWPWR The student's last stepwise solution", default={}, scope=Scope.user_state)
     question = Dict(help="SWPWR The student's current stepwise question", default={}, scope=Scope.user_state)
     # count_attempts keeps track of the number of attempts of this question by this student so we can
     # compare to course.max_attempts which is inherited as an per-question setting or a course-wide setting.
     count_attempts = Integer(help="SWPWR Counted number of questions attempts", default=0, scope=Scope.user_state)
-    raw_possible = Float(help="SWPWR Number of possible points", default=3,scope=Scope.user_state)
+    raw_possible = Float(help="SWPWR Number of possible points", default=1,scope=Scope.user_state)
+# NOTE: Don't assume 3 points per problem in swpwrxblock
+    # raw_possible = Float(help="SWPWR Number of possible points", default=3,scope=Scope.user_state)
     # The following 'weight' is examined by the standard scoring code, so needs to be set once we determine which weight value to use
     # (per-Q or per-course). Also used in rescoring by override_score_module_state.
     weight = Float(help="SWPWR Defines the number of points the problem is worth.", default=1, scope=Scope.user_state)
@@ -177,6 +216,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     my_grade_errors_ded  = Integer(help="SWPWR Remember grade_errors_ded course setting vs question setting", default=-1, scope=Scope.user_state)
     my_grade_min_steps_count  = Integer(help="SWPWR Remember grade_min_steps_count course setting vs question setting", default=-1, scope=Scope.user_state)
     my_grade_min_steps_ded  = Integer(help="SWPWR Remember grade_min_steps_ded course setting vs question setting", default=-1, scope=Scope.user_state)
+    my_grade_app_key  = String(help="SWPWR Remember app_key course setting vs question setting", default="SBIRPhase2", scope=Scope.user_state)
 
     # variant_attempted: Remembers the set of variant q_index values the student has already attempted.
     # We can't add a Set to Scope.user_state, or we get get runtime errors whenever we update this field:
@@ -252,6 +292,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         temp_grade_errors_ded = -1
         temp_grade_min_steps_count = -1
         temp_grade_min_steps_ded = -1
+        temp_grade_app_key = ""
 
         # For course-wide settings
         temp_course_stepwise_weight = -1
@@ -265,19 +306,25 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         temp_course_stepwise_grade_errors_ded = -1
         temp_course_stepwise_grade_min_steps_count = -1
         temp_course_stepwise_grade_min_steps_ded = -1
+        temp_course_stepwise_grade_app_key = ""
 
         # Defaults For course-wide settings if they aren't defined for this course
         def_course_stepwise_weight = 1.0
         def_course_stepwise_max_attempts = None
         def_course_stepwise_option_hint = True
         def_course_stepwise_option_showme = True
-        def_course_stepwise_grade_showme_ded = 3.0
+        def_course_stepwise_grade_showme_ded = 0.25
+# NOTE: Don't assume 3 points per problem in swpwrxblock
+        # def_course_stepwise_grade_showme_ded = 3.0
         def_course_stepwise_grade_hints_count = 2
         def_course_stepwise_grade_hints_ded = 1.0
         def_course_stepwise_grade_errors_count = 2
         def_course_stepwise_grade_errors_ded = 1.0
         def_course_stepwise_grade_min_steps_count = 3
-        def_course_stepwise_grade_min_steps_ded = 0.25
+        def_course_stepwise_grade_min_steps_ded = 0.0
+# NOTE: Don't assume a min steps deduction in swpwrxblock
+        # def_course_stepwise_grade_min_steps_ded = 0.25
+        def_course_stepwise_grade_app_key = "SBIRPhase2"
 
         # after application of course-wide settings
         self.my_weight = -1
@@ -291,6 +338,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         self.my_grade_errors_ded = -1
         self.my_grade_min_steps_count = -1
         self.my_grade_min_steps_ded = -1
+        self.my_grade_app_key = ""
 
         # Fetch the xblock-specific settings if they exist, otherwise create a default
       
@@ -372,6 +420,13 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             temp_grade_min_steps_ded = -1
         if DEBUG: logger.info('SWPWRXBlock student_view() temp_grade_min_steps_ded: {t}'.format(t=temp_grade_min_steps_ded))
 
+        try:
+            temp_grade_app_key = self.q_grade_app_key
+        except (NameError,AttributeError) as e:
+            if DEBUG: logger.info('SWPWRXBlock student_view() self.q_grade_app_key was not defined in this instance: {e}'.format(e=e))
+            temp_grade_app_key = ""
+        if DEBUG: logger.info('SWPWRXBlock student_view() temp_grade_app_key: {t}'.format(t=temp_grade_app_key))
+
         # Fetch the course-wide settings if they exist, otherwise create a default
 
         try:
@@ -450,6 +505,13 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             if DEBUG: logger.info('SWPWRXBlock student_view() course.stepwise_grade_min_steps_ded was not defined in this instance: {e}'.format(e=e))
             temp_course_stepwise_grade_min_steps_ded = -1
         if DEBUG: logger.info('SWPWRXBlock student_view() temp_course_stepwise_grade_min_steps_ded: {s}'.format(s=temp_course_stepwise_grade_min_steps_ded))
+
+        try:
+            temp_course_stepwise_app_key = course.stepwise_grade_app_key
+        except (NameError,AttributeError) as e:
+            if DEBUG: logger.info('SWPWRXBlock student_view() course.stepwise_grade_app_key was not defined in this instance: {e}'.format(e=e))
+            temp_course_stepwise_grade_app_key = ""
+        if DEBUG: logger.info('SWPWRXBlock student_view() temp_course_stepwise_grade_app_key: {s}'.format(s=temp_course_stepwise_grade_app_key))
 
         # Enforce course-wide grading options here.
         # We prefer the per-question setting to the course setting.
@@ -557,6 +619,14 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             self.my_grade_min_steps_ded = def_course_stepwise_grade_min_steps_ded
         if DEBUG: logger.info('SWPWRXBlock student_view() self.my_grade_min_steps_ded={m}'.format(m=self.my_grade_min_steps_ded))
 
+        if (temp_grade_app_key != ""):
+            self.my_grade_app_key = temp_grade_app_key
+        elif (temp_course_stepwise_grade_app_key != ""):
+            self.my_grade_app_key = temp_course_stepwise_grade_app_key
+        else:
+            self.my_grade_app_key = def_course_stepwise_grade_app_key
+
+        if DEBUG: logger.info('SWPWRXBlock student_view() self.my_grade_app_key={m}'.format(m=self.my_grade_app_key))
 
         # Fetch the new xblock-specific attributes if they exist, otherwise set them to a default
         try:
@@ -578,13 +648,25 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             self.q_swpwr_problem_hints = "[]"
         if DEBUG: logger.info('SWPWRXBlock student_view() self.q_swpwr_problem_hints: {t}'.format(t=self.q_swpwr_problem_hints))
 
-        # Save an identifier for the user
+        # Save an identifier for the user and their full name
 
         user_service = self.runtime.service( self, 'user')
         xb_user = user_service.get_current_user()
-        if DEBUG: logger.info('SWPWRXBlock student_view() xbuser: {e}'.format(e=xb_user))
-        self.xb_user_email = xb_user.emails[0]
-        if DEBUG: logger.info('SWPWRXBlock student_view() xb_user_email: {e}'.format(e=self.xb_user_email))
+        self.xb_user_username = user_service.get_current_user().opt_attrs.get('edx-platform.username')
+        if self.xb_user_username is None:
+            if DEBUG: logger.error('SWPWRXBlock self.xb_user_username was None')
+            self.xb_user_username = 'FIXME'
+        if self.xb_user_username == "":
+            if DEBUG: logger.error('SWPWRXBlock self.xb_user_username was empty')
+            self.xb_user_username = 'FIXME'
+        self.xb_user_fullname = xb_user.full_name
+        if self.xb_user_fullname is None:
+            if DEBUG: logger.error('SWPWRXBlock self.xb_user_fullname was None')
+            self.xb_user_fullname = 'FIXME FIXME'
+        if self.xb_user_fullname == "":
+            if DEBUG: logger.error('SWPWRXBlock self.xb_user_fullname was empty')
+            self.xb_user_fullname = 'FIXME FIXME'
+        if DEBUG: logger.info('SWPWRXBlock student_view() self.xb_user_username: {e} self.xb_user_fullname: {f}'.format(e=self.xb_user_username,f=self.xb_user_fullname))
 
         # Determine which stepwise variant to use
 
@@ -772,12 +854,12 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.add_resource('<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />','text/html','head')
         frag.add_resource('<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />','text/html','head')
         frag.add_resource('<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />','text/html','head')
-        frag.add_resource('<link rel="manifest" href="/site.webmanifest" />','text/html','head')
+        # Don't add site.webmanifest to eliminate 404 error since we need to give a deep path in the xblock static assets on the LMS server
+        # frag.add_resource('<link rel="manifest" href="/site.webmanifest" />','text/html','head')
         frag.add_resource('<meta name="viewport" content="width=device-width,initial-scale=1.0"/>','text/html','head')
         frag.add_resource('<link rel="preconnect" href="https://fonts.googleapis.com" />','text/html','head')
-        frag.add_resource('<link rel="preconnect" href="https://fonts.googleapis.com" />','text/html','head')
         frag.add_resource('<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />','text/html','head')
-        frag.add_resource('<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Irish+Grover&family=Sura:wght@400;700&display=swap" rel="stylesheet" />','text/html','head')
+        frag.add_resource('<link href="https://fonts.googleapis.com/css2?family=Capriola&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Irish+Grover&display=swap" rel="stylesheet" />','text/html','head')
         frag.add_resource('<title>Querium StepWise Power</title>','text/html','head')
         # root div is in swpwrxstudent.html
         # html_string = '<div id="root"></div>'
@@ -889,12 +971,12 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                            '        disabledSchemas: "' + invalid_schemas_js + '"' + \
                            '    }, ' + \
                            '    student: { ' + \
-                           '        studentId: "' + self.xb_user_email + '", ' + \
-                           '        fullName: "' + 'SAMPLE SAMPLE' + '", ' + \
-                           '        familiarName: "' + 'SAMPLE' + '"' + \
+                           '        studentId: "' + self.xb_user_username + '", ' + \
+                           '        fullName: "' + self.xb_user_fullname + '", ' + \
+                           '        familiarName: "' + 'NONE' + '"' + \
                            '    },' + \
                            '    problem: { ' + \
-                           '        appKey: "' + 'JiraTestPage' + '", ' + \
+                           '        appKey: "' + self.q_grade_app_key + '", ' + \
                            '        policyId: "' + '$A9$' + '", ' + \
                            '        problemId: "' + self.q_id + '", ' + \
                            '        title: "' + 'SAMPLE' + '", ' + \
@@ -912,13 +994,13 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                            '        onComplete: (session,log) => {' + \
                            '            console.info("onComplete session",session);' + \
                            '            console.info("onComplete log",log);' + \
-                           '            console.info("onComplete handlerUrlSwpwrResults",handlerUrlSwpwrResults);' + \
+                           '            console.info("onComplete handlerUrlSwpwrFinalResults",handlerUrlSwpwrFinalResults);' + \
                            '            const solution = [session,log];' + \
                            '            var solution_string = JSON.stringify(solution);' + \
                            '            console.info("onComplete solution_string",solution_string);' + \
                            '            $.ajax({' + \
                            '                type: "POST",' + \
-                           '                url: handlerUrlSwpwrResults,' + \
+                           '                url: handlerUrlSwpwrFinalResults,' + \
                            '                data: solution_string,' + \
                            '                success: function (data,msg) {' + \
                            '                    console.info("onComplete solution POST success");' + \
@@ -931,6 +1013,27 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                            '            });' + \
                            '            $(\'.problem-complete\').show();' + \
                            '            $(\'.unit-navigation\').show();' + \
+                           '        },' + \
+                           '        onStep: (session,log) => {' + \
+                           '            console.info("onStep session",session);' + \
+                           '            console.info("onStep log",log);' + \
+                           '            console.info("onStep handlerUrlSwpwrPartialResults",handlerUrlSwpwrPartialResults);' + \
+                           '            const solution = [session,log];' + \
+                           '            var solution_string = JSON.stringify(solution);' + \
+                           '            console.info("onStep solution_string",solution_string);' + \
+                           '            $.ajax({' + \
+                           '                type: "POST",' + \
+                           '                url: handlerUrlSwpwrPartialResults,' + \
+                           '                data: solution_string,' + \
+                           '                success: function (data,msg) {' + \
+                           '                    console.info("onStep solution POST success");' + \
+                           '                    console.info("onStep solution POST data",data);' + \
+                           '                    console.info("onStep solution POST msg",msg);' + \
+                           '                },' + \
+                           '                error: function(XMLHttpRequest, textStatus, errorThrown) {' + \
+                           '                    console.info("onStep solution POST error textStatus=",textStatus," errorThrown=",errorThrown);' + \
+                           '                }' + \
+                           '            });' + \
                            '        }' + \
                            '    }' + \
                            '};' + \
@@ -977,27 +1080,54 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     # PUBLISH_GRADE
     # For rescoring events
     def publish_grade(self):
-        if DEBUG: logger.info("SWPWRXBlock publish_grade() self.raw_earned={e} self.weight={w}".format(e=self.raw_earned,w=self.weight))
+        if DEBUG: logger.info("SWPWRXBlock publish_grade() pretrimmed self.raw_earned={e} self.weight={w}".format(e=self.raw_earned,w=self.weight))
         if self.raw_earned < 0.0:
            self.raw_earned = 0.0
         if self.raw_earned > self.weight:
            self.raw_earned = self.weight
+        if DEBUG: logger.info("SWPWRXBlock publish_grade() posttrimmed self.raw_earned={e} self.weight={w}".format(e=self.raw_earned,w=self.weight))
         self.runtime.publish(self, 'grade',
-             {   'value': self.raw_earned,
-                 'max_value': self.weight
+             {   'value': self.raw_earned*1.0,
+                 'max_value': self.weight*1.0
              })
-
 
 
     # SAVE
     def save(self):
         if DEBUG: logger.info("SWPWRXBlock save() self{s}".format(s=self))
+        # If we don't have a url_name for this xblock defined to make the xblock unique, assign ourselves a unique UUID4 as a hex string.
+        # Otherwise course imports can confuse multiple swpwrxblocks with url_name == "NONE" (the default)
+        # We don't currently allow authors to specify a value for this field in studio since we don't want to burden them with assigning UUIDs.
+        # There was also a long period of time prior to September 2024 where we didn't assign any value to this field, so we try to catch
+        # such swpwrxblocks and correct this at the time of the next save()
+        try:
+            self.url_name
+        except NameError as e:
+            logger.info('SWPWRXBlock save() self.url_name was undefined: {e}'.format(e=e))
+            self.url_name = 'NONE'
+        if self.url_name == '' or self.url_name == "NONE":
+            self.url_name = str(uuid.uuid4().hex)
+            if DEBUG: logger.info('SWPWRXBlock save() defined self.url_name as {s}'.format(s=self.url_name))
+        else:
+            if DEBUG: logger.info('SWPWRXBlock save() there is an existing url_name {s}'.format(s=self.url_name))
+	# We no longer need to store solution. Disable tis temporarily.
+	# self.solution = {}
+        # if we managed to store a two-element list in the solution Dict, fix it
+        # if type(self.solution) in [list,tuple]:
+        #     my_dict['session'] = self.solution[0]
+        #     if len(self.solution) > 1:
+        #         my_dict['log'] = self.solution[1]
+        #     else:
+        #         my_dict['log'] = []
+        #     self.solution = my_dict
+        #     logger.info('SWPWRXBlock save() solution converted list to Dict: {e}'.format(e=self.solution))
         try:
             XBlock.save(self)       # Call parent class save()
         # except (NameError,AttributeError,InvalidScopeError) as e:
         except Exception as e:
             logger.info('SWPWRXBlock save() had an error: {e}'.format(e=e))
-        if DEBUG: logger.info("SWPWRXBlock save() back from parent save. self.solution={s}".format(s=self.solution))
+        # if DEBUG: logger.info("SWPWRXBlock save() back from parent save. self.solution={s}".format(s=self.solution))
+        if DEBUG: logger.info("SWPWRXBlock save() back from parent save. self.swpwr_results={s}".format(s=self.swpwr_results))
 
 
     # GET_DATA: RETURN DATA FOR THIS QUESTION
@@ -1008,10 +1138,14 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if self.my_max_attempts is None:
             self.my_max_attempts = -1
 
+        # if DEBUG: logger.info("SWPWRXBlock get_data() self.solution={a}".format(a=self.solution))
+
+        # NOTE: swpwr app does not need to be passed the solution
+        #       to our previous attempt at this problem
         data = {
             "question" : self.question,
             "grade" : self.grade,
-            "solution" : self.solution,
+            # "solution" : {},
             "count_attempts" : self.count_attempts,
             "variants_count" : self.variants_count,
             "max_attempts" : self.my_max_attempts
@@ -1021,7 +1155,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         return json_data
 
     # SAVE GRADE
-    @XBlock.json_handler
+    ### @XBlock.json_handler	# We're just calling it directly now, not in a callback.
     def save_grade(self, data, suffix=''):
         if DEBUG: logger.info('SWPWRXBlock save_grade() entered')
         if DEBUG: logger.info("SWPWRXBlock save_grade() self.max_attempts={a}".format(a=self.max_attempts))
@@ -1076,6 +1210,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
              if DEBUG: logger.info('SWPWRXBlock save_grade() self.q_grade_min_steps_ded was not defined: {e}'.format(e=e))
              q_grade_min_steps_ded = -1
 
+        try: q_grade_app_key = self.q_grade_app_key
+        except (NameError,AtrributeError) as e:
+             if DEBUG: logger.info('SWPWRXBlock save_grade() self.q_grade_app_key was not defined: {e}'.format(e=e))
+             q_grade_app_key = "SBIRPhase2"
+
         # Apply grading defaults
 
         if q_weight == -1:
@@ -1099,74 +1238,96 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if q_grade_min_steps_ded == -1:
             if DEBUG: logger.info('SWPWRXBlock save_grade() min_steps_ded default set to 0.25')
             q_grade_min_steps_ded = 0.25
+        if q_grade_app_key == "":
+            if DEBUG: logger.info('SWPWRXBlock save_grade() app_key default set to SBIRPhase2')
+            q_grade_app_key = "SBIRPhase2"
 
-        """
-        Count the total number of VALID steps the student input.
-        Used to determine if they get full credit for entering at least a min number of good steps.
-        """
-        valid_steps = 0
+#
+# NOTE: Don't count min_steps on the POWER xblock
+#         """
+#         Count the total number of VALID steps the student input.
+#         Used to determine if they get full credit for entering at least a min number of good steps.
+#         """
+#         valid_steps = 0
+#         if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps data={d}".format(d=data))
+#         step_details = data['stepDetails']
+#         if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps step_details={d}".format(d=step_details))
+#         if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps len(step_details)={l}".format(l=len(step_details)))
+#         for c in range(len(step_details)):
+#             if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps begin examine step c={c} step_details[c]={d}".format(c=c,d=step_details[c]))
+#             for i in range (len(step_details[c]['info'])):
+#                 if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps examine step c={c} i={i} step_details[c]['info']={s}".format(c=c,i=i,s=step_details[c]['info']))
+#                 if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps examine step c={c} i={i} step_details[c]['info'][i]={s}".format(c=c,i=i,s=step_details[c]['info'][i]))
+#                 step_status = step_details[c]['info'][i]['status']
+#                 if (step_status == 0):       # victory valid_steps += 1
+#                     valid_steps += 1
+#                     if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps c={c} i={i} victory step found".format(c=c,i=i))
+#                 elif (step_status == 1):     # valid step
+#                     valid_steps += 1
+#                     if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps c={c} i={i} valid step found".format(c=c,i=i))
+#                 elif (step_status == 3):     # invalid step
+#                     valid_steps += 0         # don't count invalid steps
+#                 else:
+#                     if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps c={c} i={i} ignoring step_status={s}".format(c=c,i=i,s=step_status))
+#                 if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps examine step c={c} i={i} step_status={s} valid_steps={v}".format(c=c,i=i,s=step_status,v=valid_steps))
+#         if DEBUG: logger.info("SWPWRXBlock save_grade() final valid_steps={v}".format(v=valid_steps))
+#
+#         grade=3.0
+#         max_grade=grade
 
-        if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps data={d}".format(d=data))
-        step_details = data['stepDetails']
-        if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps step_details={d}".format(d=step_details))
-        if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps len(step_details)={l}".format(l=len(step_details)))
-        for c in range(len(step_details)):
-            if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps begin examine step c={c} step_details[c]={d}".format(c=c,d=step_details[c]))
-            for i in range (len(step_details[c]['info'])):
-                if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps examine step c={c} i={i} step_details[c]['info']={s}".format(c=c,i=i,s=step_details[c]['info']))
-                if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps examine step c={c} i={i} step_details[c]['info'][i]={s}".format(c=c,i=i,s=step_details[c]['info'][i]))
-                step_status = step_details[c]['info'][i]['status']
-                if (step_status == 0):       # victory valid_steps += 1
-                    valid_steps += 1
-                    if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps c={c} i={i} victory step found".format(c=c,i=i))
-                elif (step_status == 1):     # valid step
-                    valid_steps += 1
-                    if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps c={c} i={i} valid step found".format(c=c,i=i))
-                elif (step_status == 3):     # invalid step
-                    valid_steps += 0         # don't count invalid steps
-                else:
-                    if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps c={c} i={i} ignoring step_status={s}".format(c=c,i=i,s=step_status))
-                if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps examine step c={c} i={i} step_status={s} valid_steps={v}".format(c=c,i=i,s=step_status,v=valid_steps))
-        if DEBUG: logger.info("SWPWRXBlock save_grade() final valid_steps={v}".format(v=valid_steps))
-
-        grade=3.0
-        max_grade=grade
-
-        if DEBUG: logger.info('SWPWRXBlock save_grade() initial grade={a} errors={b} errors_count={c} hints={d} hints_count={e} showme={f} min_steps={g} valid_steps={h}'.format(a=grade,b=data['errors'],c=q_grade_errors_count,d=data['hints'],e=q_grade_hints_count,f=data['usedShowMe'],g=q_grade_min_steps_count,h=valid_steps))
-        if data['errors']>q_grade_errors_count:
-            grade=grade-q_grade_errors_ded
-            if DEBUG: logger.info('SWPWRXBlock save_grade() errors test errors_ded={a} grade={b}'.format(a=q_grade_errors_ded,b=grade))
-        if data['hints']>q_grade_hints_count:
-            grade=grade-q_grade_hints_ded
-            if DEBUG: logger.info('SWPWRXBlock save_grade() hints test hints_ded={a} grade={b}'.format(a=q_grade_hints_ded,b=grade))
-        if data['usedShowMe']:
-            grade=grade-q_grade_showme_ded
-            if DEBUG: logger.info('SWPWRXBlock save_grade() showme test showme_ded={a} grade={b}'.format(a=q_grade_showme_ded,b=grade))
-        
-        # Don't subtract min_steps points on a MatchSpec problem or DomainOf
-        self.my_q_definition = data['answered_question']['q_definition']
-        if DEBUG: logger.info('SWPWRXBlock save_grade() check on min_steps deduction grade={g} max_grade={m} q_grade_min_steps_count={c} q_grade_min_steps_ded={d} self.my_q_definition={q}'.format(g=grade,m=max_grade,c=q_grade_min_steps_count,d=q_grade_min_steps_ded,q=self.my_q_definition))
-        if (grade >= max_grade and valid_steps < q_grade_min_steps_count and self.my_q_definition.count('MatchSpec') == 0 and self.my_q_definition.count('DomainOf') == 0 ):
-            grade=grade-q_grade_min_steps_ded
-            if DEBUG: logger.info('SWPWRXBlock save_grade() took min_steps deduction after grade={g}'.format(g=grade))
+        # Track whether they've completed it or not and assign 1.0 points if they have completed the problem
+        if self.is_answered:
+            grade=1.0
         else:
-            if DEBUG: logger.info('SWPWRXBlock save_grade() did not take min_steps deduction after grade={g}'.format(g=grade))
-
-        if grade<0.0:
-            logger.info('SWPWRXBlock save_grade() zero negative grade')
             grade=0.0
+        max_grade=1.0
 
-        if DEBUG: logger.info("SWPWRXBlock save_grade() final grade={a} q_weight={b}".format(a=grade,b=q_weight))
+#
+# NOTE: Don't count the number of errors in the swpwrxblock
+#
+#         if DEBUG: logger.info('SWPWRXBlock save_grade() initial grade={a} errors={b} errors_count={c} hints={d} hints_count={e} showme={f} min_steps={g} valid_steps={h}'.format(a=grade,b=data['errors'],c=q_grade_errors_count,d=data['hints'],e=q_grade_hints_count,f=data['usedShowMe'],g=q_grade_min_steps_count,h=valid_steps))
+#         if data['errors']>q_grade_errors_count:
+#             grade=grade-q_grade_errors_ded
+#             if DEBUG: logger.info('SWPWRXBlock save_grade() errors test errors_ded={a} grade={b}'.format(a=q_grade_errors_ded,b=grade))
+#         if data['hints']>q_grade_hints_count:
+#             grade=grade-q_grade_hints_ded
+#             if DEBUG: logger.info('SWPWRXBlock save_grade() hints test hints_ded={a} grade={b}'.format(a=q_grade_hints_ded,b=grade))
+#         if data['usedShowMe']:
+#             grade=grade-q_grade_showme_ded
+#             if DEBUG: logger.info('SWPWRXBlock save_grade() showme test showme_ded={a} grade={b}'.format(a=q_grade_showme_ded,b=grade))
+#
+#         # Don't subtract min_steps points on a MatchSpec problem or DomainOf
+#         self.my_q_definition = data['answered_question']['q_definition']
+#         if DEBUG: logger.info('SWPWRXBlock save_grade() check on min_steps deduction grade={g} max_grade={m} q_grade_min_steps_count={c} q_grade_min_steps_ded={d} self.my_q_definition={q} self.q_grade_app_key={k}'.format(g=grade,m=max_grade,c=q_grade_min_steps_count,d=q_grade_min_steps_ded,q=self.my_q_definition,k=self.q_grade_app_key))
+#         if (grade >= max_grade and valid_steps < q_grade_min_steps_count and self.my_q_definition.count('MatchSpec') == 0 and self.my_q_definition.count('DomainOf') == 0 ):
+#             grade=grade-q_grade_min_steps_ded
+#             if DEBUG: logger.info('SWPWRXBlock save_grade() took min_steps deduction after grade={g}'.format(g=grade))
+#         else:
+#             if DEBUG: logger.info('SWPWRXBlock save_grade() did not take min_steps deduction after grade={g}'.format(g=grade))
+#
+#         if grade<0.0:
+#             logger.info('SWPWRXBlock save_grade() zero negative grade')
+#             grade=0.0
+#
+#         if DEBUG: logger.info("SWPWRXBlock save_grade() final grade={a} q_weight={b}".format(a=grade,b=q_weight))
 
-        self.runtime.publish(self, 'grade',
-            {   'value': (grade/3.0)*q_weight,
-                'max_value': 1.0*q_weight
-            })
+        # The following now handled below by publish_grade() after save() is complete:
+        # self.runtime.publish(self, 'grade',
+        #     {   'value': (grade/3.0)*weight,
+        #         'max_value': 1.0*weight
+        #     })
+
+# NOTE: Don't assume 3 points per problem in swpwrxblock
+#         self.raw_earned = (grade/3.0)*weight
+        self.raw_earned = grade
+
+        if DEBUG: logger.info("SWPWRXBlock save_grade() raw_earned={a}".format(a=self.raw_earned))
 
         if DEBUG: logger.info("SWPWRXBlock save_grade() final data={a}".format(a=data))
-        self.solution = data
+        # self.solution = data
+        # if DEBUG: logger.info("SWPWRXBlock save_grade() final self.solution={a}".format(a=self.solution))
         self.grade = grade
-        if DEBUG: logger.info("SWPWRXBlock save_grade() final self.solution={a}".format(a=self.solution))
+        if DEBUG: logger.info("SWPWRXBlock save_grade() grade={a}".format(a=self.grade))
 
         # Don't increment attempts on save grade.  We want to increment them when the student starts
         # a question, not when they finish.  Otherwise people can start the question as many times
@@ -1186,9 +1347,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         self.save()     # Time to persist our state!!!
 
+        self.publish_grade()     # Now publish our grade results to persist them into the grading database
+
         # if DEBUG: logger.info("SWPWRXBlock save_grade() final self={a}".format(a=self))
         if DEBUG: logger.info("SWPWRXBlock save_grade() final self.count_attempts={a}".format(a=self.count_attempts))
-        if DEBUG: logger.info("SWPWRXBlock save_grade() final self.solution={a}".format(a=self.solution))
+        # if DEBUG: logger.info("SWPWRXBlock save_grade() final self.solution={a}".format(a=self.solution))
         if DEBUG: logger.info("SWPWRXBlock save_grade() final self.grade={a}".format(a=self.grade))
         if DEBUG: logger.info("SWPWRXBlock save_grade() final self.weight={a}".format(a=self.weight))
         if DEBUG: logger.info("SWPWRXBlock save_grade() final self.variants_attempted={v}".format(v=self.variants_attempted))
@@ -1326,6 +1489,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         self.q_grade_errors_ded = float(data['q_grade_errors_ded'])
         self.q_grade_min_steps_count = int(data['q_grade_min_steps_count'])
         self.q_grade_min_steps_ded = float(data['q_grade_min_steps_ded'])
+        self.q_grade_app_key = str(data['q_grade_app_key'])
 
         self.q_id = data['id']
         self.q_label = data['label']
@@ -1348,14 +1512,26 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         return {'result': 'success'}
 
 
-# SWPWR RESULTS: Save the final results of the SWPWR React app as a stringified structure.
+# SWPWR FINAL RESULTS: Save the final results of the SWPWR React app as a stringified structure.
     @XBlock.json_handler
-    def save_swpwr_results(self, data, suffix=''):
-        if DEBUG: logger.info("SWPWRXBlock save_swpwr_results() data={d}".format(d=data))
+    def save_swpwr_final_results(self, data, suffix=''):
+        if DEBUG: logger.info("SWPWRXBlock save_swpwr_final_results() data={d}".format(d=data))
         self.swpwr_results = json.dumps(data, separators=(',', ':'))
-        if DEBUG: logger.info("SWPWRXBlock save_swpwr_results() self.swpwr_results={r}".format(r=self.swpwr_results))
-        self.save() # Time to persist our state!!!
-        if DEBUG: logger.info("SWPWRXBlock save_swpwr_results() back from save")
+        self.is_answered = True		# We are now done
+        if DEBUG: logger.info("SWPWRXBlock save_swpwr_final_results() self.swpwr_results={r}".format(r=self.swpwr_results))
+        self.save_grade(data)		# Includes publishing out results to persist them
+        if DEBUG: logger.info("SWPWRXBlock save_swpwr_final_results() back from save_grade")
+        return {'result': 'success'}
+
+# SWPWR PARTIAL RESULTS: Save the interim results of the SWPWR React app as a stringified structure.
+    @XBlock.json_handler
+    def save_swpwr_partial_results(self, data, suffix=''):
+        if DEBUG: logger.info("SWPWRXBlock save_swpwr_partial_results() data={d}".format(d=data))
+        self.swpwr_results = json.dumps(data, separators=(',', ':'))
+        self.is_answered = False	# We are not done yet
+        if DEBUG: logger.info("SWPWRXBlock save_swpwr_partial_results() self.swpwr_results={r}".format(r=self.swpwr_results))
+        self.save_grade(data)		# Includes publishing out results to persist them
+        if DEBUG: logger.info("SWPWRXBlock save_swpwr_partial_results() back from save_grade")
         return {'result': 'success'}
 
     # Do necessary overrides from ScorableXBlockMixin
@@ -1564,7 +1740,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         question = {
             "q_id" : self.q_id,
-            "q_user" : self.xb_user_email,
+            "q_user" : self.xb_user_username,
             "q_index" : 0,
             "q_label" : self.q_label,
             "q_stimulus" : self.q_stimulus,
@@ -1589,6 +1765,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             "q_grade_errors_ded" : self.my_grade_errors_ded,
             "q_grade_min_steps_count" : self.my_grade_min_steps_count,
             "q_grade_min_steps_ded" : self.my_grade_min_steps_ded,
+            "q_grade_app_key" : self.my_grade_app_key
         }
 
         if DEBUG: logger.info("SWPWRXBlock pick_variant() returned question q_index={i} question={q}".format(i=question['q_index'],q=question))

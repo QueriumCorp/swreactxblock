@@ -3,7 +3,8 @@
  *        Disble Hint and ShowMe buttons if options are set.
  */
 
-var handlerUrlSwpwrResults;  // Define this globally where it can be found by the React swpwr onSubmit code
+var handlerUrlSwpwrFinalResults;  // Define this globally where it can be found by the React swpwr onComplete code
+var handlerUrlSwpwrPartialResults;  // Define this globally where it can be found by the React swpwr onStep code
 
 function SWPWRXStudent(runtime, element) {
 
@@ -12,7 +13,8 @@ function SWPWRXStudent(runtime, element) {
 
     var handlerUrlGetData = runtime.handlerUrl(element, 'get_data');
 
-    handlerUrlSwpwrResults = runtime.handlerUrl(element, 'save_swpwr_results');   // Leave a handlerUrl for the SWPWR onSubmit callback
+    handlerUrlSwpwrFinalResults = runtime.handlerUrl(element, 'save_swpwr_final_results');   // Leave a handlerUrl for the SWPWR onSubmit callback
+    handlerUrlSwpwrPartialResults = runtime.handlerUrl(element, 'save_swpwr_partial_results');   // Leave a handlerUrl for the SWPWR onSubmit callback
 
     console.info("SWPWRXStudent calling get_data at ",handlerUrlGetData);
 
@@ -46,7 +48,8 @@ function SWPWRXStudent(runtime, element) {
             // Set our context variables from the data we receive
             var question = data_obj.question;
             var grade = data_obj.grade;
-            var solution = data_obj.solution;
+            // We no longer pass in solution.
+            // var solution = data_obj.solution;
             var count_attempts = data_obj.count_attempts;
             var variants_count = data_obj.variants_count;
             var max_attempts = data_obj.max_attempts;
@@ -66,7 +69,8 @@ function SWPWRXStudent(runtime, element) {
             console.info("SWPWRXStudent swpwr_problem",swpwr_problem);
             // console.info("SWPWRXStudent enable_showme",enable_showme);
             // console.info("SWPWRXStudent enable_hint",enable_hint);
-            console.info("SWPWRXStudent solution",solution);
+            // We no longer pass in solution
+            // console.info("SWPWRXStudent solution",solution);
             console.info("SWPWRXStudent count_attempts",count_attempts);
             console.info("SWPWRXStudent variants_counnt",variants_count);
             console.info("SWPWRXStudent max_attempts",max_attempts);
