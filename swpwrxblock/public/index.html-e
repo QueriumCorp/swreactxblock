@@ -22,43 +22,7 @@
       let params = new URLSearchParams(window.location.search)
       let urlRank = params.get('rank')
       let urlAppKey = params.get('appKey')
-      /*
 
-{
-    "appKey": "SBIRPhase2",
-    "policyId": "$A9$",
-    "problemId": "Fall2024Newb",
-    "title": "SAMPLE",
-    "stimulus": "Mark rode his bicycle 9 miles on Saturday. He rode 3 miles on Sunday. In all, he rode 12 miles over the weekend.",
-    "class": "gradeBasicAlgebra",
-    "question": "SolveWordProblemNewb[{"Mark rode his bicycle 9 miles on Saturday. He rode 3 miles on Sunday. In all, he rode 12 miles over the weekend."}]",
-    "hints": [
-        "",
-        "",
-        ""
-    ],
-    "wpHints": [
-        {
-            "page": "newbFindFacts",
-            "hints": [
-                "The first known amount is **9 miles**. Do you see it up above? Highlight it. Then pull it out and place it under Known.",
-                "The next known amount is **3 miles**. Highlight it, pull it out, and place it under Known.",
-                "The next known amount is **12 miles**. Put it under Known, too.",
-                "That&apos;s the last known amount. Now let&apos;s look for unknown amounts.",
-                "If you think there are no unknown amounts... you&apos;re right!✓In this story, all of the amounts are known. So don&apos;t put anything under Unknown. We&apos;ll learn more about unknown amounts later on.",
-                "For this one, we&apos;re all done pulling it apart. Click ➜ and I&apos;ll just double check your work before we move on."
-            ]
-        },
-        {
-            "page": "newbProblemType",
-            "hints": [
-                "The problem has two parts, 9 miles on Saturday and 3 miles on Sunday.✓Those parts are put together to make the total, 12 miles.✓Pick the Total problem type. Then click ➜."
-            ]
-        }
-    ]
-}
-
-*/
       if (urlRank === 'newb') {
         window.swpwr = {
           options: {
@@ -325,78 +289,30 @@ The equation is 6 + 5 = T. Click ✔ and I'll check that you've got it right.`,
           options: {
             gltfUrl:
               'https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models',
-            rank: 'newb',
-            disabledSchemas: [
-              'additiveDifferenceSchema',
-              'additiveChangeSchema',
-              'subtractiveChangeSchema',
-              'multiplicativeEqualGroupsSchema',
-              'multiplicativeCompareSchema',
-            ],
+            rank: 'dev',
+            disabledSchemas: [],
           },
           student: {
-            studentId: 'TheCure',
-            fullName: 'Robert Smith',
-            familiarName: 'Robert',
+            studentId: 'Winifred',
+            fullName: 'Winry Van Riper',
+            familiarName: 'Win',
           },
           problem: {
-            appKey: 'JiraTestPage', // 'SBIRPhase2',
+            appKey: urlAppKey || 'JiraTestPage',
             policyId: '$A9$',
-            problemId: 'Fall2024Newb',
-            title: 'SAMPLE',
+            problemId: 'QUES-30533',
+            title: 'Sticker Book Cost',
             stimulus:
-              'Mark rode his bicycle 9 miles on Saturday. He rode 3 miles on Sunday. In all, he rode 12 miles over the weekend.',
+              'Minh spent $6.25 on 5  sticker books to give his nephews. Find the cost of each sticker book.',
             topic: 'gradeBasicAlgebra',
             definition:
-              'SolveWordProblemNewb[{"Mark rode his bicycle 9 miles on Saturday. He rode 3 miles on Sunday. In all, he rode 12 miles over the weekend."}]',
-            hints: ['', '', ''],
+              'SolveWordProblemAns[{"Minh spent $6.25 on 5 sticker books to give his nephews. Find the cost of each sticker book."}]',
+            mathHints: [],
             wpHints: [
-              {
-                pageId: 'newbFindFacts',
-                hints: [
-                  `The first known amount is **9 miles**. Do you see it in the story up above?
-                  
-When you find an amount, highlight it. There might be more than one way to do that.`,
-                  `You can highlight **9 miles** or **9 miles on Saturday**. You can even highlight the whole sentence **Mark rode his bicycle 9 miles on Saturday**.
-Just don&apos;t highlight more than one amount at a time.`,
-                  `Highlight **9 miles** in the story.
-                
-Then pull it out and and put it under Known, just like you saw in the video.
-
-Click [MORE] when you&apos;re done.`,
-                  `The next known amount is **3 miles**.
-                
-Highlight that amount. Then pull it out and put it under Known.
-
-Click [MORE] when you&apos;re done.`,
-                  `Next is **12 miles**.
-                
-Pull out that amount and put it under Known, too.
-
-That&apos;s the last known amount. Now let&apos;s look for unknown amounts. Click [MORE].`,
-                  `If you think there are no unknown amounts... you&apos;re right!
-
-In this story, all amounts are known. So don&apos;t put anything under Unknown. We'll learn about unknown amounts later. Click [MORE] to see what&apos;s next.`,
-                  `For this one, we&apos;re done pulling it apart.
-
-See ✔ next to me? When it&apos;s green, you can click it. Then I&apos;ll check your work. If everything is correct, ✔ turns into ➜ and you can move on.
-
-Go ahead and click ✔ now.`,
-                ],
-              },
-              {
-                pageId: 'newbNewbProblemType',
-                hints: [
-                  `There are two parts, 9 miles and 3 miles.
-            
-They&apos;re put together to make the total, 12 miles.
-
-Choose Total. Then click ✔.`,
-                ],
-              },
+              // { page: 'newb:FindFacts', hints: ['wpHint1', 'wbHint2'] },
+              // { page: 'ranger:ReadProblem', hints: ['wpHint1', 'wbHint2'] },
             ],
           },
-
           handlers: {
             onComplete: (session, studentLog) => {
               console.info("I'm an external onComplete Handler")
