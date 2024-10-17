@@ -26,6 +26,7 @@ function SWPWRXStudent(runtime, element) {
     $('.sequence-bottom').hide();   // Don't show the EdX sequential navigation buttons that lie on top of the react div
     $('.unit-navigation').hide();   // Don't show the EdX sequential navigation buttons that lie on top of the react div
     $('.problem-complete').hide();  // Don't show the 'problem is complete' message
+    $('.wrap-instructor-info').hide();  // Don't show the 'staff debug' button
 
     get_data_data = {}		// don't need to sent any data to get_data
 
