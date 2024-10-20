@@ -243,6 +243,59 @@ The equation is 6 + 5 = T. Click ✔ and I'll check that you've got it right.`,
             },
           },
         }
+      } else if (urlRank === 'scout') {
+        window.swpwr = {
+          options: {
+            gltfUrl:
+              'https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models',
+            rank: 'ranger',
+            disabledSchemas: [],
+          },
+          student: {
+            studentId: 'Winifred',
+            fullName: 'Winry Van Riper',
+            familiarName: 'Win',
+          },
+          problem: {
+            appKey: urlAppKey || 'JiraTestPage',
+            policyId: '$A9$',
+            problemId: 'QUES-30533',
+            title: 'Sticker Book Cost',
+            stimulus:
+              'Adrianne had $22. Then she earned $301 more. How much money does she have now?',
+            topic: 'gradeBasicAlgebra',
+            definition:
+              'SolveWordProblemAns[{"Adrianne had $22. Then she earned $301 more. How much money does she have now?"}]',
+            mathHints: [],
+            wpHints: [
+              {
+                pageId: 'scoutFillDiagram',
+                hints: [
+                  'The amounts are **$22**, **$301**, and the amount of money she has now.',
+                  'Identify the start amount, the change amount, and the end amount. Look for clues in the word problem to help you.',
+                ],
+              },
+              {
+                pageId: 'scoutOwnWords',
+                hints: [
+                  'Here, the answer is money. You can type $323 in the *number* box and leave the *units* box empty. Or, type just 323 in the *number* box. Then type the word **dollars** in the *units* box.',
+                ],
+              },
+            ],
+          },
+          handlers: {
+            onComplete: (session, studentLog) => {
+              console.info("I'm an external onComplete Handler")
+              console.info('session', session)
+              console.info('studentLog', studentLog)
+            },
+            onStep: (session, studentLog) => {
+              console.info("I'm an external onStep Handler")
+              console.info('session', session)
+              console.info('studentLog', studentLog)
+            },
+          },
+        }
       } else if (urlRank === 'ranger') {
         window.swpwr = {
           options: {
