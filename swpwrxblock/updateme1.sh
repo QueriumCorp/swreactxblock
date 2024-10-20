@@ -1,4 +1,4 @@
-git checkout open-release/palm.master
+git checkout open-release/redwood.master
 git branch
 cd swpwrxblock
 d=`date '+%Y%m%d%H%M'`
