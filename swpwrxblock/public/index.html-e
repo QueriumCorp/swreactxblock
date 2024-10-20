@@ -22,12 +22,13 @@
       let params = new URLSearchParams(window.location.search)
       let urlRank = params.get('rank')
       let urlAppKey = params.get('appKey')
-
+      console.info('🤩')
       if (urlRank === 'newb') {
         window.swpwr = {
           options: {
             gltfUrl:
               'https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models',
+
             rank: 'newb',
             disabledSchemas: [
               'additiveDifferenceSchema',
@@ -289,6 +290,7 @@ The equation is 6 + 5 = T. Click ✔ and I'll check that you've got it right.`,
           options: {
             gltfUrl:
               'https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models',
+
             rank: 'dev',
             disabledSchemas: [],
           },
