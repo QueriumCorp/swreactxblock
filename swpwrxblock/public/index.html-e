@@ -385,7 +385,7 @@ The equation is 6 + 5 = T. Click ✔ and I'll check that you've got it right.`,
     </script>
   </head>
   <body>
-    <div id="qqROOT" class="sw-reactjs-xblock"></div>
+    <div id="qqROOT"></div>
     <script type="module" src="/public/main.tsx"></script>
   </body>
 </html>
