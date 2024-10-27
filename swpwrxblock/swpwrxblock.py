@@ -1075,6 +1075,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             # frag.add_resource('<script type="module" src="/public/index-YyiH-LRh.js"></script>','application/javascript','head')
             # frag.add_resource(final_string,'application/javascript','foot')
 
+            # Add bugfender library for console log capture
+            frag.add_resource('<script defer src="https://js.bugfender.com/bugfender-v2.js"></script>','application/javascript','head')
+
         frag.initialize_js('SWPWRXStudent', {})  # Call the entry point
         return frag
 

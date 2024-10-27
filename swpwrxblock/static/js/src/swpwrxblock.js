@@ -4,4 +4,18 @@
  */
 
 console.log("Hello World!");
+
+Bugfender.init({
+    appKey: 'rLBi6ZTSwDd3FEM8EhHlrlQRXpiHvZkt',
+    apiURL: 'https://api.bugfender.com/',
+    baseURL: 'https://dashboard.bugfender.com/',
+    overrideConsoleMethods: true,
+    printToConsole: true,
+    // registerErrorHandler: true,
+    // logBrowserEvents: true,
+    // logUIEvents: true,
+    // version: '',
+    // build: '',
+});
+
 console.log("This is a test message from swpwrxblock.js.");
