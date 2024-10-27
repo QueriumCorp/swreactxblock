@@ -955,6 +955,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         else:
             # Add our own snippet of javascript code so we can add debugging code on the fly without re-building the xblock
             frag.add_javascript_url('//swm-openedx-us-dev-storage.s3.us-east-2.amazonaws.com/static/js/swpwrxblock.js');
+            # Add bugfender library for console log capture
+            frag.add_javascript_url('//js.bugfender.com/bugfender-v2.js')
             # Invalid schema choices should be a CSV list of one or more of these: "TOTAL", "DIFFERENCE", "CHANGEINCREASE", "CHANGEDECREASE", "EQUALGROUPS", and "COMPARE"
             # Invalid schema choices can also be the official names: "additiveTotalSchema", "additiveDifferenceSchema", "additiveChangeSchema", "subtractiveChangeSchema", "multiplicativeEqualGroupsSchema", and "multiplicativeCompareSchema"
             # Convert the upper-case names to the 'official' names. NB: The order of .replace() calls might matter if one of these schema names is a substring of another name.
@@ -1074,9 +1076,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             # This script module apparently cannot be generated using the Fragment library, so we'll next try hard coding it into the page template.
             # frag.add_resource('<script type="module" src="/public/index-YyiH-LRh.js"></script>','application/javascript','head')
             # frag.add_resource(final_string,'application/javascript','foot')
-
-            # Add bugfender library for console log capture
-            frag.add_resource('<script defer src="https://js.bugfender.com/bugfender-v2.js"></script>','application/javascript','head')
 
         frag.initialize_js('SWPWRXStudent', {})  # Call the entry point
         return frag
