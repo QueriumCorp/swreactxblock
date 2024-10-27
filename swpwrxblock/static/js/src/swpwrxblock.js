@@ -5,17 +5,20 @@
 
 console.log("Hello World from swpwrxblock.js!");
 
-Bugfender.init({
-    appKey: 'rLBi6ZTSwDd3FEM8EhHlrlQRXpiHvZkt',
-    apiURL: 'https://api.bugfender.com/',
-    baseURL: 'https://dashboard.bugfender.com/',
-    overrideConsoleMethods: true,
-    printToConsole: true,
-    // registerErrorHandler: true,
-    // logBrowserEvents: true,
-    // logUIEvents: true,
-    // version: '',
-    // build: '',
-});
+/**
+ * Moved to swpwrxblock.py:
+ * Bugfender.init({
+ *     appKey: 'rLBi6ZTSwDd3FEM8EhHlrlQRXpiHvZkt',
+ *     apiURL: 'https://api.bugfender.com/',
+ *     baseURL: 'https://dashboard.bugfender.com/',
+ *     overrideConsoleMethods: true,
+ *     printToConsole: true,
+ *     // registerErrorHandler: true,
+ *     // logBrowserEvents: true,
+ *     // logUIEvents: true,
+ *     // version: '',
+ *     // build: '',
+ * });
+ */
 
 console.log("This is a test message from swpwrxblock.js.");
