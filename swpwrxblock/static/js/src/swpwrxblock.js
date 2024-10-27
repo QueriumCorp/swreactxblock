@@ -3,7 +3,7 @@
  * custom javascript loaded by the swpwrxblock from an S3 bucket
  */
 
-console.log("Hello World!");
+console.log("Hello World from swpwrxblock.js!");
 
 Bugfender.init({
     appKey: 'rLBi6ZTSwDd3FEM8EhHlrlQRXpiHvZkt',
