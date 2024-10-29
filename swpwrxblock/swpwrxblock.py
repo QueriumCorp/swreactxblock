@@ -865,8 +865,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         # html_string = '<div id="root"></div>'
         # frag.add_content(html_string)
 
-        resource_string = self.resource_string("public/android-chrome-192x192.png")
-        if DEBUG: logger.info('SWPWRXBlock student_view() KENT example resource_string={r}'.format(r=resource_string))
+        # resource_string = self.resource_string("public/android-chrome-192x192.png")
+        # if DEBUG: logger.info('SWPWRXBlock student_view() KENT example resource_string={r}'.format(r=resource_string))
         # Force a script tag of module type to hold the main React app file
         # html_string = '<script type="module" src="public/index-YyiH-LRh.js"></script>'
         # frag.add_content(html_string)
