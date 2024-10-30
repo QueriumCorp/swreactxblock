@@ -823,6 +823,10 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
 # Build content programatticaly that looks like the above HTML
 
+        # DEBUG TEST
+        my_test_url = self.runtime.local_resource_url(self, 'blue_brain.png')
+        if DEBUG: logger.info('SWPWRXBlock student_view() KENT my_test_url={r}'.format(r=my_test_url))
+
         # NOTE: The following page now includes the script tag that loads the module for the main React app
         html = self.resource_string("static/html/swpwrxstudent.html")
         frag = Fragment(html.format(self=self))
