@@ -86,8 +86,15 @@ cp $b/${js1} public/
 cp $b/${cs1} public/
 
 # Remember swpwr version info
+# {  "version": "1.9.200"}
 v=`grep '^  "version":' $i/package.json | sed -e 's/,//' -e 's/^/{/' -e 's/$/}/'`
 echo "$v" > public/swpwr_version.json
+v1=`grep '^  "version":' $i/package.json | sed -e 's/^.*: "//' -e 's/"}//' -e 's/",//'`
+# echo "v1 = x${v1}x"
+
+# sed -I -e "s/SWPWR_VERSION/$v/" swpwrxblock.py
+#             frag.add_resource('<script type="module"> Bugfender.init({ appKey: \'rLBi6ZTSwDd3FEM8EhHlrlQRXpiHvZkt\', apiURL: \'https://api.bugfender.com/\', baseURL: \'https://dashboard.bugfender.com/\', version: \'1.9.200\', }); </script>','text/html','head')
+sed -I -e "s#dashboard.bugfender.com/\\\', version: \\\'[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}#dashboard.bugfender.com/\\\', version: \\\'${v1}#" swpwrxblock.py
 
 echo "We are incorporating swpwr $v"
 echo "The top-level Javascript file is $js1"
