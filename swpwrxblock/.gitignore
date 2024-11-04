@@ -1,6 +1,1 @@
-dist/
-dist-*.tar.gz
-public-*.tar.gz
-swpwrxblock-0708.py
-static/js/src/swpwrxblock-save.js
-swpwrxblock.py-e
+.vscode
