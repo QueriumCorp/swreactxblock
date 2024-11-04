@@ -99,10 +99,20 @@ sed -I -e "s#dashboard.bugfender.com/\\\', version: \\\'[0-9]\{1,3\}.[0-9]\{1,3\
 echo "We are incorporating swpwr $v"
 echo "The top-level Javascript file is $js1"
 echo "The top-level CSS file is $cs1"
-echo "Be sure to edit static/html/swpwrxstudent.html to update those filenames:"
-echo "    <!-- Load main React app filename -->"
-echo "    <script type="module" crossorigin src="/static/xblock/resources/swpwrxblock/public/${js1}"></script>"
-echo "    <link rel="stylesheet" crossorigin href="/static/xblock/resources/swpwrxblock/public/${cs1}">"
-echo "Also, be sure to run:"
+echo "Going to run:"
 echo "./fixcssurl.sh $cs1"
+echo "./fixcssurl.sh $cs1" | /bin/bash
+echo "Going to run:"
 echo "./fixjsurl.sh $js1"
+echo "./fixjsurl.sh $js1"  | /bin/bash
+
+# echo "Be sure to edit static/html/swpwrxstudent.html to update those filenames:"
+echo "Editing static/html/swpwrxstudent.html to specify:"
+echo "${js1}"
+echo "${cs1}"
+# echo "    <!-- Load main React app filename -->"
+# echo "    <script type="module" crossorigin src="/static/xblock/resources/swpwrxblock/public/${js1}"></script>"
+sed -I -e "s/<script type=\"module\" crossorigin src=\"\/static\/xblock\/resources\/swpwrxblock\/public.*$/<script type=\"module\" crossorigin src=\"\/static\/xblock\/resources\/swpwrxblock\/public\/{$js1}\"><\/script>/" static/html/swpwrxstudent.html
+# echo "    <link rel="stylesheet" crossorigin href="/static/xblock/resources/swpwrxblock/public/${cs1}">"
+sed -I -e "s/<link rel="module" crossorigin href=\"\/static\/xblock\/resources\/swpwrxblock\/public.*$/<link rel=\"stylesheet\" crossorigin href=\"\/static\/xblock\/resources\/swpwrxblock\/public\/{$cs1}\">/" static/html/swpwrxstudent.html
+echo "Done with cpassets.sh"
