@@ -121,18 +121,18 @@ cp $b/${cs1} $p/
 # Remember swpwr version info
 # {  "version": "1.9.200"}
 echo "$version" > $p/swpwr_version.json
-v1=`grep '^  "version":' $i/package.json | sed -e 's/^.*: "//' -e 's/"}//' -e 's/",//'`
-sed -I -e "s#dashboard.bugfender.com/\\\', version: \\\'[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}#dashboard.bugfender.com/\\\', version: \\\'${v1}#" swpwrxblock.py
+# v1=`grep '^  "version":' $i/package.json | sed -e 's/^.*: "//' -e 's/"}//' -e 's/",//'`
+sed -I -e "s#dashboard.bugfender.com/\\\', version: \\\'v?[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}#dashboard.bugfender.com/\\\', version: \\\'${version}#" swpwrxblock.py
 
-echo "We are incorporating swpwr $v"
+echo "We are incorporating swpwr $version"
 echo "The top-level Javascript file is $js1"
 echo "The top-level CSS file is $cs1"
 echo "Going to run:"
-echo "./scripts/fixcssurl.sh $cs1"
-echo "./scripts/fixcssurl.sh $cs1" | /bin/bash
+echo "../scripts/fixcssurl.sh $cs1"
+echo "../scripts/fixcssurl.sh $cs1" | /bin/bash
 echo "Going to run:"
-echo "./scripts/fixjsurl.sh $js1"
-echo "./scripts/fixjsurl.sh $js1"  | /bin/bash
+echo "../scripts/fixjsurl.sh $js1"
+echo "../scripts/fixjsurl.sh $js1"  | /bin/bash
 
 # echo "Be sure to edit static/html/swpwrxstudent.html to update those filenames:"
 echo "Editing static/html/swpwrxstudent.html to specify:"
