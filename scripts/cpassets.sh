@@ -10,52 +10,78 @@ else
   environment="prod"
 fi
 
-# Set the CDN URL based on the environment
-cdn="https://swm-openedx-us-$environment-storage.s3.us-east-2.amazonaws.com/swpwrxblock/"
-
-# Use wget to recursively copy the contents of $cdn to ~/src/
-wget -r -np -nH --cut-dirs=1 -P ~/src/ $cdn
+# Set the environment based CDN URL
+case $environment in
+  dev)
+    domain="cdn.dev.stepwisemath.ai"
+    ;;
+  prod)
+    domain="cdn.web.stepwisemath.ai"
+    ;;
+  staging)
+    domain="cdn.staging.stepwisemath.ai"
+    ;;
+  *)
+    echo "Invalid environment: $environment"
+    exit 1
+    ;;
+esac
 
 # Full pathnames to the swpwr build and public directories
-x=swpwr
-i=~/src/$x
-b=$i/dist/assets
-p=$i/public
-s=$i/src
+i=../react_build/
 d=$i/dist
-# we no longer have foxy.glb in models as of Sept 19, 2024
-# m=$d/models
+b=$d/assets
+p=$i/public
 
-if [ ! -d "dist" ]; then
-  mkdir dist
+# read VERSION from the cdn and extract the semantic version of the latest release
+version=$(curl https://${domain}/swpwr/VERSION)
+
+# Download the latest swpwr release tarball
+curl -O https://${domain}/swpwr/swpwr-${version}.tar.gz
+
+# Extract the tarball and move the contents to ~/src/
+tar -xvf swpwr-${version}.tar.gz -C $i
+
+# ----------------------------
+# sample folder structure
+# ~/react_build/
+#   dist/
+#     assets/
+#     BabyFox/
+#     models/
+#     index.html
+# ----------------------------
+
+
+if [ ! -d $d ]; then
+  # raise an error if the dist directory does not exist
+  echo "dist directory does not exist"
+  exit 1
 fi
-if [ ! -d "dist/assets" ]; then
-  mkdir dist/assets
+if [ ! -d $b ]; then
+  # raise an error if the dist/assets directory does not exist
+  echo "dist/assets directory does not exist"
+  exit 1
 fi
 
-if [ ! -d "public" ]; then
-  mkdir public
+if [ ! -d "$p/assets" ]; then
+  mkdir -p $p/assets
+  echo "$p/assets directory created"
 fi
 
-if [ ! -d "public/assets" ]; then
-  mkdir public/assets
-fi
 
-# if [ ! -d "public/models" ]; then
-#   mkdir public/models
-# fi
-
-if [ ! -d "public/BabyFox" ]; then
-  mkdir public/BabyFox
+if [ ! -d "$p/BabyFox" ]; then
+  mkdir -p $p/BabyFox
+  echo "$p/BabyFox directory created"
 fi
 
 # Which precache manifest to copy
 # c=precache-manifest.8c5268b68a90c8397a5eb1681f40011c.js
 
 # Copy the swpwr .js .css and .woff2 files to public in swpwrxblock
-ls $b | grep '\.js$' | sed -e "s#^#cp $b/#" -e 's#$# public/#' | sh
-ls $b | grep '\.css$' | sed -e "s#^#cp $b/#" -e 's#$# public/#' | sh
-ls $b | grep '\.woff2$' | sed -e "s#^#cp $b/#" -e 's#$# public/assets/#' | sh
+ls $b | grep '\.js$' | sed -e "s#^#cp $b/#" -e "s#$# $p/#" | sh
+ls $b | grep '\.css$' | sed -e "s#^#cp $b/#" -e "s#$# $p/#" | sh
+ls $b | grep '\.woff2$' | sed -e "s#^#cp $b/#" -e "s#$# $p/assets/#" | sh
 
 # exit
 
@@ -69,55 +95,44 @@ cs1=`ls -t $b/*.css | sed -e 's#^.*/##g' | head -1`
 # cs1=index-BlBmDmqs.css
 # echo cs1=$cs1
 
-cp $p/android-chrome-192x192.png public/
-cp $p/android-chrome-512x512.png public/
-cp $p/apple-touch-icon.png public/
-cp $p/favicon-16x16.png public/
-cp $p/favicon-32x32.png public/
-cp $p/favicon.ico public/
-cp $p/vite.svg public/
+cp $d/android-chrome-192x192.png $p/
+cp $d/android-chrome-512x512.png $p/
+cp $d/apple-touch-icon.png $p/
+cp $d/favicon-16x16.png $p/
+cp $d/favicon-32x32.png $p/
+cp $d/favicon.ico $p/
+cp $d/vite.svg $p/
 #
-cp $d/site.webmanifest public/
+cp $d/site.webmanifest $p/
 #
 # We are not using foxy.glb as of Sept 19, 2024 to remove 25MB of payload from the swpwrxblock assets and not to try to download the file from S3
 # cp $m/foxy.glb public/models/
-cp $p/BabyFox.svg public/BabyFox.svg
-cp $p/BabyFox/BabyFox.svg public/BabyFox/BabyFox.svg
+cp $d/BabyFox.svg $p/BabyFox.svg
+cp $d/BabyFox/BabyFox.svg $p/BabyFox/BabyFox.svg
 #
-cp $i/index.html public/
-sed -I -e 's#/src/main.tsx#/public/main.tsx#' public/index.html
-sed -I -e 's#gltfUrl: "/models/"#gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/"#' public/index.html
-# cp $s/App.tsx public/
-# cp $s/App.css public/
-# cp $s/Stage.tsx public/
-# cp $s/main.tsx public/
-cp $s/assets/react.svg public/
-# cp $s/models/foxy/model.tsx public/
+cp $i/index.html $p/
+sed -I -e 's#gltfUrl: "/models/"#gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/"#' $p/index.html
+
 #
-cp $b/${js1} public/
+cp $b/${js1} $p/
 #
-cp $b/${cs1} public/
+cp $b/${cs1} $p/
 
 # Remember swpwr version info
 # {  "version": "1.9.200"}
-v=`grep '^  "version":' $i/package.json | sed -e 's/,//' -e 's/^/{/' -e 's/$/}/'`
-echo "$v" > public/swpwr_version.json
+echo "$version" > $p/swpwr_version.json
 v1=`grep '^  "version":' $i/package.json | sed -e 's/^.*: "//' -e 's/"}//' -e 's/",//'`
-# echo "v1 = x${v1}x"
-
-# sed -I -e "s/SWPWR_VERSION/$v/" swpwrxblock.py
-#             frag.add_resource('<script type="module"> Bugfender.init({ appKey: \'rLBi6ZTSwDd3FEM8EhHlrlQRXpiHvZkt\', apiURL: \'https://api.bugfender.com/\', baseURL: \'https://dashboard.bugfender.com/\', version: \'1.9.200\', }); </script>','text/html','head')
 sed -I -e "s#dashboard.bugfender.com/\\\', version: \\\'[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}#dashboard.bugfender.com/\\\', version: \\\'${v1}#" swpwrxblock.py
 
 echo "We are incorporating swpwr $v"
 echo "The top-level Javascript file is $js1"
 echo "The top-level CSS file is $cs1"
 echo "Going to run:"
-echo "./fixcssurl.sh $cs1"
-echo "./fixcssurl.sh $cs1" | /bin/bash
+echo "./scripts/fixcssurl.sh $cs1"
+echo "./scripts/fixcssurl.sh $cs1" | /bin/bash
 echo "Going to run:"
-echo "./fixjsurl.sh $js1"
-echo "./fixjsurl.sh $js1"  | /bin/bash
+echo "./scripts/fixjsurl.sh $js1"
+echo "./scripts/fixjsurl.sh $js1"  | /bin/bash
 
 # echo "Be sure to edit static/html/swpwrxstudent.html to update those filenames:"
 echo "Editing static/html/swpwrxstudent.html to specify:"

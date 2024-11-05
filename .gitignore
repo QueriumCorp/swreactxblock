@@ -1,4 +1,5 @@
 venv/
+react_build
 swpwrxblock/public/.*.swp
 swpwrxblock/static/js/.*.swp
 swpwrxblock/__init__.pyc
