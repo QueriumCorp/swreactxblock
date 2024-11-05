@@ -33,7 +33,7 @@ d=$i/dist
 b=$d/assets
 
 # mcdaniel: this MIGHT need to be ../swpwrxblock/public
-p=$i/public
+p=../swpwrxblock/public
 
 # read VERSION from the cdn and extract the semantic version of the latest release
 version=$(curl https://${domain}/swpwr/VERSION)
@@ -130,11 +130,11 @@ echo "We are incorporating swpwr $version"
 echo "The top-level Javascript file is $js1"
 echo "The top-level CSS file is $cs1"
 echo "Going to run:"
-echo "../scripts/fixcssurl.sh $cs1"
-echo "../scripts/fixcssurl.sh $cs1" | /bin/bash
+echo "./fixcssurl.sh $cs1"
+echo "./fixcssurl.sh $cs1" | /bin/bash
 echo "Going to run:"
-echo "../scripts/fixjsurl.sh $js1"
-echo "../scripts/fixjsurl.sh $js1"  | /bin/bash
+echo "./fixjsurl.sh $js1"
+echo "./fixjsurl.sh $js1"  | /bin/bash
 
 # echo "Be sure to edit static/html/swpwrxstudent.html to update those filenames:"
 echo "Editing static/html/swpwrxstudent.html to specify:"
