@@ -31,6 +31,8 @@ esac
 i=../react_build/
 d=$i/dist
 b=$d/assets
+
+# mcdaniel: this MIGHT need to be ../swpwrxblock/public
 p=$i/public
 
 # read VERSION from the cdn and extract the semantic version of the latest release
