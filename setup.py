@@ -104,6 +104,7 @@ def copy_assets(environment="prod"):
     def validate_path(path):
         if not os.path.exists(path):
             raise FileNotFoundError(f"copy_assets() path not found: {path}")
+        logger("copy_assets() validated path: " + path)
 
     # Set the environment based CDN URL
     domain = {
