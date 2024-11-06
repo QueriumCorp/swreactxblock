@@ -101,6 +101,10 @@ def copy_assets(environment="prod"):
     logger("copy_assets() starting swpwr installation script")
     import requests
 
+    def validate_path(path):
+        if not os.path.exists(path):
+            raise FileNotFoundError(f"copy_assets() path not found: {path}")
+
     # Set the environment based CDN URL
     domain = {
         "dev": "cdn.dev.stepwisemath.ai",
@@ -149,6 +153,19 @@ def copy_assets(environment="prod"):
     with tarfile.open(tarball_filename, "r:gz") as tar:
         tar.extractall(path=i)
 
+    # validate the extracted tarball contents
+    validate_path(d)
+    for folder_path in [
+        "assets",
+        "BabyFox",
+        "models",
+        "public",        
+    ]:
+        validate_path(os.path.join(d, folder_path))
+    validate_path(os.path.join(d, "index.html"))
+    validate_path(os.path.join(d, "sadPanda.svg"))
+    
+
     # Copy the swpwr .js .css and .woff2 files to public in swpwrxblock
     for ext in [".js", ".css", ".woff2"]:
         for file in os.listdir(b):
@@ -168,6 +185,7 @@ def copy_assets(environment="prod"):
         "site.webmanifest",
     ]:
         logger(f"copy_assets() copying {file} to {p}")
+        validate_path(os.path.join(d, file))
         shutil.copy(os.path.join(d, file), p)
 
     shutil.copy(os.path.join(d, "BabyFox.svg"), p)
@@ -258,10 +276,8 @@ setup(
     packages=[
         "swpwrxblock",
     ],
-    install_requires=[
-        "XBlock",
-        "requests",
-    ],
+    install_requires=["XBlock"],
+    setup_requires=["requests"],
     entry_points={
         "xblock.v1": [
             "swpwrxblock = swpwrxblock:SWPWRXBlock",
