@@ -1,15 +1,20 @@
-# Pylint: disable=W0718,W0611
+# Pylint: disable=W0718,W0611,W1203
 """Setup for swpwrxblock XBlock."""
 
 import os
-import subprocess
+import glob
+import logging
 from setuptools import setup, Command
+
 
 # our stuff
 from version import VERSION
+from install_swpwr import copy_assets
+
+logger = logging.getLogger(__name__)
 
 # Read the ENVIRONMENT_ID environment variable
-environment_id = os.environ.get('ENVIRONMENT_ID', 'prod')
+environment_id = os.environ.get("ENVIRONMENT_ID", "prod")
 print(f"ENVIRONMENT_ID: {environment_id}")
 
 
@@ -24,15 +29,25 @@ class RunScript(Command):
     def __init__(self, dist, **kw):
         super().__init__(dist, **kw)
         self.environment_id = environment_id
-        
+
+    def clean_public(self):
+        """
+        ensure that the public/ folder is empty except for README.md
+        at the point in time that we run this script
+        """
+        public_dir = "../swpwrxblock/public"
+        files = glob.glob(os.path.join(public_dir, "*"))
+
+        for file in files:
+            if os.path.isfile(file) and not file.endswith("README.md"):
+                os.remove(file)
+                logger.warning(f"Deleted: {file}")
+
     def initialize_options(self):
         """
         delete anything in swpwrxblock/public except for README.md
         """
-        try:
-            subprocess.check_call(["bash", "scripts/cleanpublic.sh"])
-        except Exception as e:
-            print(e)
+        self.clean_public()
 
     def finalize_options(self):
         """Finalize tasks."""
@@ -40,19 +55,9 @@ class RunScript(Command):
 
     def run(self):
         """
-        run cpassets.sh (run from updateme1.sh), which does 
-            (A) creates the public folder in our build directory, 
-            (B) copies all of the public/ contents from the swpwr react assets, 
-            (C) Displays the 2 lings of HTML that need to replace what is in static/html/swpwrxstudent.html, and 
-            (D) displays what comands to run as fixcsurl.sh and fixjsurl.sh to add the right hash string to fix the asset paths that are referenced by other assets.
+        Do setup() tasks.
         """
-
-        try:
-            cpassets = os.path.join(os.path.dirname(__file__), "scripts", "cpassets.sh")
-            subprocess.check_call(["bash", cpassets, environment_id])
-        except Exception as e:
-            print(e)
-
+        copy_assets(self.environment_id)
 
 
 def package_data(pkg, roots):
@@ -89,11 +94,7 @@ setup(
     },
     package_data=package_data(
         "swpwrxblock",
-        [
-            "static",
-            "public",
-            "translations"
-        ],
+        ["static", "public", "translations"],
     ),
     include_package_data=True,
     cmdclass={
