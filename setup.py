@@ -6,7 +6,7 @@ import subprocess
 from setuptools import setup, Command
 
 # our stuff
-import swpwrxblock
+from version import VERSION
 
 # Read the ENVIRONMENT_ID environment variable
 environment_id = os.environ.get('ENVIRONMENT_ID', 'prod')
@@ -73,7 +73,7 @@ def package_data(pkg, roots):
 
 setup(
     name="swpwrxblock-xblock",
-    version=swpwrxblock.VERSION,
+    version=VERSION,
     description="swpwrxblock XBlock",
     license="MIT",
     packages=[
