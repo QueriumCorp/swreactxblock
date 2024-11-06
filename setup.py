@@ -30,7 +30,8 @@ logger(f"ENVIRONMENT_ID: {ENVIRONMENT_ID}")
 
 class RunScript(Command):
     """
-    Automate populating the public/ folder with the latest React build assets for the swpwr react app.
+    Automate populating the public/ folder with the latest React build 
+    assets for the swpwr react app.
     """
 
     description = "Run a custom bash script"
@@ -63,7 +64,6 @@ class RunScript(Command):
     def finalize_options(self):
         """Finalize tasks."""
         logger("Finalizing swpwr installation script")
-        pass
 
     def run(self):
         """
@@ -84,6 +84,9 @@ def fix_css_url(css_filename):
     if not os.path.isfile(css_file_path):
         raise FileNotFoundError(f"fix_css_url() file not found: {css_file_path}")
 
+    with open(css_file_path, "r", encoding="utf-8") as file:
+        data = file.read()
+
     data = data.replace("url(/swpwr/assets", "url(/static/xblock/resources/swpwrxblock/public/assets")
 
     with open(css_file_path, "w", encoding="utf-8") as file:
@@ -102,6 +105,9 @@ def fix_js_url(js_filename):
     js_file_path = os.path.join(HERE, "swpwrxblock", "public", js_filename)
     if not os.path.isfile(js_file_path):
         raise FileNotFoundError(f"fix_js_url() file not found: {js_file_path}")
+
+    with open(js_file_path, "r", encoding="utf-8") as file:
+        data = file.read()
 
     data = data.replace('"/swpwr/models/foxy.glb"', '"/static/xblock/resources/swpwrxblock/public/models/foxy.glb"')
 
