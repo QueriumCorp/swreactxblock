@@ -164,20 +164,24 @@ def copy_assets(environment="prod"):
         raise ValueError(f"copy_assets() invalid version: {version} from {version_url}")
 
     # Download the latest swpwr release tarball
-    tarball_url = f"https://{domain}/swpwr/swpwr-{version}.tar.gz"
-    tarball_path = f"swpwr-{version}.tar.gz"
+    tarball_filename = f"swpwr-{version}.tar.gz"
+    tarball_url = f"https://{domain}/swpwr/{tarball_filename}"
+    logger(f"copy_assets() downloading {tarball_url}")
     with requests.get(tarball_url, stream=True) as r:
-        with open(tarball_path, "wb", encoding="utf-8") as f:
+        with open(tarball_filename, "wb", encoding="utf-8") as f:
             shutil.copyfileobj(r.raw, f)
+        logger(f"copy_assets() successfully downloaded {tarball_filename}")
 
     # Extract the tarball and move the contents to ~/src/
-    with tarfile.open(tarball_path, "r:gz") as tar:
+    logger(f"copy_assets() extracting {tarball_filename}")
+    with tarfile.open(tarball_filename, "r:gz") as tar:
         tar.extractall(path=i)
 
     # Copy the swpwr .js .css and .woff2 files to public in swpwrxblock
     for ext in [".js", ".css", ".woff2"]:
         for file in os.listdir(b):
             if file.endswith(ext):
+                logger(f"copy_assets() copying {file} to {p}")
                 shutil.copy(os.path.join(b, file), os.path.join(p, "assets" if ext == ".woff2" else ""))
 
     # Copy specific files
@@ -191,11 +195,13 @@ def copy_assets(environment="prod"):
         "vite.svg",
         "site.webmanifest",
     ]:
+        logger(f"copy_assets() copying {file} to {p}")
         shutil.copy(os.path.join(d, file), p)
 
     shutil.copy(os.path.join(d, "BabyFox.svg"), p)
     shutil.copy(os.path.join(d, "BabyFox", "BabyFox.svg"), os.path.join(p, "BabyFox"))
 
+    logger("copy_assets() editing index.html to point to the correct assets")
     shutil.copy(os.path.join(i, "index.html"), p)
     with open(os.path.join(p, "index.html"), "r", encoding="utf-8") as file:
         data = file.read().replace(
@@ -206,6 +212,7 @@ def copy_assets(environment="prod"):
         file.write(data)
 
     # Get the most recent .js and .css files
+    logger("copy_assets() getting the most recent .js and .css files")
     js1 = max([f for f in os.listdir(b) if f.endswith(".js")], key=lambda x: os.path.getmtime(os.path.join(b, x)))
     cs1 = max([f for f in os.listdir(b) if f.endswith(".css")], key=lambda x: os.path.getmtime(os.path.join(b, x)))
 
@@ -213,6 +220,7 @@ def copy_assets(environment="prod"):
     shutil.copy(os.path.join(b, cs1), p)
 
     # Remember swpwr version info
+    logger("copy_assets() re-writing swpwr_version.json")
     with open(os.path.join(p, "swpwr_version.json"), "w", encoding="utf-8") as f:
         f.write(f'{{"version": "{version}"}}')
 
@@ -221,12 +229,14 @@ def copy_assets(environment="prod"):
             "dashboard.bugfender.com/\\', version: \\'v?[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}",
             f"dashboard.bugfender.com/\\', version: \\'{version}",
         )
+    
+    logger("copy_assets() re-writing swpwrxblock.py")
     with open("swpwrxblock.py", "w", encoding="utf-8") as file:
         file.write(data)
 
-    logger(f"We are incorporating swpwr {version}")
-    logger(f"The top-level Javascript file is {js1}")
-    logger(f"The top-level CSS file is {cs1}")
+    logger(f"copy_assets() We are incorporating swpwr {version}")
+    logger(f"copy_assets() The top-level Javascript file is {js1}")
+    logger(f"copy_assets() The top-level CSS file is {cs1}")
 
     fix_css_url(css_filename=cs1)
     fix_js_url(js_filename=js1)
@@ -248,8 +258,8 @@ def copy_assets(environment="prod"):
     with open(swpwrxstudent_html_path, "w", encoding="utf-8") as file:
         file.write(data)
 
-    logger(f"Updated {swpwrxstudent_html_path}")
-    logger("finished running swpwr installation script")
+    logger(f"copy_assets() Updated {swpwrxstudent_html_path}")
+    logger("copy_assets() finished running swpwr installation script")
 
 
 def package_data(pkg, roots):
