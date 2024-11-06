@@ -21,7 +21,7 @@ def logger(msg: str):
     """
     Print a message to the console.
     """
-    prefix = "swpwrxblock-xblock"
+    prefix = "stepwise-power-xblock"
     print(prefix + ": " + msg)
 
 
@@ -144,7 +144,7 @@ def copy_assets(environment="prod"):
     tarball_url = f"https://{domain}/swpwr/{tarball_filename}"
     logger(f"copy_assets() downloading {tarball_url}")
     with requests.get(tarball_url, stream=True) as r:
-        with open(tarball_filename, "wb", encoding="utf-8") as f:
+        with open(tarball_filename, "wb") as f:
             shutil.copyfileobj(r.raw, f)
         logger(f"copy_assets() successfully downloaded {tarball_filename}")
 
@@ -269,9 +269,9 @@ def package_data(pkg, roots):
 
 
 setup(
-    name="swpwrxblock-xblock",
+    name="stepwise-power-xblock",
     version=VERSION,
-    description="swpwrxblock XBlock",
+    description="Stepwise Power XBlock",
     license="MIT",
     packages=[
         "swpwrxblock",
