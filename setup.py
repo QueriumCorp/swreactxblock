@@ -92,6 +92,7 @@ setup(
         [
             "static",
             "public",
+            "translations"
         ],
     ),
     include_package_data=True,
