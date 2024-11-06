@@ -4,7 +4,7 @@
 # python stuff
 import os
 import glob
-import logging
+import re
 import tarfile
 import shutil
 from setuptools import setup, Command
@@ -13,11 +13,19 @@ from setuptools import setup, Command
 # our stuff
 from version import VERSION
 
+HERE = os.path.abspath(os.path.dirname(__file__))
+ENVIRONMENT_ID = os.environ.get("ENVIRONMENT_ID", "prod")
 
-logger = logging.getLogger(__name__)
 
-environment_id = os.environ.get("ENVIRONMENT_ID", "prod")
-logger.info(f"ENVIRONMENT_ID: {environment_id}")
+def logger(msg: str):
+    """
+    Print a message to the console.
+    """
+    prefix = "swpwrxblock-xblock"
+    print(prefix + ": " + msg)
+
+
+logger(f"ENVIRONMENT_ID: {ENVIRONMENT_ID}")
 
 
 class RunScript(Command):
@@ -30,7 +38,7 @@ class RunScript(Command):
 
     def __init__(self, dist, **kw):
         super().__init__(dist, **kw)
-        self.environment_id = environment_id
+        self.ENVIRONMENT_ID = ENVIRONMENT_ID
 
     def clean_public(self):
         """
@@ -43,23 +51,26 @@ class RunScript(Command):
         for file in files:
             if os.path.isfile(file) and not file.endswith("README.md"):
                 os.remove(file)
-                logger.warning(f"Deleted: {file}")
+                logger(f"Deleted: {file}")
 
     def initialize_options(self):
         """
         delete anything in swpwrxblock/public except for README.md
         """
+        logger("Cleaning public/ directory")
         self.clean_public()
 
     def finalize_options(self):
         """Finalize tasks."""
+        logger("Finalizing swpwr installation script")
         pass
 
     def run(self):
         """
         Do setup() tasks.
         """
-        copy_assets(self.environment_id)
+        logger("Running swpwr installation script")
+        copy_assets(self.ENVIRONMENT_ID)
 
 
 def fix_css_url(css_filename):
@@ -67,25 +78,18 @@ def fix_css_url(css_filename):
     what is this?
     """
     if not css_filename:
-        raise ValueError("Wrong number of parameters. Must specify the CSS filename to edit.")
+        raise ValueError("fix_css_url() no value received for css_filename.")
 
-    css_file_path = os.path.join("public", css_filename)
+    css_file_path = os.path.join(HERE + "swpwrxblock", "public", css_filename)
     if not os.path.isfile(css_file_path):
-        raise FileNotFoundError(f"File not found: {css_file_path}")
-
-    backup_file_path = css_file_path + ".bak"
-    with open(css_file_path, "r", encoding="utf-8") as file:
-        data = file.read()
+        raise FileNotFoundError(f"fix_css_url() file not found: {css_file_path}")
 
     data = data.replace("url(/swpwr/assets", "url(/static/xblock/resources/swpwrxblock/public/assets")
-
-    with open(backup_file_path, "w", encoding="utf-8") as file:
-        file.write(data)
 
     with open(css_file_path, "w", encoding="utf-8") as file:
         file.write(data)
 
-    logger.info(f"Updated CSS file: {css_file_path}")
+    logger(f"updated CSS file {css_file_path}")
 
 
 def fix_js_url(js_filename):
@@ -93,27 +97,18 @@ def fix_js_url(js_filename):
     what is this?
     """
     if not js_filename:
-        raise ValueError("Wrong number of parameters. Must specify the JavaScript filename to edit.")
+        raise ValueError("fix_js_url() no value received for js_filename.")
 
-    js_file_path = os.path.join("public", js_filename)
+    js_file_path = os.path.join(HERE, "swpwrxblock", "public", js_filename)
     if not os.path.isfile(js_file_path):
-        raise FileNotFoundError(f"File not found: {js_file_path}")
+        raise FileNotFoundError(f"fix_js_url() file not found: {js_file_path}")
 
-    backup_file_path = js_file_path + ".bak"
-    with open(js_file_path, "r", encoding="utf-8") as file:
-        data = file.read()
-
-    data = data.replace(
-        '"/swpwr/models/foxy.glb"', 
-        '"/static/xblock/resources/swpwrxblock/public/models/foxy.glb"')
-
-    with open(backup_file_path, "w", encoding="utf-8") as file:
-        file.write(data)
+    data = data.replace('"/swpwr/models/foxy.glb"', '"/static/xblock/resources/swpwrxblock/public/models/foxy.glb"')
 
     with open(js_file_path, "w", encoding="utf-8") as file:
         file.write(data)
 
-    logger.info(f"Updated JavaScript file: {js_file_path}")
+    logger(f"updated JavaScript file {js_file_path}")
 
 
 def copy_assets(environment="prod"):
@@ -136,37 +131,42 @@ def copy_assets(environment="prod"):
     }.get(environment, None)
 
     if domain is None:
-        raise ValueError(f"Invalid environment: {environment}")
+        raise ValueError(f"copy_assets() Invalid environment: {environment}")
+
+    logger(f"downloading ReactJS build assets from {domain}")
 
     # Full pathnames to the swpwr build and public directories
-    i = "../react_build/"
+    i = os.path.join(HERE, "react_build")
     d = os.path.join(i, "dist")
     b = os.path.join(d, "assets")
-    p = "../swpwrxblock/public"
+    p = os.path.join(HERE, "swpwrxblock", "public")
+
+    # Create necessary directories if they do not exist
+    os.makedirs(i, exist_ok=True)
+    os.makedirs(d, exist_ok=True)
+    os.makedirs(b, exist_ok=True)
+    os.makedirs(p, exist_ok=True)
+    os.makedirs(os.path.join(p, "assets"), exist_ok=True)
+    os.makedirs(os.path.join(p, "BabyFox"), exist_ok=True)
 
     # Read VERSION from the CDN and extract the semantic version of the latest release
-    version = requests.get(f"https://{domain}/swpwr/VERSION").text.strip()
+    version_url = f"https://{domain}/swpwr/VERSION"
+    version = requests.get(version_url).text.strip()
+
+    # validate that the version is a semantic version. example: v1.2.300
+    if not re.match(r"^v[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}$", version):
+        raise ValueError(f"copy_assets() invalid version: {version} from {version_url}")
 
     # Download the latest swpwr release tarball
     tarball_url = f"https://{domain}/swpwr/swpwr-{version}.tar.gz"
     tarball_path = f"swpwr-{version}.tar.gz"
     with requests.get(tarball_url, stream=True) as r:
-        with open(tarball_path, "wb") as f:
+        with open(tarball_path, "wb", encoding="utf-8") as f:
             shutil.copyfileobj(r.raw, f)
 
     # Extract the tarball and move the contents to ~/src/
     with tarfile.open(tarball_path, "r:gz") as tar:
         tar.extractall(path=i)
-
-    # Check and create necessary directories
-    if not os.path.isdir(d):
-        raise FileNotFoundError("dist directory does not exist")
-
-    if not os.path.isdir(b):
-        raise FileNotFoundError("dist/assets directory does not exist")
-
-    os.makedirs(os.path.join(p, "assets"), exist_ok=True)
-    os.makedirs(os.path.join(p, "BabyFox"), exist_ok=True)
 
     # Copy the swpwr .js .css and .woff2 files to public in swpwrxblock
     for ext in [".js", ".css", ".woff2"]:
@@ -218,15 +218,18 @@ def copy_assets(environment="prod"):
     with open("swpwrxblock.py", "w", encoding="utf-8") as file:
         file.write(data)
 
-    logger.info(f"We are incorporating swpwr {version}")
-    logger.info(f"The top-level Javascript file is {js1}")
-    logger.info(f"The top-level CSS file is {cs1}")
+    logger(f"We are incorporating swpwr {version}")
+    logger(f"The top-level Javascript file is {js1}")
+    logger(f"The top-level CSS file is {cs1}")
 
     fix_css_url(css_filename=cs1)
     fix_js_url(js_filename=js1)
 
     # Update the HTML file with the new JS and CSS filenames
-    with open("static/html/swpwrxstudent.html", "r", encoding="utf-8") as file:
+    swpwrxstudent_html_path = os.path.join(HERE, "swpwrxblock", "static", "html", "swpwrxstudent.html")
+    logger(f"Updating {swpwrxstudent_html_path}")
+
+    with open(swpwrxstudent_html_path, "r", encoding="utf-8") as file:
         data = file.read()
     data = data.replace(
         '<script type="module" crossorigin src="/static/xblock/resources/swpwrxblock/public.*$',
@@ -236,8 +239,12 @@ def copy_assets(environment="prod"):
         '<link rel="module" crossorigin href="/static/xblock/resources/swpwrxblock/public.*$',
         f'<link rel="stylesheet" crossorigin href="/static/xblock/resources/swpwrxblock/public/{cs1}">',
     )
-    with open("static/html/swpwrxstudent.html", "w", encoding="utf-8") as file:
+    with open(swpwrxstudent_html_path, "w", encoding="utf-8") as file:
         file.write(data)
+
+    logger(f"Updated {swpwrxstudent_html_path}")
+    logger("finished running swpwr installation script")
+
 
 def package_data(pkg, roots):
     """Generic function to find package_data.
@@ -265,6 +272,7 @@ setup(
     ],
     install_requires=[
         "XBlock",
+        "requests",
     ],
     entry_points={
         "xblock.v1": [
