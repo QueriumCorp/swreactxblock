@@ -21,13 +21,11 @@ def fix_css_url(css_filename):
     what is this?
     """
     if not css_filename:
-        logger.warning("Wrong number of parameters. Must specify the CSS filename to edit.")
-        return
+        raise ValueError("Wrong number of parameters. Must specify the CSS filename to edit.")
 
     css_file_path = os.path.join("public", css_filename)
     if not os.path.isfile(css_file_path):
-        logger.warning(f"File not found: {css_file_path}")
-        return
+        raise FileNotFoundError(f"File not found: {css_file_path}")
 
     backup_file_path = css_file_path + ".bak"
     with open(css_file_path, "r", encoding="utf-8") as file:
@@ -41,7 +39,7 @@ def fix_css_url(css_filename):
     with open(css_file_path, "w", encoding="utf-8") as file:
         file.write(data)
 
-    logger.warning(f"Updated CSS file: {css_file_path}")
+    logger.info(f"Updated CSS file: {css_file_path}")
 
 
 def fix_js_url(js_filename):
@@ -49,27 +47,27 @@ def fix_js_url(js_filename):
     what is this?
     """
     if not js_filename:
-        logger.warning("Wrong number of parameters. Must specify the JavaScript filename to edit.")
-        return
+        raise ValueError("Wrong number of parameters. Must specify the JavaScript filename to edit.")
 
     js_file_path = os.path.join("public", js_filename)
     if not os.path.isfile(js_file_path):
-        logger.warning(f"File not found: {js_file_path}")
-        return
+        raise FileNotFoundError(f"File not found: {js_file_path}")
 
     backup_file_path = js_file_path + ".bak"
     with open(js_file_path, "r", encoding="utf-8") as file:
         data = file.read()
 
-    data = data.replace('"/swpwr/models/foxy.glb"', '"/static/xblock/resources/swpwrxblock/public/models/foxy.glb"')
+    data = data.replace(
+        '"/swpwr/models/foxy.glb"', 
+        '"/static/xblock/resources/swpwrxblock/public/models/foxy.glb"')
 
-    with open(backup_file_path, "w") as file:
+    with open(backup_file_path, "w", encoding="utf-8") as file:
         file.write(data)
 
-    with open(js_file_path, "w") as file:
+    with open(js_file_path, "w", encoding="utf-8") as file:
         file.write(data)
 
-    logger.warning(f"Updated JavaScript file: {js_file_path}")
+    logger.info(f"Updated JavaScript file: {js_file_path}")
 
 
 def copy_assets(environment="prod"):
