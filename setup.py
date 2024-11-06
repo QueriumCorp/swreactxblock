@@ -7,7 +7,7 @@ import glob
 import re
 import tarfile
 import shutil
-from setuptools import setup, Command
+from setuptools import setup
 
 
 # our stuff
@@ -27,56 +27,26 @@ def logger(msg: str):
 
 logger(f"ENVIRONMENT_ID: {ENVIRONMENT_ID}")
 
-
-class RunScript(Command):
+def clean_public():
     """
-    Automate populating the public/ folder with the latest React build 
-    assets for the swpwr react app.
+    ensure that the public/ folder is empty except for README.md
+    at the point in time that we run this script
     """
+    public_dir = os.path.join(HERE + "swpwrxblock", "public")
+    logger(f"clean_public() cleaning {public_dir}")
+    files = glob.glob(os.path.join(public_dir, "*"))
 
-    description = "Run a custom bash script"
-    user_options = []
-
-    def __init__(self, dist, **kw):
-        super().__init__(dist, **kw)
-        self.ENVIRONMENT_ID = ENVIRONMENT_ID
-
-    def clean_public(self):
-        """
-        ensure that the public/ folder is empty except for README.md
-        at the point in time that we run this script
-        """
-        public_dir = "../swpwrxblock/public"
-        files = glob.glob(os.path.join(public_dir, "*"))
-
-        for file in files:
-            if os.path.isfile(file) and not file.endswith("README.md"):
-                os.remove(file)
-                logger(f"Deleted: {file}")
-
-    def initialize_options(self):
-        """
-        delete anything in swpwrxblock/public except for README.md
-        """
-        logger("Cleaning public/ directory")
-        self.clean_public()
-
-    def finalize_options(self):
-        """Finalize tasks."""
-        logger("Finalizing swpwr installation script")
-
-    def run(self):
-        """
-        Do setup() tasks.
-        """
-        logger("Running swpwr installation script")
-        copy_assets(self.ENVIRONMENT_ID)
+    for file in files:
+        if os.path.isfile(file) and not file.endswith("README.md"):
+            os.remove(file)
+            logger(f"clean_public() deleted: {file}")
 
 
 def fix_css_url(css_filename):
     """
     what is this?
     """
+    logger(f"fix_css_url() {css_filename}")
     if not css_filename:
         raise ValueError("fix_css_url() no value received for css_filename.")
 
@@ -99,6 +69,7 @@ def fix_js_url(js_filename):
     """
     what is this?
     """
+    logger(f"fix_js_url() {js_filename}")
     if not js_filename:
         raise ValueError("fix_js_url() no value received for js_filename.")
 
@@ -127,6 +98,7 @@ def copy_assets(environment="prod"):
     (D) displays what comands to run as fixcsurl.sh and fixjsurl.sh to add the
         right hash string to fix the asset paths that are referenced by other assets.
     """
+    logger("copy_assets() starting swpwr installation script")
     import requests
 
     # Set the environment based CDN URL
@@ -300,7 +272,6 @@ setup(
         ["static", "public", "translations"],
     ),
     include_package_data=True,
-    cmdclass={
-        "run_script": RunScript,
-    },
 )
+clean_public()
+copy_assets(ENVIRONMENT_ID)
