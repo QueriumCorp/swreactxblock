@@ -27,6 +27,7 @@ def logger(msg: str):
 
 logger(f"ENVIRONMENT_ID: {ENVIRONMENT_ID}")
 
+
 def validate_path(path):
     """
     Check if a path exists, and raise an exception if it does not.
@@ -34,6 +35,7 @@ def validate_path(path):
     if not os.path.exists(path):
         raise FileNotFoundError(f"copy_assets() path not found: {path}")
     logger("copy_assets() validated path: " + path)
+
 
 def clean_public():
     """
@@ -144,11 +146,11 @@ def copy_assets(environment="prod"):
         version = response.text.strip()
     else:
         response.raise_for_status()
-    
+
     # validate that the version is a semantic version. example: v1.2.300
     if not re.match(r"^v[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}$", version):
         raise ValueError(f"copy_assets() invalid version: {version} from {version_url}")
-    
+
     logger(f"copy_assets() latest swpwr version is {version}")
 
     # Download the latest swpwr release tarball
@@ -171,12 +173,11 @@ def copy_assets(environment="prod"):
         "assets",
         "BabyFox",
         "models",
-        "public",        
+        "public",
     ]:
         validate_path(os.path.join(d, folder_path))
     validate_path(os.path.join(d, "index.html"))
     validate_path(os.path.join(d, "sadPanda.svg"))
-    
 
     # Copy the swpwr .js .css and .woff2 files to public in swpwrxblock
     for ext in [".js", ".css", ".woff2"]:
@@ -231,7 +232,7 @@ def copy_assets(environment="prod"):
             "dashboard.bugfender.com/\\', version: \\'v?[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}",
             f"dashboard.bugfender.com/\\', version: \\'{version}",
         )
-    
+
     logger("copy_assets() re-writing swpwrxblock.py")
     with open("swpwrxblock.py", "w", encoding="utf-8") as file:
         file.write(data)
