@@ -187,14 +187,14 @@ def copy_assets(environment="prod"):
         f.write(f'{{"version": "{version}"}}')
 
     # change the bugfender.com API version tag in swpwrxblock.py
-    with open("swpwrxblock.py", "r", encoding="utf-8") as file:
+    with open("swpwrxblock/swpwrxblock.py", "r", encoding="utf-8") as file:
         data = file.read().replace(
             "dashboard.bugfender.com/\\', version: \\'v?[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}",
             f"dashboard.bugfender.com/\\', version: \\'{version}",
         )
 
-    logger("copy_assets() re-writing swpwrxblock.py")
-    with open("swpwrxblock.py", "w", encoding="utf-8") as file:
+    logger("copy_assets() re-writing swpwrxblock/swpwrxblock.py")
+    with open("swpwrxblock/swpwrxblock.py", "w", encoding="utf-8") as file:
         file.write(data)
 
     logger(f"copy_assets() We are incorporating swpwr {version}")
