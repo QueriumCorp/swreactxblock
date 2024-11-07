@@ -16,3 +16,17 @@ swpwrxblock/static/js/src/swpwrxstudent.js-fake
 swpwrxblock/public/assets/app.css.bak
 swpwrxblock/public/assets/app.js.bak
 public-*-backup.tar.gz
+public/
+*.tar.gz
+*.tar
+*.gz
+*.zip
+.DS_Store
+*.pyc
+*.pyo
+*.swp
+*.swo
+*.log
+*.log.*
+*.log-*
+*.log/*

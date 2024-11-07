@@ -42,7 +42,7 @@ def clean_public():
     ensure that the public/ folder is empty except for README.md
     at the point in time that we run this script
     """
-    public_dir = os.path.join(HERE,"swpwrxblock", "public")
+    public_dir = os.path.join(HERE, "swpwrxblock", "public")
     logger(f"clean_public() cleaning {public_dir}")
     files = glob.glob(os.path.join(public_dir, "*"))
 
