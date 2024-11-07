@@ -54,13 +54,13 @@ def clean_public():
 
 def fix_css_url(css_filename):
     """
-    what is this?
+    fix any CSS asset file reference to point at the swpwrxblock static assets directory
     """
     logger(f"fix_css_url() {css_filename}")
     if not css_filename:
         raise ValueError("fix_css_url() no value received for css_filename.")
 
-    css_file_path = os.path.join(HERE + "swpwrxblock", "public", css_filename)
+    css_file_path = os.path.join(HERE, "swpwrxblock", "public", "dist", "assets", css_filename)
     if not os.path.isfile(css_file_path):
         raise FileNotFoundError(f"fix_css_url() file not found: {css_file_path}")
 
@@ -77,20 +77,21 @@ def fix_css_url(css_filename):
 
 def fix_js_url(js_filename):
     """
-    what is this?
+    fix any JS asset file references to the foxy.glb 3D model to point at the swpwrxblock static assets directory
     """
     logger(f"fix_js_url() {js_filename}")
     if not js_filename:
         raise ValueError("fix_js_url() no value received for js_filename.")
 
-    js_file_path = os.path.join(HERE, "swpwrxblock", "public", js_filename)
+    js_file_path = os.path.join(HERE, "swpwrxblock", "public", "dist", "assets", js_filename)
     if not os.path.isfile(js_file_path):
         raise FileNotFoundError(f"fix_js_url() file not found: {js_file_path}")
 
     with open(js_file_path, "r", encoding="utf-8") as file:
         data = file.read()
 
-    data = data.replace('"/swpwr/models/foxy.glb"', '"/static/xblock/resources/swpwrxblock/public/models/foxy.glb"')
+    # foxy.glb lives in dist/models
+    data = data.replace('"/swpwr/models/foxy.glb"', '"/static/xblock/resources/swpwrxblock/public/dist/models/foxy.glb"')
 
     with open(js_file_path, "w", encoding="utf-8") as file:
         file.write(data)
@@ -124,18 +125,14 @@ def copy_assets(environment="prod"):
     logger(f"downloading ReactJS build assets from {domain}")
 
     # Full pathnames to the swpwr build and public directories
-    i = os.path.join(HERE, "react_build")
+    i = os.path.join(HERE, "public")
     d = os.path.join(i, "dist")
     b = os.path.join(d, "assets")
-    p = os.path.join(HERE, "swpwrxblock", "public")
 
     # Create necessary directories if they do not exist
     os.makedirs(i, exist_ok=True)
     os.makedirs(d, exist_ok=True)
     os.makedirs(b, exist_ok=True)
-    os.makedirs(p, exist_ok=True)
-    os.makedirs(os.path.join(p, "assets"), exist_ok=True)
-    os.makedirs(os.path.join(p, "BabyFox"), exist_ok=True)
 
     # Read VERSION from the CDN and extract the semantic version of the latest release
     version_url = f"https://{domain}/swpwr/VERSION"
@@ -173,60 +170,23 @@ def copy_assets(environment="prod"):
         "assets",
         "BabyFox",
         "models",
-        "public",
     ]:
         validate_path(os.path.join(d, folder_path))
+    # validate a couple of sample contents files that should be in public/dist
     validate_path(os.path.join(d, "index.html"))
     validate_path(os.path.join(d, "sadPanda.svg"))
 
-    # Copy the swpwr .js .css and .woff2 files to public in swpwrxblock
-    for ext in [".js", ".css", ".woff2"]:
-        for file in os.listdir(b):
-            if file.endswith(ext):
-                logger(f"copy_assets() copying {file} to {p}")
-                shutil.copy(os.path.join(b, file), os.path.join(p, "assets" if ext == ".woff2" else ""))
+    # Get the names of the most recent index-<hash>.js and index-<hash>.css files
+    logger("copy_assets() determining the most recent index.js and index.css file hashes")
+    js1 = max([f for f in os.listdir(b) if f.startswith("index") and f.endswith(".js")], key=lambda x: os.path.getmtime(os.path.join(b, x)))
+    cs1 = max([f for f in os.listdir(b) if f.startswith("index") and f.endswith(".css")], key=lambda x: os.path.getmtime(os.path.join(b, x)))
 
-    # Copy specific files
-    for file in [
-        "android-chrome-192x192.png",
-        "android-chrome-512x512.png",
-        "apple-touch-icon.png",
-        "favicon-16x16.png",
-        "favicon-32x32.png",
-        "favicon.ico",
-        "vite.svg",
-        "site.webmanifest",
-    ]:
-        logger(f"copy_assets() copying {file} to {p}")
-        validate_path(os.path.join(d, file))
-        shutil.copy(os.path.join(d, file), p)
-
-    shutil.copy(os.path.join(d, "BabyFox.svg"), p)
-    shutil.copy(os.path.join(d, "BabyFox", "BabyFox.svg"), os.path.join(p, "BabyFox"))
-
-    logger("copy_assets() editing index.html to point to the correct assets")
-    shutil.copy(os.path.join(i, "index.html"), p)
-    with open(os.path.join(p, "index.html"), "r", encoding="utf-8") as file:
-        data = file.read().replace(
-            'gltfUrl: "/models/"',
-            'gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/"',
-        )
-    with open(os.path.join(p, "index.html"), "w", encoding="utf-8") as file:
-        file.write(data)
-
-    # Get the most recent .js and .css files
-    logger("copy_assets() getting the most recent .js and .css files")
-    js1 = max([f for f in os.listdir(b) if f.endswith(".js")], key=lambda x: os.path.getmtime(os.path.join(b, x)))
-    cs1 = max([f for f in os.listdir(b) if f.endswith(".css")], key=lambda x: os.path.getmtime(os.path.join(b, x)))
-
-    shutil.copy(os.path.join(b, js1), p)
-    shutil.copy(os.path.join(b, cs1), p)
-
-    # Remember swpwr version info
+    # Remember swpwr version info in a jsonf ile in public/dist/assets
     logger("copy_assets() re-writing swpwr_version.json")
-    with open(os.path.join(p, "swpwr_version.json"), "w", encoding="utf-8") as f:
+    with open(os.path.join(b, "swpwr_version.json"), "w", encoding="utf-8") as f:
         f.write(f'{{"version": "{version}"}}')
 
+    # change the bugfender.com API version tag in swpwrxblock.py
     with open("swpwrxblock.py", "r", encoding="utf-8") as file:
         data = file.read().replace(
             "dashboard.bugfender.com/\\', version: \\'v?[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}",
@@ -244,20 +204,23 @@ def copy_assets(environment="prod"):
     fix_css_url(css_filename=cs1)
     fix_js_url(js_filename=js1)
 
-    # Update the HTML file with the new JS and CSS filenames
+    # Update the xblock student view HTML file with the new JS and CSS filenames
     swpwrxstudent_html_path = os.path.join(HERE, "swpwrxblock", "static", "html", "swpwrxstudent.html")
     logger(f"Updating {swpwrxstudent_html_path}")
 
     with open(swpwrxstudent_html_path, "r", encoding="utf-8") as file:
         data = file.read()
+    # handle the case where the JS path has public to make it have react_build/dist/assets
     data = data.replace(
         '<script type="module" crossorigin src="/static/xblock/resources/swpwrxblock/public.*$',
-        f'<script type="module" crossorigin src="/static/xblock/resources/swpwrxblock/public/{js1}"></script>',
+        f'<script type="module" crossorigin src="/static/xblock/resources/swpwrxblock/public/dist/assets/{js1}"></script>',
     )
+    # handle the case where the CSS path has public to make it have react_build/dist/assets
     data = data.replace(
         '<link rel="module" crossorigin href="/static/xblock/resources/swpwrxblock/public.*$',
-        f'<link rel="stylesheet" crossorigin href="/static/xblock/resources/swpwrxblock/public/{cs1}">',
+        f'<link rel="stylesheet" crossorigin href="/static/xblock/resources/swpwrxblock/public/dist/assets/{cs1}">',
     )
+    # now write out the updated MHTL student view file
     with open(swpwrxstudent_html_path, "w", encoding="utf-8") as file:
         file.write(data)
 
