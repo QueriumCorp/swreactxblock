@@ -27,6 +27,14 @@ def logger(msg: str):
 
 logger(f"ENVIRONMENT_ID: {ENVIRONMENT_ID}")
 
+def validate_path(path):
+    """
+    Check if a path exists, and raise an exception if it does not.
+    """
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"copy_assets() path not found: {path}")
+    logger("copy_assets() validated path: " + path)
+
 def clean_public():
     """
     ensure that the public/ folder is empty except for README.md
@@ -101,11 +109,6 @@ def copy_assets(environment="prod"):
     logger("copy_assets() starting swpwr installation script")
     import requests
 
-    def validate_path(path):
-        if not os.path.exists(path):
-            raise FileNotFoundError(f"copy_assets() path not found: {path}")
-        logger("copy_assets() validated path: " + path)
-
     # Set the environment based CDN URL
     domain = {
         "dev": "cdn.dev.stepwisemath.ai",
@@ -134,11 +137,19 @@ def copy_assets(environment="prod"):
 
     # Read VERSION from the CDN and extract the semantic version of the latest release
     version_url = f"https://{domain}/swpwr/VERSION"
-    version = requests.get(version_url).text.strip()
-
+    logger(f"copy_assets() retrieving swpwr package version from {version_url}")
+    response = requests.get(version_url)
+    version = "Unknown"
+    if response.status_code == 200:
+        version = response.text.strip()
+    else:
+        response.raise_for_status()
+    
     # validate that the version is a semantic version. example: v1.2.300
     if not re.match(r"^v[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}$", version):
         raise ValueError(f"copy_assets() invalid version: {version} from {version_url}")
+    
+    logger(f"copy_assets() latest swpwr version is {version}")
 
     # Download the latest swpwr release tarball
     tarball_filename = f"swpwr-{version}.tar.gz"
