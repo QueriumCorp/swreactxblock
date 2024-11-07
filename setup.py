@@ -159,7 +159,7 @@ def copy_assets(environment="prod"):
             shutil.copyfileobj(r.raw, f)
         logger(f"copy_assets() successfully downloaded {tarball_filename}")
 
-    # Extract the tarball and move the contents to ~/src/
+    # Extract the tarball and move the contents to swpwrxblock's public directory
     logger(f"copy_assets() extracting {tarball_filename}")
     with tarfile.open(tarball_filename, "r:gz") as tar:
         tar.extractall(path=i)
