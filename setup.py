@@ -65,11 +65,6 @@ def fix_css_url(css_filename):
 
     css_file_path = os.path.join(HERE, "public", "dist", "assets", css_filename)
     logger("copy_assets() fix_css_url() about to fix " + css_file_path)
-    validate_path(HERE)
-    validate_path(HERE + "/public")
-    validate_path(HERE + "/public/dist")
-    validate_path(HERE + "/public/dist/assets")
-    validate_path(HERE + "/public/dist/assets/" + css_filename)
     if not os.path.isfile(css_file_path):
         raise FileNotFoundError(f"fix_css_url() file not found: {css_file_path}")
 
@@ -94,8 +89,13 @@ def fix_js_url(js_filename):
     if not js_filename:
         raise ValueError("fix_js_url() no value received for js_filename.")
 
-    js_file_path = os.path.join(HERE, "swpwrxblock", "public", "dist", "assets", js_filename)
+    js_file_path = os.path.join(HERE, "public", "dist", "assets", js_filename)
     logger("copy_assets() fix_js_url() about to fix " + js_file_path)
+    validate_path(HERE)
+    validate_path(HERE + "/public")
+    validate_path(HERE + "/public/dist")
+    validate_path(HERE + "/public/dist/assets")
+    validate_path(HERE + "/public/dist/assets/" + js_filename)
     if not os.path.isfile(js_file_path):
         raise FileNotFoundError(f"fix_js_url() file not found: {js_file_path}")
 
