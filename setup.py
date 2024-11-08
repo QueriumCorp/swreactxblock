@@ -40,6 +40,21 @@ def validate_path(path):
     logger("copy_assets() validated path: " + path)
 
 
+def clean_public():
+    """
+    ensure that the public/ folder is empty except for README.md
+    at the point in time that we run this script
+    """
+    public_dir = os.path.join(HERE + "swpwrxblock", "public")
+    logger(f"clean_public() cleaning {public_dir}")
+    files = glob.glob(os.path.join(public_dir, "*"))
+
+    for file in files:
+        if os.path.isfile(file) and not file.endswith("README.md"):
+            os.remove(file)
+            logger(f"clean_public() deleted: {file}")
+
+
 def fix_css_url(css_filename):
     """
     fix any CSS asset file reference to point at the swpwrxblock static assets directory
@@ -48,8 +63,7 @@ def fix_css_url(css_filename):
     if not css_filename:
         raise ValueError("fix_css_url() no value received for css_filename.")
 
-    css_file_path = os.path.join(HERE, "public", "dist", "assets", css_filename)
-    logger("copy_assets() fix_css_url() about to fix " + css_file_path)
+    css_file_path = os.path.join(HERE, "swpwrxblock", "public", "dist", "assets", css_filename)
     if not os.path.isfile(css_file_path):
         raise FileNotFoundError(f"fix_css_url() file not found: {css_file_path}")
 
@@ -66,11 +80,42 @@ def fix_css_url(css_filename):
     logger(f"updated CSS file {css_file_path}")
 
 
+def fix_js_url(js_filename):
+    """
+    fix any JS asset file references to the foxy.glb 3D model to point at the swpwrxblock static assets directory
+    """
+    logger(f"fix_js_url() {js_filename}")
+    if not js_filename:
+        raise ValueError("fix_js_url() no value received for js_filename.")
+
+    js_file_path = os.path.join(HERE, "swpwrxblock", "public", "dist", "assets", js_filename)
+    if not os.path.isfile(js_file_path):
+        raise FileNotFoundError(f"fix_js_url() file not found: {js_file_path}")
+
+    with open(js_file_path, "r", encoding="utf-8") as file:
+        data = file.read()
+
+    # foxy.glb lives in dist/models
+    data = data.replace(
+        '"/swpwr/models/foxy.glb"',
+        '"/static/xblock/resources/swpwrxblock/public/dist/models/foxy.glb"',
+    )
+
+    with open(js_file_path, "w", encoding="utf-8") as file:
+        file.write(data)
+
+    logger(f"updated JavaScript file {js_file_path}")
+
+
 def copy_assets(environment="prod"):
     """
     Download and position ReactJS build assets in the appropriate directories.
     (A) creates the public folder in our build directory,
-    (B) untars the dist/ directory from the swpwr react assets into /public,
+    (B) copies all of the public/ contents from the swpwr react assets,
+    (C) Displays the 2 lings of HTML that need to replace what is in
+        static/html/swpwrxstudent.html, and
+    (D) displays what commands to run as fixcsurl.sh and fixjsurl.sh to add the
+        right hash string to fix the asset paths that are referenced by other assets.
     """
     logger("copy_assets() starting swpwr installation script")
 
@@ -95,18 +140,9 @@ def copy_assets(environment="prod"):
     b = os.path.join(d, "assets")
 
     # Create necessary directories if they do not exist
-    try:
-        os.makedirs(i, exist_ok=True)
-    except Exception as err:
-        logger(f"copy_assets() Unexpected i={i} {err=}, {type(err)=}")
-    try:
-        os.makedirs(d, exist_ok=True)
-    except Exception as err:
-        logger(f"copy_assets() Unexpected d={d} {err=}, {type(err)=}")
-    try:
-        os.makedirs(b, exist_ok=True)
-    except Exception as err:
-        logger(f"copy_assets() Unexpected b={b} {err=}, {type(err)=}")
+    os.makedirs(i, exist_ok=True)
+    os.makedirs(d, exist_ok=True)
+    os.makedirs(b, exist_ok=True)
 
     # Read VERSION from the CDN and extract the semantic version of the latest release
     version_url = f"https://{domain}/swpwr/VERSION"
@@ -205,8 +241,7 @@ def copy_assets(environment="prod"):
     logger(f"copy_assets() The top-level CSS file is {cs1}")
 
     fix_css_url(css_filename=cs1)
-    # Don't need to fix up the path to foxy.glb any more
-    # fix_js_url(js_filename=js1)
+    fix_js_url(js_filename=js1)
 
     # Update the xblock student view HTML file with the new JS and CSS filenames
     swpwrxstudent_html_path = os.path.join(
@@ -271,4 +306,5 @@ setup(
     ),
     include_package_data=True,
 )
+clean_public()
 copy_assets(ENVIRONMENT_ID)
