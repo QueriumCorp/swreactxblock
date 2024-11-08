@@ -45,14 +45,23 @@ def clean_public():
     ensure that the public/ folder is empty except for README.md
     at the point in time that we run this script
     """
-    public_dir = os.path.join(HERE + "swpwrxblock", "public")
+    public_dir = os.path.join(HERE, "public")
     logger(f"clean_public() cleaning {public_dir}")
     files = glob.glob(os.path.join(public_dir, "*"))
 
     for file in files:
         if os.path.isfile(file) and not file.endswith("README.md"):
-            os.remove(file)
+            logger(f"clean_public() considering: {file}")
+            try:
+                os.remove(file)
+            except FileNotFoundError:
+                print(f"File '{file}' not found.")
+            except PermissionError:
+                print(f"You don't have permission to delete '{file}'.")
+            except Exception as e:
+                print(f"An error occurred trying to remove {file}: {e}")
             logger(f"clean_public() deleted: {file}")
+    logger(f"clean_public() done cleaning {public_dir}")
 
 
 def fix_css_url(css_filename):
@@ -91,11 +100,6 @@ def fix_js_url(js_filename):
 
     js_file_path = os.path.join(HERE, "public", "dist", "assets", js_filename)
     logger("copy_assets() fix_js_url() about to fix " + js_file_path)
-    validate_path(HERE)
-    validate_path(HERE + "/public")
-    validate_path(HERE + "/public/dist")
-    validate_path(HERE + "/public/dist/assets")
-    validate_path(HERE + "/public/dist/assets/" + js_filename)
     if not os.path.isfile(js_file_path):
         raise FileNotFoundError(f"fix_js_url() file not found: {js_file_path}")
 
