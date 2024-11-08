@@ -38,7 +38,7 @@
 #         }),
 #         footer: /* @__PURE__ */ import_react108.default.createElement(powerFooter_default, {
 #           problem: work.problem,
-# 
+#
 # For app.css:
 # kentfuka@Kents-Mac-mini swpwr % diff -c public/assets/app.css ~/src/swpwrxblock/swpwrxblock/public/assets/app.css
 # *** public/assets/app.css	2022-11-14 09:28:07.000000000 -0700

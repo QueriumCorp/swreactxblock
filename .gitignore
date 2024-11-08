@@ -1,5 +1,7 @@
 venv/
 react_build
+node_modules/
+package-lock.json
 swpwrxblock/public/.*.swp
 swpwrxblock/static/js/.*.swp
 swpwrxblock/__init__.pyc

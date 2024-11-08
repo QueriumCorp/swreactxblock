@@ -7,7 +7,7 @@ Developer Notes
 -------------
 This is cloned from the swxblock for StepWise
 
-This block loads assets copied from the 'swpwr' repo 
+This block loads assets copied from the 'swpwr' repo
 
 https://github.com/QueriumCorp/swpwr
 

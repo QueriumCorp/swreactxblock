@@ -1,14 +1,16 @@
+# -*- coding: utf-8 -*-
 # Pylint: disable=W0718,W0611,W1203
 """Setup for swpwrxblock XBlock."""
 
+import glob
+
 # python stuff
 import os
-import glob
 import re
-import tarfile
 import shutil
-from setuptools import setup
+import tarfile
 
+from setuptools import setup
 
 # our stuff
 from version import VERSION
@@ -67,7 +69,9 @@ def fix_css_url(css_filename):
     with open(css_file_path, "r", encoding="utf-8") as file:
         data = file.read()
 
-    data = data.replace("url(/swpwr/assets", "url(/static/xblock/resources/swpwrxblock/public/assets")
+    data = data.replace(
+        "url(/swpwr/assets", "url(/static/xblock/resources/swpwrxblock/public/assets"
+    )
 
     with open(css_file_path, "w", encoding="utf-8") as file:
         file.write(data)
@@ -91,7 +95,10 @@ def fix_js_url(js_filename):
         data = file.read()
 
     # foxy.glb lives in dist/models
-    data = data.replace('"/swpwr/models/foxy.glb"', '"/static/xblock/resources/swpwrxblock/public/dist/models/foxy.glb"')
+    data = data.replace(
+        '"/swpwr/models/foxy.glb"',
+        '"/static/xblock/resources/swpwrxblock/public/dist/models/foxy.glb"',
+    )
 
     with open(js_file_path, "w", encoding="utf-8") as file:
         file.write(data)
@@ -106,7 +113,7 @@ def copy_assets(environment="prod"):
     (B) copies all of the public/ contents from the swpwr react assets,
     (C) Displays the 2 lings of HTML that need to replace what is in
         static/html/swpwrxstudent.html, and
-    (D) displays what comands to run as fixcsurl.sh and fixjsurl.sh to add the
+    (D) displays what commands to run as fixcsurl.sh and fixjsurl.sh to add the
         right hash string to fix the asset paths that are referenced by other assets.
     """
     logger("copy_assets() starting swpwr installation script")
@@ -177,9 +184,17 @@ def copy_assets(environment="prod"):
     validate_path(os.path.join(d, "sadPanda.svg"))
 
     # Get the names of the most recent index-<hash>.js and index-<hash>.css files
-    logger("copy_assets() determining the most recent index.js and index.css file hashes")
-    js1 = max([f for f in os.listdir(b) if f.startswith("index") and f.endswith(".js")], key=lambda x: os.path.getmtime(os.path.join(b, x)))
-    cs1 = max([f for f in os.listdir(b) if f.startswith("index") and f.endswith(".css")], key=lambda x: os.path.getmtime(os.path.join(b, x)))
+    logger(
+        "copy_assets() determining the most recent index.js and index.css file hashes"
+    )
+    js1 = max(
+        [f for f in os.listdir(b) if f.startswith("index") and f.endswith(".js")],
+        key=lambda x: os.path.getmtime(os.path.join(b, x)),
+    )
+    cs1 = max(
+        [f for f in os.listdir(b) if f.startswith("index") and f.endswith(".css")],
+        key=lambda x: os.path.getmtime(os.path.join(b, x)),
+    )
 
     # Remember swpwr version info in a jsonf ile in public/dist/assets
     logger("copy_assets() re-writing swpwr_version.json")
@@ -205,7 +220,9 @@ def copy_assets(environment="prod"):
     fix_js_url(js_filename=js1)
 
     # Update the xblock student view HTML file with the new JS and CSS filenames
-    swpwrxstudent_html_path = os.path.join(HERE, "swpwrxblock", "static", "html", "swpwrxstudent.html")
+    swpwrxstudent_html_path = os.path.join(
+        HERE, "swpwrxblock", "static", "html", "swpwrxstudent.html"
+    )
     logger(f"Updating {swpwrxstudent_html_path}")
 
     with open(swpwrxstudent_html_path, "r", encoding="utf-8") as file:
