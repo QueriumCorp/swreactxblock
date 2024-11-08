@@ -1,30 +1,31 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=C901,F841,F821,F522,F524
-"""
-StepWise Power xblock questions can contain up to 10 variants.  The xblock remembers which variants the student has attempted and if the student
-requests a new variant, we will try to assign one that has not yet been attempted. Once the student has attempted all available variants,
-if they request another variant, we will clear the list of attempted variants and start assigning variants over again.
+# pylint: disable=E0401
+"""StepWise Power xblock questions can contain up to 10 variants. The xblock remembers which variants the student has
+attempted and if the student requests a new variant, we will try to assign one that has not yet been attempted. Once the
+student has attempted all available variants, if they request another variant, we will clear the list of attempted
+variants and start assigning variants over again.
 
-We count question attempts made by the student.  We don't consider an attempt to have begun until the student submits their first step
-in the attempt, or requests a hint, or requests to see the worked-out solution ('ShowMe').
-We use a callback from the StepWise UI client code to know that the student has begun their attempt.
+We count question attempts made by the student. We don't consider an attempt to have begun until the student submits
+their first step in the attempt, or requests a hint, or requests to see the worked-out solution ('ShowMe'). We use a
+callback from the StepWise UI client code to know that the student has begun their attempt.
 
-An attempt isn't counted until the student submits their first step since the student can visit the question, then leave the question
-without doing any work, and come back later.  We don't want to wait until after the student submits their final answer to count the attempt
-to prevent the student from (1) visiting the problem, (2) clicking show solution, (3) writing down the steps, and (4) reloading the browser
-web page.  In this scenario the student has seen the steps to the solution, but is not charged for an attempt.
+An attempt isn't counted until the student submits their first step since the student can visit the question, then leave
+the question without doing any work, and come back later. We don't want to wait until after the student submits their
+final answer to count the attempt to prevent the student from (1) visiting the problem, (2) clicking show solution,
+(3) writing down the steps, and (4) reloading the browser web page. In this scenario the student has seen the steps to
+the solution, but is not charged for an attempt.
 
-When the student completes work on the StepWise problem ('victory'), we use a callback from the StepWise UI client code to record
-the student's score on that attempt.
+When the student completes work on the StepWise problem ('victory'), we use a callback from the StepWise UI client code
+to record the student's score on that attempt.
 
 The Javascript code in this xblock displays the score and steps on the student's most recent attempt (only).
 
-Note that the xblock Python code's logic for computing the score is somewhat duplicated in the xblock's Javascript code since the Javascript is
-responsible for updating the information displayed to the student on their results, and the Python code does not currently provide
-this detailed scoring data down to the Javascript code.  It may be possible for the results of the scoring callback POST to return
-the scoring details to the Javascript code for display, but this is not currently done.  Thus, if you need to update the scoring logic
-here in Python, you need to check the Javascript source in js/src/swpwrxstudent.js to make sure you don't also have to change the score display
-logic there.
+Note that the xblock Python code's logic for computing the score is somewhat duplicated in the xblock's Javascript code
+since the Javascript is responsible for updating the information displayed to the student on their results, and the
+Python code does not currently provide this detailed scoring data down to the Javascript code. It may be possible for
+the results of the scoring callback POST to return the scoring details to the Javascript code for display, but this is
+not currently done. Thus, if you need to update the scoring logic here in Python, you need to check the Javascript
+source in js/src/swpwrxstudent.js to make sure you don't also have to change the score display logic there.
 
 The swpwr_problem_hints field is optional, and looks like this:
 swpwr.problem.wpHints = [
@@ -44,7 +45,8 @@ swpwr.problem.wpHints = [
 ]
 
 The flow of saving results is:
-   swpwrxstudent.js sets the callback URLs for saving partial results (per step), and saving final results (on problem complete).
+   swpwrxstudent.js sets the callback URLs for saving partial results (per step),
+   and saving final results (on problem complete).
    For save_swpwr_final_results(data), we do:
         (A) set self.swpwr_results = json.dumps(data)
         (B) set self.is_answered=True
@@ -60,21 +62,20 @@ The flow of saving results is:
     save_swpwr_partial_results(data) does the same as save_swpwr_final_results(),
         except it sets self.is_answered=False
 
-NOTE: the url_name field in this xblock records a UUID for this xblock instance. This url_name field was added so this xblock looks like every other
-      standard type of xblock to the OpenEdX runtime (e.g chapter, sequential, vertical, problem).
-      Having the url_name field in the xblock makes it easier to generate unique xblocks via software, e.g. from StepWise questions defined in Jira.
-      If a url_name field exists in the xblock, then OpenEdX apparently uses that field value to uniquely identify the object.
-      Without filling in a value in this field, course imports of XML swpwrxblock data will mess up and all xblocks with a blank value for url_name
-      will be assumed to be the same xblock, which causes the import to mangle the swpwrxblocks in the course import.
-      To ensure that we have a unique value for url_field, the save() routine checks the url_name field and if it is blank, we generate a UUID to
-      provide a value for that field.  Doing the creation of this field in this manner means that we don't have to expose the url_name field in
-      The studio view and make a question author invent a unique url_name value for their question.
-
+NOTE: the url_name field in this xblock records a UUID for this xblock instance. This url_name field was added so this
+xblock looks like every other standard type of xblock to the OpenEdX runtime (e.g chapter, sequential, vertical, problem).
+Having the url_name field in the xblock makes it easier to generate unique xblocks via software, e.g. from StepWise
+questions defined in Jira. If a url_name field exists in the xblock, then OpenEdX apparently uses that field value to
+uniquely identify the object. Without filling in a value in this field, course imports of XML swpwrxblock data will mess
+up and all xblocks with a blank value for url_name will be assumed to be the same xblock, which causes the import to
+mangle the swpwrxblocks in the course import. To ensure that we have a unique value for url_field, the save() routine
+checks the url_name field and if it is blank, we generate a UUID to provide a value for that field. Doing the creation of
+this field in this manner means that we don't have to expose the url_name field in the studio view and make a question
+author invent a unique url_name value for their question.
 """
 
 import json
 import random
-import re
 import uuid
 from logging import getLogger
 
@@ -82,7 +83,6 @@ from logging import getLogger
 import pkg_resources
 
 # Django Stuff
-from django.conf import settings
 from lms.djangoapps.courseware.courses import get_course_by_id
 from web_fragments.fragment import Fragment
 
@@ -106,28 +106,25 @@ logger = getLogger(__name__)
 # DEBUG=settings.ROVER_DEBUG
 # DEBUG=False
 DEBUG = True
-
 DEFAULT_RANK = "cadet"  # What we'll use for a rank if not modified by the user/default
-TEST_MODE = False
 
-"""
-The general idea is that we'll determine which question parameters to pass to the StepWise client before invoking it,
+TEST_MODE = False
+"""The general idea is that we'll determine which question parameters to pass to the StepWise client before invoking it,
 making use of course-wide StepWise defaults if set.
-If the student has exceeded the max number of attempts (course-wide setting or per-question setting), we won't let them
-start another attempt.
-We'll then get two call-backs:
+
+If the student has exceeded the max number of attempts (course-wide
+setting or per-question setting), we won't let them start another attempt. We'll then get two call-backs:
 1. When the student begins work on the question (e.g. submits a first step, clicks 'Hint', or clicks 'Show Solution',
 the callback code here will increment the attempts counter.
 2. When the student completes the problem ('victory'), we'll compute their grade and save their grade for this attempt.
-Note that the student can start an attempt, but never finish (abandoned attempt), but we will still want to count that attempt.
+Note that the student can start an attempt, but never finish (abandoned attempt), but we will still want to count that
+attempt.
 """
 
 
 @XBlock.wants("user")
 class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
-    """
-    This xblock provides up to 10 variants of a question for delivery using the StepWise UI.
-    """
+    """This xblock provides up to 10 variants of a question for delivery using the StepWise UI."""
 
     has_author_view = True  # tells the xblock to not ignore the AuthorView
     has_score = True  # tells the xblock to not ignore the grade event
@@ -404,10 +401,10 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
     # STUDENT_VIEW
     def student_view(self, context=None):
-        """
-        The STUDENT view of the SWPWRXBlock, shown to students
-        when viewing courses.  We set up the question parameters (referring to course-wide settings), then launch
-        the javascript StepWise client.
+        """The STUDENT view of the SWPWRXBlock, shown to students when viewing courses.
+
+        We set up the question parameters (referring to course-wide settings), then launch the javascript StepWise
+        client.
         """
         if DEBUG:
             logger.info(
@@ -454,14 +451,14 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         # NOTE: Can't set a self.q_* field here if an older imported swpwrxblock doesn't define this field, since it defaults to None
         # (read only?) so we'll use instance vars my_* to remember whether to use the course-wide setting or the per-question setting.
-        # Similarly, some old courses may not define the stepwise advanced settings we want, so we create local variables for them.
+        # Similarly, some old courses may not define the stepwise advanced
+        # settings we want, so we create local variables for them.
 
         # For per-xblock settings
         temp_weight = -1
         temp_max_attempts = -1
         temp_option_hint = -1
         temp_option_showme = -1
-        temp_grade_shome_ded = -1
         temp_grade_hints_count = -1
         temp_grade_hints_ded = -1
         temp_grade_errors_count = -1
@@ -486,7 +483,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         # Defaults For course-wide settings if they aren't defined for this course
         def_course_stepwise_weight = 1.0
-        def_course_stepwise_max_attempts = None
         def_course_stepwise_option_hint = True
         def_course_stepwise_option_showme = True
         def_course_stepwise_grade_showme_ded = 0.25
@@ -731,7 +727,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                         e=e
                     )
                 )
-            temp_course_stepwise_stepwise_weight = -1
         if DEBUG:
             logger.info(
                 "SWPWRXBlock student_view() temp_course_stepwise_weight: {s}".format(
@@ -748,7 +743,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                         e=e
                     )
                 )
-            temp_course_stepwise_stepwise_max_attempts = -1
         if DEBUG:
             logger.info(
                 "SWPWRXBlock student_view() temp_course_stepwise_max_attempts: {s}".format(
@@ -1222,7 +1216,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 )
             )
 
-        ### HEAD ASSETS
+        # HEAD ASSETS
         # <!DOCTYPE html>
         # <html lang="en">
         #   <head>
@@ -1373,7 +1367,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         html = self.resource_string("static/html/swpwrxstudent.html")
         frag = Fragment(html.format(self=self))
 
-        ### index.html assets
+        # index.html assets
         # <html lang="en">
         #   <head>
         #     <meta charset="UTF-8" />
@@ -1484,7 +1478,10 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         # WASIN2022        frag.add_css(self.resource_string("public/assets/app.css"))
 
-        # NOTINJVR        frag.add_resource('<base href="/testq_assets/"/>','text/html','head')		# Needed so react code can find its pages. Don't do earlier or impacts relative pathnames of resources
+        # NOTINJVR        frag.add_resource('<base
+        # href="/testq_assets/"/>','text/html','head')           # Needed so react
+        # code can find its pages. Don't do earlier or impacts relative pathnames
+        # of resources
 
         frag.add_javascript(
             self.resource_string("static/js/src/final_callback.js")
@@ -1524,7 +1521,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             # frag.add_resource('<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>','text/html','head')
             # frag.add_resource('<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>','text/html','head')
             # frag.add_resource('<meta name="viewport" content="width=device-width, initial-scale=1.0" />','text/html','head')
-            ### FIXME: have to add the problem and student fields to the snippet_string
+            #
+            # TODO: have to add the problem and student fields to the snippet_string
             # mid_string = '$(function() {'+snippet_string     # Add jQuery function start
             # final_string = mid_string+'});'                 # Adds final '});' for the jQuery function
             # frag.add_resource(final_string,'application/javascript','foot')
@@ -1534,7 +1532,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             # html_string = '<div id="root"></div>'
             # frag.add_content(html_string)
         else:
-            # Add our own snippet of javascript code so we can add debugging code on the fly without re-building the xblock
+            # Add our own snippet of javascript code so we can add debugging code on
+            # the fly without re-building the xblock
             frag.add_javascript_url(
                 "//swm-openedx-us-dev-storage.s3.us-east-2.amazonaws.com/static/js/swpwrxblock.js"
             )
@@ -1549,7 +1548,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             )
             # Invalid schema choices should be a CSV list of one or more of these: "TOTAL", "DIFFERENCE", "CHANGEINCREASE", "CHANGEDECREASE", "EQUALGROUPS", and "COMPARE"
             # Invalid schema choices can also be the official names: "additiveTotalSchema", "additiveDifferenceSchema", "additiveChangeSchema", "subtractiveChangeSchema", "multiplicativeEqualGroupsSchema", and "multiplicativeCompareSchema"
-            # Convert the upper-case names to the 'official' names. NB: The order of .replace() calls might matter if one of these schema names is a substring of another name.
+            # Convert the upper-case names to the 'official' names. NB: The order of
+            # .replace() calls might matter if one of these schema names is a
+            # substring of another name.
             invalid_schemas_js = self.q_swpwr_invalid_schemas
             if DEBUG:
                 logger.info(
@@ -1726,19 +1727,16 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         frag.initialize_js("SWPWRXStudent", {})  # Call the entry point
         return frag
 
-    # PUBLISH_GRADE
-    # For rescoring events
     def publish_grade(self):
+        """Publish the grade for this block, for rescoring events."""
         if DEBUG:
             logger.info(
                 "SWPWRXBlock publish_grade() pretrimmed self.raw_earned={e} self.weight={w}".format(
                     e=self.raw_earned, w=self.weight
                 )
             )
-        if self.raw_earned < 0.0:
-            self.raw_earned = 0.0
-        if self.raw_earned > self.weight:
-            self.raw_earned = self.weight
+        self.raw_earned = max(self.raw_earned, 0.0)
+        self.raw_earned = min(self.raw_earned, self.weight)
         if DEBUG:
             logger.info(
                 "SWPWRXBlock publish_grade() posttrimmed self.raw_earned={e} self.weight={w}".format(
@@ -1751,8 +1749,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             {"value": self.raw_earned * 1.0, "max_value": self.weight * 1.0},
         )
 
-    # SAVE
     def save(self):
+        """Save this block to the database."""
         if DEBUG:
             logger.info("SWPWRXBlock save() self{s}".format(s=self))
         # If we don't have a url_name for this xblock defined to make the xblock unique, assign ourselves a unique UUID4 as a hex string.
@@ -1767,7 +1765,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 "SWPWRXBlock save() self.url_name was undefined: {e}".format(e=e)
             )
             self.url_name = "NONE"
-        if self.url_name == "" or self.url_name == "NONE":
+        if self.url_name in ("", "NONE"):
             self.url_name = str(uuid.uuid4().hex)
             if DEBUG:
                 logger.info(
@@ -1796,6 +1794,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         try:
             XBlock.save(self)  # Call parent class save()
         # except (NameError,AttributeError,InvalidScopeError) as e:
+        # pylint: disable=W0718
         except Exception as e:
             logger.info("SWPWRXBlock save() had an error: {e}".format(e=e))
         # if DEBUG: logger.info("SWPWRXBlock save() back from parent save. self.solution={s}".format(s=self.solution))
@@ -1806,9 +1805,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 )
             )
 
-    # GET_DATA: RETURN DATA FOR THIS QUESTION
     @XBlock.json_handler
     def get_data(self, msg, suffix=""):
+        """RETURN DATA FOR THIS QUESTION."""
         if DEBUG:
             logger.info("SWPWRXBlock get_data() entered. msg={msg}".format(msg=msg))
 
@@ -1832,9 +1831,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         json_data = json.dumps(data)
         return json_data
 
-    # SAVE GRADE
-    ### @XBlock.json_handler	# We're just calling it directly now, not in a callback.
+    # @XBlock.json_handler
     def save_grade(self, data, suffix=""):
+        """We're just calling it directly now, not in a callback."""
         if DEBUG:
             logger.info("SWPWRXBlock save_grade() entered")
         if DEBUG:
@@ -1875,7 +1874,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         try:
             q_grade_showme_ded = self.q_grade_showme_ded
-        except (NameError, AtrributeError) as e:
+        except (NameError, AttributeError) as e:
             if DEBUG:
                 logger.info(
                     "SWPWRXBlock save_grade() self.q_grade_showme_dev was not defined: {e}".format(
@@ -1886,17 +1885,18 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         try:
             q_grade_hints_count = self.q_grade_hints_count
-        except (NameError, AtrributeError) as e:
+        except (NameError, AttributeError) as e:
             if DEBUG:
                 logger.info(
-                    "SWPWRXBlock save_grade() self.q_grade_hints_count was not defined: {e}",
-                    format(e=e),
+                    "SWPWRXBlock save_grade() self.q_grade_hints_count was not defined: {e}".format(
+                        e=e
+                    ),
                 )
             q_grade_hints_count = -1
 
         try:
             q_grade_hints_ded = self.q_grade_hints_ded
-        except (NameError, AtrributeError) as e:
+        except (NameError, AttributeError) as e:
             if DEBUG:
                 logger.info(
                     "SWPWRXBlock save_grade() self.q_grade_hints_ded was not defined: {e}".format(
@@ -1907,7 +1907,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         try:
             q_grade_errors_count = self.q_grade_errors_count
-        except (NameError, AtrributeError) as e:
+        except (NameError, AttributeError) as e:
             if DEBUG:
                 logger.info(
                     "SWPWRXBlock save_grade() self.q_grade_errors_count was not defined: {e}".format(
@@ -1918,7 +1918,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         try:
             q_grade_errors_ded = self.q_grade_errors_ded
-        except (NameError, AtrributeError) as e:
+        except (NameError, AttributeError) as e:
             if DEBUG:
                 logger.info(
                     "SWPWRXBlock save_grade() self.q_grade_errors_ded was not defined: {e}".format(
@@ -1929,7 +1929,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         try:
             q_grade_min_steps_count = self.q_grade_min_steps_count
-        except (NameError, AtrributeError) as e:
+        except (NameError, AttributeError) as e:
             if DEBUG:
                 logger.info(
                     "SWPWRXBlock save_grade() self.q_grade_min_steps_count was not defined: {e}".format(
@@ -1940,7 +1940,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         try:
             q_grade_min_steps_ded = self.q_grade_min_steps_ded
-        except (NameError, AtrributeError) as e:
+        except (NameError, AttributeError) as e:
             if DEBUG:
                 logger.info(
                     "SWPWRXBlock save_grade() self.q_grade_min_steps_ded was not defined: {e}".format(
@@ -1951,7 +1951,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         try:
             q_grade_app_key = self.q_grade_app_key
-        except (NameError, AtrributeError) as e:
+        except (NameError, AttributeError) as e:
             if DEBUG:
                 logger.info(
                     "SWPWRXBlock save_grade() self.q_grade_app_key was not defined: {e}".format(
@@ -2037,7 +2037,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             grade = 1.0
         else:
             grade = 0.0
-        max_grade = 1.0
 
         #
         # NOTE: Don't count the number of errors in the swpwrxblock
@@ -2103,14 +2102,14 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 )
                 if DEBUG:
                     logger.info(
-                        "SWPWRXBlock save_grade() record variants_attempted for variant {a}".format(
+                        "SWPWRXBlock save_grade() record variants_attempted for variant {v}".format(
                             v=self.q_index
                         )
                     )
                 self.previous_variant = self.q_index
                 if DEBUG:
                     logger.info(
-                        "SWPWRXBlock save_grade() record previous_variant for variant {a}".format(
+                        "SWPWRXBlock save_grade() record previous_variant for variant {v}".format(
                             v=self.previous_variant
                         )
                     )
@@ -2160,9 +2159,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 )
             )
 
-    # START ATTEMPT
     @XBlock.json_handler
     def start_attempt(self, data, suffix=""):
+        """START A NEW ATTEMPT."""
         if DEBUG:
             logger.info("SWPWRXBlock start_attempt() entered")
         if DEBUG:
@@ -2238,6 +2237,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     # RESET: PICK A NEW VARIANT
     @XBlock.json_handler
     def retry(self, data, suffix=""):
+        """Reset and pick a new variant."""
         if DEBUG:
             logger.info("SWPWRXBlock retry() entered")
         if DEBUG:
@@ -2256,7 +2256,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             )
         if DEBUG:
             logger.info(
-                "SWPWRXBlock retry() pre-pick_question q_index={i}".format(
+                "SWPWRXBlock retry() pre-pick_question q_index={v}".format(
                     v=self.question["q_index"]
                 )
             )
@@ -2279,9 +2279,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     # workbench while developing your XBlock.
     @staticmethod
     def workbench_scenarios():
+        """A canned scenario for display in the workbench."""
         if DEBUG:
             logger.info("SWPWRXBlock workbench_scenarios() entered")
-        """A canned scenario for display in the workbench."""
         return [
             (
                 "SWPWRXBlock",
@@ -2300,12 +2300,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         ]
 
     def studio_view(self, context=None):
+        """The STUDIO view of the SWPWRXBlock, shown to instructors when authoring courses."""
         if DEBUG:
             logger.info("SWPWRXBlock studio_view() entered.")
-        """
-        The STUDIO view of the SWPWRXBlock, shown to instructors
-        when authoring courses.
-        """
         html = self.resource_string("static/html/swpwrxstudio.html")
         frag = Fragment(html.format(self=self))
         frag.add_css(self.resource_string("static/css/swpwrxstudio.css"))
@@ -2315,12 +2312,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         return frag
 
     def author_view(self, context=None):
+        """The AUTHOR view of the SWPWRXBlock, shown to instructors when previewing courses."""
         if DEBUG:
             logger.info("SWPWRXBlock author_view() entered")
-        """
-        The AUTHOR view of the SWPWRXBlock, shown to instructors
-        when previewing courses.
-        """
         html = self.resource_string("static/html/swpwrxauthor.html")
         frag = Fragment(html.format(self=self))
         frag.add_css(self.resource_string("static/css/swpwrxauthor.css"))
@@ -2433,35 +2427,32 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
     # Do necessary overrides from ScorableXBlockMixin
     def has_submitted_answer(self):
+        """Returns True if the problem has been answered by the runtime user."""
         if DEBUG:
             logger.info("SWPWRXBlock has_submitted_answer() entered")
-        """
-        Returns True if the problem has been answered by the runtime user.
-        """
-        if DEBUG:
             logger.info(
                 "SWPWRXBlock has_submitted_answer() {a}".format(a=self.is_answered)
             )
         return self.is_answered
 
     def get_score(self):
-        if DEBUG:
-            logger.info("SWPWRXBlock get_score() entered")
-        """
-        Return a raw score already persisted on the XBlock.  Should not
+        """Return a raw score already persisted on the XBlock.
+
+        Should not
         perform new calculations.
         Returns:
             Score(raw_earned=float, raw_possible=float)
         """
         if DEBUG:
+            logger.info("SWPWRXBlock get_score() entered")
             logger.info("SWPWRXBlock get_score() earned {e}".format(e=self.raw_earned))
         if DEBUG:
             logger.info("SWPWRXBlock get_score() max {m}".format(m=self.max_score()))
         return Score(float(self.raw_earned), float(self.max_score()))
 
     def set_score(self, score):
-        """
-        Persist a score to the XBlock.
+        """Persist a score to the XBlock.
+
         The score is a named tuple with a raw_earned attribute and a
         raw_possible attribute, reflecting the raw earned score and the maximum
         raw score the student could have earned respectively.
@@ -2475,8 +2466,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         self.raw_earned = score.raw_earned
 
     def calculate_score(self):
-        """
-        Calculate a new raw score based on the state of the problem.
+        """Calculate a new raw score based on the state of the problem.
+
         This method should not modify the state of the XBlock.
         Returns:
             Score(raw_earned=float, raw_possible=float)
@@ -2509,10 +2500,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         return 1
 
     def weighted_grade(self):
-        """
-        Returns the block's current saved grade multiplied by the block's
-        weight- the number of points earned by the learner.
-        """
+        """Returns the block's current saved grade multiplied by the block's weight- the number of points earned by the
+        learner."""
         if DEBUG:
             logger.info(
                 "SWPWRXBlock weighted_grade() earned {e}".format(e=self.raw_earned)
@@ -2524,10 +2513,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         return self.raw_earned * self.q_weight
 
     def bit_count_ones(self, var):
-        """
-        Returns the count of one bits in an integer variable
-        Note that Python ints are full-fledged objects, unlike in C, so ints are plenty long for these operations.
-        """
+        """Returns the count of one bits in an integer variable Note that Python ints are full-fledged objects, unlike
+        in C, so ints are plenty long for these operations."""
         if DEBUG:
             logger.info("SWPWRXBlock bit_count_ones var={v}".format(v=var))
         count = 0
@@ -2540,10 +2527,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         return count
 
     def bit_set_one(self, var, bitnum):
-        """
-        return var = var with bit 'bitnum' set
-        Note that Python ints are full-fledged objects, unlike in C, so ints are plenty long for these operations.
-        """
+        """Return var = var with bit 'bitnum' set Note that Python ints are full-fledged objects, unlike in C, so ints
+        are plenty long for these operations."""
         if DEBUG:
             logger.info(
                 "SWPWRXBlock bit_set_one var={v} bitnum={b}".format(v=var, b=bitnum)
@@ -2554,10 +2539,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         return var
 
     def bit_is_set(self, var, bitnum):
-        """
-        return True if bit bitnum is set in var
-        Note that Python ints are full-fledged objects, unlike in C, so ints are plenty long for these operations.
-        """
+        """Return True if bit bitnum is set in var Note that Python ints are full-fledged objects, unlike in C, so ints
+        are plenty long for these operations."""
         if DEBUG:
             logger.info(
                 "SWPWRXBlock bit_is_set var={v} bitnum={b}".format(v=var, b=bitnum)
@@ -2580,7 +2563,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         try:
             prev_index = self.q_index
-        except (NameError, AttributeError) as e:
+        except (NameError, AttributeError):
             prev_index = -1
 
         if DEBUG:
@@ -2613,7 +2596,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         if self.bit_count_ones(self.variants_attempted) >= self.variants_count:
             if DEBUG:
-                logger.warn(
+                logger.warning(
                     "SWPWRXBlock pick_variant() seen all variants attempted={a} count={c}, clearing variants_attempted".format(
                         a=self.variants_attempted, c=self.variants_count
                     )
@@ -2625,7 +2608,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
         if self.variants_count <= 0:
             if DEBUG:
-                logger.warn(
+                logger.warning(
                     "SWPWRXBlock pick_variant() bad variants_count={c}, setting to 1.".format(
                         c=self.variants_count
                     )
@@ -2691,23 +2674,22 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                         )
                     )
                 break
-            else:
+            if DEBUG:
+                logger.info(
+                    "pick_variant() try {t}: variant {q} has already been attempted".format(
+                        t=tries, q=q_index
+                    )
+                )
+            if self.bit_count_ones(self.variants_attempted) >= self.variants_count:
                 if DEBUG:
                     logger.info(
-                        "pick_variant() try {t}: variant {q} has already been attempted".format(
-                            t=tries, q=q_index
+                        "pick_variant() try {t}: we have attempted all {c} variants. clearning self.variants_attempted.".format(
+                            t=tries, c=self.bit_count_ones(self.variants_attempted)
                         )
                     )
-                if self.bit_count_ones(self.variants_attempted) >= self.variants_count:
-                    if DEBUG:
-                        logger.info(
-                            "pick_variant() try {t}: we have attempted all {c} variants. clearning self.variants_attempted.".format(
-                                t=tries, c=self.bit_count_ones(self.variants_attempted)
-                            )
-                        )
-                    q_index = 0  # Default
-                    self.variants_attempted = 0
-                    break
+                q_index = 0  # Default
+                self.variants_attempted = 0
+                break
 
         if tries >= max_tries:
             if DEBUG:
@@ -2722,7 +2704,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         if DEBUG:
             logger.info("pick_variant() Selected variant {v}".format(v=q_index))
 
-        # Note: we won't set self.variants_attempted for this variant until they actually begin work on it (see start_attempt() below)
+        # Note: we won't set self.variants_attempted for this variant until they
+        # actually begin work on it (see start_attempt() below)
 
         question = {
             "q_id": self.q_id,

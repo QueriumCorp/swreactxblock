@@ -49,10 +49,12 @@ requirements:
 # -------------------------------------------------------------------------
 lint:
 	pre-commit run --all-files && \
-	pylint ./terraform/python/rekognition_api && \
+	pylint ./swpwrxblock/ && \
 	flake8 . && \
 	isort . && \
-	black ./terraform/python/rekognition_api
+	black ./swpwrxblock/ && \
+	black --line-length 120 swpwrxblock/swpwrxblock.py && \
+	docformatter --in-place --wrap-summaries 120 --wrap-descriptions 120 swpwrxblock/swpwrxblock.py
 
 # -------------------------------------------------------------------------
 # Destroy all build artifacts and Python temporary files

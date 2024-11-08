@@ -17,6 +17,7 @@ from version import VERSION
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 ENVIRONMENT_ID = os.environ.get("ENVIRONMENT_ID", "prod")
+HTTP_TIMEOUT = 30
 
 
 def logger(msg: str):
@@ -117,6 +118,8 @@ def copy_assets(environment="prod"):
         right hash string to fix the asset paths that are referenced by other assets.
     """
     logger("copy_assets() starting swpwr installation script")
+
+    # pylint: disable=C0415
     import requests
 
     # Set the environment based CDN URL
@@ -144,7 +147,7 @@ def copy_assets(environment="prod"):
     # Read VERSION from the CDN and extract the semantic version of the latest release
     version_url = f"https://{domain}/swpwr/VERSION"
     logger(f"copy_assets() retrieving swpwr package version from {version_url}")
-    response = requests.get(version_url)
+    response = requests.get(version_url, timeout=HTTP_TIMEOUT)
     version = "Unknown"
     if response.status_code == 200:
         version = response.text.strip()
@@ -161,15 +164,36 @@ def copy_assets(environment="prod"):
     tarball_filename = f"swpwr-{version}.tar.gz"
     tarball_url = f"https://{domain}/swpwr/{tarball_filename}"
     logger(f"copy_assets() downloading {tarball_url}")
-    with requests.get(tarball_url, stream=True) as r:
+    with requests.get(tarball_url, stream=True, timeout=HTTP_TIMEOUT) as r:
         with open(tarball_filename, "wb") as f:
             shutil.copyfileobj(r.raw, f)
         logger(f"copy_assets() successfully downloaded {tarball_filename}")
 
-    # Extract the tarball and move the contents to swpwrxblock's public directory
+    def is_within_directory(directory, target):
+        """
+        Check if the target path is within the given directory.
+        """
+        abs_directory = os.path.abspath(directory)
+        abs_target = os.path.abspath(target)
+        return os.path.commonpath([abs_directory]) == os.path.commonpath(
+            [abs_directory, abs_target]
+        )
+
+    def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+        """
+        Safely extract tar file members to avoid path traversal attacks.
+        """
+        for member in tar.getmembers():
+            member_path = os.path.join(path, member.name)
+            if not is_within_directory(path, member_path):
+                raise tarfile.TarError("Attempted Path Traversal in Tar File")
+        # Extract the tarball contents. This is safe because we have already
+        # validated the paths, hence the `nosec` comment.
+        tar.extractall(path, members, numeric_owner=numeric_owner)  # nosec
+
     logger(f"copy_assets() extracting {tarball_filename}")
     with tarfile.open(tarball_filename, "r:gz") as tar:
-        tar.extractall(path=i)
+        safe_extract(tar, path=i)
 
     # validate the extracted tarball contents
     validate_path(d)
@@ -188,11 +212,11 @@ def copy_assets(environment="prod"):
         "copy_assets() determining the most recent index.js and index.css file hashes"
     )
     js1 = max(
-        [f for f in os.listdir(b) if f.startswith("index") and f.endswith(".js")],
+        (f for f in os.listdir(b) if f.startswith("index") and f.endswith(".js")),
         key=lambda x: os.path.getmtime(os.path.join(b, x)),
     )
     cs1 = max(
-        [f for f in os.listdir(b) if f.startswith("index") and f.endswith(".css")],
+        (f for f in os.listdir(b) if f.startswith("index") and f.endswith(".css")),
         key=lambda x: os.path.getmtime(os.path.join(b, x)),
     )
 
