@@ -1,4 +1,7 @@
 venv/
+react_build
+node_modules/
+package-lock.json
 swpwrxblock/public/.*.swp
 swpwrxblock/static/js/.*.swp
 swpwrxblock/__init__.pyc
@@ -15,3 +18,17 @@ swpwrxblock/static/js/src/swpwrxstudent.js-fake
 swpwrxblock/public/assets/app.css.bak
 swpwrxblock/public/assets/app.js.bak
 public-*-backup.tar.gz
+public/
+*.tar.gz
+*.tar
+*.gz
+*.zip
+.DS_Store
+*.pyc
+*.pyo
+*.swp
+*.swo
+*.log
+*.log.*
+*.log-*
+*.log/*

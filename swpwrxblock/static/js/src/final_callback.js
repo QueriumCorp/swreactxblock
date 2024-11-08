@@ -1,9 +1,8 @@
+// global array for storing the SWPWR problems in the assignment
 
-      // global array for storing the SWPWR problems in the assignment
+window.swpwr_problems = [];
 
-      window.swpwr_problems = [];
-
-      // Final callback to submit SWPWR React app results
+// Final callback to submit SWPWR React app results
 
 //NOTYET       window.swpwr_onSubmit = (solution) =>{
 //NOTYET         console.info("swpwr_onSubmit solution",solution);
@@ -27,4 +26,3 @@
 //NOTYET         $('.problem-complete').show();  // Show the 'problem is complete' message
 //NOTYET         $('.sequence-bottom').show();   // Show the problem navigation buttons again
 //NOTYET       };
-

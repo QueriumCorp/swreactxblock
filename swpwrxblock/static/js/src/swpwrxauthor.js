@@ -1,27 +1,27 @@
 /* Javascript for SWPWRXAuthor. */
 function SWPWRXAuthor(runtime, element, questions) {
-    var qu1 = $( "#variant1", element );
-    var dm1 = $( ".display_math", qu1 );
+  var qu1 = $("#variant1", element);
+  var dm1 = $(".display_math", qu1);
 
-    console.info('SWPWRXAuthor questions',questions);
+  console.info("SWPWRXAuthor questions", questions);
 
-    switch (questions) {
-        case 1:
-            qu1.removeClass("problem-empty");
-            break;
-    }
+  switch (questions) {
+    case 1:
+      qu1.removeClass("problem-empty");
+      break;
+  }
 
-    if( dm1.html()=="\\(\\)" ){
-        dm1.addClass("problem-empty");
-    }else{
-        dm1.removeClass("problem-empty");
-    }
+  if (dm1.html() == "\\(\\)") {
+    dm1.addClass("problem-empty");
+  } else {
+    dm1.removeClass("problem-empty");
+  }
 
-    /* PAGE LOAD EVENT */
-    $(function ($) {
-        MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-        setTimeout(function () {
-            console.info(questions)
-        }, 250);
-    });
+  /* PAGE LOAD EVENT */
+  $(function ($) {
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    setTimeout(function () {
+      console.info(questions);
+    }, 250);
+  });
 }
