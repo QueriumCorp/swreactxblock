@@ -165,9 +165,11 @@ def copy_assets(environment="prod"):
     validate_path(os.path.join(d, "apple-touch-icon.png"))
     validate_path(os.path.join(d, "favicon-16x16.png"))
     validate_path(os.path.join(d, "favicon-32x32.png"))
+    validate_path(os.path.join(d, "favicon.ico"))
     validate_path(os.path.join(d, "index.html"))
     validate_path(os.path.join(d, "sadPanda.svg"))
     validate_path(os.path.join(d, "site.webmanifest"))
+    validate_path(os.path.join(d, "stats.html"))
     validate_path(os.path.join(d, "vite.svg"))
 
     validate_path(os.path.join(d, "BabyFox", "BabyFox.svg"))
@@ -208,7 +210,7 @@ def copy_assets(environment="prod"):
     validate_path(os.path.join(d, "assets", "index-B_VqGgJi.css"))
     validate_path(os.path.join(d, "assets", "index-BdxI-PSa.js"))
 
-    validate_path(os.path.join(d, "models", "Foxy-Fuka.glb"))
+    validate_path(os.path.join(d, "models", "FoxyFuka.glb"))
     validate_path(os.path.join(d, "models", "foxy-compressed.glb"))
     validate_path(os.path.join(d, "models", "foxy-uncompressed.glb"))
     validate_path(os.path.join(d, "models", "foxy.glb"))
