@@ -276,8 +276,9 @@ def copy_assets(environment="prod"):
     logger(f"copy_assets() Updated {swpwrxstudent_html_path}")
     logger("copy_assets() finished running swpwr installation script")
 
-    # Force an error so we can review this output
-    validate_path(os.path.join(d, "models", "iDontExist.tsx"))
+    # normally pip won't display our logger output unless there is an error, so
+    # force an error at the end of setup() so we can review this output
+    # validate_path(os.path.join(d, "models", "iDontExist.tsx"))
 
 def package_data(pkg, roots):
     """Generic function to find package_data.
