@@ -157,9 +157,62 @@ def copy_assets(environment="prod"):
         "models",
     ]:
         validate_path(os.path.join(d, folder_path))
-    # validate a couple of sample contents files that should be in public/dist
+
+    # validate contents contents files that should be in public/dist
+    validate_path(os.path.join(d, "BabyFox.svg"))
+    validate_path(os.path.join(d, "android-chrome-192x192.png"))
+    validate_path(os.path.join(d, "android-chrome-512x512.png"))
+    validate_path(os.path.join(d, "apple-touch-icon.png"))
+    validate_path(os.path.join(d, "favicon-16x16.png"))
+    validate_path(os.path.join(d, "favicon-32x32.png"))
     validate_path(os.path.join(d, "index.html"))
     validate_path(os.path.join(d, "sadPanda.svg"))
+    validate_path(os.path.join(d, "site.webmanifest"))
+    validate_path(os.path.join(d, "vite.svg"))
+
+    validate_path(os.path.join(d, "BabyFox", "BabyFox.svg"))
+
+    validate_path(os.path.join(d, "assets", "DailyMotion-Bb7kos7h.js"))
+    validate_path(os.path.join(d, "assets", "Facebook-DLhvQtLB.js"))
+    validate_path(os.path.join(d, "assets", "FilePlayer-CIfFZ4b8.js"))
+    validate_path(os.path.join(d, "assets", "KaTeX_AMS-Regular-BQhdFMY1.woff2"))
+    validate_path(os.path.join(d, "assets", "KaTeX_Caligraphic-Bold-Dq_IR9rO.woff2"))
+    validate_path(os.path.join(d, "assets", "KaTeX_Caligraphic-Regular-Di6jR-x-.woff2"))
+    validate_path(os.path.join(d, "assets", "KaTeX_Fraktur-Bold-CL6g_b3V.woff2"))
+    validate_path(os.path.join(d, "assets", "KaTeX_Fraktur-Regular-CTYiF6lA.woff2"))
+    validate_path(os.path.join(d, "assets", "KaTeX_Main-Bold-Cx986IdX.woff2"))
+    validate_path(os.path.join(d, "assets", "KaTeX_Main-BoldItalic-DxDJ3AOS.woff2"))
+    validate_path(os.path.join(d, "assets", "KaTeX_Main-Italic-NWA7e6Wa.woff2"))
+    validate_path(os.path.join(d, "assets", "KaTeX_Main-Regular-B22Nviop.woff2"))
+    validate_path(os.path.join(d, "assets", "KaTeX_Math-BoldItalic-CZnvNsCZ.woff2"))
+    validate_path(os.path.join(d, "assets", "KaTeX_Math-Italic-t53AETM-.woff2"))
+    validate_path(os.path.join(d, "assets", "KaTeX_SansSerif-Bold-D1sUS0GD.woff2"))
+    validate_path(os.path.join(d, "assets", "KaTeX_SansSerif-Italic-C3H0VqGB.woff2"))
+    validate_path(os.path.join(d, "assets", "KaTeX_SansSerif-Regular-DDBCnlJ7.woff2"))
+    validate_path(os.path.join(d, "assets", "KaTeX_Script-Regular-D3wIWfF6.woff2"))
+    validate_path(os.path.join(d, "assets", "KaTeX_Size1-Regular-mCD8mA8B.woff2"))
+    validate_path(os.path.join(d, "assets", "KaTeX_Size2-Regular-Dy4dx90m.woff2"))
+    validate_path(os.path.join(d, "assets", "KaTeX_Size4-Regular-Dl5lxZxV.woff2"))
+    validate_path(os.path.join(d, "assets", "KaTeX_Typewriter-Regular-CO6r4hn1.woff2"))
+    validate_path(os.path.join(d, "assets", "Kaltura-Do9z9Dhq.js"))
+    validate_path(os.path.join(d, "assets", "Mixcloud-xxYATmwO.js"))
+    validate_path(os.path.join(d, "assets", "Mux-C777p6u5.js"))
+    validate_path(os.path.join(d, "assets", "Preview-D76yD220.js"))
+    validate_path(os.path.join(d, "assets", "SoundCloud-V2Z7FnWf.js"))
+    validate_path(os.path.join(d, "assets", "Streamable-BRrsjUGO.js"))
+    validate_path(os.path.join(d, "assets", "Twitch-BM4Su8GF.js"))
+    validate_path(os.path.join(d, "assets", "Vidyard-CGoH-OJj.js"))
+    validate_path(os.path.join(d, "assets", "Vimeo-C6QJtfs2.js"))
+    validate_path(os.path.join(d, "assets", "Wistia-Ah2BW4ms.js"))
+    validate_path(os.path.join(d, "assets", "YouTube-rlL1waAH.js"))
+    validate_path(os.path.join(d, "assets", "index-B_VqGgJi.css"))
+    validate_path(os.path.join(d, "assets", "index-BdxI-PSa.js"))
+
+    validate_path(os.path.join(d, "models", "Foxy-Fuka.glb"))
+    validate_path(os.path.join(d, "models", "foxy-compressed.glb"))
+    validate_path(os.path.join(d, "models", "foxy-uncompressed.glb"))
+    validate_path(os.path.join(d, "models", "foxy.glb"))
+    validate_path(os.path.join(d, "models", "newFoxy.tsx"))
 
     # Get the names of the most recent index-<hash>.js and index-<hash>.css files
     logger(
@@ -221,6 +274,8 @@ def copy_assets(environment="prod"):
     logger(f"copy_assets() Updated {swpwrxstudent_html_path}")
     logger("copy_assets() finished running swpwr installation script")
 
+    # Force an error so we can review this output
+    validate_path(os.path.join(d, "models", "iDontExist.tsx"))
 
 def package_data(pkg, roots):
     """Generic function to find package_data.
