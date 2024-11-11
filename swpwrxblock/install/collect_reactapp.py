@@ -12,7 +12,7 @@ import re
 import shutil
 import tarfile
 
-from install.utils import logger, validate_path
+from swpwrxblock.install.utils import logger, validate_path
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 ENVIRONMENT_ID = os.environ.get("ENVIRONMENT_ID", "prod")
