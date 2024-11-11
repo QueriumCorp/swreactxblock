@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 # Pylint: disable=W0718,W0611,W1203
-"""Setup for swpwrxblock XBlock."""
-
-import glob
+"""
+Setup for swpwrxblock XBlock. Collects the ReactJS build assets originating
+from https://github.com/QueriumCorp/swpwr and stores these in
+swpwrxblock/public.
+"""
 
 # python stuff
 import os
@@ -10,34 +12,13 @@ import re
 import shutil
 import tarfile
 
-from setuptools import setup
-
-# our stuff
-from version import VERSION
+from install.utils import logger, validate_path
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 ENVIRONMENT_ID = os.environ.get("ENVIRONMENT_ID", "prod")
 HTTP_TIMEOUT = 30
 
-
-def logger(msg: str):
-    """
-    Print a message to the console.
-    """
-    prefix = "stepwise-power-xblock"
-    print(prefix + ": " + msg)
-
-
 logger(f"ENVIRONMENT_ID: {ENVIRONMENT_ID}")
-
-
-def validate_path(path):
-    """
-    Check if a path exists, and raise an exception if it does not.
-    """
-    if not os.path.exists(path):
-        raise FileNotFoundError(f"copy_assets() path not found: {path}")
-    logger("copy_assets() validated path: " + path)
 
 
 def fix_css_url(css_filename):
@@ -279,42 +260,3 @@ def copy_assets(environment="prod"):
     # normally pip won't display our logger output unless there is an error, so
     # force an error at the end of setup() so we can review this output
     # validate_path(os.path.join(d, "models", "iDontExist.tsx"))
-
-def package_data(pkg, roots):
-    """Generic function to find package_data.
-
-    All of the files under each of the `roots` will be declared as package
-    data for package `pkg`.
-
-    """
-    data = []
-    for root in roots:
-        for dirname, _, files in os.walk(os.path.join(pkg, root)):
-            for fname in files:
-                data.append(os.path.relpath(os.path.join(dirname, fname), pkg))
-
-    return {pkg: data}
-
-
-setup(
-    name="stepwise-power-xblock",
-    version=VERSION,
-    description="Stepwise Power XBlock",
-    license="MIT",
-    packages=[
-        "swpwrxblock",
-    ],
-    install_requires=["XBlock"],
-    setup_requires=["requests"],
-    entry_points={
-        "xblock.v1": [
-            "swpwrxblock = swpwrxblock:SWPWRXBlock",
-        ]
-    },
-    package_data=package_data(
-        "swpwrxblock",
-        ["static", "public", "translations"],
-    ),
-    include_package_data=True,
-)
-copy_assets(ENVIRONMENT_ID)
