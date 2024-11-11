@@ -1,6 +1,6 @@
 [build-system]
 requires = ["setuptools", "wheel"]
-build-backend = "swpwrxblock.install.build_backend.CustomBuildBackend"
+build-backend = "custom_build_backend"
 
 [project]
 name = "stepwise-power-xblock"
@@ -15,7 +15,6 @@ swpwrxblock = "swpwrxblock:SWPWRXBlock"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["swpwrxblock*"]
-exclude = ["swpwrxblock.install"]
 
 [tool.setuptools.package-data]
 "swpwrxblock" = ["static/*", "public/*", "translations/*"]

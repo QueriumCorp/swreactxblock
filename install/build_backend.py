@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# custom_build_backend.py
 """
 Custom build backend for setuptools to copy assets before building the package.
 """
