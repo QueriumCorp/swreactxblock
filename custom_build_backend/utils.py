@@ -3,6 +3,8 @@
 
 import os
 
+print("DEBUG: custom_build_backend.utils import successful")
+
 
 def logger(msg: str):
     """

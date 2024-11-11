@@ -60,7 +60,18 @@ lint:
 # Destroy all build artifacts and Python temporary files
 # -------------------------------------------------------------------------
 clean:
-	echo "ADD ME!!"
+	@test -d stepwise_power_xblock.egg-info && rm -rf stepwise_power_xblock.egg-info || true
+	@test -d swpwrxblock/public/dist && rm -rf swpwrxblock/public/dist || true
+	@test -d build && rm -r build || true
+	@test -d dist && rm -r dist || true
+	@test -d *.egg-info && rm -r *.egg-info || true
+
+
+
+build:
+	make clean && \
+	pip cache purge && \
+	pip wheel . --no-build-isolation -v -w dist
 
 # -------------------------------------------------------------------------
 # Run Python unit tests

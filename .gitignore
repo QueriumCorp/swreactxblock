@@ -1,4 +1,7 @@
 venv/
+dist/
+__pycache__
+*.egg-info
 react_build
 node_modules/
 package-lock.json

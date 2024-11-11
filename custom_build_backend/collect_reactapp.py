@@ -5,19 +5,21 @@ Setup for swpwrxblock XBlock. Collects the ReactJS build assets originating
 from https://github.com/QueriumCorp/swpwr and stores these in
 swpwrxblock/public.
 """
-
 # python stuff
 import os
 import re
 import shutil
 import tarfile
 
-from swpwrxblock.install.utils import logger, validate_path
+from custom_build_backend.utils import logger, validate_path
 
 HERE = os.path.abspath(os.path.dirname(__file__))
+SWPWRXBLOCK_DIR = os.path.abspath(os.path.join(HERE, "..", "swpwrxblock"))
+
 ENVIRONMENT_ID = os.environ.get("ENVIRONMENT_ID", "prod")
 HTTP_TIMEOUT = 30
 
+print("DEBUG: custom_build_backend.collect_reactapp import successful")
 logger(f"ENVIRONMENT_ID: {ENVIRONMENT_ID}")
 
 
@@ -29,7 +31,9 @@ def fix_css_url(css_filename):
     if not css_filename:
         raise ValueError("fix_css_url() no value received for css_filename.")
 
-    css_file_path = os.path.join(HERE, "public", "dist", "assets", css_filename)
+    css_file_path = os.path.join(
+        SWPWRXBLOCK_DIR, "public", "dist", "assets", css_filename
+    )
     if not os.path.isfile(css_file_path):
         raise FileNotFoundError(f"fix_css_url() file not found: {css_file_path}")
 
@@ -70,7 +74,7 @@ def copy_assets(environment="prod"):
     logger(f"downloading ReactJS build assets from {domain}")
 
     # Full pathnames to the swpwr build and public directories
-    i = os.path.join(HERE, "public")
+    i = os.path.join(SWPWRXBLOCK_DIR, "public")
     d = os.path.join(i, "dist")
     b = os.path.join(d, "assets")
 
@@ -234,7 +238,7 @@ def copy_assets(environment="prod"):
 
     # Update the xblock student view HTML file with the new JS and CSS filenames
     swpwrxstudent_html_path = os.path.join(
-        HERE, "swpwrxblock", "static", "html", "swpwrxstudent.html"
+        SWPWRXBLOCK_DIR, "static", "html", "swpwrxstudent.html"
     )
     logger(f"Updating {swpwrxstudent_html_path}")
 
