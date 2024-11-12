@@ -9,8 +9,6 @@ import pkg_resources
 from setuptools import find_packages, setup
 from setuptools.command.install import install
 
-from .version import VERSION
-
 PACKAGE_NAME = "stepwise-power-xblock"
 
 
@@ -58,7 +56,7 @@ class PostInstallCommand(install):
 
 setup(
     name=PACKAGE_NAME,
-    version=VERSION,
+    version="18.1.0",
     description="Stepwise Power XBlock",
     license="MIT",
     install_requires=["XBlock", "requests"],
