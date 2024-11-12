@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Install utilities for the stepwise-power-xblock XBlock."""
 
+import atexit
 import os
 
 import pkg_resources
@@ -22,6 +23,7 @@ class LoggerBuffer:
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super(LoggerBuffer, cls).__new__(cls)
+            atexit.register(cls._instance.save_logs)
         return cls._instance
 
     def log(self, msg: str):
@@ -33,11 +35,15 @@ class LoggerBuffer:
     def clear_logs(self):
         self._buffer = []
 
-    def __del__(self):
+    def save_logs(self):
         dist = pkg_resources.get_distribution("stepwise-power-xblock")
         install_path = dist.location
         buffer = self.get_logs()
         log_path = os.path.join(install_path, "post_install.log")
+
+        if os.path.exists(log_path):
+            os.remove(log_path)
+
         with open(log_path, "w", encoding="utf-8") as file:
             for line in buffer:
                 file.write(line + "\n")

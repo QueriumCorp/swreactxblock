@@ -66,6 +66,7 @@ clean:
 	@rm -rf dist
 	@rm -rf venv
 	@rm -rf swpwrxblock.egg-info
+	@rm -rf *.log
 	@test -d swpwrxblock/public/dist && rm -rf swpwrxblock/public/dist || true
 
 
