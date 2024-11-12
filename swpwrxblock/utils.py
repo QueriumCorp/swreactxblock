@@ -59,7 +59,7 @@ def logger(msg: str):
     if not DEBUG_MODE:
         return
 
-    prefix = "DEBUG: swpwrxblock-build-backend"
+    prefix = "DEBUG: swpwrxblock"
     LoggerBuffer().log(prefix + " - " + msg)
     print(prefix + " - " + msg)
 
