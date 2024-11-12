@@ -64,6 +64,7 @@ clean:
 	@rm -rf .mypy_cache
 	@rm -rf build
 	@rm -rf dist
+	@rm -rf venv
 	@rm -rf swpwrxblock.egg-info
 	@test -d swpwrxblock/public/dist && rm -rf swpwrxblock/public/dist || true
 

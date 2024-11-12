@@ -82,11 +82,11 @@ from logging import getLogger
 # Python stuff
 import pkg_resources
 
-# Django Stuff
-from lms.djangoapps.courseware.courses import get_course_by_id
-from web_fragments.fragment import Fragment
-
 # Open edX stuff
+from lms.djangoapps.courseware.courses import get_course_by_id
+
+# Django Stuff
+from web_fragments.fragment import Fragment
 from xblock.core import XBlock
 from xblock.fields import Boolean, Dict, Float, Integer, Scope, String
 
