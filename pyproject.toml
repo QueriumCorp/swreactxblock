@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "custom_build_backend.backend"
+requires = ["setuptools", "wheel", "swpwrxblock-build-backend"]
+build-backend = "swpwrxblock_build_backend.backend"
 
 [project]
 name = "stepwise-power-xblock"

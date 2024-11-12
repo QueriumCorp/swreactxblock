@@ -71,7 +71,7 @@ clean:
 build:
 	make clean && \
 	pip cache purge && \
-	pip wheel . --no-build-isolation -v -w dist
+	pip wheel . -v -w dist
 
 # -------------------------------------------------------------------------
 # Run Python unit tests

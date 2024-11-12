@@ -6,6 +6,7 @@ repos:
     rev: v4.0.0-alpha.8
     hooks:
       - id: prettier
+        files: '\.(js|jsx|ts|tsx|css|scss|md|json)$'
   - repo: https://github.com/codespell-project/codespell
     rev: v2.3.0
     hooks:
