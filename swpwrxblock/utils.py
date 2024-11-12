@@ -3,6 +3,7 @@
 
 import atexit
 import os
+from datetime import datetime
 
 import pkg_resources
 
@@ -59,7 +60,8 @@ def logger(msg: str):
     if not DEBUG_MODE:
         return
 
-    prefix = "DEBUG: swpwrxblock"
+    timestamp = datetime.now().strftime("%Y-%b-%d %H:%M:%S")
+    prefix = f"{timestamp}: swpwrxblock"
     LoggerBuffer().log(prefix + " - " + msg)
     print(prefix + " - " + msg)
 
