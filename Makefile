@@ -60,11 +60,12 @@ lint:
 # Destroy all build artifacts and Python temporary files
 # -------------------------------------------------------------------------
 clean:
-	@test -d stepwise_power_xblock.egg-info && rm -rf stepwise_power_xblock.egg-info || true
+	@rm -rf .pytest_cache
+	@rm -rf .mypy_cache
+	@rm -rf build
+	@rm -rf dist
+	@rm -rf swpwrxblock.egg-info
 	@test -d swpwrxblock/public/dist && rm -rf swpwrxblock/public/dist || true
-	@test -d build && rm -r build || true
-	@test -d dist && rm -r dist || true
-	@test -d *.egg-info && rm -r *.egg-info || true
 
 
 
