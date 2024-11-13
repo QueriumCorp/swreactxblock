@@ -7,7 +7,7 @@ from datetime import datetime
 
 import pkg_resources
 
-from .const import DEBUG_MODE, PACKAGE_NAME
+from .const import DEBUG_MODE
 
 print("DEBUG: swpwrxblock.utils import successful")
 
@@ -53,6 +53,15 @@ class LoggerBuffer:
         self.clear_logs()
 
 
+def validate_path(path):
+    """
+    Check if a path exists, and raise an exception if it does not.
+    """
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"copy_assets() path not found: {path}")
+    logger("validate_path() validated: " + path)
+
+
 def logger(msg: str):
     """
     Print a message to the console.
@@ -64,29 +73,3 @@ def logger(msg: str):
     prefix = f"{timestamp}: swpwrxblock"
     LoggerBuffer().log(prefix + " - " + msg)
     print(prefix + " - " + msg)
-
-
-def validate_path(path):
-    """
-    Check if a path exists, and raise an exception if it does not.
-    """
-    if not os.path.exists(path):
-        raise FileNotFoundError(f"copy_assets() path not found: {path}")
-    logger("validate_path() validated: " + path)
-
-
-def verify_path(path: str):
-    if not os.path.exists(path):
-        raise FileNotFoundError(f"verify_path() path not found: {path}")
-
-
-def get_install_path():
-    """
-    Get the file system installation path of this package.
-    """
-    dist = pkg_resources.get_distribution(PACKAGE_NAME)
-    install_path = os.path.join(dist.location, "swpwrxblock")
-    verify_path(install_path)
-
-    logger(f"post_install.get_install_path() - installation path: {install_path}")
-    return install_path

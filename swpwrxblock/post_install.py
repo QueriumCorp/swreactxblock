@@ -13,22 +13,17 @@ import tarfile
 
 # our stuff
 from .const import DEFAULT_ENVIRONMENT, HTTP_TIMEOUT
-from .utils import get_install_path, logger, validate_path
+from .utils import logger, validate_path
 
 # The environment ID is used to determine which CDN to download the assets from.
 # It is set as a bash environment variable in the Dockerfile.
 ENVIRONMENT_ID = os.environ.get("ENVIRONMENT_ID", DEFAULT_ENVIRONMENT)
 
-# we're inside a Python virtual environment. The path to the swpwrxblock client
-# is the parent directory of the current directory.
-# SWPWRXBLOCK_DIR = os.path.abspath(os.path.join(HERE, "..", DEFAULT_XBLOCK_CLIENT))
-SWPWRXBLOCK_DIR = get_install_path()
-
 logger("DEBUG: swpwrxblock.post_install import successful")
 logger(f"ENVIRONMENT_ID: {ENVIRONMENT_ID}")
 
 
-def fix_css_url(css_filename):
+def fix_css_url(css_filename: str, install_path: str):
     """
     fix any CSS asset file reference to point at the swpwrxblock static assets directory
     """
@@ -36,9 +31,7 @@ def fix_css_url(css_filename):
     if not css_filename:
         raise ValueError("fix_css_url() no value received for css_filename.")
 
-    css_file_path = os.path.join(
-        SWPWRXBLOCK_DIR, "public", "dist", "assets", css_filename
-    )
+    css_file_path = os.path.join(install_path, "public", "dist", "assets", css_filename)
     if not os.path.isfile(css_file_path):
         raise FileNotFoundError(f"fix_css_url() file not found: {css_file_path}")
 
@@ -55,7 +48,7 @@ def fix_css_url(css_filename):
     logger(f"updated CSS file {css_file_path}")
 
 
-def copy_assets(environment="prod"):
+def copy_assets(install_path: str, environment: str = "prod"):
     """
     Download and position ReactJS build assets in the appropriate directories.
     (A) creates the public/ folder in our build directory,
@@ -79,7 +72,7 @@ def copy_assets(environment="prod"):
     logger(f"downloading ReactJS build assets from {domain}")
 
     # Full pathnames to the swpwr build and public directories
-    i = os.path.join(SWPWRXBLOCK_DIR, "public")
+    i = os.path.join(install_path, "public")
     d = os.path.join(i, "dist")
     b = os.path.join(d, "assets")
 
@@ -240,11 +233,11 @@ def copy_assets(environment="prod"):
     logger(f"copy_assets() The top-level Javascript file is {js1}")
     logger(f"copy_assets() The top-level CSS file is {cs1}")
 
-    fix_css_url(css_filename=cs1)
+    fix_css_url(css_filename=cs1, install_path=install_path)
 
     # Update the xblock student view HTML file with the new JS and CSS filenames
     swpwrxstudent_html_path = os.path.join(
-        SWPWRXBLOCK_DIR, "static", "html", "swpwrxstudent.html"
+        install_path, "static", "html", "swpwrxstudent.html"
     )
     logger(f"Updating {swpwrxstudent_html_path}")
 
