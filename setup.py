@@ -103,7 +103,7 @@ class PostInstallCommand(install):
 
 setup(
     name=PACKAGE_NAME,
-    version="18.1.5",
+    version="18.1.6",
     description="Stepwise Power XBlock",
     license="MIT",
     install_requires=["XBlock", "requests"],
