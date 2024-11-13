@@ -36,3 +36,4 @@ public/
 *.log.*
 *.log-*
 *.log/*
+*.out

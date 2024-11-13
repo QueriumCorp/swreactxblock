@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=W1201
 """
 pip installation configuration for the Stepwise Power XBlock.
 """
@@ -16,8 +17,9 @@ from setuptools.command.install import install
 
 PACKAGE_NAME = "stepwise-power-xblock"
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 logger = logging.getLogger(__name__)
+logger.info("custom_installer.py - Imported")
 
 
 class CustomInstaller(install):
@@ -38,12 +40,14 @@ class CustomInstaller(install):
         Override the default run() method, adding a post-install method
         that copies ReactJS build assets.
         """
+        logger.info(PACKAGE_NAME + " CustomInstaller.run() - Starting")
         install.run(self)
 
         # Ensure the normal setup() has completed all operations
         self.execute(
             self.swpwrxblock_post_installation, (), msg="Running post install task"
         )
+        logger.info(PACKAGE_NAME + " CustomInstaller.run() - Completed")
 
     ###########################################################################
     # private post-installation task methods
@@ -55,7 +59,8 @@ class CustomInstaller(install):
         dist = pkg_resources.get_distribution(PACKAGE_NAME)
         install_path = dist.location
         logger.info(
-            "CustomInstaller._get_install_path() - installation path: %s",
+            PACKAGE_NAME
+            + " CustomInstaller._get_install_path() - installation path: %s",
             install_path,
         )
         return install_path
@@ -69,7 +74,8 @@ class CustomInstaller(install):
         if install_path not in sys.path:
             sys.path.append(install_path)
             logger.info(
-                "CustomInstaller._set_path() - appending to system path: {}".format(
+                PACKAGE_NAME
+                + " CustomInstaller._set_path() - appending to system path: {}".format(
                     install_path
                 )
             )
@@ -101,6 +107,9 @@ class CustomInstaller(install):
         Post-installation task to copy assets into the installed package
         from the ReactJS build, stored in a remote CDN.
         """
+        logger.info(
+            PACKAGE_NAME + " CustomInstaller.swpwrxblock_post_installation() - Starting"
+        )
         install_path = self._get_install_path()
         self._write_diagnostics(install_path)
         self._set_path(install_path)
@@ -109,3 +118,7 @@ class CustomInstaller(install):
         module = importlib.import_module(module_name)
         copy_assets = getattr(module, "copy_assets")
         copy_assets()
+        logger.info(
+            PACKAGE_NAME
+            + " CustomInstaller.swpwrxblock_post_installation() - completed"
+        )
