@@ -13,7 +13,7 @@ import sys
 
 # 3rd party stuff
 import pkg_resources
-from setuptools.command.install import install
+from wheel.bdist_wheel import bdist_wheel as _bdist_wheel
 
 PACKAGE_NAME = "stepwise-power-xblock"
 
@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 logger.info("custom_installer.py - Imported")
 
 
-class CustomInstaller(install):
+class CustomBdistWheel(_bdist_wheel):
     """
     Post-installation for installation mode.
 
@@ -41,7 +41,7 @@ class CustomInstaller(install):
         that copies ReactJS build assets.
         """
         logger.info(PACKAGE_NAME + " CustomInstaller.run() - Starting")
-        install.run(self)
+        super().run()
 
         # Ensure the normal setup() has completed all operations
         self.execute(

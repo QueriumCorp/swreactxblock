@@ -9,7 +9,7 @@ import logging
 from setuptools import find_packages, setup
 
 # our stuff
-from custom_installer import CustomInstaller
+from custom_installer import CustomBdistWheel
 
 PACKAGE_NAME = "stepwise-power-xblock"
 
@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 setup(
     name=PACKAGE_NAME,
-    version="18.1.10",
+    version="18.1.11",
     description="Stepwise Power XBlock",
     license="MIT",
     install_requires=["XBlock", "requests"],
@@ -29,6 +29,6 @@ setup(
     },
     entry_points={"xblock.v1": ["swpwrxblock = swpwrxblock:SWPWRXBlock"]},
     cmdclass={
-        "bdist_wheel": CustomInstaller,
+        "bdist_wheel": CustomBdistWheel,
     },
 )
