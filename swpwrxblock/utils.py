@@ -7,7 +7,7 @@ from datetime import datetime
 
 import pkg_resources
 
-from .const import DEBUG_MODE
+from .const import DEBUG_MODE, PACKAGE_NAME
 
 print("DEBUG: swpwrxblock.utils import successful")
 
@@ -73,3 +73,13 @@ def validate_path(path):
     if not os.path.exists(path):
         raise FileNotFoundError(f"copy_assets() path not found: {path}")
     logger("validate_path() validated: " + path)
+
+
+def get_install_path():
+    """
+    Get the file system installation path of this package.
+    """
+    dist = pkg_resources.get_distribution(PACKAGE_NAME)
+    install_path = dist.location
+    logger(f"post_install.get_install_path() - installation path: {install_path}")
+    return install_path

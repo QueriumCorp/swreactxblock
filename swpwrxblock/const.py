@@ -6,3 +6,4 @@ DEBUG_MODE = True
 DEFAULT_ENVIRONMENT = "prod"
 DEFAULT_XBLOCK_CLIENT = "swpwrxblock"
 HTTP_TIMEOUT = 30
+PACKAGE_NAME = "stepwise-power-xblock"

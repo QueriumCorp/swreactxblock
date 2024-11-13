@@ -13,18 +13,16 @@ import tarfile
 
 # our stuff
 from .const import DEFAULT_ENVIRONMENT, HTTP_TIMEOUT
-from .utils import logger, validate_path
-
-HERE = os.path.abspath(os.path.dirname(__file__))
-
-# we're inside a Python virtual environment. The path to the swpwrxblock client
-# is the parent directory of the current directory.
-# SWPWRXBLOCK_DIR = os.path.abspath(os.path.join(HERE, "..", DEFAULT_XBLOCK_CLIENT))
-SWPWRXBLOCK_DIR = HERE
+from .utils import get_install_path, logger, validate_path
 
 # The environment ID is used to determine which CDN to download the assets from.
 # It is set as a bash environment variable in the Dockerfile.
 ENVIRONMENT_ID = os.environ.get("ENVIRONMENT_ID", DEFAULT_ENVIRONMENT)
+
+# we're inside a Python virtual environment. The path to the swpwrxblock client
+# is the parent directory of the current directory.
+# SWPWRXBLOCK_DIR = os.path.abspath(os.path.join(HERE, "..", DEFAULT_XBLOCK_CLIENT))
+SWPWRXBLOCK_DIR = get_install_path()
 
 logger("DEBUG: swpwrxblock.post_install import successful")
 logger(f"ENVIRONMENT_ID: {ENVIRONMENT_ID}")
