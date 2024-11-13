@@ -48,7 +48,7 @@ def fix_css_url(css_filename: str, install_path: str):
     logger(f"updated CSS file {css_file_path}")
 
 
-def copy_assets(install_path: str, environment: str = "prod"):
+def copy_assets(install_path: str, bdist_path: str, environment: str = "prod"):
     """
     Download and position ReactJS build assets in the appropriate directories.
     (A) creates the public/ folder in our build directory,
@@ -57,6 +57,8 @@ def copy_assets(install_path: str, environment: str = "prod"):
     logger(
         "copy_assets() starting swpwr installation script", install_path=install_path
     )
+    logger(f"copy_assets() install_path={install_path}")
+    logger(f"copy_assets() bdist_path={bdist_path}")
 
     # pylint: disable=C0415
     import requests

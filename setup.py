@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 setup(
     name=PACKAGE_NAME,
-    version="18.1.19",
+    version="18.1.20",
     description="Stepwise Power XBlock",
     license="MIT",
     install_requires=["XBlock", "requests"],
