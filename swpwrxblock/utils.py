@@ -42,6 +42,9 @@ class LoggerBuffer:
         if os.path.exists(log_path):
             os.remove(log_path)
 
+        msg = f"LoggerBuffer().save_logs() - Writing logs to {log_path}"
+        self.log(msg)
+        print(msg)
         with open(log_path, "w", encoding="utf-8") as file:
             for line in buffer:
                 file.write(line + "\n")
