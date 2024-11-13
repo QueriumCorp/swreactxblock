@@ -82,21 +82,24 @@ from logging import getLogger
 # Python stuff
 import pkg_resources
 
-# Django Stuff
-from lms.djangoapps.courseware.courses import get_course_by_id
-from web_fragments.fragment import Fragment
-
 # Open edX stuff
+from web_fragments.fragment import Fragment
 from xblock.core import XBlock
 from xblock.fields import Boolean, Dict, Float, Integer, Scope, String
-
-# McDaniel apr-2019: this is deprecated.
-# from xblock.fragment import Fragment
 from xblock.scorable import ScorableXBlockMixin, Score
-from xblockutils.studio_editable import StudioEditableXBlockMixin
+from xblock.utils.studio_editable import StudioEditableXBlockMixin
 
-# Fuka sep-2024 this is deprecated
-# from xblock.mixins import ScopedStorageMixin
+# pylint: disable=W0718,C0103
+try:
+    from lms.djangoapps.courseware.courses import get_course_by_id
+except Exception as e:
+    description = str(e)
+    print(
+        f"swpwrxblock.swpwrxblock.py - lms.djangoapps.courseware.courses import get_course_by_id: {description}"
+    )
+
+    def get_course_by_id(course_id: str):
+        pass
 
 
 UNSET = object()
@@ -138,6 +141,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
     # Place to store the UUID for this xblock instance.  Not currently displayed in any view.
     url_name = String(display_name="URL name", default="NONE", scope=Scope.content)
 
+    # mcdaniel: added this to work around linter errors
+    max_attempts = Integer(
+        help="SWPWR Max question attempts", default=3, scope=Scope.content
+    )
+
     # PER-QUESTION GRADING OPTIONS (SEPARATE SET FOR COURSE DEFAULTS)
     q_weight = Float(
         display_name="Problem Weight",
@@ -156,7 +164,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         scope=Scope.content,
     )
     q_grade_hints_count = Integer(
-        help="SWPWR Number of Hints before deduction", default=2, scope=Scope.content
+        help="SWPWR Number of Hints before deduction",
+        default=2,
+        scope=Scope.content,
     )
     q_grade_hints_ded = Float(
         help="SWPWR Point deduction for using excessive Hints",
@@ -164,7 +174,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         scope=Scope.content,
     )
     q_grade_errors_count = Integer(
-        help="SWPWR Number of Errors before deduction", default=2, scope=Scope.content
+        help="SWPWR Number of Errors before deduction",
+        default=2,
+        scope=Scope.content,
     )
     q_grade_errors_ded = Float(
         help="SWPWR Point deduction for excessive Errors",
@@ -189,7 +201,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
     # PER-QUESTION HINTS/SHOW SOLUTION OPTIONS
     q_option_hint = Boolean(
-        help='SWPWR Display Hint button if "True"', default=True, scope=Scope.content
+        help='SWPWR Display Hint button if "True"',
+        default=True,
+        scope=Scope.content,
     )
     q_option_showme = Boolean(
         help='SWPWR Display ShowSolution button if "True"',
@@ -217,7 +231,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
         scope=Scope.content,
     )
     q_definition = String(
-        help="SWPWR Definition", default="SolveFor[5a+4=2a-5,a]", scope=Scope.content
+        help="SWPWR Definition",
+        default="SolveFor[5a+4=2a-5,a]",
+        scope=Scope.content,
     )
     q_type = String(help="SWPWR Type", default="gradeBasicAlgebra", scope=Scope.content)
     q_display_math = String(
@@ -2215,7 +2231,8 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             if DEBUG:
                 logger.info(
                     "checking bit_is_set {v}={b}".format(
-                        v=variant, b=self.bit_is_set(self.variants_attempted, variant)
+                        v=variant,
+                        b=self.bit_is_set(self.variants_attempted, variant),
                     )
                 )
             self.previous_variant = variant
@@ -2286,7 +2303,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
             (
                 "SWPWRXBlock",
                 """<swpwrxblock/>
-             """,
+            """,
             ),
             (
                 "Multiple SWPWRXBlock",
@@ -2295,7 +2312,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                 <swpwrxblock/>
                 <swpwrxblock/>
                 </vertical_demo>
-             """,
+            """,
             ),
         ]
 

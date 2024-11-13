@@ -60,7 +60,21 @@ lint:
 # Destroy all build artifacts and Python temporary files
 # -------------------------------------------------------------------------
 clean:
-	echo "ADD ME!!"
+	@rm -rf .pytest_cache
+	@rm -rf .mypy_cache
+	@rm -rf build
+	@rm -rf dist
+	@rm -rf venv
+	@rm -rf swpwrxblock.egg-info
+	@rm -rf *.log
+	@test -d swpwrxblock/public/dist && rm -rf swpwrxblock/public/dist || true
+
+
+
+build:
+	make clean && \
+	pip cache purge && \
+	pip wheel . -v -w dist
 
 # -------------------------------------------------------------------------
 # Run Python unit tests

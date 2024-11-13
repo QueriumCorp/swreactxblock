@@ -1,4 +1,8 @@
 venv/
+dist/
+build/
+__pycache__
+*.egg-info
 react_build
 node_modules/
 package-lock.json
@@ -32,3 +36,4 @@ public/
 *.log.*
 *.log-*
 *.log/*
+*.out
