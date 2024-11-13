@@ -59,7 +59,7 @@ class CustomInstall(_install):
         """
         Get the file system installation path of this package.
         """
-        install_path = self.build_lib
+        install_path = os.path.join(self.build_lib, "swpwrxblock")
         self._verify_path(install_path)
         logger.info(
             PACKAGE_NAME
