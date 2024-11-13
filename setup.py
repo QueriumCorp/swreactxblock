@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 setup(
     name=PACKAGE_NAME,
-    version="18.1.9",
+    version="18.1.10",
     description="Stepwise Power XBlock",
     license="MIT",
     install_requires=["XBlock", "requests"],
@@ -29,6 +29,6 @@ setup(
     },
     entry_points={"xblock.v1": ["swpwrxblock = swpwrxblock:SWPWRXBlock"]},
     cmdclass={
-        "install": CustomInstaller,
+        "bdist_wheel": CustomInstaller,
     },
 )

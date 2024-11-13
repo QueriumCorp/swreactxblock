@@ -6,4 +6,6 @@ try:
     from .swpwrxblock import SWPWRXBlock  # noqa: F401
 except Exception as e:
     description = str(e)
-    print(f"swpwrxblock.__init__.py - ImportError: SWPWRXBlock {description}")
+    print(
+        f"swpwrxblock.__init__.py - Warning: encountered the following exception when attempting to import SWPWRXBlock {description}. You can ignore this warning during pip installation."
+    )
