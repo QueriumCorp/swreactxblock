@@ -59,7 +59,7 @@ class CustomInstall(_install):
         """
         Get the file system installation path of this package.
         """
-        install_path = self.install_lib
+        install_path = self.build_lib
         self._verify_path(install_path)
         logger.info(
             PACKAGE_NAME
