@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-class PostInstallCommand(install):
+class CustomInstaller(install):
     """
     Post-installation for installation mode.
 
@@ -39,8 +39,13 @@ class PostInstallCommand(install):
         install.run(self)
 
         # Ensure the normal setup() has completed all operations
-        self.execute(self.swm_post_install, (), msg="Running post install task")
+        self.execute(
+            self.swpwrxblock_post_installation, (), msg="Running post install task"
+        )
 
+    ###########################################################################
+    # private post-installation task methods
+    ###########################################################################
     def _get_install_path(self):
         """
         Get the file system installation path of this package.
@@ -48,7 +53,7 @@ class PostInstallCommand(install):
         dist = pkg_resources.get_distribution(PACKAGE_NAME)
         install_path = dist.location
         logger.info(
-            "PostInstallCommand._get_install_path() - installation path: %s",
+            "CustomInstaller._get_install_path() - installation path: %s",
             install_path,
         )
         return install_path
@@ -62,7 +67,7 @@ class PostInstallCommand(install):
         if install_path not in sys.path:
             sys.path.append(install_path)
             logger.info(
-                "PostInstallCommand._set_path() - appending to system path: {}".format(
+                "CustomInstaller._set_path() - appending to system path: {}".format(
                     install_path
                 )
             )
@@ -86,7 +91,10 @@ class PostInstallCommand(install):
             diagnostic_file.flush()
             os.fsync(diagnostic_file.fileno())
 
-    def swm_post_install(self):
+    ###########################################################################
+    # top-level post-installation task method
+    ###########################################################################
+    def swpwrxblock_post_installation(self):
         """
         Post-installation task to copy assets into the installed package
         from the ReactJS build, stored in a remote CDN.
@@ -113,6 +121,6 @@ setup(
     },
     entry_points={"xblock.v1": ["swpwrxblock = swpwrxblock:SWPWRXBlock"]},
     cmdclass={
-        "install": PostInstallCommand,
+        "install": CustomInstaller,
     },
 )
