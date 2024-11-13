@@ -5,8 +5,6 @@ import atexit
 import os
 from datetime import datetime
 
-import pkg_resources
-
 from .const import DEBUG_MODE
 
 print("DEBUG: swpwrxblock.utils import successful")
@@ -20,6 +18,7 @@ class LoggerBuffer:
 
     _instance = None
     _buffer = []
+    install_path: str = ""
 
     def __new__(cls):
         if cls._instance is None:
@@ -37,10 +36,8 @@ class LoggerBuffer:
         self._buffer = []
 
     def save_logs(self):
-        dist = pkg_resources.get_distribution("stepwise-power-xblock")
-        install_path = dist.location
         buffer = self.get_logs()
-        log_path = os.path.join(install_path, "post_install.log")
+        log_path = os.path.join(self.install_path, "post_install.log")
 
         if os.path.exists(log_path):
             os.remove(log_path)
@@ -62,13 +59,14 @@ def validate_path(path):
     logger("validate_path() validated: " + path)
 
 
-def logger(msg: str):
+def logger(msg: str, install_path: str = None):
     """
     Print a message to the console.
     """
     if not DEBUG_MODE:
         return
-
+    if install_path:
+        LoggerBuffer().install_path = install_path
     timestamp = datetime.now().strftime("%Y-%b-%d %H:%M:%S")
     prefix = f"{timestamp}: swpwrxblock"
     LoggerBuffer().log(prefix + " - " + msg)

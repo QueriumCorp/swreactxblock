@@ -54,7 +54,9 @@ def copy_assets(install_path: str, environment: str = "prod"):
     (A) creates the public/ folder in our build directory,
     (B) Untars all of the swpwr dist contents into public/dist.
     """
-    logger("copy_assets() starting swpwr installation script")
+    logger(
+        "copy_assets() starting swpwr installation script", install_path=install_path
+    )
 
     # pylint: disable=C0415
     import requests
