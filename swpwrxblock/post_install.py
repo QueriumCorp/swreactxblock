@@ -101,8 +101,9 @@ def copy_assets(install_path: str, environment: str = "prod"):
 
     # Download the latest swpwr release tarball
     tarball_filename = f"swpwr-{version}.tar.gz"
+    full_tarball_path = os.path.abspath(tarball_filename)
     tarball_url = f"https://{domain}/swpwr/{tarball_filename}"
-    logger(f"copy_assets() downloading {tarball_url}")
+    logger(f"copy_assets() downloading {tarball_url} to {full_tarball_path}")
     with requests.get(tarball_url, stream=True, timeout=HTTP_TIMEOUT) as r:
         with open(tarball_filename, "wb") as f:
             shutil.copyfileobj(r.raw, f)
