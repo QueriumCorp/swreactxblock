@@ -76,6 +76,7 @@ author invent a unique url_name value for their question.
 
 import json
 import random
+import sys
 import uuid
 from logging import getLogger
 
@@ -83,21 +84,21 @@ from logging import getLogger
 import pkg_resources
 
 # Open edX stuff
-from lms.djangoapps.courseware.courses import get_course_by_id
+# pylint: disable=W0718,C0103
+try:
+    from lms.djangoapps.courseware.courses import get_course_by_id
+    from web_fragments.fragment import Fragment
+    from xblock.core import XBlock
+    from xblock.fields import Boolean, Dict, Float, Integer, Scope, String
 
-# Django Stuff
-from web_fragments.fragment import Fragment
-from xblock.core import XBlock
-from xblock.fields import Boolean, Dict, Float, Integer, Scope, String
-
-# McDaniel apr-2019: this is deprecated.
-# from xblock.fragment import Fragment
-from xblock.scorable import ScorableXBlockMixin, Score
-from xblockutils.studio_editable import StudioEditableXBlockMixin
-
-# Fuka sep-2024 this is deprecated
-# from xblock.mixins import ScopedStorageMixin
-
+    # McDaniel apr-2019: this is deprecated.
+    # from xblock.fragment import Fragment
+    from xblock.scorable import ScorableXBlockMixin, Score
+    from xblockutils.studio_editable import StudioEditableXBlockMixin
+except Exception as e:
+    description = str(e)
+    print(f"swpwrxblock.swpwrxblock.py - ImportError: SWPWRXBlock {description}")
+    sys.exit(1)
 
 UNSET = object()
 
