@@ -68,11 +68,11 @@ class CustomInstall(_install):
         )
         return install_path
 
-    def _get_bdist_path(self):
+    def get_bdist_path(self):
         """
         Get the file system pip wheel bdist path for this package.
         """
-        relative_path = self._get_bdist_path()
+        relative_path = self.install_lib
         install_path = os.path.abspath(relative_path)
         self._verify_path(install_path)
         logger.info(
