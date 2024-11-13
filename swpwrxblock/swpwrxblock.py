@@ -94,7 +94,9 @@ try:
     from lms.djangoapps.courseware.courses import get_course_by_id
 except Exception as e:
     description = str(e)
-    print(f"swpwrxblock.swpwrxblock.py - ImportError: SWPWRXBlock {description}")
+    print(
+        f"swpwrxblock.swpwrxblock.py - lms.djangoapps.courseware.courses import get_course_by_id: {description}"
+    )
 
     def get_course_by_id(course_id: str):
         pass
