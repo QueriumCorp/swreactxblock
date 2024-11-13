@@ -13,7 +13,7 @@ import sys
 
 # 3rd party stuff
 import pkg_resources
-from wheel.bdist_wheel import bdist_wheel as _bdist_wheel
+from setuptools.command.install import install as _install
 
 PACKAGE_NAME = "stepwise-power-xblock"
 
@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 logger.info("custom_installer.py - Imported")
 
 
-class CustomBdistWheel(_bdist_wheel):
+class CustomInstall(_install):
     """
     Post-installation for installation mode.
 
