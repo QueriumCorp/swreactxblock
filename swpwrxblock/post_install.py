@@ -82,6 +82,9 @@ def copy_assets(install_path: str, environment: str = "prod"):
     os.makedirs(i, exist_ok=True)
     os.makedirs(d, exist_ok=True)
     os.makedirs(b, exist_ok=True)
+    logger(f"copy_assets() i={i}")
+    logger(f"copy_assets() d={d}")
+    logger(f"copy_assets() b={b}")
 
     # Read VERSION from the CDN and extract the semantic version of the latest release
     version_url = f"https://{domain}/swpwr/VERSION"
