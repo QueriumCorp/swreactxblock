@@ -132,14 +132,14 @@ class CustomInstall(_install):
             PACKAGE_NAME + " CustomInstall().swpwrxblock_post_installation() - Starting"
         )
         install_path = self._get_install_path()
-        bdist_path = os.path.join(self._get_bdist_path(), "wheel", "swpwrxblock")
+        # bdist_path = os.path.join(self._get_bdist_path(), "wheel", "swpwrxblock")
         self._write_diagnostics(install_path)
         self._set_path(install_path)
 
         module_name = "swpwrxblock.post_install"
         module = importlib.import_module(module_name)
         copy_assets = getattr(module, "copy_assets")
-        copy_assets(install_path=install_path, bdist_path=bdist_path)
+        copy_assets(install_path=install_path, bdist_path="")
         logger.info(
             PACKAGE_NAME
             + " CustomInstall().swpwrxblock_post_installation() - completed"
