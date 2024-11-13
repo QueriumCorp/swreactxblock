@@ -38,14 +38,19 @@ class CustomInstall(_install):
         """
         Override the default run() method, adding a post-install method
         that copies ReactJS build assets.
+
+        Note: upon entering this method, the package has been
+        a.) cloned from the github repo
+        b.) built by wheel, and is now ready to be built into a bdist by wheel
         """
         logger.info(PACKAGE_NAME + " CustomInstall().run() - Starting")
-        super().run()
-
         # Ensure the normal setup() has completed all operations
         self.execute(
             self.swpwrxblock_post_installation, (), msg="Running post install task"
         )
+
+        # copies build to bdist directory in the wheel temporary directory
+        super().run()
         logger.info(PACKAGE_NAME + " CustomInstall().run() - Completed")
 
     ###########################################################################
