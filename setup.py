@@ -32,17 +32,45 @@ class PostInstallCommand(install):
     """
 
     def run(self):
-        # Run the standard installation process
+        """
+        Override the default run() method, adding a post-install method
+        that copies ReactJS build assets.
+        """
         install.run(self)
 
-        # Get the distribution object for the installed package
+        # Ensure the normal setup() has completed all operations
+        self.execute(self.swm_post_install, (), msg="Running post install task")
+
+    def _get_install_path(self):
+        """
+        Get the file system installation path of this package.
+        """
         dist = pkg_resources.get_distribution(PACKAGE_NAME)
-
-        # Determine the installation path
         install_path = dist.location
-        logger.info("PostInstallCommand.run() - installation path: %s", install_path)
+        logger.info(
+            "PostInstallCommand._get_install_path() - installation path: %s",
+            install_path,
+        )
+        return install_path
 
-        # Gather diagnostic information
+    def _set_path(self, install_path):
+        """
+        Append the installation path to the system path in order to ensure that
+        python can find the installed package, and that it can import modules
+        from the installed package.
+        """
+        if install_path not in sys.path:
+            sys.path.append(install_path)
+            logger.info(
+                "PostInstallCommand._set_path() - appending to system path: {}".format(
+                    install_path
+                )
+            )
+
+    def _write_diagnostics(self, install_path):
+        """
+        Write diagnostic information to a file in the current working directory.
+        """
         diagnostic_info = {
             "platform": platform.platform(),
             "python_version": platform.python_version(),
@@ -51,27 +79,25 @@ class PostInstallCommand(install):
             "current_working_directory": os.getcwd(),
         }
 
-        # Write diagnostic information to a file
         diagnostic_file_path = os.path.join(os.getcwd(), "setup_diagnostic_info.out")
         with open(diagnostic_file_path, "w", encoding="utf-8") as diagnostic_file:
             for key, value in diagnostic_info.items():
                 diagnostic_file.write(f"{key}: {value}\n")
+            diagnostic_file.flush()
+            os.fsync(diagnostic_file.fileno())
 
-        # Add the installation path to sys.path to ensure the module can be imported
-        if install_path not in sys.path:
-            sys.path.append(install_path)
-            logger.info(
-                "PostInstallCommand.run() - appending to system path: {}".format(
-                    install_path
-                )
-            )
+    def swm_post_install(self):
+        """
+        Post-installation task to copy assets into the installed package
+        from the ReactJS build, stored in a remote CDN.
+        """
+        install_path = self._get_install_path()
+        self._write_diagnostics(install_path)
+        self._set_path(install_path)
 
-        # Import the copy_assets function from the installed package
         module_name = "swpwrxblock.post_install"
         module = importlib.import_module(module_name)
         copy_assets = getattr(module, "copy_assets")
-
-        # Execute the copy_assets function
         copy_assets()
 
 
@@ -82,7 +108,9 @@ setup(
     license="MIT",
     install_requires=["XBlock", "requests"],
     packages=find_packages(where="."),
-    package_data={"swpwrxblock": ["static/**", "public/**", "translations/**"]},
+    package_data={
+        "swpwrxblock": ["static/**", "public/**", "translations/**", "README.md"]
+    },
     entry_points={"xblock.v1": ["swpwrxblock = swpwrxblock:SWPWRXBlock"]},
     cmdclass={
         "install": PostInstallCommand,
