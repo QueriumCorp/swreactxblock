@@ -12,18 +12,34 @@ import shutil
 import tarfile
 
 # our stuff
-from .const import DEFAULT_ENVIRONMENT, HTTP_TIMEOUT
+from .const import (
+    DEFAULT_ENVIRONMENT,
+    ENVIRONMENT_DEV,
+    ENVIRONMENT_PROD,
+    ENVIRONMENT_STAGING,
+    HTTP_TIMEOUT,
+    VALID_ENVIRONMENTS,
+)
 from .utils import logger, save_logs, validate_path
 
 # The environment ID is used to determine which CDN to download the assets from.
-# It is set as a bash environment variable in the Dockerfile.
-ENVIRONMENT_ID = os.environ.get("ENVIRONMENT_ID", DEFAULT_ENVIRONMENT)
+# It is set as a bash environment variable in the openedx Dockerfile,
+# itself managed by tutor plugin, https://github.com/StepwiseMath/tutor-contrib-stepwise-config
+STEPWISEMATH_ENV = os.environ.get("STEPWISEMATH_ENV", DEFAULT_ENVIRONMENT)
+
+if STEPWISEMATH_ENV not in VALID_ENVIRONMENTS:
+    raise ValueError(
+        f"Invalid value received for STEPWISEMATH_ENV: {STEPWISEMATH_ENV}. "
+        f"Expected one of {VALID_ENVIRONMENTS}. "
+        "Refer to https://github.com/StepwiseMath/tutor-contrib-stepwise-config "
+        "and/or https://github.com/lpm0073/openedx_devops/tree/main/.github/workflows"
+    )
 
 logger("DEBUG: swpwrxblock.post_install import successful")
-logger(f"ENVIRONMENT_ID: {ENVIRONMENT_ID}")
+logger(f"STEPWISEMATH_ENV: {STEPWISEMATH_ENV}")
 
 
-def fix_css_url(css_filename: str, install_path: str):
+def fix_css_url(css_filename: str, build_path: str):
     """
     fix any CSS asset file reference to point at the swpwrxblock static assets directory
     """
@@ -31,7 +47,7 @@ def fix_css_url(css_filename: str, install_path: str):
     if not css_filename:
         raise ValueError("fix_css_url() no value received for css_filename.")
 
-    css_file_path = os.path.join(install_path, "public", "dist", "assets", css_filename)
+    css_file_path = os.path.join(build_path, "public", "dist", "assets", css_filename)
     if not os.path.isfile(css_file_path):
         raise FileNotFoundError(f"fix_css_url() file not found: {css_file_path}")
 
@@ -48,16 +64,14 @@ def fix_css_url(css_filename: str, install_path: str):
     logger(f"updated CSS file {css_file_path}")
 
 
-def copy_assets(install_path: str, bdist_path: str, environment: str = "prod"):
+def copy_assets(build_path: str, bdist_path: str, environment: str = ENVIRONMENT_PROD):
     """
     Download and position ReactJS build assets in the appropriate directories.
     (A) creates the public/ folder in our build directory,
     (B) Untars all of the swpwr dist contents into public/dist.
     """
-    logger(
-        "copy_assets() starting swpwr installation script", install_path=install_path
-    )
-    logger(f"copy_assets() install_path={install_path}")
+    logger("copy_assets() starting swpwr installation script", build_path=build_path)
+    logger(f"copy_assets() build_path={build_path}")
     logger(f"copy_assets() bdist_path={bdist_path}")
 
     # pylint: disable=C0415
@@ -65,9 +79,9 @@ def copy_assets(install_path: str, bdist_path: str, environment: str = "prod"):
 
     # Set the environment based CDN URL
     domain = {
-        "dev": "cdn.dev.stepwisemath.ai",
-        "prod": "cdn.web.stepwisemath.ai",
-        "staging": "cdn.staging.stepwisemath.ai",
+        ENVIRONMENT_DEV: "cdn.dev.stepwisemath.ai",
+        ENVIRONMENT_STAGING: "cdn.staging.stepwisemath.ai",
+        ENVIRONMENT_PROD: "cdn.web.stepwisemath.ai",
     }.get(environment, None)
 
     if domain is None:
@@ -76,7 +90,7 @@ def copy_assets(install_path: str, bdist_path: str, environment: str = "prod"):
     logger(f"downloading ReactJS build assets from {domain}")
 
     # Full pathnames to the swpwr build and public directories
-    i = os.path.join(install_path, "public")
+    i = os.path.join(build_path, "public")
     d = os.path.join(i, "dist")
     b = os.path.join(d, "assets")
 
@@ -243,11 +257,11 @@ def copy_assets(install_path: str, bdist_path: str, environment: str = "prod"):
     logger(f"copy_assets() The top-level Javascript file is {js1}")
     logger(f"copy_assets() The top-level CSS file is {cs1}")
 
-    fix_css_url(css_filename=cs1, install_path=install_path)
+    fix_css_url(css_filename=cs1, build_path=build_path)
 
     # Update the xblock student view HTML file with the new JS and CSS filenames
     swpwrxstudent_html_path = os.path.join(
-        install_path, "static", "html", "swpwrxstudent.html"
+        build_path, "static", "html", "swpwrxstudent.html"
     )
     logger(f"Updating {swpwrxstudent_html_path}")
 
@@ -263,9 +277,11 @@ def copy_assets(install_path: str, bdist_path: str, environment: str = "prod"):
     data = re.sub(
         r'<link rel="module" crossorigin href="/static/xblock/resources/swpwrxblock/public.*$',
         f'<link rel="stylesheet" crossorigin href="/static/xblock/resources/swpwrxblock/public/dist/assets/{cs1}">',
-        data
+        data,
     )
-    logger(f"copy_assets() After replace of {js1} and {cs1} in student view, data is: {data}")
+    logger(
+        f"copy_assets() After replace of {js1} and {cs1} in student view, data is: {data}"
+    )
     # now write out the updated MHTL student view file
     with open(swpwrxstudent_html_path, "w", encoding="utf-8") as file:
         file.write(data)
