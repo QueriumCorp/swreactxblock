@@ -14,17 +14,14 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - alpha
-      - beta
-      - next
-      - next-major
+      - main
 
 jobs:
   bump-version-next:
     runs-on: ubuntu-latest
     env:
-      VERSION_FILE: __version__.py
-      PACKAGE_PATH: ${{ github.workspace }}/api/terraform/python/openai_api/
+      VERSION_FILE: __about__.py
+      PACKAGE_PATH: ${{ github.workspace }}/swpwrxblock/
 
     steps:
       - uses: actions/checkout@v4
@@ -58,7 +55,7 @@ jobs:
         id: current_version
         run: |
           cd ${{ env.PACKAGE_PATH }}
-          echo "CURRENT_VERSION=$(python -c 'from __version__ import __version__; print(__version__)')" >> $GITHUB_ENV
+          echo "CURRENT_VERSION=$(python -c 'from __about__ import __version__; print(__version__)')" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 

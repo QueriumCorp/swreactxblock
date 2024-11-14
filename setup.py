@@ -2,8 +2,12 @@
 """
 pip installation configuration for the Stepwise Power XBlock.
 """
+import io
+
 # python stuff
 import logging
+import os
+from typing import Dict
 
 # 3rd party stuff
 from setuptools import find_packages, setup
@@ -12,14 +16,27 @@ from setuptools import find_packages, setup
 from custom_installer import CustomInstall
 
 PACKAGE_NAME = "stepwise-power-xblock"
+HERE = os.path.abspath(os.path.dirname(__file__))
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
+def load_about() -> Dict[str, str]:
+    about: Dict[str, str] = {}
+    with io.open(
+        os.path.join(HERE, "swpwrxblock", "__about__.py"), "rt", encoding="utf-8"
+    ) as f:
+        exec(f.read(), about)  # pylint: disable=exec-used  # nosec
+    return about
+
+
+ABOUT = load_about()
+
+
 setup(
     name=PACKAGE_NAME,
-    version="18.1.22",
+    version=ABOUT["__version__"],
     description="Stepwise Power XBlock",
     license="MIT",
     install_requires=["XBlock", "requests"],
