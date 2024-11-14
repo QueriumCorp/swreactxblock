@@ -260,9 +260,10 @@ def copy_assets(install_path: str, bdist_path: str, environment: str = "prod"):
     )
     # handle the case where the CSS path has public to make it have react_build/dist/assets
 
-    data = data.replace(
-        '<link rel="module" crossorigin href="/static/xblock/resources/swpwrxblock/public.*$',
+    data = re.sub(
+        r'<link rel="module" crossorigin href="/static/xblock/resources/swpwrxblock/public.*$',
         f'<link rel="stylesheet" crossorigin href="/static/xblock/resources/swpwrxblock/public/dist/assets/{cs1}">',
+        data
     )
     logger(f"copy_assets() After replace of {js1} and {cs1} in student view, data is: {data}")
     # now write out the updated MHTL student view file
