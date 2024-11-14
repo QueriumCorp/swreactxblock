@@ -13,7 +13,7 @@ import tarfile
 
 # our stuff
 from .const import DEFAULT_ENVIRONMENT, HTTP_TIMEOUT
-from .utils import logger, validate_path
+from .utils import logger, save_logs, validate_path
 
 # The environment ID is used to determine which CDN to download the assets from.
 # It is set as a bash environment variable in the Dockerfile.
@@ -275,3 +275,4 @@ def copy_assets(install_path: str, bdist_path: str, environment: str = "prod"):
     # normally pip won't display our logger output unless there is an error, so
     # force an error at the end of setup() so we can review this output
     # validate_path(os.path.join(d, "models", "iDontExist.tsx"))
+    save_logs()
