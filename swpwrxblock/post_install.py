@@ -12,7 +12,14 @@ import shutil
 import tarfile
 
 # our stuff
-from .const import DEFAULT_ENVIRONMENT, HTTP_TIMEOUT, VALID_ENVIRONMENTS
+from .const import (
+    DEFAULT_ENVIRONMENT,
+    ENVIRONMENT_DEV,
+    ENVIRONMENT_PROD,
+    ENVIRONMENT_STAGING,
+    HTTP_TIMEOUT,
+    VALID_ENVIRONMENTS,
+)
 from .utils import logger, save_logs, validate_path
 
 # The environment ID is used to determine which CDN to download the assets from.
@@ -57,7 +64,9 @@ def fix_css_url(css_filename: str, install_path: str):
     logger(f"updated CSS file {css_file_path}")
 
 
-def copy_assets(install_path: str, bdist_path: str, environment: str = "prod"):
+def copy_assets(
+    install_path: str, bdist_path: str, environment: str = ENVIRONMENT_PROD
+):
     """
     Download and position ReactJS build assets in the appropriate directories.
     (A) creates the public/ folder in our build directory,
@@ -74,9 +83,9 @@ def copy_assets(install_path: str, bdist_path: str, environment: str = "prod"):
 
     # Set the environment based CDN URL
     domain = {
-        "dev": "cdn.dev.stepwisemath.ai",
-        "prod": "cdn.web.stepwisemath.ai",
-        "staging": "cdn.staging.stepwisemath.ai",
+        ENVIRONMENT_DEV: "cdn.dev.stepwisemath.ai",
+        ENVIRONMENT_STAGING: "cdn.staging.stepwisemath.ai",
+        ENVIRONMENT_PROD: "cdn.web.stepwisemath.ai",
     }.get(environment, None)
 
     if domain is None:
