@@ -18,7 +18,7 @@ class LoggerBuffer:
 
     _instance = None
     _buffer = []
-    install_path: str = ""
+    build_path: str = ""
 
     def __new__(cls):
         if cls._instance is None:
@@ -37,7 +37,7 @@ class LoggerBuffer:
 
     def save_logs(self):
         buffer = self.get_logs()
-        log_path = os.path.join(self.install_path, "post_install.log")
+        log_path = os.path.join(self.build_path, "post_install.log")
 
         if os.path.exists(log_path):
             os.remove(log_path)
@@ -62,14 +62,14 @@ def validate_path(path):
     logger("validate_path() validated: " + path)
 
 
-def logger(msg: str, install_path: str = None):
+def logger(msg: str, build_path: str = None):
     """
     Print a message to the console.
     """
     if not DEBUG_MODE:
         return
-    if install_path:
-        LoggerBuffer().install_path = install_path
+    if build_path:
+        LoggerBuffer().build_path = build_path
     timestamp = datetime.now().strftime("%Y-%b-%d %H:%M:%S")
     prefix = f"{timestamp}: swpwrxblock"
     LoggerBuffer().log(prefix + " - " + msg)

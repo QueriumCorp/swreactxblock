@@ -60,18 +60,19 @@ class CustomInstall(_install):
         if not os.path.exists(path):
             raise FileNotFoundError(f"verify_path() path not found: {path}")
 
-    def _get_install_path(self):
+    def _get_build_path(self):
         """
-        Get the file system installation path of this package.
+        Get the wheel build path of this package. this is expected to be
+        inside the temporary directory of the wheel build process.
         """
         relative_path = os.path.join(self.build_lib, "swpwrxblock")
-        install_path = os.path.abspath(relative_path)
-        self._verify_path(install_path)
+        build_path = os.path.abspath(relative_path)
+        self._verify_path(build_path)
         logger.info(
-            PACKAGE_NAME + " CustomInstall()._get_install_path(): %s",
-            install_path,
+            PACKAGE_NAME + " CustomInstall()._get_build_path(): %s",
+            build_path,
         )
-        return install_path
+        return build_path
 
     def _get_bdist_path(self):
         """
@@ -79,42 +80,42 @@ class CustomInstall(_install):
         mcdaniel: Can this be removed?
         """
         relative_path = self.install_lib
-        install_path = os.path.abspath(relative_path)
-        self._verify_path(install_path)
+        bdist_path = os.path.abspath(relative_path)
+        self._verify_path(bdist_path)
         logger.info(
             PACKAGE_NAME + " CustomInstall()._get_bdist_path(): %s",
-            install_path,
+            bdist_path,
         )
-        return install_path
+        return bdist_path
 
-    def _set_path(self, install_path):
+    def _set_path(self, build_path):
         """
         Append the installation path to the system path in order to ensure that
         python can find the installed package, and that it can import modules
         from the installed package.
         """
-        if install_path not in sys.path:
-            sys.path.append(install_path)
+        if build_path not in sys.path:
+            sys.path.append(build_path)
             logger.info(
                 PACKAGE_NAME
                 + " CustomInstall()._set_path() - appending to system path: {}".format(
-                    install_path
+                    build_path
                 )
             )
 
-    def _write_diagnostics(self, install_path):
+    def _write_diagnostics(self, build_path):
         """
         Write diagnostic information to a file in the current working directory.
         """
         diagnostic_info = {
             "platform": platform.platform(),
             "python_version": platform.python_version(),
-            "installation_path": install_path,
+            "installation_path": build_path,
             "sys_path": sys.path,
             "current_working_directory": os.getcwd(),
         }
 
-        diagnostic_file_path = os.path.join(install_path, "setup_diagnostic_info.out")
+        diagnostic_file_path = os.path.join(build_path, "setup_diagnostic_info.out")
         with open(diagnostic_file_path, "w", encoding="utf-8") as diagnostic_file:
             for key, value in diagnostic_info.items():
                 diagnostic_file.write(f"{key}: {value}\n")
@@ -132,14 +133,14 @@ class CustomInstall(_install):
         logger.info(
             PACKAGE_NAME + " CustomInstall().swpwrxblock_post_installation() - Starting"
         )
-        install_path = self._get_install_path()
-        self._set_path(install_path)
-        self._write_diagnostics(install_path)
+        build_path = self._get_build_path()
+        self._set_path(build_path)
+        self._write_diagnostics(build_path)
 
         module_name = "swpwrxblock.post_install"
         module = importlib.import_module(module_name)
         copy_assets = getattr(module, "copy_assets")
-        copy_assets(install_path=install_path, bdist_path="")
+        copy_assets(build_path=build_path, bdist_path="")
         logger.info(
             PACKAGE_NAME
             + " CustomInstall().swpwrxblock_post_installation() - completed"
