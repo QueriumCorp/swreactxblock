@@ -17,10 +17,10 @@ from .utils import logger, save_logs, validate_path
 
 # The environment ID is used to determine which CDN to download the assets from.
 # It is set as a bash environment variable in the Dockerfile.
-ENVIRONMENT_ID = os.environ.get("ENVIRONMENT_ID", DEFAULT_ENVIRONMENT)
+STEPWISEMATH_ENV = os.environ.get("STEPWISEMATH_ENV", DEFAULT_ENVIRONMENT)
 
 logger("DEBUG: swpwrxblock.post_install import successful")
-logger(f"ENVIRONMENT_ID: {ENVIRONMENT_ID}")
+logger(f"STEPWISEMATH_ENV: {STEPWISEMATH_ENV}")
 
 
 def fix_css_url(css_filename: str, install_path: str):
@@ -263,9 +263,11 @@ def copy_assets(install_path: str, bdist_path: str, environment: str = "prod"):
     data = re.sub(
         r'<link rel="module" crossorigin href="/static/xblock/resources/swpwrxblock/public.*$',
         f'<link rel="stylesheet" crossorigin href="/static/xblock/resources/swpwrxblock/public/dist/assets/{cs1}">',
-        data
+        data,
     )
-    logger(f"copy_assets() After replace of {js1} and {cs1} in student view, data is: {data}")
+    logger(
+        f"copy_assets() After replace of {js1} and {cs1} in student view, data is: {data}"
+    )
     # now write out the updated MHTL student view file
     with open(swpwrxstudent_html_path, "w", encoding="utf-8") as file:
         file.write(data)
