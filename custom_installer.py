@@ -114,7 +114,7 @@ class CustomInstall(_install):
             "current_working_directory": os.getcwd(),
         }
 
-        diagnostic_file_path = os.path.join(os.getcwd(), "setup_diagnostic_info.out")
+        diagnostic_file_path = os.path.join(install_path, "setup_diagnostic_info.out")
         with open(diagnostic_file_path, "w", encoding="utf-8") as diagnostic_file:
             for key, value in diagnostic_info.items():
                 diagnostic_file.write(f"{key}: {value}\n")
