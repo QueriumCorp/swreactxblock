@@ -74,3 +74,7 @@ def logger(msg: str, install_path: str = None):
     prefix = f"{timestamp}: swpwrxblock"
     LoggerBuffer().log(prefix + " - " + msg)
     print(prefix + " - " + msg)
+
+
+def save_logs():
+    LoggerBuffer().save_logs()

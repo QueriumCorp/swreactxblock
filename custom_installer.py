@@ -76,6 +76,7 @@ class CustomInstall(_install):
     def _get_bdist_path(self):
         """
         Get the file system pip wheel bdist path for this package.
+        mcdaniel: Can this be removed?
         """
         relative_path = self.install_lib
         install_path = os.path.abspath(relative_path)
@@ -132,9 +133,8 @@ class CustomInstall(_install):
             PACKAGE_NAME + " CustomInstall().swpwrxblock_post_installation() - Starting"
         )
         install_path = self._get_install_path()
-        # bdist_path = os.path.join(self._get_bdist_path(), "wheel", "swpwrxblock")
-        self._write_diagnostics(install_path)
         self._set_path(install_path)
+        self._write_diagnostics(install_path)
 
         module_name = "swpwrxblock.post_install"
         module = importlib.import_module(module_name)

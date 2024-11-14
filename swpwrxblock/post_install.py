@@ -13,7 +13,7 @@ import tarfile
 
 # our stuff
 from .const import DEFAULT_ENVIRONMENT, HTTP_TIMEOUT
-from .utils import logger, validate_path
+from .utils import logger, save_logs, validate_path
 
 # The environment ID is used to determine which CDN to download the assets from.
 # It is set as a bash environment variable in the Dockerfile.
@@ -166,41 +166,42 @@ def copy_assets(install_path: str, bdist_path: str, environment: str = "prod"):
 
     validate_path(os.path.join(d, "BabyFox", "BabyFox.svg"))
 
-    validate_path(os.path.join(d, "assets", "DailyMotion-Bb7kos7h.js"))
-    validate_path(os.path.join(d, "assets", "Facebook-DLhvQtLB.js"))
-    validate_path(os.path.join(d, "assets", "FilePlayer-CIfFZ4b8.js"))
-    validate_path(os.path.join(d, "assets", "KaTeX_AMS-Regular-BQhdFMY1.woff2"))
-    validate_path(os.path.join(d, "assets", "KaTeX_Caligraphic-Bold-Dq_IR9rO.woff2"))
-    validate_path(os.path.join(d, "assets", "KaTeX_Caligraphic-Regular-Di6jR-x-.woff2"))
-    validate_path(os.path.join(d, "assets", "KaTeX_Fraktur-Bold-CL6g_b3V.woff2"))
-    validate_path(os.path.join(d, "assets", "KaTeX_Fraktur-Regular-CTYiF6lA.woff2"))
-    validate_path(os.path.join(d, "assets", "KaTeX_Main-Bold-Cx986IdX.woff2"))
-    validate_path(os.path.join(d, "assets", "KaTeX_Main-BoldItalic-DxDJ3AOS.woff2"))
-    validate_path(os.path.join(d, "assets", "KaTeX_Main-Italic-NWA7e6Wa.woff2"))
-    validate_path(os.path.join(d, "assets", "KaTeX_Main-Regular-B22Nviop.woff2"))
-    validate_path(os.path.join(d, "assets", "KaTeX_Math-BoldItalic-CZnvNsCZ.woff2"))
-    validate_path(os.path.join(d, "assets", "KaTeX_Math-Italic-t53AETM-.woff2"))
-    validate_path(os.path.join(d, "assets", "KaTeX_SansSerif-Bold-D1sUS0GD.woff2"))
-    validate_path(os.path.join(d, "assets", "KaTeX_SansSerif-Italic-C3H0VqGB.woff2"))
-    validate_path(os.path.join(d, "assets", "KaTeX_SansSerif-Regular-DDBCnlJ7.woff2"))
-    validate_path(os.path.join(d, "assets", "KaTeX_Script-Regular-D3wIWfF6.woff2"))
-    validate_path(os.path.join(d, "assets", "KaTeX_Size1-Regular-mCD8mA8B.woff2"))
-    validate_path(os.path.join(d, "assets", "KaTeX_Size2-Regular-Dy4dx90m.woff2"))
-    validate_path(os.path.join(d, "assets", "KaTeX_Size4-Regular-Dl5lxZxV.woff2"))
-    validate_path(os.path.join(d, "assets", "KaTeX_Typewriter-Regular-CO6r4hn1.woff2"))
-    validate_path(os.path.join(d, "assets", "Kaltura-Do9z9Dhq.js"))
-    validate_path(os.path.join(d, "assets", "Mixcloud-xxYATmwO.js"))
-    validate_path(os.path.join(d, "assets", "Mux-C777p6u5.js"))
-    validate_path(os.path.join(d, "assets", "Preview-D76yD220.js"))
-    validate_path(os.path.join(d, "assets", "SoundCloud-V2Z7FnWf.js"))
-    validate_path(os.path.join(d, "assets", "Streamable-BRrsjUGO.js"))
-    validate_path(os.path.join(d, "assets", "Twitch-BM4Su8GF.js"))
-    validate_path(os.path.join(d, "assets", "Vidyard-CGoH-OJj.js"))
-    validate_path(os.path.join(d, "assets", "Vimeo-C6QJtfs2.js"))
-    validate_path(os.path.join(d, "assets", "Wistia-Ah2BW4ms.js"))
-    validate_path(os.path.join(d, "assets", "YouTube-rlL1waAH.js"))
-    validate_path(os.path.join(d, "assets", "index-B_VqGgJi.css"))
-    validate_path(os.path.join(d, "assets", "index-BdxI-PSa.js"))
+    # we no longer validate paths with hashes in the filename so the code isn't tied to the filenames in the react app distribution
+    # validate_path(os.path.join(d, "assets", "DailyMotion-Bb7kos7h.js"))
+    # validate_path(os.path.join(d, "assets", "Facebook-DLhvQtLB.js"))
+    # validate_path(os.path.join(d, "assets", "FilePlayer-CIfFZ4b8.js"))
+    # validate_path(os.path.join(d, "assets", "KaTeX_AMS-Regular-BQhdFMY1.woff2"))
+    # validate_path(os.path.join(d, "assets", "KaTeX_Caligraphic-Bold-Dq_IR9rO.woff2"))
+    # validate_path(os.path.join(d, "assets", "KaTeX_Caligraphic-Regular-Di6jR-x-.woff2"))
+    # validate_path(os.path.join(d, "assets", "KaTeX_Fraktur-Bold-CL6g_b3V.woff2"))
+    # validate_path(os.path.join(d, "assets", "KaTeX_Fraktur-Regular-CTYiF6lA.woff2"))
+    # validate_path(os.path.join(d, "assets", "KaTeX_Main-Bold-Cx986IdX.woff2"))
+    # validate_path(os.path.join(d, "assets", "KaTeX_Main-BoldItalic-DxDJ3AOS.woff2"))
+    # validate_path(os.path.join(d, "assets", "KaTeX_Main-Italic-NWA7e6Wa.woff2"))
+    # validate_path(os.path.join(d, "assets", "KaTeX_Main-Regular-B22Nviop.woff2"))
+    # validate_path(os.path.join(d, "assets", "KaTeX_Math-BoldItalic-CZnvNsCZ.woff2"))
+    # validate_path(os.path.join(d, "assets", "KaTeX_Math-Italic-t53AETM-.woff2"))
+    # validate_path(os.path.join(d, "assets", "KaTeX_SansSerif-Bold-D1sUS0GD.woff2"))
+    # validate_path(os.path.join(d, "assets", "KaTeX_SansSerif-Italic-C3H0VqGB.woff2"))
+    # validate_path(os.path.join(d, "assets", "KaTeX_SansSerif-Regular-DDBCnlJ7.woff2"))
+    # validate_path(os.path.join(d, "assets", "KaTeX_Script-Regular-D3wIWfF6.woff2"))
+    # validate_path(os.path.join(d, "assets", "KaTeX_Size1-Regular-mCD8mA8B.woff2"))
+    # validate_path(os.path.join(d, "assets", "KaTeX_Size2-Regular-Dy4dx90m.woff2"))
+    # validate_path(os.path.join(d, "assets", "KaTeX_Size4-Regular-Dl5lxZxV.woff2"))
+    # validate_path(os.path.join(d, "assets", "KaTeX_Typewriter-Regular-CO6r4hn1.woff2"))
+    # validate_path(os.path.join(d, "assets", "Kaltura-Do9z9Dhq.js"))
+    # validate_path(os.path.join(d, "assets", "Mixcloud-xxYATmwO.js"))
+    # validate_path(os.path.join(d, "assets", "Mux-C777p6u5.js"))
+    # validate_path(os.path.join(d, "assets", "Preview-D76yD220.js"))
+    # validate_path(os.path.join(d, "assets", "SoundCloud-V2Z7FnWf.js"))
+    # validate_path(os.path.join(d, "assets", "Streamable-BRrsjUGO.js"))
+    # validate_path(os.path.join(d, "assets", "Twitch-BM4Su8GF.js"))
+    # validate_path(os.path.join(d, "assets", "Vidyard-CGoH-OJj.js"))
+    # validate_path(os.path.join(d, "assets", "Vimeo-C6QJtfs2.js"))
+    # validate_path(os.path.join(d, "assets", "Wistia-Ah2BW4ms.js"))
+    # validate_path(os.path.join(d, "assets", "YouTube-rlL1waAH.js"))
+    # validate_path(os.path.join(d, "assets", "index-B_VqGgJi.css"))
+    # validate_path(os.path.join(d, "assets", "index-BdxI-PSa.js"))
 
     validate_path(os.path.join(d, "models", "FoxyFuka.glb"))
     validate_path(os.path.join(d, "models", "foxy-compressed.glb"))
@@ -225,6 +226,7 @@ def copy_assets(install_path: str, bdist_path: str, environment: str = "prod"):
     logger("copy_assets() re-writing swpwr_version.json")
     with open(os.path.join(b, "swpwr_version.json"), "w", encoding="utf-8") as f:
         f.write(f'{{"version": "{version}"}}')
+    logger(f"copy_assets() swpwr_version.json is now set for {version}")
 
     # change the bugfender.com API version tag in swpwrxblock.py
     with open("swpwrxblock/swpwrxblock.py", "r", encoding="utf-8") as file:
@@ -257,10 +259,13 @@ def copy_assets(install_path: str, bdist_path: str, environment: str = "prod"):
         f'<script type="module" crossorigin src="/static/xblock/resources/swpwrxblock/public/dist/assets/{js1}"></script>',
     )
     # handle the case where the CSS path has public to make it have react_build/dist/assets
-    data = data.replace(
-        '<link rel="module" crossorigin href="/static/xblock/resources/swpwrxblock/public.*$',
+
+    data = re.sub(
+        r'<link rel="module" crossorigin href="/static/xblock/resources/swpwrxblock/public.*$',
         f'<link rel="stylesheet" crossorigin href="/static/xblock/resources/swpwrxblock/public/dist/assets/{cs1}">',
+        data
     )
+    logger(f"copy_assets() After replace of {js1} and {cs1} in student view, data is: {data}")
     # now write out the updated MHTL student view file
     with open(swpwrxstudent_html_path, "w", encoding="utf-8") as file:
         file.write(data)
@@ -271,3 +276,4 @@ def copy_assets(install_path: str, bdist_path: str, environment: str = "prod"):
     # normally pip won't display our logger output unless there is an error, so
     # force an error at the end of setup() so we can review this output
     # validate_path(os.path.join(d, "models", "iDontExist.tsx"))
+    save_logs()
