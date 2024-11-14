@@ -12,12 +12,21 @@ import shutil
 import tarfile
 
 # our stuff
-from .const import DEFAULT_ENVIRONMENT, HTTP_TIMEOUT
+from .const import DEFAULT_ENVIRONMENT, HTTP_TIMEOUT, VALID_ENVIRONMENTS
 from .utils import logger, save_logs, validate_path
 
 # The environment ID is used to determine which CDN to download the assets from.
-# It is set as a bash environment variable in the Dockerfile.
+# It is set as a bash environment variable in the openedx Dockerfile,
+# itself managed by tutor plugin, https://github.com/StepwiseMath/tutor-contrib-stepwise-config
 STEPWISEMATH_ENV = os.environ.get("STEPWISEMATH_ENV", DEFAULT_ENVIRONMENT)
+
+if STEPWISEMATH_ENV not in VALID_ENVIRONMENTS:
+    raise ValueError(
+        f"Invalid value received for STEPWISEMATH_ENV: {STEPWISEMATH_ENV}. "
+        f"Expected one of {VALID_ENVIRONMENTS}. "
+        "Refer to https://github.com/StepwiseMath/tutor-contrib-stepwise-config "
+        "and/or https://github.com/lpm0073/openedx_devops/tree/main/.github/workflows"
+    )
 
 logger("DEBUG: swpwrxblock.post_install import successful")
 logger(f"STEPWISEMATH_ENV: {STEPWISEMATH_ENV}")
