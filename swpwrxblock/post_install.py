@@ -179,7 +179,6 @@ def copy_assets(build_path: str, bdist_path: str, environment: str = None):
     validate_path(os.path.join(d, "sadPanda.svg"))
     validate_path(os.path.join(d, "site.webmanifest"))
     validate_path(os.path.join(d, "stats.html"))
-    validate_path(os.path.join(d, "vite.svg"))
 
     validate_path(os.path.join(d, "BabyFox", "BabyFox.svg"))
 
