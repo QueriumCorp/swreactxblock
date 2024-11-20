@@ -269,21 +269,28 @@ def copy_assets(build_path: str, bdist_path: str, environment: str = None):
 
     with open(swpwrxstudent_html_path, "r", encoding="utf-8") as file:
         data = file.read()
-    # handle the case where the JS path has public to make it have react_build/dist/assets
-    data = data.replace(
-        '<script type="module" crossorigin src="/static/xblock/resources/swpwrxblock/public.*$',
-        f'<script type="module" crossorigin src="/static/xblock/resources/swpwrxblock/public/dist/assets/{js1}"></script>',
+    logger(
+        f"copy_assets() Before replace with js1={js1} and cs1={cs1} in student view, data is:\n{data}"
     )
-    # handle the case where the CSS path has public to make it have react_build/dist/assets
-
+    # handle the legacy case where the JS path has public/ to make it have public/dist/assets/
+    # Note that the path snippet 'dist/' was optional for backward compatibility
     data = re.sub(
-        r'<link rel="module" crossorigin href="/static/xblock/resources/swpwrxblock/public.*$',
+        r'<script type="module" crossorigin src="/static/xblock/resources/swpwrxblock/public.*"></script>$',
+        f'<script type="module" crossorigin src="/static/xblock/resources/swpwrxblock/public/dist/assets/{js1}"></script>',
+        data,
+        flags=re.MULTILINE
+    )
+    # handle the legacy case where the CSS path has public/ to make it have public/dist/assets/
+    data = re.sub(
+        r'<link rel="stylesheet" crossorigin href="/static/xblock/resources/swpwrxblock/public.*">$',
         f'<link rel="stylesheet" crossorigin href="/static/xblock/resources/swpwrxblock/public/dist/assets/{cs1}">',
         data,
+        flags=re.MULTILINE
     )
     logger(
-        f"copy_assets() After replace of {js1} and {cs1} in student view, data is: {data}"
+        f"copy_assets() After replace with js1={js1} and cs1={cs1} in student view, data is:\n{data}"
     )
+
     # now write out the updated MHTL student view file
     with open(swpwrxstudent_html_path, "w", encoding="utf-8") as file:
         file.write(data)
