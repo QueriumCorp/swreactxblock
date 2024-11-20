@@ -20,6 +20,11 @@ logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 logger = logging.getLogger(__name__)
 logger.info("custom_installer.py - Imported")
 
+# The environment ID is used to determine which CDN to download the assets from.
+# It is set as a bash environment variable in the openedx Dockerfile,
+# itself managed by tutor plugin, https://github.com/StepwiseMath/tutor-contrib-stepwise-config
+STEPWISEMATH_ENV = os.environ.get("STEPWISEMATH_ENV")
+
 
 class CustomInstall(_install):
     """
@@ -140,7 +145,7 @@ class CustomInstall(_install):
         module_name = "swpwrxblock.post_install"
         module = importlib.import_module(module_name)
         copy_assets = getattr(module, "copy_assets")
-        copy_assets(build_path=build_path, bdist_path="")
+        copy_assets(build_path=build_path, bdist_path="", environment=STEPWISEMATH_ENV)
         logger.info(
             PACKAGE_NAME
             + " CustomInstall().swpwrxblock_post_installation() - completed"
