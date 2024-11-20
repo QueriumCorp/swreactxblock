@@ -5,7 +5,6 @@ pip installation configuration for the Stepwise Power XBlock.
 import io
 
 # python stuff
-import logging
 import os
 from typing import Dict
 
@@ -17,9 +16,6 @@ from custom_installer import CustomInstall
 
 PACKAGE_NAME = "stepwise-power-xblock"
 HERE = os.path.abspath(os.path.dirname(__file__))
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 def load_about() -> Dict[str, str]:
