@@ -1,40 +1,25 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=E0401
-"""StepWise Power xblock questions can contain up to 10 variants. The xblock remembers which variants the student has
+"""StepWise Power xblock
+
+Note that legacy (non-POWER) stepwise xblock questions can contain up to 10 variants. This xblock code remembers which variants the student has
 attempted and if the student requests a new variant, we will try to assign one that has not yet been attempted. Once the
 student has attempted all available variants, if they request another variant, we will clear the list of attempted
-variants and start assigning variants over again.
+variants and start assigning variants over again. For the POWER xblock we have only implemented one variant per
+xblock, but some of the variant-related code remains. Caveat Utilitor.
 
-We count question attempts made by the student. We don't consider an attempt to have begun until the student submits
-their first step in the attempt, or requests a hint, or requests to see the worked-out solution ('ShowMe'). We use a
-callback from the StepWise UI client code to know that the student has begun their attempt.
+When the student completes work on the StepWise POWER problem (aka 'victory'), we use a callback from the StepWise UI client code
+to record the student's score on that attempt.  We also receive a separate callback after the student completes each operation
+in the app's 5 POWER phases. There are about a dozen separate event types that we receive these intermediate callbacks for.
 
-An attempt isn't counted until the student submits their first step since the student can visit the question, then leave
-the question without doing any work, and come back later. We don't want to wait until after the student submits their
-final answer to count the attempt to prevent the student from (1) visiting the problem, (2) clicking show solution,
-(3) writing down the steps, and (4) reloading the browser web page. In this scenario the student has seen the steps to
-the solution, but is not charged for an attempt.
-
-When the student completes work on the StepWise problem ('victory'), we use a callback from the StepWise UI client code
-to record the student's score on that attempt.
-
-We use the CompletableXBlockMixin to support reporting whether work on this xblock is complete.  The emit_completion
+We use the CompletableXBlockMixin to support reporting whether student work on an xblock is complete.  The emit_completion
 call supports a range from 0.0 (0% complete) to 1.0 (100% complete).  We use only those min and max values.
 We could support partial complation, but we don't.  We just want to control whether a green check will appear in the LMS
 for this xblock once the student has completed all 5 phases of the POWER problem.
 
-The Javascript code in this xblock displays the score and steps on the student's most recent attempt (only).
-
-Note that the xblock Python code's logic for computing the score is somewhat duplicated in the xblock's Javascript code
-since the Javascript is responsible for updating the information displayed to the student on their results, and the
-Python code does not currently provide this detailed scoring data down to the Javascript code. It may be possible for
-the results of the scoring callback POST to return the scoring details to the Javascript code for display, but this is
-not currently done. Thus, if you need to update the scoring logic here in Python, you need to check the Javascript
-source in js/src/swpwrxstudent.js to make sure you don't also have to change the score display logic there.
-
-To support resuming work on a partially-completed swpwr problem, when we initialize the window.swpwr structure to pass to the
-swpwr React app, we check to see whether there are previous results persisted in self.swpwr_results.  If so, we
-unpack that attribute and pass oldSession and oldLog back to the React app as additional attributes in window.swpwr.
+To support resuming work on a partially-completed swpwr problem, we check to see whether there are previous results persisted
+in self.swpwr_results when we initialize the window.swpwr structure to pass to the swpwr React app.  If so, we
+unpack that swpwr_results attribute and pass oldSession and oldLog back to the React app as two additional attributes in window.swpwr.
 
 The swpwr_problem_hints field is optional, and looks like this:
 swpwr.problem.wpHints = [
@@ -122,7 +107,6 @@ logger = getLogger(__name__)
 DEBUG = True
 DEFAULT_RANK = "cadet"  # What we'll use for a rank if not modified by the user/default
 
-TEST_MODE = False
 """The general idea is that we'll determine which question parameters to pass to the StepWise client before invoking it,
 making use of course-wide StepWise defaults if set.
 
@@ -1243,180 +1227,10 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableXBl
                 )
             )
 
-        # HEAD ASSETS
-        # <!DOCTYPE html>
-        # <html lang="en">
-        #   <head>
-        #     <meta charset="utf-8" />
-        #     <link rel="icon" href="/favicon.ico" />
-        #     <meta name="viewport" content="width=device-width, initial-scale=1" />
-        #     <meta name="theme-color" content="#000000" />
-        #     <meta
-        #       name="description"
-        #       content="Web site created using create-react-app"
-        #     />
-        #     <link rel="apple-touch-icon" href="/logo192.png" />
-        #     <!--
-        #       manifest.json provides metadata used when your web app is installed on a
-        #       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-        #     -->
-        #     <link rel="manifest" href="/manifest.json" />
-        #
-        #     <title>Querium StepWise Power</title>
-        #
-        #     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        #     <script src="https://stepwise.querium.com/libs/mathquill/mathquill.js"></script>
-        #
-        #     <!-- #### START OF STEPWISE STUFF #### -->
-        #     <link
-        #       rel="stylesheet"
-        #       id="options_typography_Open+Sans:400,700-css"
-        #       href="https://fonts.googleapis.com/css?family=Open+Sans:400,700"
-        #       type="text/css"
-        #       media="all"
-        #     />
-        #     <link
-        #       rel="stylesheet"
-        #       id="options_typography_Lato:300,900-css"
-        #       href="https://fonts.googleapis.com/css?family=Lato:300,900"
-        #       type="text/css"
-        #       media="all"
-        #     />
-        #
-        #     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        #     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        #     <!--[if lt IE 9]>
-        #       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        #       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        #     <![endif]-->
-        #
-        #     <!-- MathJax is required as is support for Latex, MathML and ASCIIMath -->
-        #     <script
-        #       type="text/javascript"
-        #       async
-        #       src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"
-        #     ></script>
-        #     <script type="text/x-mathjax-config">
-        #       MathJax.Hub.Config({ messageStyle: 'none', skipStartupTypeset: true, showMathMenu: true, tex2jax: { preview: 'none' }, asciimath2jax: { delimiters: [['`','`'],['``','``']], preview: "none" }, AsciiMath: {displaystyle: false} }); MathJax.Hub.Register.LoadHook("[MathJax]/extensions/asciimath2jax.js",function () { var AM = MathJax.Extension.asciimath2jax, CREATEPATTERNS = AM.createPatterns; AM.createPatterns = function () { var result = CREATEPATTERNS.call(this); this.match['``'].mode = ";mode=display"; return result; }; }); MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready",function () { var AM = MathJax.InputJax.AsciiMath; AM.postfilterHooks.Add(function (data) { if (data.script.type.match(/;mode=display/)) {data.math.root.display = "block"} return data; }); });
-        #     </script>
-        #
-        #     <link
-        #       rel="stylesheet"
-        #       type="text/css"
-        #       media="screen"
-        #       href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
-        #     />
-
-        #     <script type="text/javascript">
-        #       function getInternetExplorerVersion() {
-        #         // Returns the version of Internet Explorer or a -1 (indicating the use of another browser).
-        #         var rv = -1; // Return value assumes failure.
-        #         if (navigator.appName == "Microsoft Internet Explorer") {
-        #           var ua = navigator.userAgent;
-        #           var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
-        #           if (re.exec(ua) != null) {
-        #             rv = parseFloat(RegExp.$1);
-        #           }
-        #         }
-        #         return rv;
-        #       }
-        #
-        #       var ieVer = getInternetExplorerVersion();
-        #       if (ieVer > 2 && ieVer < 10) {
-        #         alert(
-        #           "Sorry, you are using an obsolete version of Internet Explorer. Querium has been designed for the secure, modern web.  Querium joins Microsoft in encouraging you to upgrade to Internet Explorer 10 or 11."
-        #         );
-        #         window.open(
-        #           "http://blogs.msdn.com/b/ie/archive/2014/08/07/stay-up-to-date-with-internet-explorer.aspx",
-        #           "_self"
-        #         );
-        #       }
-        #     </script>
-        #
-        #     <!-- Loads the Lato font used by default in the StepWise UI. Can be     -->
-        #     <!-- overridden with a cascaded style sheet                             -->
-        #     <link
-        #       href="https://fonts.googleapis.com/css?family=Lato"
-        #       rel="stylesheet"
-        #     />
-        #     <link
-        #       href="https://fonts.googleapis.com/css?family=Oswald"
-        #       rel="stylesheet"
-        #     />
-        #
-        #     <!-- REQUIRED CSS files for Querium StepWise Client                     -->
-        #     <link
-        #       rel="stylesheet"
-        #       type="text/css"
-        #       href="https://stepwise.querium.com/libs/mathquill/mathquill.css"
-        #     />
-        #     <!-- REQUIRED for the chip components -->
-        #     <link
-        #       rel="stylesheet"
-        #       href="https://cdn.jsdelivr.net/gh/mlaursen/react-md@5.1.4/themes/react-md.teal-pink-200-light.min.css"
-        #     />
-        #     <link
-        #       rel="stylesheet"
-        #       type="text/css"
-        #       href="https://stepwise.querium.com/client/querium-stepwise-1.6.8.css"
-        #     />
-        #
-        #     <!-- REQUIRED Javascript files for Querium StepWise Client -->
-        #     <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
-        #     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-        #     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.min.js"></script>
-        #     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
-        #
-        #     <script
-        #       type="text/javascript"
-        #       src="https://stepwise.querium.com/client/querium-stepwise-1.6.8.1-sw4wp.js"
-        #     ></script>
-        #
-        #     <!-- Set this to true to enable logging -->
-        #     <script>
-        #       querium.qEvalLogging = true;
-        #     </script>
-        #
-        #     <!-- #### END OF STEPWISE STUFF #### -->
-        #   </head>
-        ###
-
-        # Build content programatticaly that looks like the above HTML
-
-        # DEBUG TEST
-        my_test_url = self.runtime.local_resource_url(self, "blue_brain.png")
-        if DEBUG:
-            logger.info(
-                "SWPWRXBlock student_view() KENT my_test_url={r}".format(r=my_test_url)
-            )
-
         # NOTE: The following page now includes the script tag that loads the module for the main React app
         html = self.resource_string("static/html/swpwrxstudent.html")
         frag = Fragment(html.format(self=self))
 
-        # index.html assets
-        # <html lang="en">
-        #   <head>
-        #     <meta charset="UTF-8" />
-        #     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        #     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        #     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        #     <link rel="manifest" href="/site.webmanifest" />
-        #     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        #     <link rel="preconnect" href="https://fonts.googleapis.com" />
-        #
-        #     <link rel="preconnect" href="https://fonts.googleapis.com" />
-        #     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        #     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Irish+Grover&family=Sura:wght@400;700&display=swap" rel="stylesheet" />
-        #
-        #     <title>StepWise Power</title>
-        #   </head>
-        #   <body>
-        #     <div id="root"></div>
-        #     <script type="module" src="/public/main.tsx"></script>
-        #   </body>
-        # </html>
-        ####
         frag.add_resource('<meta charset="UTF-8"/>', "text/html", "head")
         frag.add_resource(
             '<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />',
@@ -1433,8 +1247,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableXBl
             "text/html",
             "head",
         )
-        # Don't add site.webmanifest to eliminate 404 error since we need to give a deep path in the xblock static assets on the LMS server
-        # frag.add_resource('<link rel="manifest" href="/site.webmanifest" />','text/html','head')
         frag.add_resource(
             '<meta name="viewport" content="width=device-width,initial-scale=1.0"/>',
             "text/html",
@@ -1456,349 +1268,238 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableXBl
             "head",
         )
         frag.add_resource("<title>Querium StepWise Power</title>", "text/html", "head")
-        # root div is in swpwrxstudent.html
-        # html_string = '<div id="root"></div>'
-        # frag.add_content(html_string)
-
-        # resource_string = self.resource_string("public/android-chrome-192x192.png")
-        # if DEBUG: logger.info('SWPWRXBlock student_view() KENT example resource_string={r}'.format(r=resource_string))
-        # Force a script tag of module type to hold the main React app file
-        # html_string = '<script type="module" src="public/index-YyiH-LRh.js"></script>'
-        # frag.add_content(html_string)
-
-        # Apparently jQuery already loaded
-        # HIDEME        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
-        # NOTYET        frag.add_javascript_url("//stepwise.querium.com/libs/mathquill/mathquill.js")
-        # NOTYET        frag.add_css_url("//fonts.googleapis.com/css?family=Open+Sans:400,700")
-        # NOTYET        frag.add_css_url("//fonts.googleapis.com/css?family=Lato:300,900")
-        # NOTYET         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        # NOTYET     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        # NOTYET     <!--[if lt IE 9]>
-        # NOTYET       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        # NOTYET       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        # NOTYET     <![endif]-->
-        #                Bootstrap CSS
-        # NOTYET        frag.add_javascript_url("//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_HTMLorMML")
-        # NOTYET        frag.add_resource('<script type="text/x-mathjax-config">MathJax.Hub.Config({ messageStyle: \'none\', skipStartupTypeset: true, showMathMenu: true, tex2jax: { preview: \'none\' }, asciimath2jax: { delimiters: [[\'`\',\'`\'],[\'``\',\'``\']], preview: "none" }, AsciiMath: {displaystyle: false} }); MathJax.Hub.Register.LoadHook("[MathJax]/extensions/asciimath2jax.js",function () { var AM = MathJax.Extension.asciimath2jax, CREATEPATTERNS = AM.createPatterns; AM.createPatterns = function () { var result = CREATEPATTERNS.call(this); this.match[\'``\'].mode = ";mode=display"; return result; }; }); MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready",function () { var AM = MathJax.InputJax.AsciiMath; AM.postfilterHooks.Add(function (data) { if (data.script.type.match(/;mode=display/)) {data.math.root.display = "block"} return data; }); });</script>','text/html','head')
-        # NOTYET        frag.add_css_url("//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css")
-        # NOTYET Don't include this for now.  Just running on iPads
-        #         frag.add_resource('<script type="text/javascript">function getInternetExplorerVersion(){var e=-1;if("Microsoft Internet Explorer"==navigator.appName){var r=navigator.userAgent;null!=new RegExp("MSIE ([0-9]{1,}[.0-9]{0,})").exec(r)&&(e=parseFloat(RegExp.$1))}return e}var ieVer=getInternetExplorerVersion();2<ieVer&&ieVer<10&&(alert("Sorry, you are using an obsolete version of Internet Explorer. Querium has been designed for the secure, modern web.  Querium joins Microsoft in encouraging you to upgrade to Internet Explorer 10 or 11."),window.open("http://blogs.msdn.com/b/ie/archive/2014/08/07/stay-up-to-date-with-internet-explorer.aspx","_self"))</script>','text/html','head')
-
-        # NOTYET        frag.add_css_url("//fonts.googleapis.com/css?family=Lato")
-        # NOTYET        frag.add_css_url("//fonts.googleapis.com/css?family=Oswald")
-        # NOTYET        frag.add_css_url("//stepwise.querium.com/libs/mathquill/mathquill.css")
-        # NOTYET        # <!-- REQUIRED for the chip components -->
-        # NOTYET        frag.add_css_url("//cdn.jsdelivr.net/gh/mlaursen/react-md@5.1.4/themes/react-md.teal-pink-200-light.min.css")
-        # NOTYET        frag.add_css_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.8.1-sw4wp.css")
-        # NOTYET        frag.add_javascript_url("//www.gstatic.com/firebasejs/4.4.0/firebase.js")               # For qEval client-side logging
-        # NOTYET        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js")
-        # NOTYET        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.min.js")
-        # NOTYET        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js")
-        # NOTYET        frag.add_javascript_url("//stepwiseai.querium.com/client/querium-stepwise-1.6.8.1-sw4wp.js")
 
         frag.add_css(self.resource_string("static/css/swpwrxstudent.css"))
         frag.add_javascript(self.resource_string("static/js/src/swpwrxstudent.js"))
 
-        # WASIN2022        frag.add_content('<script>querium.qEvalLogging=true;</script>')
-
         # Now we can finally add the React app bundle assets
-
-        # WASIN2022        frag.add_css(self.resource_string("public/assets/app.css"))
-
-        # NOTINJVR        frag.add_resource('<base
-        # href="/testq_assets/"/>','text/html','head')           # Needed so react
-        # code can find its pages. Don't do earlier or impacts relative pathnames
-        # of resources
-
         frag.add_javascript(
             self.resource_string("static/js/src/final_callback.js")
         )  # Final submit callback code and define swpwr_problems[]
 
-        if TEST_MODE:
+        # Add our own snippet of javascript code so we can add debugging code on
+        # the fly without re-building the xblock
+        frag.add_javascript_url(
+            "//swm-openedx-us-dev-storage.s3.us-east-2.amazonaws.com/static/js/swpwrxblock.js"
+        )
+        # Add bugfender library for console log capture
+        frag.add_javascript_url("//js.bugfender.com/bugfender-v2.js")
+        frag.add_resource(
+            "<script type=\"module\"> Bugfender.init({ appKey: 'rLBi6ZTSwDd3FEM8EhHlrlQRXpiHvZkt', apiURL: 'https://api.bugfender.com/', baseURL: 'https://dashboard.bugfender.com/', version: '1.9.203'}); Bugfender.setDeviceKey('username', '"
+            + self.xb_user_username
+            + "'); </script>",
+            "text/html",
+            "head",
+        )
+        # Invalid schema choices should be a CSV list of one or more of these: "TOTAL", "DIFFERENCE", "CHANGEINCREASE", "CHANGEDECREASE", "EQUALGROUPS", and "COMPARE"
+        # Invalid schema choices can also be the official names: "additiveTotalSchema", "additiveDifferenceSchema", "additiveChangeSchema", "subtractiveChangeSchema", "multiplicativeEqualGroupsSchema", and "multiplicativeCompareSchema"
+        # Convert the upper-case names to the 'official' names. NB: The order of
+        # .replace() calls might matter if one of these schema names is a
+        # substring of another name.
+        invalid_schemas_js = self.q_swpwr_invalid_schemas
+        if DEBUG:
+            logger.info(
+                "SWPWRXBlock student_view() before mapping loop invalid_schemas_js={e}".format(
+                    e=invalid_schemas_js
+                )
+            )
+        mapping = {
+            "TOTAL": "additiveTotalSchema",
+            "DIFFERENCE": "additiveDifferenceSchema",
+            "CHANGEINCREASE": "additiveChangeSchema",
+            "CHANGEDECREASE": "subtractiveChangeSchema",
+            "EQUALGROUPS": "multiplicativeEqualGroupsSchema",
+            "COMPARE": "multiplicativeCompareSchema",
+        }
+        for schema_key, schema_value in mapping.items():
+            invalid_schemas_js = invalid_schemas_js.replace(
+                schema_key, schema_value
+            )
             if DEBUG:
                 logger.info(
-                    "SWPWRXBlock student_view() TEST_MODE={e}".format(e=TEST_MODE)
-                )
-            ###
-            # Resources from index.html
-            # <html lang="en">
-            #   <head>
-            #     <meta charset="UTF-8" />
-            #     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-            #     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-            #     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-            #     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            #     <title>testReactxBlock</title>
-            #     <script>
-            #       window.swpwr = {
-            #         options: {
-            #           swapiUrl: "https://swapi2.onrender.com/",
-            #           gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/",
-            #         },
-            #       };
-            #     </script>
-            #   </head>
-            #   <body>
-            #     <div id="root"></div>
-            #     <script type="module" src="/public/main.tsx"></script>
-            #   </body>
-            # </html>
-            ###
-            # frag.add_resource('<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>','text/html','head')
-            # frag.add_resource('<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>','text/html','head')
-            # frag.add_resource('<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>','text/html','head')
-            # frag.add_resource('<meta name="viewport" content="width=device-width, initial-scale=1.0" />','text/html','head')
-            #
-            # TODO: have to add the problem and student fields to the snippet_string
-            # mid_string = '$(function() {'+snippet_string     # Add jQuery function start
-            # final_string = mid_string+'});'                 # Adds final '});' for the jQuery function
-            # frag.add_resource(final_string,'application/javascript','foot')
-            frag.add_javascript_url(
-                "//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/assets/index-CIesktn4.js"
-            )
-            # html_string = '<div id="root"></div>'
-            # frag.add_content(html_string)
-        else:
-            # Add our own snippet of javascript code so we can add debugging code on
-            # the fly without re-building the xblock
-            frag.add_javascript_url(
-                "//swm-openedx-us-dev-storage.s3.us-east-2.amazonaws.com/static/js/swpwrxblock.js"
-            )
-            # Add bugfender library for console log capture
-            frag.add_javascript_url("//js.bugfender.com/bugfender-v2.js")
-            frag.add_resource(
-                "<script type=\"module\"> Bugfender.init({ appKey: 'rLBi6ZTSwDd3FEM8EhHlrlQRXpiHvZkt', apiURL: 'https://api.bugfender.com/', baseURL: 'https://dashboard.bugfender.com/', version: '1.9.203'}); Bugfender.setDeviceKey('username', '"
-                + self.xb_user_username
-                + "'); </script>",
-                "text/html",
-                "head",
-            )
-            # Invalid schema choices should be a CSV list of one or more of these: "TOTAL", "DIFFERENCE", "CHANGEINCREASE", "CHANGEDECREASE", "EQUALGROUPS", and "COMPARE"
-            # Invalid schema choices can also be the official names: "additiveTotalSchema", "additiveDifferenceSchema", "additiveChangeSchema", "subtractiveChangeSchema", "multiplicativeEqualGroupsSchema", and "multiplicativeCompareSchema"
-            # Convert the upper-case names to the 'official' names. NB: The order of
-            # .replace() calls might matter if one of these schema names is a
-            # substring of another name.
-            invalid_schemas_js = self.q_swpwr_invalid_schemas
-            if DEBUG:
-                logger.info(
-                    "SWPWRXBlock student_view() before mapping loop invalid_schemas_js={e}".format(
-                        e=invalid_schemas_js
+                    "SWPWRXBlock student_view() in mapping loop schema_key={k} schema_value={v} invalid_schemas_js={e}".format(
+                        k=schema_key, v=schema_value, e=invalid_schemas_js
                     )
                 )
-            mapping = {
-                "TOTAL": "additiveTotalSchema",
-                "DIFFERENCE": "additiveDifferenceSchema",
-                "CHANGEINCREASE": "additiveChangeSchema",
-                "CHANGEDECREASE": "subtractiveChangeSchema",
-                "EQUALGROUPS": "multiplicativeEqualGroupsSchema",
-                "COMPARE": "multiplicativeCompareSchema",
-            }
-            for schema_key, schema_value in mapping.items():
-                invalid_schemas_js = invalid_schemas_js.replace(
-                    schema_key, schema_value
-                )
-                if DEBUG:
-                    logger.info(
-                        "SWPWRXBlock student_view() in mapping loop schema_key={k} schema_value={v} invalid_schemas_js={e}".format(
-                            k=schema_key, v=schema_value, e=invalid_schemas_js
-                        )
-                    )
 
-            swpwr_string = (
-                "window.swpwr = {"
-                )
-            # If we have persisted previous results in self.swpwr_results, pass those results back to the swpwr React app
+        # We use the window.swpwr DOM element to communicate the POWER problem definition to the React app.
+        # We construct that Javascript structure here.
+
+        swpwr_string = (
+            "window.swpwr = {"
+            )
+        # If we have persisted previous results in self.swpwr_results, pass those results back to the swpwr React app
+        # in the 'oldSession' and 'oldLog' attributes.
+        try:
+           swpwr_results = self.swpwr_results
+        except (NameError, AttributeError) as e:
+           if DEBUG:
+              logger.info(
+                 "SWPWRXBlock save_grade() self.swpwr_results was not defined when building swpwr_string: {e}".format(e=e)
+              )
+              swpwr_results = ""
+
+        if (len(swpwr_results) > 0):
+            # Parse any existing JSON results string to a 2-element Python list of [session and log[]]
             try:
-               swpwr_results = self.swpwr_results
-            except (NameError, AttributeError) as e:
+               json_array = json.loads(swpwr_results)
+            except Exception as e:
+               logger.error(
+                  "SWPWRXBlock student_view() in setting swpwr_string could not load json from swpwr_results: {e}".format(e=e)
+               )
+            else:
+               session_element = json_array[0]
+               log_element =     json_array[1]
+
+               # Convert the first element back to a JSON string
+               session_element_string = json.dumps(session_element)
+
+               # Convert the second element back to a JSON string
+               log_element_string = json.dumps(log_element)
+
                if DEBUG:
-                  logger.info(
-                     "SWPWRXBlock save_grade() self.swpwr_results was not defined when building swpwr_string: {e}".format(e=e)
-                  )
-                  swpwr_results = ""
-
-            if (len(swpwr_results) > 0):
-                # Parse any existing JSON results string to a 2-element Python list of [session and log[]]
-                try:
-                   json_array = json.loads(swpwr_results)
-                except Exception as e:
-                   logger.error(
-                      "SWPWRXBlock student_view() in setting swpwr_string could not load json from swpwr_results: {e}".format(e=e)
+                   logger.info(
+                       "SWPWRXBlock student_view() in setting swpwr_string session_element_str={s}".format(
+                           s=session_element_string
+                       )
                    )
-                else:
-                   session_element = json_array[0]
-                   log_element =     json_array[1]
-
-                   # Convert the first element back to a JSON string
-                   session_element_string = json.dumps(session_element)
-
-                   # Convert the second element back to a JSON string
-                   log_element_string = json.dumps(log_element)
-
-                   if DEBUG:
-                       logger.info(
-                           "SWPWRXBlock student_view() in setting swpwr_string session_element_str={s}".format(
-                               s=session_element_string
-                           )
+                   logger.info(
+                       "SWPWRXBlock student_view() in setting swpwr_string log_element_str={l}".format(
+                           l=log_element_string
                        )
-                       logger.info(
-                           "SWPWRXBlock student_view() in setting swpwr_string log_element_str={l}".format(
-                               l=log_element_string
-                           )
-                       )
-                   swpwr_string = ( swpwr_string
-                       + "    oldSession: '"
-                       + str(session_element_string).replace("'", "&apos;")
-                       + "',"
-                       + "    oldLog: '"
-                       + str(log_element_string).replace("'", "&apos;")
-                       + "',"
-                       )
-            swpwr_string = ( swpwr_string
-                + "    options: {"
-                + '        swapiUrl: "https://swapi2.onrender.com", '
-                + '        gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/", '
-                + '        rank: "'
-                + self.q_swpwr_rank
-                + '", '
-                + '        disabledSchemas: "'
-                + invalid_schemas_js
-                + '"'
-                + "    }, "
-                + "    student: { "
-                + '        studentId: "'
-                + self.xb_user_username
-                + '", '
-                + '        fullName: "'
-                + self.xb_user_fullname
-                + '", '
-                + '        familiarName: "'
-                + "NONE"
-                + '"'
-                + "    },"
-                + "    problem: { "
-                + '        appKey: "'
-                + self.q_grade_app_key
-                + '", '
-                + '        policyId: "'
-                + "$A9$"
-                + '", '
-                + '        problemId: "'
-                + self.q_id
-                + '", '
-                + '        title: "'
-                + "SAMPLE"
-                + '", '
-                + "        stimulus: '"
-                + str(self.q_stimulus).replace("'", "&apos;")
-                + "', "
-                + '        topic: "'
-                + "gradeBasicAlgebra"
-                + '", '
-                + "        definition: '"
-                + str(self.q_definition).replace("'", "&apos;")
-                + "', "
-                + "        wpHintsString: '"
-                + str(self.q_swpwr_problem_hints).replace("'", "&apos;")
-                + "', "
-                + "        mathHints: ["
-                + '                   "'
-                + str(self.q_hint1).replace("'", "&apos;").replace('"', "&quot;")
-                + '",'
-                + '                   "'
-                + str(self.q_hint2).replace("'", "&apos;").replace('"', "&quot;")
-                + '",'
-                + '                   "'
-                + str(self.q_hint3).replace("'", "&apos;").replace('"', "&quot;")
-                + '"'
-                + "                   ]"
-                + "    },"
-                + "    handlers: {"
-                + "        onComplete: (session,log) => {"
-                + '            console.info("onComplete session",session);'
-                + '            console.info("onComplete log",log);'
-                + '            console.info("onComplete handlerUrlSwpwrFinalResults",handlerUrlSwpwrFinalResults);'
-                + "            const solution = [session,log];"
-                + "            var solution_string = JSON.stringify(solution);"
-                + '            console.info("onComplete solution_string",solution_string);'
-                + "            $.ajax({"
-                + '                type: "POST",'
-                + "                url: handlerUrlSwpwrFinalResults,"
-                + "                data: solution_string,"
-                + "                success: function (data,msg) {"
-                + '                    console.info("onComplete solution POST success");'
-                + '                    console.info("onComplete solution POST data",data);'
-                + '                    console.info("onComplete solution POST msg",msg);'
-                + "                },"
-                + "                error: function(XMLHttpRequest, textStatus, errorThrown) {"
-                + '                    console.info("onComplete solution POST error textStatus=",textStatus," errorThrown=",errorThrown);'
-                + "                }"
-                + "            });"
-                + "            $('.problem-complete').show();"
-                + "            $('.unit-navigation').show();"
-                + "        },"
-                + "        onStep: (session,log) => {"
-                + '            console.info("onStep session",session);'
-                + '            console.info("onStep log",log);'
-                + '            console.info("onStep handlerUrlSwpwrPartialResults",handlerUrlSwpwrPartialResults);'
-                + "            const solution = [session,log];"
-                + "            var solution_string = JSON.stringify(solution);"
-                + '            console.info("onStep solution_string",solution_string);'
-                + "            $.ajax({"
-                + '                type: "POST",'
-                + "                url: handlerUrlSwpwrPartialResults,"
-                + "                data: solution_string,"
-                + "                success: function (data,msg) {"
-                + '                    console.info("onStep solution POST success");'
-                + '                    console.info("onStep solution POST data",data);'
-                + '                    console.info("onStep solution POST msg",msg);'
-                + "                },"
-                + "                error: function(XMLHttpRequest, textStatus, errorThrown) {"
-                + '                    console.info("onStep solution POST error textStatus=",textStatus," errorThrown=",errorThrown);'
-                + "                }"
-                + "            });"
-                + "        }"
-                + "    }"
-                + "};"
-                + "try { "
-                + '    console.log( "before JSON.parse wpHintsString ",window.swpwr.problem.wpHintsString);'
-                + "    window.swpwr.problem.wpHints = JSON.parse(window.swpwr.problem.wpHintsString);"
-                + '    console.log( "wpHints data is ",window.swpwr.problem.wpHints );'
-                + "} catch(e) {"
-                + '    console.log( "Could not decode wpHints string",e.message );'
-                + "};"
+                   )
+               swpwr_string = ( swpwr_string
+                   + "    oldSession: '"
+                   + str(session_element_string).replace("'", "&apos;")
+                   + "',"
+                   + "    oldLog: '"
+                   + str(log_element_string).replace("'", "&apos;")
+                   + "',"
+                   )
+
+        # Once we have dealt with adding oldSession and oldLog to swpwr_string if necessary, we set the rest of the problem attributes:
+        # 'options', 'student', 'problem', and 'handlers'
+        # The 'handlers' attribute are for our callbacks: onComplete and onStep.
+
+        swpwr_string = ( swpwr_string
+            + "    options: {"
+            + '        swapiUrl: "https://swapi2.onrender.com", '
+            + '        gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/", '
+            + '        rank: "'
+            + self.q_swpwr_rank
+            + '", '
+            + '        disabledSchemas: "'
+            + invalid_schemas_js
+            + '"'
+            + "    }, "
+            + "    student: { "
+            + '        studentId: "'
+            + self.xb_user_username
+            + '", '
+            + '        fullName: "'
+            + self.xb_user_fullname
+            + '", '
+            + '        familiarName: "'
+            + "NONE"
+            + '"'
+            + "    },"
+            + "    problem: { "
+            + '        appKey: "'
+            + self.q_grade_app_key
+            + '", '
+            + '        policyId: "'
+            + "$A9$"
+            + '", '
+            + '        problemId: "'
+            + self.q_id
+            + '", '
+            + '        title: "'
+            + "SAMPLE"
+            + '", '
+            + "        stimulus: '"
+            + str(self.q_stimulus).replace("'", "&apos;")
+            + "', "
+            + '        topic: "'
+            + "gradeBasicAlgebra"
+            + '", '
+            + "        definition: '"
+            + str(self.q_definition).replace("'", "&apos;")
+            + "', "
+            + "        wpHintsString: '"
+            + str(self.q_swpwr_problem_hints).replace("'", "&apos;")
+            + "', "
+            + "        mathHints: ["
+            + '                   "'
+            + str(self.q_hint1).replace("'", "&apos;").replace('"', "&quot;")
+            + '",'
+            + '                   "'
+            + str(self.q_hint2).replace("'", "&apos;").replace('"', "&quot;")
+            + '",'
+            + '                   "'
+            + str(self.q_hint3).replace("'", "&apos;").replace('"', "&quot;")
+            + '"'
+            + "                   ]"
+            + "    },"
+            + "    handlers: {"
+            + "        onComplete: (session,log) => {"
+            + '            console.info("onComplete session",session);'
+            + '            console.info("onComplete log",log);'
+            + '            console.info("onComplete handlerUrlSwpwrFinalResults",handlerUrlSwpwrFinalResults);'
+            + "            const solution = [session,log];"
+            + "            var solution_string = JSON.stringify(solution);"
+            + '            console.info("onComplete solution_string",solution_string);'
+            + "            $.ajax({"
+            + '                type: "POST",'
+            + "                url: handlerUrlSwpwrFinalResults,"
+            + "                data: solution_string,"
+            + "                success: function (data,msg) {"
+            + '                    console.info("onComplete solution POST success");'
+            + '                    console.info("onComplete solution POST data",data);'
+            + '                    console.info("onComplete solution POST msg",msg);'
+            + "                },"
+            + "                error: function(XMLHttpRequest, textStatus, errorThrown) {"
+            + '                    console.info("onComplete solution POST error textStatus=",textStatus," errorThrown=",errorThrown);'
+            + "                }"
+            + "            });"
+            + "            $('.problem-complete').show();"
+            + "            $('.unit-navigation').show();"
+            + "        },"
+            + "        onStep: (session,log) => {"
+            + '            console.info("onStep session",session);'
+            + '            console.info("onStep log",log);'
+            + '            console.info("onStep handlerUrlSwpwrPartialResults",handlerUrlSwpwrPartialResults);'
+            + "            const solution = [session,log];"
+            + "            var solution_string = JSON.stringify(solution);"
+            + '            console.info("onStep solution_string",solution_string);'
+            + "            $.ajax({"
+            + '                type: "POST",'
+            + "                url: handlerUrlSwpwrPartialResults,"
+            + "                data: solution_string,"
+            + "                success: function (data,msg) {"
+            + '                    console.info("onStep solution POST success");'
+            + '                    console.info("onStep solution POST data",data);'
+            + '                    console.info("onStep solution POST msg",msg);'
+            + "                },"
+            + "                error: function(XMLHttpRequest, textStatus, errorThrown) {"
+            + '                    console.info("onStep solution POST error textStatus=",textStatus," errorThrown=",errorThrown);'
+            + "                }"
+            + "            });"
+            + "        }"
+            + "    }"
+            + "};"
+            + "try { "
+            + '    console.log( "before JSON.parse wpHintsString ",window.swpwr.problem.wpHintsString);'
+            + "    window.swpwr.problem.wpHints = JSON.parse(window.swpwr.problem.wpHintsString);"
+            + '    console.log( "wpHints data is ",window.swpwr.problem.wpHints );'
+            + "} catch(e) {"
+            + '    console.log( "Could not decode wpHints string",e.message );'
+            + "};"
+        )
+        if DEBUG:
+            logger.info(
+                "SWPWRXBlock student_view() swpwr_string={e}".format(e=swpwr_string)
             )
-            if DEBUG:
-                logger.info(
-                    "SWPWRXBlock student_view() swpwr_string={e}".format(e=swpwr_string)
-                )
-            frag.add_resource(swpwr_string, "application/javascript", "foot")
-            # Emit the Python dict into the HTML as Javascript object
-            # json_string = json.dumps(swpwr_problem_template,separators=(',', ':'))
-            # javascript_string = '      window.swpwr_problem_template = '+json_string+';'
-            # javascript_string = javascript_string+'window.swpwr_problems.push(window.swpwr_problem_template);console.info("window.swpwr_problems.length=",window.swpwr_problems.length);'
-            # if DEBUG: logger.info("SWPWRXBlock student_view() swpwr_problem_template final javascript={j}".format(j=javascript_string))
-            # frag.add_javascript(javascript_string)     # SWPWR problem to work.
-
-            # Load up the React app bundle js, and wrap it as needed so it does not run until after the DOM is completely loaded
-            # bundle_string = self.resource_string("public/assets/app.js")
-
-            # if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string head={e}".format(e=bundle_string[0:100]))
-            # if DEBUG: logger.info("SWPWRXBlock student_view() bundle_string tail={e}".format(e=bundle_string[len(bundle_string)-100:]))
-            # # Wrap the bundle js in a jQuery function so it runs after the DOM finishes loading, to emulate the 'defer' action of a <script> tag in the React index.html
-            # mid_string = '$(function() {'+bundle_string     # Add jQuery function start
-            # if DEBUG: logger.info("SWPWRXBlock student_view() mid_string head={e}".format(e=mid_string[0:100]))
-            # if DEBUG: logger.info("SWPWRXBlock student_view() mid_string tail={e}".format(e=mid_string[len(mid_string)-100:]))
-            # # Add jQuery function ending.
-            # final_string = mid_string+'});'                 # Adds final '});' for the jQuery function
-            # if DEBUG: logger.info("SWPWRXBlock student_view() final_string head={e}".format(e=final_string[0:100]))
-            # if DEBUG: logger.info("SWPWRXBlock student_view() final_string tail={e}".format(e=final_string[len(final_string)-100:]))
-            # frag.add_javascript_url("//s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/public/index-YyiH-LRh.js")  # This gets a CORB error
-            # frag.add_javascript_url("public/index-YyiH-LRh.js") # Need to update any time swpwr gets rebuilt
-            # frag.add_javascript(self.resource_string("public/index-YyiH-LRh.js")) # Need to update any time swpwr gets rebuilt
-            # This script module apparently cannot be generated using the Fragment library, so we'll next try hard coding it into the page template.
-            # frag.add_resource('<script type="module" src="/public/index-YyiH-LRh.js"></script>','application/javascript','head')
-            # frag.add_resource(final_string,'application/javascript','foot')
+        frag.add_resource(swpwr_string, "application/javascript", "foot")
 
         frag.initialize_js("SWPWRXStudent", {})  # Call the entry point
         return frag
@@ -1856,24 +1557,11 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableXBl
                         s=self.url_name
                     )
                 )
-        # We no longer need to store solution. Disable tis temporarily.
-        # self.solution = {}
-        # if we managed to store a two-element list in the solution Dict, fix it
-        # if type(self.solution) in [list,tuple]:
-        #     my_dict['session'] = self.solution[0]
-        #     if len(self.solution) > 1:
-        #         my_dict['log'] = self.solution[1]
-        #     else:
-        #         my_dict['log'] = []
-        #     self.solution = my_dict
-        #     logger.info('SWPWRXBlock save() solution converted list to Dict: {e}'.format(e=self.solution))
         try:
             XBlock.save(self)  # Call parent class save()
-        # except (NameError,AttributeError,InvalidScopeError) as e:
         # pylint: disable=W0718
         except Exception as e:
             logger.info("SWPWRXBlock save() had an error: {e}".format(e=e))
-        # if DEBUG: logger.info("SWPWRXBlock save() back from parent save. self.solution={s}".format(s=self.solution))
         if DEBUG:
             logger.info(
                 "SWPWRXBlock save() back from parent save. self.swpwr_results={s}".format(
@@ -2075,82 +1763,12 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableXBl
                 )
             q_grade_app_key = "SBIRPhase2"
 
-        #
-        # NOTE: Don't count min_steps on the POWER xblock
-        #         """
-        #         Count the total number of VALID steps the student input.
-        #         Used to determine if they get full credit for entering at least a min number of good steps.
-        #         """
-        #         valid_steps = 0
-        #         if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps data={d}".format(d=data))
-        #         step_details = data['stepDetails']
-        #         if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps step_details={d}".format(d=step_details))
-        #         if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps len(step_details)={l}".format(l=len(step_details)))
-        #         for c in range(len(step_details)):
-        #             if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps begin examine step c={c} step_details[c]={d}".format(c=c,d=step_details[c]))
-        #             for i in range (len(step_details[c]['info'])):
-        #                 if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps examine step c={c} i={i} step_details[c]['info']={s}".format(c=c,i=i,s=step_details[c]['info']))
-        #                 if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps examine step c={c} i={i} step_details[c]['info'][i]={s}".format(c=c,i=i,s=step_details[c]['info'][i]))
-        #                 step_status = step_details[c]['info'][i]['status']
-        #                 if (step_status == 0):       # victory valid_steps += 1
-        #                     valid_steps += 1
-        #                     if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps c={c} i={i} victory step found".format(c=c,i=i))
-        #                 elif (step_status == 1):     # valid step
-        #                     valid_steps += 1
-        #                     if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps c={c} i={i} valid step found".format(c=c,i=i))
-        #                 elif (step_status == 3):     # invalid step
-        #                     valid_steps += 0         # don't count invalid steps
-        #                 else:
-        #                     if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps c={c} i={i} ignoring step_status={s}".format(c=c,i=i,s=step_status))
-        #                 if DEBUG: logger.info("SWPWRXBlock save_grade() count valid_steps examine step c={c} i={i} step_status={s} valid_steps={v}".format(c=c,i=i,s=step_status,v=valid_steps))
-        #         if DEBUG: logger.info("SWPWRXBlock save_grade() final valid_steps={v}".format(v=valid_steps))
-        #
-        #         grade=3.0
-        #         max_grade=grade
-
         # Track whether they've completed it or not and assign 1.0 points if they have completed the problem
         if self.is_answered:
             grade = 1.0
         else:
             grade = 0.0
 
-        #
-        # NOTE: Don't count the number of errors in the swpwrxblock
-        #
-        #         if DEBUG: logger.info('SWPWRXBlock save_grade() initial grade={a} errors={b} errors_count={c} hints={d} hints_count={e} showme={f} min_steps={g} valid_steps={h}'.format(a=grade,b=data['errors'],c=q_grade_errors_count,d=data['hints'],e=q_grade_hints_count,f=data['usedShowMe'],g=q_grade_min_steps_count,h=valid_steps))
-        #         if data['errors']>q_grade_errors_count:
-        #             grade=grade-q_grade_errors_ded
-        #             if DEBUG: logger.info('SWPWRXBlock save_grade() errors test errors_ded={a} grade={b}'.format(a=q_grade_errors_ded,b=grade))
-        #         if data['hints']>q_grade_hints_count:
-        #             grade=grade-q_grade_hints_ded
-        #             if DEBUG: logger.info('SWPWRXBlock save_grade() hints test hints_ded={a} grade={b}'.format(a=q_grade_hints_ded,b=grade))
-        #         if data['usedShowMe']:
-        #             grade=grade-q_grade_showme_ded
-        #             if DEBUG: logger.info('SWPWRXBlock save_grade() showme test showme_ded={a} grade={b}'.format(a=q_grade_showme_ded,b=grade))
-        #
-        #         # Don't subtract min_steps points on a MatchSpec problem or DomainOf
-        #         self.my_q_definition = data['answered_question']['q_definition']
-        #         if DEBUG: logger.info('SWPWRXBlock save_grade() check on min_steps deduction grade={g} max_grade={m} q_grade_min_steps_count={c} q_grade_min_steps_ded={d} self.my_q_definition={q} self.q_grade_app_key={k}'.format(g=grade,m=max_grade,c=q_grade_min_steps_count,d=q_grade_min_steps_ded,q=self.my_q_definition,k=self.q_grade_app_key))
-        #         if (grade >= max_grade and valid_steps < q_grade_min_steps_count and self.my_q_definition.count('MatchSpec') == 0 and self.my_q_definition.count('DomainOf') == 0 ):
-        #             grade=grade-q_grade_min_steps_ded
-        #             if DEBUG: logger.info('SWPWRXBlock save_grade() took min_steps deduction after grade={g}'.format(g=grade))
-        #         else:
-        #             if DEBUG: logger.info('SWPWRXBlock save_grade() did not take min_steps deduction after grade={g}'.format(g=grade))
-        #
-        #         if grade<0.0:
-        #             logger.info('SWPWRXBlock save_grade() zero negative grade')
-        #             grade=0.0
-        #
-        #         if DEBUG: logger.info("SWPWRXBlock save_grade() final grade={a} q_weight={b}".format(a=grade,b=q_weight))
-
-        # The following now handled below by publish_grade() after save() is complete:
-        # self.runtime.publish(self, 'grade',
-        #     {   'value': (grade/3.0)*weight,
-        #         'max_value': 1.0*weight
-        #     })
-
-        # NOTE: Don't assume 3 points per problem in swpwrxblock
-        #         self.raw_earned = (grade/3.0)*weight
         self.raw_earned = grade
 
         if DEBUG:
@@ -2160,8 +1778,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableXBl
 
         if DEBUG:
             logger.info("SWPWRXBlock save_grade() final data={a}".format(a=data))
-        # self.solution = data
-        # if DEBUG: logger.info("SWPWRXBlock save_grade() final self.solution={a}".format(a=self.solution))
         self.grade = grade
         if DEBUG:
             logger.info("SWPWRXBlock save_grade() grade={a}".format(a=self.grade))
@@ -2260,7 +1876,6 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableXBl
                     v=self.previous_variant
                 )
             )
-        # logger.info("SWPWRXBlock start_attempt() action={d} sessionId={s} timeMark={t}".format(d=data['status']['action'],s=data['status']['sessionId'],t=data['status']['timeMark']))
         if DEBUG:
             logger.info(
                 "SWPWRXBlock start_attempt() passed q_index={q}".format(
