@@ -1595,6 +1595,55 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
 
             swpwr_string = (
                 "window.swpwr = {"
+                )
+            # If we have persisted previous results in self.swpwr_results, pass those results back to the swpwr React app
+            try:
+               swpwr_results = self.swpwr_results
+            except (NameError, AttributeError) as e:
+               if DEBUG:
+                  logger.info(
+                     "SWPWRXBlock save_grade() self.swpwr_results was not defined when building swpwr_string: {e}".format(e=e)
+                  )
+                  swpwr_results = ""
+
+            if (len(swpwr_results) > 0):
+                # Parse any existing JSON results string to a 2-element Python list of [session and log[]]
+                try:
+                   json_array = json.loads(swpwr_results)
+                except Exception as e:
+                   logger.error(
+                      "SWPWRXBlock student_view() in setting swpwr_string could not load json from swpwr_results: {e}".format(e=e)
+                   )
+                else:
+                   session_element = json_array[0]
+                   log_element =     json_array[1]
+
+                   # Convert the first element back to a JSON string
+                   session_element_string = json.dumps(session_element)
+
+                   # Convert the second element back to a JSON string
+                   log_element_string = json.dumps(log_element)
+
+                   if DEBUG:
+                       logger.info(
+                           "SWPWRXBlock student_view() in setting swpwr_string session_element_str={s}".format(
+                               s=session_element_string
+                           )
+                       )
+                       logger.info(
+                           "SWPWRXBlock student_view() in setting swpwr_string log_element_str={l}".format(
+                               l=log_element_string
+                           )
+                       )
+                   swpwr_string = ( swpwr_string
+                       + "    oldSession: '"
+                       + str(session_element_string).replace("'", "&apos;")
+                       + "',"
+                       + "    oldLog: '"
+                       + str(log_element_string).replace("'", "&apos;")
+                       + "',"
+                       )
+            swpwr_string = ( swpwr_string
                 + "    options: {"
                 + '        swapiUrl: "https://swapi2.onrender.com", '
                 + '        gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/", '
