@@ -33,7 +33,7 @@ ABOUT = load_about()
 setup(
     name=PACKAGE_NAME,
     version=ABOUT["__version__"],
-    description="Stepwise Power XBlock",
+    description="Stepwise POWER XBlock",
     license="MIT",
     install_requires=["XBlock", "requests"],
     packages=find_packages(where="."),
