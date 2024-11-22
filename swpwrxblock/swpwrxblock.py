@@ -18,6 +18,11 @@ the solution, but is not charged for an attempt.
 When the student completes work on the StepWise problem ('victory'), we use a callback from the StepWise UI client code
 to record the student's score on that attempt.
 
+We use the CompletableXBlockMixin to support reporting whether work on this xblock is complete.  The emit_completion
+call supports a range from 0.0 (0% complete) to 1.0 (100% complete).  We use only those min and max values.
+We could support partial complation, but we don't.  We just want to control whether a green check will appear in the LMS
+for this xblock once the student has completed all 5 phases of the POWER problem.
+
 The Javascript code in this xblock displays the score and steps on the student's most recent attempt (only).
 
 Note that the xblock Python code's logic for computing the score is somewhat duplicated in the xblock's Javascript code
@@ -26,6 +31,10 @@ Python code does not currently provide this detailed scoring data down to the Ja
 the results of the scoring callback POST to return the scoring details to the Javascript code for display, but this is
 not currently done. Thus, if you need to update the scoring logic here in Python, you need to check the Javascript
 source in js/src/swpwrxstudent.js to make sure you don't also have to change the score display logic there.
+
+To support resuming work on a partially-completed swpwr problem, when we initialize the window.swpwr structure to pass to the
+swpwr React app, we check to see whether there are previous results persisted in self.swpwr_results.  If so, we
+unpack that attribute and pass oldSession and oldLog back to the React app as additional attributes in window.swpwr.
 
 The swpwr_problem_hints field is optional, and looks like this:
 swpwr.problem.wpHints = [
@@ -58,9 +67,10 @@ The flow of saving results is:
                 (b) calls XBlock.save() to persist our object data
         (D) publish_grade,  which should call
               self.runtime.publish
+        (E) call self.emit_completion(1.0) to report that we are complete (1.0)
 
     save_swpwr_partial_results(data) does the same as save_swpwr_final_results(),
-        except it sets self.is_answered=False
+        except it sets self.is_answered=False and self.emit_completion(0.0)
 
 NOTE: the url_name field in this xblock records a UUID for this xblock instance. This url_name field was added so this
 xblock looks like every other standard type of xblock to the OpenEdX runtime (e.g chapter, sequential, vertical, problem).
@@ -88,6 +98,7 @@ from xblock.core import XBlock
 from xblock.fields import Boolean, Dict, Float, Integer, Scope, String
 from xblock.scorable import ScorableXBlockMixin, Score
 from xblock.utils.studio_editable import StudioEditableXBlockMixin
+from xblock.completable import CompletableXBlockMixin
 
 # pylint: disable=W0718,C0103
 try:
@@ -126,7 +137,7 @@ attempt.
 
 
 @XBlock.wants("user")
-class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
+class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableXBlockMixin, XBlock):
     """This xblock provides up to 10 variants of a question for delivery using the StepWise UI."""
 
     has_author_view = True  # tells the xblock to not ignore the AuthorView
@@ -2466,9 +2477,12 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                     r=self.swpwr_results
                 )
             )
-        self.save_grade(data)  # Includes publishing out results to persist them
+        self.save_grade(data)  # Includes publishing our results to persist them
         if DEBUG:
             logger.info("SWPWRXBlock save_swpwr_final_results() back from save_grade")
+        self.emit_completion(1.0)   # Report that we are complete
+        if DEBUG:
+            logger.info("SWPWRXBlock save_swpwr_partial_results() back from emit_completion(1.0)")
         return {"result": "success"}
 
     # SWPWR PARTIAL RESULTS: Save the interim results of the SWPWR React app as a stringified structure.
@@ -2486,9 +2500,12 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, XBlock):
                     r=self.swpwr_results
                 )
             )
-        self.save_grade(data)  # Includes publishing out results to persist them
+        self.save_grade(data)  # Includes publishing our results to persist them
         if DEBUG:
             logger.info("SWPWRXBlock save_swpwr_partial_results() back from save_grade")
+        self.emit_completion(0.0)   # Report that we are NOT complete
+        if DEBUG:
+            logger.info("SWPWRXBlock save_swpwr_partial_results() back from emit_completion(0.0)")
         return {"result": "success"}
 
     # Do necessary overrides from ScorableXBlockMixin
