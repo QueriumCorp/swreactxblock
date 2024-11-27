@@ -1370,10 +1370,10 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableXBl
                    )
                swpwr_string = ( swpwr_string
                    + "    oldSession: '"
-                   + str(session_element_string).replace("'", "&apos;")
+                   + session_element_string.replace("'", "&apos;")
                    + "',"
                    + "    oldLog: '"
-                   + str(log_element_string).replace("'", "&apos;")
+                   + log_element_string.replace("'", "&apos;")
                    + "',"
                    )
 
