@@ -1376,6 +1376,16 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableXBl
                    + log_element_string.replace("'", "&apos;")
                    + "',"
                    )
+        else
+               # If no previous attempt data, set these to empty values
+               swpwr_string = ( swpwr_string
+                   + "    oldSession: '"
+                   + "{}"
+                   + "',"
+                   + "    oldLog: '"
+                   + "[]"
+                   + "',"
+                   )
 
         # Once we have dealt with adding oldSession and oldLog to swpwr_string if necessary, we set the rest of the problem attributes:
         # 'options', 'student', 'problem', and 'handlers'
