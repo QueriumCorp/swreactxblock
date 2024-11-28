@@ -2097,7 +2097,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableXBl
             logger.info("SWPWRXBlock save_swpwr_final_results() back from save_grade")
         self.emit_completion(1.0)   # Report that we are complete
         if DEBUG:
-            logger.info("SWPWRXBlock save_swpwr_partial_results() back from emit_completion(1.0)")
+            logger.info("SWPWRXBlock save_swpwr_final_results() back from emit_completion(1.0)")
         return {"result": "success"}
 
     # SWPWR PARTIAL RESULTS: Save the interim results of the SWPWR React app as a stringified structure.
