@@ -2094,11 +2094,17 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableXBl
                 "SWPWRXBlock save_swpwr_final_results() data={d}".format(d=data)
             )
         self.swpwr_results = json.dumps(data, separators=(",", ":"))
-        self.is_answered = True  # We are now done
         if DEBUG:
             logger.info(
                 "SWPWRXBlock save_swpwr_final_results() self.swpwr_results={r}".format(
                     r=self.swpwr_results
+                )
+            )
+        self.is_answered = True  # We are now done
+        if DEBUG:
+            logger.info(
+                "SWPWRXBlock save_swpwr_final_results() self.is_answered={r}".format(
+                    r=self.is_answered
                 )
             )
         self.save_grade(data)  # Includes publishing our results to persist them
@@ -2118,7 +2124,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableXBl
             )
         # There seems to be a bug in swpwr 1.9.216+ where there is an immediate callback to save_swpwr_partial_results
         # right after a call to save_swpwr_final_results, so we ignore any partial calls once we've seen a final call
-        if self.has_submitted_answer():
+        if self.is_answered == True:
             if DEBUG:
                 logger.info("SWPWRXBlock save_swpwr_partial_results() ignoring partial results for completed problem")
             return {"result": "success"}
