@@ -2118,7 +2118,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableXBl
             )
         # There seems to be a bug in swpwr 1.9.216+ where there is an immediate callback to save_swpwr_partial_results
         # right after a call to save_swpwr_final_results, so we ignore any partial calls once we've seen a final call
-        if has_submitted_answer():
+        if self.has_submitted_answer():
             if DEBUG:
                 logger.info("SWPWRXBlock save_swpwr_partial_results() ignoring partial results for completed problem")
             return {"result": "success"}
