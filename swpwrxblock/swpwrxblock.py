@@ -108,6 +108,8 @@ logger = getLogger(__name__)
 DEBUG = True
 DEFAULT_RANK = "cadet"  # What we'll use for a rank if not modified by the user/default
 
+PASSPREVSESSION = False	# Don't pass oldSession and oldLog values
+
 """The general idea is that we'll determine which question parameters to pass to the StepWise client before invoking it,
 making use of course-wide StepWise defaults if set.
 
@@ -1340,7 +1342,7 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableXBl
               )
               swpwr_results = ""
 
-        if (len(swpwr_results) > 0):
+        if (PASSPREVSESSION and (len(swpwr_results) > 0)):
             # Parse any existing JSON results string to a 2-element Python list of [session and log[]]
             try:
                json_array = json.loads(swpwr_results)
@@ -1370,22 +1372,18 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableXBl
                        )
                    )
                swpwr_string = ( swpwr_string
-                   + "    oldSession: '"
-                   + session_element_string.replace("'", "&apos;")
-                   + "',"
-                   + "    oldLog: '"
-                   + log_element_string.replace("'", "&apos;")
-                   + "',"
+                   + '    oldSession: "'
+                   + session_element_string.replace('"', "&quot;")
+                   + '",'
+                   + '    oldLog: "'
+                   + log_element_string.replace('"', "&quot;")
+                   + '",'
                    )
         else:
             # If no previous attempt data, set these to empty values
             swpwr_string = ( swpwr_string
-                + "    oldSession: '"
-                + "{}"
-                + "',"
-                + "    oldLog: '"
-                + "[]"
-                + "',"
+                + '    oldSession: "{}",'
+                + '    oldLog: "[]",'
                 )
 
         # Once we have dealt with adding oldSession and oldLog to swpwr_string if necessary, we set the rest of the problem attributes:
