@@ -56,6 +56,7 @@ The flow of saving results is:
 
     save_swpwr_partial_results(data) does the same as save_swpwr_final_results(),
         except it sets self.is_answered=False and self.emit_completion(0.0)
+        also, we want to ignore partial results callbacks if we've previously seen final results.
 
 NOTE: the url_name field in this xblock records a UUID for this xblock instance. This url_name field was added so this
 xblock looks like every other standard type of xblock to the OpenEdX runtime (e.g chapter, sequential, vertical, problem).
@@ -2117,21 +2118,28 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableXBl
             logger.info(
                 "SWPWRXBlock save_swpwr_partial_results() data={d}".format(d=data)
             )
-        self.swpwr_results = json.dumps(data, separators=(",", ":"))
-        self.is_answered = False  # We are not done yet
-        if DEBUG:
-            logger.info(
-                "SWPWRXBlock save_swpwr_partial_results() self.swpwr_results={r}".format(
-                    r=self.swpwr_results
+        # There seems to be a bug in swpwr 1.9.216+ where there is an immediate callback to save_swpwr_partial_results
+        # right after a call to save_swpwr_final_results, so we ignore any partial calls once we've seen a final call
+        if has_submitted_answer():
+            if DEBUG:
+                logger.info("SWPWRXBlock save_swpwr_partial_results() ignoring partial results for completed problem")
+            return {"result": "success"}
+        else:
+            self.swpwr_results = json.dumps(data, separators=(",", ":"))
+            self.is_answered = False  # We are not done yet
+            if DEBUG:
+                logger.info(
+                    "SWPWRXBlock save_swpwr_partial_results() self.swpwr_results={r}".format(
+                        r=self.swpwr_results
+                    )
                 )
-            )
-        self.save_grade(data)  # Includes publishing our results to persist them
-        if DEBUG:
-            logger.info("SWPWRXBlock save_swpwr_partial_results() back from save_grade")
-        self.emit_completion(0.0)   # Report that we are NOT complete
-        if DEBUG:
-            logger.info("SWPWRXBlock save_swpwr_partial_results() back from emit_completion(0.0)")
-        return {"result": "success"}
+            self.save_grade(data)  # Includes publishing our results to persist them
+            if DEBUG:
+                logger.info("SWPWRXBlock save_swpwr_partial_results() back from save_grade")
+            self.emit_completion(0.0)   # Report that we are NOT complete
+            if DEBUG:
+                logger.info("SWPWRXBlock save_swpwr_partial_results() back from emit_completion(0.0)")
+            return {"result": "success"}
 
     # Do necessary overrides from ScorableXBlockMixin
     def has_submitted_answer(self):
