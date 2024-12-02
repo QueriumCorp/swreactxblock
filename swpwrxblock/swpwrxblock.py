@@ -108,7 +108,7 @@ logger = getLogger(__name__)
 DEBUG = True
 DEFAULT_RANK = "cadet"  # What we'll use for a rank if not modified by the user/default
 
-PASSPREVSESSION = False	# Don't pass oldSession and oldLog values
+PASSPREVSESSION = True	# Do pass oldSession and oldLog values
 
 """The general idea is that we'll determine which question parameters to pass to the StepWise client before invoking it,
 making use of course-wide StepWise defaults if set.
@@ -1377,6 +1377,9 @@ class SWPWRXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableXBl
                    + '",'
                    + '    oldLog: "'
                    + log_element_string.replace('"', "&quot;")
+                   + '",'
+                   + '    oldSessionLogCombo: "'
+                   + swpwr_results.replace('"', "&quot;")
                    + '",'
                    )
         else:
