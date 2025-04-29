@@ -51,7 +51,7 @@ class CustomInstall(_install):
         logger.info(PACKAGE_NAME + " CustomInstall().run() - Starting")
         # Ensure the normal setup() has completed all operations
         self.execute(
-            self.swpwrxblock_post_installation, (), msg="Running post install task"
+            self.swreactxblock_post_installation, (), msg="Running post install task"
         )
 
         # copies build to bdist directory in the wheel temporary directory
@@ -70,7 +70,7 @@ class CustomInstall(_install):
         Get the wheel build path of this package. this is expected to be
         inside the temporary directory of the wheel build process.
         """
-        relative_path = os.path.join(self.build_lib, "swpwrxblock")
+        relative_path = os.path.join(self.build_lib, "swreactxblock")
         build_path = os.path.abspath(relative_path)
         self._verify_path(build_path)
         logger.info(
@@ -130,23 +130,23 @@ class CustomInstall(_install):
     ###########################################################################
     # top-level post-installation task method
     ###########################################################################
-    def swpwrxblock_post_installation(self):
+    def swreactxblock_post_installation(self):
         """
         Post-installation task to copy assets into the installed package
         from the ReactJS build, stored in a remote CDN.
         """
         logger.info(
-            PACKAGE_NAME + " CustomInstall().swpwrxblock_post_installation() - Starting"
+            PACKAGE_NAME + " CustomInstall().swreactxblock_post_installation() - Starting"
         )
         build_path = self._get_build_path()
         self._set_path(build_path)
         self._write_diagnostics(build_path)
 
-        module_name = "swpwrxblock.post_install"
+        module_name = "swreactxblock.post_install"
         module = importlib.import_module(module_name)
         copy_assets = getattr(module, "copy_assets")
         copy_assets(build_path=build_path, bdist_path="", environment=STEPWISEMATH_ENV)
         logger.info(
             PACKAGE_NAME
-            + " CustomInstall().swpwrxblock_post_installation() - completed"
+            + " CustomInstall().swreactxblock_post_installation() - completed"
         )

@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       VERSION_FILE: __about__.py
-      PACKAGE_PATH: ${{ github.workspace }}/swpwrxblock/
+      PACKAGE_PATH: ${{ github.workspace }}/swreactxblock/
 
     steps:
       - uses: actions/checkout@v4

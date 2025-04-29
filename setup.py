@@ -21,7 +21,7 @@ HERE = os.path.abspath(os.path.dirname(__file__))
 def load_about() -> Dict[str, str]:
     about: Dict[str, str] = {}
     with io.open(
-        os.path.join(HERE, "swpwrxblock", "__about__.py"), "rt", encoding="utf-8"
+        os.path.join(HERE, "swreactxblock", "__about__.py"), "rt", encoding="utf-8"
     ) as f:
         exec(f.read(), about)  # pylint: disable=exec-used  # nosec
     return about
@@ -38,9 +38,9 @@ setup(
     install_requires=["XBlock", "requests"],
     packages=find_packages(where="."),
     package_data={
-        "swpwrxblock": ["static/**", "public/**", "translations/**", "README.md"]
+        "swreactxblock": ["static/**", "public/**", "translations/**", "README.md"]
     },
-    entry_points={"xblock.v1": ["swpwrxblock = swpwrxblock:SWPWRXBlock"]},
+    entry_points={"xblock.v1": ["swreactxblock = swreactxblock:SWREACTXBlock"]},
     cmdclass={
         "install": CustomInstall,
     },

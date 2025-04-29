@@ -2,7 +2,7 @@
 #
 # Version of cpassets.sh that copies test assets from testReactxBlock
 #
-# Full pathnames to the swpwr build and public directories
+# Full pathnames to the swreact build and public directories
 x=testReactxBlock
 i=~/src/$x/
 b=$i/dist/assets
@@ -28,7 +28,7 @@ cp $p/vite.svg public/
 #
 cp $i/index.html public/
 sed -I -e 's#/src/main.tsx#/public/main.tsx#' public/index.html
-sed -I -e 's#gltfUrl: "/models/"#gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/"#' public/index.html
+sed -I -e 's#gltfUrl: "/models/"#gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swreact/dist/models/"#' public/index.html
 cp $s/App.tsx public/
 cp $s/App.css public/
 cp $s/Stage.tsx public/

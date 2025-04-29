@@ -14,7 +14,7 @@
     "eslint-plugin-import": "^2.29.0",
     "semantic-release": "^24.0.0"
   },
-  "name": "swpwrxblock",
+  "name": "swreactxblock",
   "description": "Stepwise Power XBlock",
   "dependencies": {},
   "author": "Lawrence McDaniel"

@@ -1,9 +1,9 @@
-/* Javascript for SWPWRXAuthor. */
-function SWPWRXAuthor(runtime, element, questions) {
+/* Javascript for SWREACTXAuthor. */
+function SWREACTXAuthor(runtime, element, questions) {
   var qu1 = $("#variant1", element);
   var dm1 = $(".display_math", qu1);
 
-  console.info("SWPWRXAuthor questions", questions);
+  console.info("SWREACTXAuthor questions", questions);
 
   switch (questions) {
     case 1:

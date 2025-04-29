@@ -1,12 +1,12 @@
 /**
- * swpwrxblock.js
- * custom javascript loaded by the swpwrxblock from an S3 bucket
+ * swreactxblock.js
+ * custom javascript loaded by the swreactxblock from an S3 bucket
  */
 
-console.log("Hello World from swpwrxblock.js!");
+console.log("Hello World from swreactxblock.js!");
 
 /**
- * Moved to swpwrxblock.py:
+ * Moved to swreactxblock.py:
  * Bugfender.init({
  *     appKey: 'rLBi6ZTSwDd3FEM8EhHlrlQRXpiHvZkt',
  *     apiURL: 'https://api.bugfender.com/',
@@ -21,4 +21,4 @@ console.log("Hello World from swpwrxblock.js!");
  * });
  */
 
-console.log("This is a test message from swpwrxblock.js.");
+console.log("This is a test message from swreactxblock.js.");

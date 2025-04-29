@@ -1,12 +1,12 @@
 /* CSS for SWXStudio */
 
 /*
-.swpwrxstudio_block .stdLbl {
+.swreactxstudio_block .stdLbl {
     display: inline-block;
     width: 20%;
     text-align: right;
 }
-.swpwrxstudio_block input {
+.swreactxstudio_block input {
     display: inline-block;
     width: 70%;
 }

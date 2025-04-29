@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # Pylint: disable=W0718,W0611,W1203
 """
-Setup for swpwrxblock XBlock. Collects the ReactJS build assets originating
-from https://github.com/QueriumCorp/swpwr and stores these in
-swpwrxblock/public.
+Setup for swreactxblock XBlock. Collects the ReactJS build assets originating
+from https://github.com/QueriumCorp/swreact and stores these in
+swreactxblock/public.
 """
 # python stuff
 import os
@@ -35,13 +35,13 @@ if STEPWISEMATH_ENV not in VALID_ENVIRONMENTS:
         "and/or https://github.com/lpm0073/openedx_devops/tree/main/.github/workflows"
     )
 
-logger("DEBUG: swpwrxblock.post_install import successful")
+logger("DEBUG: swreactxblock.post_install import successful")
 logger(f"STEPWISEMATH_ENV: {STEPWISEMATH_ENV}")
 
 
 def fix_css_url(css_filename: str, build_path: str):
     """
-    fix any CSS asset file reference to point at the swpwrxblock static assets directory
+    fix any CSS asset file reference to point at the swreactxblock static assets directory
     """
     logger(f"fix_css_url() {css_filename}")
     if not css_filename:
@@ -55,7 +55,7 @@ def fix_css_url(css_filename: str, build_path: str):
         data = file.read()
 
     data = data.replace(
-        "url(/swpwr/assets", "url(/static/xblock/resources/swpwrxblock/public/assets"
+        "url(/swreact/assets", "url(/static/xblock/resources/swreactxblock/public/assets"
     )
 
     with open(css_file_path, "w", encoding="utf-8") as file:
@@ -68,9 +68,9 @@ def copy_assets(build_path: str, bdist_path: str, environment: str = None):
     """
     Download and position ReactJS build assets in the appropriate directories.
     (A) creates the public/ folder in our build directory,
-    (B) Untars all of the swpwr dist contents into public/dist.
+    (B) Untars all of the swreact dist contents into public/dist.
     """
-    logger("copy_assets() starting swpwr installation script", build_path=build_path)
+    logger("copy_assets() starting swreact installation script", build_path=build_path)
     logger(f"copy_assets() build_path={build_path}")
     logger(f"copy_assets() bdist_path={bdist_path}")
 
@@ -92,7 +92,7 @@ def copy_assets(build_path: str, bdist_path: str, environment: str = None):
 
     logger(f"downloading ReactJS build assets from {domain}")
 
-    # Full pathnames to the swpwr build and public directories
+    # Full pathnames to the swreact build and public directories
     i = os.path.join(build_path, "public")
     d = os.path.join(i, "dist")
     b = os.path.join(d, "assets")
@@ -106,8 +106,8 @@ def copy_assets(build_path: str, bdist_path: str, environment: str = None):
     logger(f"copy_assets() b={b}")
 
     # Read VERSION from the CDN and extract the semantic version of the latest release
-    version_url = f"https://{domain}/swpwr/VERSION"
-    logger(f"copy_assets() retrieving swpwr package version from {version_url}")
+    version_url = f"https://{domain}/swreact/VERSION"
+    logger(f"copy_assets() retrieving swreact package version from {version_url}")
     response = requests.get(version_url, timeout=HTTP_TIMEOUT)
     version = "Unknown"
     if response.status_code == 200:
@@ -119,12 +119,12 @@ def copy_assets(build_path: str, bdist_path: str, environment: str = None):
     if not re.match(r"^v[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}$", version):
         raise ValueError(f"copy_assets() invalid version: {version} from {version_url}")
 
-    logger(f"copy_assets() latest swpwr version is {version}")
+    logger(f"copy_assets() latest swreact version is {version}")
 
-    # Download the latest swpwr release tarball
-    tarball_filename = f"swpwr-{version}.tar.gz"
+    # Download the latest swreact release tarball
+    tarball_filename = f"swreact-{version}.tar.gz"
     full_tarball_path = os.path.abspath(tarball_filename)
-    tarball_url = f"https://{domain}/swpwr/{tarball_filename}"
+    tarball_url = f"https://{domain}/swreact/{tarball_filename}"
     logger(f"copy_assets() downloading {tarball_url} to {full_tarball_path}")
     with requests.get(tarball_url, stream=True, timeout=HTTP_TIMEOUT) as r:
         with open(tarball_filename, "wb") as f:
@@ -238,36 +238,36 @@ def copy_assets(build_path: str, bdist_path: str, environment: str = None):
         key=lambda x: os.path.getmtime(os.path.join(b, x)),
     )
 
-    # Remember swpwr version info in a jsonf ile in public/dist/assets
-    logger("copy_assets() re-writing swpwr_version.json")
-    with open(os.path.join(b, "swpwr_version.json"), "w", encoding="utf-8") as f:
+    # Remember swreact version info in a jsonf ile in public/dist/assets
+    logger("copy_assets() re-writing swreact_version.json")
+    with open(os.path.join(b, "swreact_version.json"), "w", encoding="utf-8") as f:
         f.write(f'{{"version": "{version}"}}')
-    logger(f"copy_assets() swpwr_version.json is now set for {version}")
+    logger(f"copy_assets() swreact_version.json is now set for {version}")
 
-    # change the bugfender.com API version tag in swpwrxblock.py
-    with open("swpwrxblock/swpwrxblock.py", "r", encoding="utf-8") as file:
+    # change the bugfender.com API version tag in swreactxblock.py
+    with open("swreactxblock/swreactxblock.py", "r", encoding="utf-8") as file:
         data = file.read().replace(
             "dashboard.bugfender.com/\\', version: \\'v?[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}",
             f"dashboard.bugfender.com/\\', version: \\'{version}",
         )
 
-    logger("copy_assets() re-writing swpwrxblock/swpwrxblock.py")
-    with open("swpwrxblock/swpwrxblock.py", "w", encoding="utf-8") as file:
+    logger("copy_assets() re-writing swreactxblock/swreactxblock.py")
+    with open("swreactxblock/swreactxblock.py", "w", encoding="utf-8") as file:
         file.write(data)
 
-    logger(f"copy_assets() We are incorporating swpwr {version}")
+    logger(f"copy_assets() We are incorporating swreact {version}")
     logger(f"copy_assets() The top-level Javascript file is {js1}")
     logger(f"copy_assets() The top-level CSS file is {cs1}")
 
     fix_css_url(css_filename=cs1, build_path=build_path)
 
     # Update the xblock student view HTML file with the new JS and CSS filenames
-    swpwrxstudent_html_path = os.path.join(
-        build_path, "static", "html", "swpwrxstudent.html"
+    swreactxstudent_html_path = os.path.join(
+        build_path, "static", "html", "swreactxstudent.html"
     )
-    logger(f"Updating {swpwrxstudent_html_path}")
+    logger(f"Updating {swreactxstudent_html_path}")
 
-    with open(swpwrxstudent_html_path, "r", encoding="utf-8") as file:
+    with open(swreactxstudent_html_path, "r", encoding="utf-8") as file:
         data = file.read()
     logger(
         f"copy_assets() Before replace with js1={js1} and cs1={cs1} in student view, data is:\n{data}"
@@ -275,15 +275,15 @@ def copy_assets(build_path: str, bdist_path: str, environment: str = None):
     # handle the legacy case where the JS path has public/ to make it have public/dist/assets/
     # Note that the path snippet 'dist/' was optional for backward compatibility
     data = re.sub(
-        r'<script type="module" crossorigin src="/static/xblock/resources/swpwrxblock/public.*"></script>$',
-        f'<script type="module" crossorigin src="/static/xblock/resources/swpwrxblock/public/dist/assets/{js1}"></script>',
+        r'<script type="module" crossorigin src="/static/xblock/resources/swreactxblock/public.*"></script>$',
+        f'<script type="module" crossorigin src="/static/xblock/resources/swreactxblock/public/dist/assets/{js1}"></script>',
         data,
         flags=re.MULTILINE
     )
     # handle the legacy case where the CSS path has public/ to make it have public/dist/assets/
     data = re.sub(
-        r'<link rel="stylesheet" crossorigin href="/static/xblock/resources/swpwrxblock/public.*">$',
-        f'<link rel="stylesheet" crossorigin href="/static/xblock/resources/swpwrxblock/public/dist/assets/{cs1}">',
+        r'<link rel="stylesheet" crossorigin href="/static/xblock/resources/swreactxblock/public.*">$',
+        f'<link rel="stylesheet" crossorigin href="/static/xblock/resources/swreactxblock/public/dist/assets/{cs1}">',
         data,
         flags=re.MULTILINE
     )
@@ -292,11 +292,11 @@ def copy_assets(build_path: str, bdist_path: str, environment: str = None):
     )
 
     # now write out the updated MHTL student view file
-    with open(swpwrxstudent_html_path, "w", encoding="utf-8") as file:
+    with open(swreactxstudent_html_path, "w", encoding="utf-8") as file:
         file.write(data)
 
-    logger(f"copy_assets() Updated {swpwrxstudent_html_path}")
-    logger("copy_assets() finished running swpwr installation script")
+    logger(f"copy_assets() Updated {swreactxstudent_html_path}")
+    logger("copy_assets() finished running swreact installation script")
 
     # normally pip won't display our logger output unless there is an error, so
     # force an error at the end of setup() so we can review this output

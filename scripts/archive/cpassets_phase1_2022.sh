@@ -1,9 +1,9 @@
 #!/bin/bash
-# Version for SBIR Phase 1 assets from 2022 swpwr repo
+# Version for SBIR Phase 1 assets from 2022 swreact repo
 #
-# Full pathnames to the swpwr build and public directories
-b=~/src/swpwr/build
-p=~/src/swpwr/public
+# Full pathnames to the swreact build and public directories
+b=~/src/swreact/build
+p=~/src/swreact/public
 
 # Which precache manifest to copy
 c=precache-manifest.8c5268b68a90c8397a5eb1681f40011c.js

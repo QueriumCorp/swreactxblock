@@ -1,30 +1,30 @@
-/* Javascript for SWPWRXBlock.
+/* Javascript for SWREACTXBlock.
  * TODO:  Enforce assignment due date for not starting another attempt.
  *        Disable Hint and ShowMe buttons if options are set.
  */
 
-var handlerUrlSwpwrFinalResults; // Define this globally where it can be found by the React swpwr onComplete code
-var handlerUrlSwpwrPartialResults; // Define this globally where it can be found by the React swpwr onStep code
+var handlerUrlSwreactFinalResults; // Define this globally where it can be found by the React swreact onComplete code
+var handlerUrlSwreactPartialResults; // Define this globally where it can be found by the React swreact onStep code
 
-function SWPWRXStudent(runtime, element) {
-  console.info("SWPWRXStudent start");
-  console.info("SWPWRXStudent element", element);
+function SWREACTXStudent(runtime, element) {
+  console.info("SWREACTXStudent start");
+  console.info("SWREACTXStudent element", element);
 
   var handlerUrlGetData = runtime.handlerUrl(element, "get_data");
 
-  handlerUrlSwpwrFinalResults = runtime.handlerUrl(
+  handlerUrlSwreactFinalResults = runtime.handlerUrl(
     element,
-    "save_swpwr_final_results",
-  ); // Leave a handlerUrl for the SWPWR onSubmit callback
-  handlerUrlSwpwrPartialResults = runtime.handlerUrl(
+    "save_swreact_final_results",
+  ); // Leave a handlerUrl for the SWREACT onSubmit callback
+  handlerUrlSwreactPartialResults = runtime.handlerUrl(
     element,
-    "save_swpwr_partial_results",
-  ); // Leave a handlerUrl for the SWPWR onSubmit callback
+    "save_swreact_partial_results",
+  ); // Leave a handlerUrl for the SWREACT onSubmit callback
 
-  console.info("SWPWRXStudent calling get_data at ", handlerUrlGetData);
+  console.info("SWREACTXStudent calling get_data at ", handlerUrlGetData);
 
-  // Now we do the question manipulation in swpwrxblock.py
-  // const SWPHASE = 5;          // Which element of the POWER steps array in window.swpwr_problem contains the StepWise UI?
+  // Now we do the question manipulation in swreactxblock.py
+  // const SWPHASE = 5;          // Which element of the POWER steps array in window.swreact_problem contains the StepWise UI?
 
   $(".SWPowerComponent").show(); // Show React app root div
 
@@ -41,7 +41,7 @@ function SWPWRXStudent(runtime, element) {
     data: JSON.stringify(get_data_data),
     error: function (XMLHttpRequest, textStatus, errorThrown) {
       console.info(
-        "SWPWRXstudent get_data POST error textStatus=",
+        "SWREACTXstudent get_data POST error textStatus=",
         textStatus,
         " errorThrown=",
         errorThrown,
@@ -49,12 +49,12 @@ function SWPWRXStudent(runtime, element) {
       // alert("Status: " + textStatus); alert("Error: " + errorThrown);
     },
     success: function (data, msg) {
-      console.info("SWPWRXstudent GET success");
-      console.info("SWPWRXstudent GET data", data);
-      console.info("SWPWRXstudent GET msg", msg);
+      console.info("SWREACTXstudent GET success");
+      console.info("SWREACTXstudent GET data", data);
+      console.info("SWREACTXstudent GET msg", msg);
 
       var data_obj = JSON.parse(data);
-      console.info("SWPWRXstudent GET data_obj", data_obj);
+      console.info("SWREACTXstudent GET data_obj", data_obj);
 
       // Set our context variables from the data we receive
       var question = data_obj.question;
@@ -69,37 +69,37 @@ function SWPWRXStudent(runtime, element) {
       var weight = question.q_weight;
       var min_steps = question.q_grade_min_steps_count;
       var min_steps_ded = question.q_grade_min_steps_ded;
-      var swpwr_problem = question.swpwr_problem;
-      var swpwr_id = question.q_id;
-      var swpwr_rank = question.q_swpwr_rank;
-      var swpwr_invalid_schemas = question.q_swpwr_invalid_schemas;
-      var swpwr_problem_hints = question.q_swpwr_problem_hints;
+      var swreact_problem = question.swreact_problem;
+      var swreact_id = question.q_id;
+      var swreact_rank = question.q_swreact_rank;
+      var swreact_invalid_schemas = question.q_swreact_invalid_schemas;
+      var swreact_problem_hints = question.q_swreact_problem_hints;
 
-      console.info("SWPWRXStudent question ID", swpwr_id);
-      console.info("SWPWRXStudent question", question);
-      console.info("SWPWRXStudent swpwr_problem", swpwr_problem);
-      // console.info("SWPWRXStudent enable_showme",enable_showme);
-      // console.info("SWPWRXStudent enable_hint",enable_hint);
+      console.info("SWREACTXStudent question ID", swreact_id);
+      console.info("SWREACTXStudent question", question);
+      console.info("SWREACTXStudent swreact_problem", swreact_problem);
+      // console.info("SWREACTXStudent enable_showme",enable_showme);
+      // console.info("SWREACTXStudent enable_hint",enable_hint);
       // We no longer pass in solution
-      // console.info("SWPWRXStudent solution",solution);
-      console.info("SWPWRXStudent count_attempts", count_attempts);
-      console.info("SWPWRXStudent variants_counnt", variants_count);
-      console.info("SWPWRXStudent max_attempts", max_attempts);
-      console.info("SWPWRXStudent weight ", weight);
-      console.info("SWPWRXStudent min steps", min_steps);
-      console.info("SWPWRXStudent min steps dec", min_steps_ded);
-      console.info("SWPWRXStudent grade", grade);
-      // console.info("SWPWRXStudent swpwr_id",swpwr_id);
-      console.info("SWPWRXStudent swpwr_rank ", swpwr_rank);
+      // console.info("SWREACTXStudent solution",solution);
+      console.info("SWREACTXStudent count_attempts", count_attempts);
+      console.info("SWREACTXStudent variants_counnt", variants_count);
+      console.info("SWREACTXStudent max_attempts", max_attempts);
+      console.info("SWREACTXStudent weight ", weight);
+      console.info("SWREACTXStudent min steps", min_steps);
+      console.info("SWREACTXStudent min steps dec", min_steps_ded);
+      console.info("SWREACTXStudent grade", grade);
+      // console.info("SWREACTXStudent swreact_id",swreact_id);
+      console.info("SWREACTXStudent swreact_rank ", swreact_rank);
       console.info(
-        "SWPWRXStudent swpwr_invalid_schemas ",
-        swpwr_invalid_schemas,
+        "SWREACTXStudent swreact_invalid_schemas ",
+        swreact_invalid_schemas,
       );
-      console.info("SWPWRXStudent swpwr_problem_hints ", swpwr_problem_hints);
+      console.info("SWREACTXStudent swreact_problem_hints ", swreact_problem_hints);
 
       /* PAGE LOAD EVENT */
       $(function ($) {});
     }, // end of success block
   });
-  console.info("SWPWRXStudent end");
+  console.info("SWREACTXStudent end");
 }

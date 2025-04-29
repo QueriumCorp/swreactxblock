@@ -49,12 +49,12 @@ requirements:
 # -------------------------------------------------------------------------
 lint:
 	pre-commit run --all-files && \
-	pylint ./swpwrxblock/ && \
+	pylint ./swreactxblock/ && \
 	flake8 . && \
 	isort . && \
-	black ./swpwrxblock/ && \
-	black --line-length 120 swpwrxblock/swpwrxblock.py && \
-	docformatter --in-place --wrap-summaries 120 --wrap-descriptions 120 swpwrxblock/swpwrxblock.py
+	black ./swreactxblock/ && \
+	black --line-length 120 swreactxblock/swreactxblock.py && \
+	docformatter --in-place --wrap-summaries 120 --wrap-descriptions 120 swreactxblock/swreactxblock.py
 
 # -------------------------------------------------------------------------
 # Destroy all build artifacts and Python temporary files
@@ -65,9 +65,9 @@ clean:
 	@rm -rf build
 	@rm -rf dist
 	@rm -rf venv
-	@rm -rf swpwrxblock.egg-info
+	@rm -rf swreactxblock.egg-info
 	@rm -rf *.log
-	@test -d swpwrxblock/public/dist && rm -rf swpwrxblock/public/dist || true
+	@test -d swreactxblock/public/dist && rm -rf swreactxblock/public/dist || true
 
 
 

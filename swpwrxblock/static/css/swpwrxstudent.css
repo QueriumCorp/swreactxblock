@@ -1,4 +1,4 @@
-/* CSS for SWPWRXBlock */
+/* CSS for SWREACTXBlock */
 
 /* Ensure that kettu doesn't grow forever */
 #content {
@@ -11,7 +11,7 @@
   padding: 0px !important;
 }
 
-.swpwrxblock_block {
+.swreactxblock_block {
   position: relative;
   transition: min-height 0.35s ease-out;
   overflow: hidden;
@@ -24,38 +24,38 @@
 .block_worked {
   min-height: 100px;
 }
-.swpwrxblock_block .count {
+.swreactxblock_block .count {
   font-weight: bold;
 }
 
-.swpwrxblock_block p {
+.swreactxblock_block p {
   cursor: pointer;
 }
 
-.swpwrxblock_block div.practice-problem {
+.swreactxblock_block div.practice-problem {
   margin: 5px;
   padding: 10px;
   border: 1px solid forestgreen;
 }
 
-.swpwrxblock_block .grade-box {
+.swreactxblock_block .grade-box {
   text-align: center;
   user-select: none;
 }
 
-.swpwrxblock_block .star-box {
+.swreactxblock_block .star-box {
   text-align: center;
   user-select: none;
   margin-bottom: 10px;
 }
 
-.swpwrxblock_block .star-icon {
+.swreactxblock_block .star-icon {
   color: #ddd;
   font-size: 2em;
   position: relative;
 }
 
-.swpwrxblock_block .star-icon.full:before {
+.swreactxblock_block .star-icon.full:before {
   text-shadow: none;
   color: #fde16d;
   content: "\2605";
@@ -64,7 +64,7 @@
   left: 0;
 }
 
-.swpwrxblock_block .star-icon.half:before {
+.swreactxblock_block .star-icon.half:before {
   text-shadow: none;
   color: #fde16d;
   content: "\2605";
@@ -77,7 +77,7 @@
 
 @-moz-document url-prefix() {
   /* Firefox Hack :( */
-  .swpwrxblock_block .star-icon {
+  .swreactxblock_block .star-icon {
     font-size: 50px;
     line-height: 34px;
   }

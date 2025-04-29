@@ -7,7 +7,7 @@ from datetime import datetime
 
 from .const import DEBUG_MODE
 
-print("DEBUG: swpwrxblock.utils import successful")
+print("DEBUG: swreactxblock.utils import successful")
 
 
 class LoggerBuffer:
@@ -71,7 +71,7 @@ def logger(msg: str, build_path: str = None):
     if build_path:
         LoggerBuffer().build_path = build_path
     timestamp = datetime.now().strftime("%Y-%b-%d %H:%M:%S")
-    prefix = f"{timestamp}: swpwrxblock"
+    prefix = f"{timestamp}: swreactxblock"
     LoggerBuffer().log(prefix + " - " + msg)
     print(prefix + " - " + msg)
 

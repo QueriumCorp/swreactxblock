@@ -1,9 +1,9 @@
 #!/bin/bash
 # Modify the React app assets app.js and app.css to support maximization by default, and to be full-screen when maximized
 # For app.js:
-# kentfuka@Kents-Mac-mini swpwr % diff -c public/assets/app.js ~/src/swpwrxblock/swpwrxblock/public/assets/app.js
+# kentfuka@Kents-Mac-mini swreact % diff -c public/assets/app.js ~/src/swreactxblock/swreactxblock/public/assets/app.js
 # *** public/assets/app.js	2022-11-14 09:28:07.000000000 -0700
-# --- /Users/kentfuka/src/swpwrxblock/swpwrxblock/public/assets/app.js	2022-11-15 11:47:17.000000000 -0700
+# --- /Users/kentfuka/src/swreactxblock/swreactxblock/public/assets/app.js	2022-11-15 11:47:17.000000000 -0700
 # ***************
 # *** 31609,31615 ****
 #       const onSubmit = props.onSubmit;
@@ -40,9 +40,9 @@
 #           problem: work.problem,
 #
 # For app.css:
-# kentfuka@Kents-Mac-mini swpwr % diff -c public/assets/app.css ~/src/swpwrxblock/swpwrxblock/public/assets/app.css
+# kentfuka@Kents-Mac-mini swreact % diff -c public/assets/app.css ~/src/swreactxblock/swreactxblock/public/assets/app.css
 # *** public/assets/app.css	2022-11-14 09:28:07.000000000 -0700
-# --- /Users/kentfuka/src/swpwrxblock/swpwrxblock/public/assets/app.css	2022-11-15 14:33:17.000000000 -0700
+# --- /Users/kentfuka/src/swreactxblock/swreactxblock/public/assets/app.css	2022-11-15 14:33:17.000000000 -0700
 # ***************
 # *** 9599,9607 ****
 # --- 9599,9610 ----
@@ -57,9 +57,9 @@
 # +   max-width: 100%;
 #     border: solid 1px black;
 #   }
-sed -I .bak -e 's/const \[maximized, setMaximized\] = (0, import_react108\.useState)(false);/const [maximized, setMaximized] = (0, import_react108.useState)(true);/' -e 's/maximizable: false/maximizable: true/' swpwrxblock/public/assets/app.js
-sed -I .bak -e 's/Maximized {/Maximized {\n    left: 0px;\n    width: 100%;\n    max-width: 100%;/' swpwrxblock/public/assets/app.css
+sed -I .bak -e 's/const \[maximized, setMaximized\] = (0, import_react108\.useState)(false);/const [maximized, setMaximized] = (0, import_react108.useState)(true);/' -e 's/maximizable: false/maximizable: true/' swreactxblock/public/assets/app.js
+sed -I .bak -e 's/Maximized {/Maximized {\n    left: 0px;\n    width: 100%;\n    max-width: 100%;/' swreactxblock/public/assets/app.css
 echo diffing app.js
-diff swpwrxblock/public/assets/app.js swpwrxblock/public/assets/app.js.bak
+diff swreactxblock/public/assets/app.js swreactxblock/public/assets/app.js.bak
 echo diffing app.css
-diff swpwrxblock/public/assets/app.css swpwrxblock/public/assets/app.css.bak
+diff swreactxblock/public/assets/app.css swreactxblock/public/assets/app.css.bak
