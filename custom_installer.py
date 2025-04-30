@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=W1201
 """
-pip installation configuration for the Stepwise Power XBlock.
+pip installation configuration for the Stepwise React XBlock.
 """
 
 # python stuff
@@ -14,7 +14,7 @@ import sys
 # 3rd party stuff
 from setuptools.command.install import install as _install
 
-PACKAGE_NAME = "stepwise-power-xblock"
+PACKAGE_NAME = "stepwise-react-xblock"
 
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 logger = logging.getLogger(__name__)
