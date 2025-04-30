@@ -22,7 +22,7 @@ window.swreact_problems = [];
 //NOTYET           }
 //NOTYET         });
 //NOTYET         // Hide the React app and show the problem complete msg
-//NOTYET         $('.SWPowerComponent').hide();  // Hide React app root div
+//NOTYET         $('.SWReactComponent').hide();  // Hide React app root div
 //NOTYET         $('.problem-complete').show();  // Show the 'problem is complete' message
 //NOTYET         $('.sequence-bottom').show();   // Show the problem navigation buttons again
 //NOTYET       };

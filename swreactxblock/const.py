@@ -5,7 +5,7 @@ This file contains the constants used in the project.
 DEBUG_MODE = True
 DEFAULT_XBLOCK_CLIENT = "swreactxblock"
 HTTP_TIMEOUT = 30
-PACKAGE_NAME = "stepwise-power-xblock"
+PACKAGE_NAME = "stepwise-react-xblock"
 
 ENVIRONMENT_DEV = "dev"
 ENVIRONMENT_STAGING = "staging"

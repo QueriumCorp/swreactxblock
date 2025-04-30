@@ -28,7 +28,7 @@
 #           setMaximized,
 # !         maximizable: false
 #         }),
-#         footer: /* @__PURE__ */ import_react108.default.createElement(powerFooter_default, {
+#         footer: /* @__PURE__ */ import_react108.default.createElement(reactFooter_default, {
 #           problem: work.problem,
 # --- 31617,31623 ----
 #           problem: work.problem,
@@ -36,7 +36,7 @@
 #           setMaximized,
 # !         maximizable: true
 #         }),
-#         footer: /* @__PURE__ */ import_react108.default.createElement(powerFooter_default, {
+#         footer: /* @__PURE__ */ import_react108.default.createElement(reactFooter_default, {
 #           problem: work.problem,
 #
 # For app.css:

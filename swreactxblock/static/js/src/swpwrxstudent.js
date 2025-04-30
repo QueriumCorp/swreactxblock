@@ -26,7 +26,7 @@ function SWREACTXStudent(runtime, element) {
   // Now we do the question manipulation in swreactxblock.py
   // const SWPHASE = 5;          // Which element of the POWER steps array in window.swreact_problem contains the StepWise UI?
 
-  $(".SWPowerComponent").show(); // Show React app root div
+  $(".SWReactComponent").show(); // Show React app root div
 
   $(".sequence-bottom").hide(); // Don't show the EdX sequential navigation buttons that lie on top of the react div
   $(".unit-navigation").hide(); // Don't show the EdX sequential navigation buttons that lie on top of the react div
