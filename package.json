@@ -15,7 +15,7 @@
     "semantic-release": "^24.0.0"
   },
   "name": "swreactxblock",
-  "description": "Stepwise Power XBlock",
+  "description": "Stepwise React XBlock",
   "dependencies": {},
-  "author": "Lawrence McDaniel"
+  "author": "Kent Fuka"
 }

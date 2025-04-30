@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Install utilities for the stepwise-power-xblock XBlock."""
+"""Install utilities for the stepwise-react-xblock XBlock."""
 
 import atexit
 import os

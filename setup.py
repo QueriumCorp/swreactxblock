@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-pip installation configuration for the Stepwise Power XBlock.
+pip installation configuration for the Stepwise React XBlock.
 """
 import io
 
@@ -14,7 +14,7 @@ from setuptools import find_packages, setup
 # our stuff
 from custom_installer import CustomInstall
 
-PACKAGE_NAME = "stepwise-power-xblock"
+PACKAGE_NAME = "stepwise-react-xblock"
 HERE = os.path.abspath(os.path.dirname(__file__))
 
 

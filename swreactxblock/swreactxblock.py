@@ -1,21 +1,26 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=E0401
-"""StepWise Power xblock
+"""StepWise React xblock
 
-Note that legacy (non-POWER) stepwise xblock questions can contain up to 10 variants. This xblock code remembers which variants the student has
+Note that legacy (non-React) stepwise xblock questions can contain up to 10 variants. This xblock code remembers which variants the student has
 attempted and if the student requests a new variant, we will try to assign one that has not yet been attempted. Once the
 student has attempted all available variants, if they request another variant, we will clear the list of attempted
-variants and start assigning variants over again. For the POWER xblock we have only implemented one variant per
-xblock, but some of the variant-related code remains. Caveat Utilitor.
+variants and start assigning variants over again.
 
-When the student completes work on the StepWise POWER problem (aka 'victory'), we use a callback from the StepWise UI client code
+FIXME: For the REACT xblock we have currently only implemented one variant per xblock, but some of the variant-related code remains. Caveat Utilitor.
+
+When the student completes work on the StepWise problem (aka 'victory'), we use a callback from the StepWise UI client code
 to record the student's score on that attempt.  We also receive a separate callback after the student completes each operation
-in the app's 5 POWER phases. There are about a dozen separate event types that we receive these intermediate callbacks for.
+in the app's phases.
+
+FIXME: It is TBD which event types that we receive these intermediate callbacks for.
 
 We use the CompletableXBlockMixin to support reporting whether student work on an xblock is complete.  The emit_completion
 call supports a range from 0.0 (0% complete) to 1.0 (100% complete).  We use only those min and max values.
 We could support partial complation, but we don't.  We just want to control whether a green check will appear in the LMS
-for this xblock once the student has completed all 5 phases of the POWER problem.
+for this xblock once the student has completed all phases of the StepWise problem.
+
+FIXME: It is TBD whether we want any other phases to mark completion aside from 'Victory'.
 
 When the student completes work on the StepWise problem ('victory'), we use a callback from the StepWise UI client code
 to record the student's score on that attempt.
@@ -1282,7 +1287,7 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
             "text/html",
             "head",
         )
-        frag.add_resource("<title>Querium StepWise Power</title>", "text/html", "head")
+        frag.add_resource("<title>Querium StepWise React</title>", "text/html", "head")
 
         frag.add_css(self.resource_string("static/css/swreactxstudent.css"))
         frag.add_javascript(self.resource_string("static/js/src/swreactxstudent.js"))
@@ -1314,7 +1319,7 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
         invalid_schemas_js = self.q_swpwr_invalid_schemas
         if DEBUG:
             logger.info(
-                "SWPWRXBlock student_view() before mapping loop invalid_schemas_js={e}".format(
+                "SWREACTXBlock student_view() before mapping loop invalid_schemas_js={e}".format(
                     e=invalid_schemas_js
                 )
             )
@@ -1332,16 +1337,18 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
             )
             if DEBUG:
                 logger.info(
-                    "SWPWRXBlock student_view() in mapping loop schema_key={k} schema_value={v} invalid_schemas_js={e}".format(
+                    "SWREACTXBlock student_view() in mapping loop schema_key={k} schema_value={v} invalid_schemas_js={e}".format(
                         k=schema_key, v=schema_value, e=invalid_schemas_js
                     )
                 )
 
-        # We use the window.swpwr DOM element to communicate the POWER problem definition to the React app.
+        # We use the window.swreact DOM element to communicate the  problem definition to the React app.
         # We construct that Javascript structure here.
 
+        # FIXME: What is the name of the top-level DOM element we are looking for, e.g. is it swReact?
+
         swpwr_string = (
-            "window.swpwr = {"
+            "window.swReact = {"
             )
         # If we have persisted previous results in self.swpwr_results, pass those results back to the swpwr React app
         # in the 'oldSession' and 'oldLog' attributes.
@@ -1350,7 +1357,7 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
         except (NameError, AttributeError) as e:
            if DEBUG:
               logger.info(
-                 "SWPWRXBlock save_grade() self.swpwr_results was not defined when building swpwr_string: {e}".format(e=e)
+                 "SWREACTXBlock save_grade() self.swpwr_results was not defined when building swpwr_string: {e}".format(e=e)
               )
               swpwr_results = ""
 
@@ -1360,7 +1367,7 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
                json_array = json.loads(swpwr_results)
             except Exception as e:
                logger.error(
-                  "SWPWRXBlock student_view() in setting swpwr_string could not load json from swpwr_results: {e}".format(e=e)
+                  "SWREACTXBlock student_view() in setting swpwr_string could not load json from swpwr_results: {e}".format(e=e)
                )
             else:
                session_element = json_array[0]
@@ -1374,12 +1381,12 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
 
                if DEBUG:
                    logger.info(
-                       "SWPWRXBlock student_view() in setting swpwr_string session_element_str={s}".format(
+                       "SWREACTXBlock student_view() in setting swpwr_string session_element_str={s}".format(
                            s=session_element_string
                        )
                    )
                    logger.info(
-                       "SWPWRXBlock student_view() in setting swpwr_string log_element_str={l}".format(
+                       "SWREACTXBlock student_view() in setting swpwr_string log_element_str={l}".format(
                            l=log_element_string
                        )
                    )
@@ -1521,7 +1528,7 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
         )
         if DEBUG:
             logger.info(
-                "SWPWRXBlock student_view() swpwr_string={e}".format(e=swpwr_string)
+                "SWREACTXBlock student_view() swpwr_string={e}".format(e=swpwr_string)
             )
         frag.add_resource(swpwr_string, "application/javascript", "foot")
 
@@ -1585,7 +1592,7 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
             XBlock.save(self)  # Call parent class save()
         # pylint: disable=W0718
         except Exception as e:
-            logger.info("SWPWRXBlock save() had an error: {e}".format(e=e))
+            logger.info("SWREACTXBlock save() had an error: {e}".format(e=e))
         if DEBUG:
             logger.info(
                 "SWREACTXBlock save() back from parent save. self.swreact_results={s}".format(
@@ -1801,7 +1808,7 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
             )
 
         if DEBUG:
-            logger.info("SWPWRXBlock save_grade() final data={a}".format(a=data))
+            logger.info("SWREACTXBlock save_grade() final data={a}".format(a=data))
         self.grade = grade
         if DEBUG:
             logger.info("SWREACTXBlock save_grade() grade={a}".format(a=self.grade))
@@ -2095,7 +2102,7 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
         self.q_swreact_invalid_schemas = data["swreact_invalid_schemas"]
         self.q_swreact_problem_hints = data["swreact_problem_hints"]
 
-        self.display_name = "Step-by-Step POWER"
+        self.display_name = "Step-by-Step React"
 
         # mcdaniel jul-2020: fix syntax error in print statement
         print(self.display_name)
@@ -2118,16 +2125,16 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
         self.is_answered = True  # We are now done
         if DEBUG:
             logger.info(
-                "SWPWRXBlock save_swpwr_final_results() self.is_answered={r}".format(
+                "SWREACTXBlock save_swpwr_final_results() self.is_answered={r}".format(
                     r=self.is_answered
                 )
             )
         self.save_grade(data)  # Includes publishing our results to persist them
         if DEBUG:
-            logger.info("SWPWRXBlock save_swpwr_final_results() back from save_grade")
+            logger.info("SWREACTXBlock save_swpwr_final_results() back from save_grade")
         self.emit_completion(1.0)   # Report that we are complete
         if DEBUG:
-            logger.info("SWPWRXBlock save_swpwr_final_results() back from emit_completion(1.0)")
+            logger.info("SWREACTXBlock save_swpwr_final_results() back from emit_completion(1.0)")
         return {"result": "success"}
 
     # SWREACT PARTIAL RESULTS: Save the interim results of the SWREACT React app as a stringified structure.
@@ -2141,23 +2148,23 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
         # right after a call to save_swpwr_final_results, so we ignore any partial calls once we've seen a final call
         if self.is_answered == True:
             if DEBUG:
-                logger.info("SWPWRXBlock save_swpwr_partial_results() ignoring partial results for completed problem")
+                logger.info("SWREACTXBlock save_swpwr_partial_results() ignoring partial results for completed problem")
             return {"result": "success"}
         else:
             self.swpwr_results = json.dumps(data, separators=(",", ":"))
             self.is_answered = False  # We are not done yet
             if DEBUG:
                 logger.info(
-                    "SWPWRXBlock save_swpwr_partial_results() self.swpwr_results={r}".format(
+                    "SWREACTXBlock save_swpwr_partial_results() self.swpwr_results={r}".format(
                         r=self.swpwr_results
                     )
                 )
             self.save_grade(data)  # Includes publishing our results to persist them
             if DEBUG:
-                logger.info("SWPWRXBlock save_swpwr_partial_results() back from save_grade")
+                logger.info("SWREACTXBlock save_swpwr_partial_results() back from save_grade")
             self.emit_completion(0.0)   # Report that we are NOT complete
             if DEBUG:
-                logger.info("SWPWRXBlock save_swpwr_partial_results() back from emit_completion(0.0)")
+                logger.info("SWREACTXBlock save_swpwr_partial_results() back from emit_completion(0.0)")
             return {"result": "success"}
 
     # Do necessary overrides from ScorableXBlockMixin
