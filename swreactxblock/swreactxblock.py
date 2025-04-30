@@ -34,9 +34,9 @@ the results of the scoring callback POST to return the scoring details to the Ja
 not currently done. Thus, if you need to update the scoring logic here in Python, you need to check the Javascript
 source in js/src/swreactxstudent.js to make sure you don't also have to change the score display logic there.
 
-To support resuming work on a partially-completed swpwr problem, we check to see whether there are previous results persisted
-in self.swpwr_results when we initialize the window.swpwr structure to pass to the swpwr React app.  If so, we
-unpack that swpwr_results attribute and pass oldSession and oldLog back to the React app as two additional attributes in window.swpwr.
+To support resuming work on a partially-completed StepWise React problem, we check to see whether there are previous results persisted
+in self.swreact_results when we initialize the window.swReact structure to pass to the StepWise React app.  If so, we
+unpack that swreact_results attribute and pass oldSession and oldLog back to the React app as two additional attributes in window.swReact.
 
 The swreact_problem_hints field is optional, and looks like this:
 swreact.problem.wpHints = [
@@ -71,7 +71,7 @@ The flow of saving results is:
               self.runtime.publish
         (E) call self.emit_completion(1.0) to report that we are complete (1.0)
 
-    save_swpwr_partial_results(data) does the same as save_swpwr_final_results(),
+    save_swreact_partial_results(data) does the same as save_swreact_final_results(),
         except it sets self.is_answered=False and self.emit_completion(0.0)
         also, we want to ignore partial results callbacks if we've previously seen final results.
 
@@ -1300,7 +1300,7 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
         # Add our own snippet of javascript code so we can add debugging code on
         # the fly without re-building the xblock
         frag.add_javascript_url(
-            "//swm-openedx-us-dev-storage.s3.us-east-2.amazonaws.com/static/js/swpwrxblock.js"
+            "//swm-openedx-us-dev-storage.s3.us-east-2.amazonaws.com/static/js/swreactxblock.js"
         )
         # Add bugfender library for console log capture
         frag.add_javascript_url("//js.bugfender.com/bugfender-v2.js")
@@ -1316,7 +1316,7 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
         # Convert the upper-case names to the 'official' names. NB: The order of
         # .replace() calls might matter if one of these schema names is a
         # substring of another name.
-        invalid_schemas_js = self.q_swpwr_invalid_schemas
+        invalid_schemas_js = self.q_swreact_invalid_schemas
         if DEBUG:
             logger.info(
                 "SWREACTXBlock student_view() before mapping loop invalid_schemas_js={e}".format(
@@ -1347,27 +1347,27 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
 
         # FIXME: What is the name of the top-level DOM element we are looking for, e.g. is it swReact?
 
-        swpwr_string = (
+        swreact_string = (
             "window.swReact = {"
             )
-        # If we have persisted previous results in self.swpwr_results, pass those results back to the swpwr React app
+        # If we have persisted previous results in self.swreact_results, pass those results back to the swReact React app
         # in the 'oldSession' and 'oldLog' attributes.
         try:
-           swpwr_results = self.swpwr_results
+           swreact_results = self.swreact_results
         except (NameError, AttributeError) as e:
            if DEBUG:
               logger.info(
-                 "SWREACTXBlock save_grade() self.swpwr_results was not defined when building swpwr_string: {e}".format(e=e)
+                 "SWREACTXBlock save_grade() self.swreact_results was not defined when building swreact_string: {e}".format(e=e)
               )
-              swpwr_results = ""
+              swreact_results = ""
 
-        if (PASSPREVSESSION and (len(swpwr_results) > 0)):
+        if (PASSPREVSESSION and (len(swreact_results) > 0)):
             # Parse any existing JSON results string to a 2-element Python list of [session and log[]]
             try:
-               json_array = json.loads(swpwr_results)
+               json_array = json.loads(swreact_results)
             except Exception as e:
                logger.error(
-                  "SWREACTXBlock student_view() in setting swpwr_string could not load json from swpwr_results: {e}".format(e=e)
+                  "SWREACTXBlock student_view() in setting swreact_string could not load json from swreact_results: {e}".format(e=e)
                )
             else:
                session_element = json_array[0]
@@ -1381,16 +1381,16 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
 
                if DEBUG:
                    logger.info(
-                       "SWREACTXBlock student_view() in setting swpwr_string session_element_str={s}".format(
+                       "SWREACTXBlock student_view() in setting swreact_string session_element_str={s}".format(
                            s=session_element_string
                        )
                    )
                    logger.info(
-                       "SWREACTXBlock student_view() in setting swpwr_string log_element_str={l}".format(
+                       "SWREACTXBlock student_view() in setting swreact_string log_element_str={l}".format(
                            l=log_element_string
                        )
                    )
-               swpwr_string = ( swpwr_string
+               swreact_string = ( swreact_string
                    + '    oldSession: "'
                    + session_element_string.replace('"', "&quot;")
                    + '",'
@@ -1398,26 +1398,26 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
                    + log_element_string.replace('"', "&quot;")
                    + '",'
                    + '    oldSessionLogCombo: "'
-                   + swpwr_results.replace('"', "&quot;")
+                   + swreact_results.replace('"', "&quot;")
                    + '",'
                    )
         else:
             # If no previous attempt data, set these to empty values
-            swpwr_string = ( swpwr_string
+            swreact_string = ( swreact_string
                 + '    oldSession: "{}",'
                 + '    oldLog: "[]",'
                 )
 
-        # Once we have dealt with adding oldSession and oldLog to swpwr_string if necessary, we set the rest of the problem attributes:
+        # Once we have dealt with adding oldSession and oldLog to swreact_string if necessary, we set the rest of the problem attributes:
         # 'options', 'student', 'problem', and 'handlers'
         # The 'handlers' attribute are for our callbacks: onComplete and onStep.
 
-        swpwr_string = ( swpwr_string
+        swreact_string = ( swreact_string
             + "    options: {"
             + '        swapiUrl: "https://swapi2.onrender.com", '
-            + '        gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swpwr/dist/models/", '
+            + '        gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swReact/dist/models/", '
             + '        rank: "'
-            + self.q_swpwr_rank
+            + self.q_swreact_rank
             + '", '
             + '        disabledSchemas: "'
             + invalid_schemas_js
@@ -1457,7 +1457,7 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
             + str(self.q_definition).replace("'", "&apos;")
             + "', "
             + "        wpHintsString: '"
-            + str(self.q_swpwr_problem_hints).replace("'", "&apos;")
+            + str(self.q_swreact_problem_hints).replace("'", "&apos;")
             + "', "
             + "        mathHints: ["
             + '                   "'
@@ -1475,13 +1475,13 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
             + "        onComplete: (session,log) => {"
             + '            console.info("onComplete session",session);'
             + '            console.info("onComplete log",log);'
-            + '            console.info("onComplete handlerUrlSwpwrFinalResults",handlerUrlSwpwrFinalResults);'
+            + '            console.info("onComplete handlerUrlSwreactFinalResults",handlerUrlSwreactFinalResults);'
             + "            const solution = [session,log];"
             + "            var solution_string = JSON.stringify(solution);"
             + '            console.info("onComplete solution_string",solution_string);'
             + "            $.ajax({"
             + '                type: "POST",'
-            + "                url: handlerUrlSwpwrFinalResults,"
+            + "                url: handlerUrlSwreactFinalResults,"
             + "                data: solution_string,"
             + "                success: function (data,msg) {"
             + '                    console.info("onComplete solution POST success");'
@@ -1498,13 +1498,13 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
             + "        onStep: (session,log) => {"
             + '            console.info("onStep session",session);'
             + '            console.info("onStep log",log);'
-            + '            console.info("onStep handlerUrlSwpwrPartialResults",handlerUrlSwpwrPartialResults);'
+            + '            console.info("onStep handlerUrlSwreactPartialResults",handlerUrlSwreactPartialResults);'
             + "            const solution = [session,log];"
             + "            var solution_string = JSON.stringify(solution);"
             + '            console.info("onStep solution_string",solution_string);'
             + "            $.ajax({"
             + '                type: "POST",'
-            + "                url: handlerUrlSwpwrPartialResults,"
+            + "                url: handlerUrlSwreactPartialResults,"
             + "                data: solution_string,"
             + "                success: function (data,msg) {"
             + '                    console.info("onStep solution POST success");'
@@ -1519,18 +1519,18 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
             + "    }"
             + "};"
             + "try { "
-            + '    console.log( "before JSON.parse wpHintsString ",window.swpwr.problem.wpHintsString);'
-            + "    window.swpwr.problem.wpHints = JSON.parse(window.swpwr.problem.wpHintsString);"
-            + '    console.log( "wpHints data is ",window.swpwr.problem.wpHints );'
+            + '    console.log( "before JSON.parse wpHintsString ",window.swReact.problem.wpHintsString);'
+            + "    window.swReact.problem.wpHints = JSON.parse(window.swReact.problem.wpHintsString);"
+            + '    console.log( "wpHints data is ",window.swReact.problem.wpHints );'
             + "} catch(e) {"
             + '    console.log( "Could not decode wpHints string",e.message );'
             + "};"
         )
         if DEBUG:
             logger.info(
-                "SWREACTXBlock student_view() swpwr_string={e}".format(e=swpwr_string)
+                "SWREACTXBlock student_view() swreact_string={e}".format(e=swreact_string)
             )
-        frag.add_resource(swpwr_string, "application/javascript", "foot")
+        frag.add_resource(swreact_string, "application/javascript", "foot")
 
         frag.initialize_js("SWREACTXStudent", {})  # Call the entry point
         return frag
@@ -2115,7 +2115,7 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
             logger.info(
                 "SWREACTXBlock save_swreact_final_results() data={d}".format(d=data)
             )
-        self.swpwr_results = json.dumps(data, separators=(",", ":"))
+        self.swreact_results = json.dumps(data, separators=(",", ":"))
         if DEBUG:
             logger.info(
                 "SWREACTXBlock save_swreact_final_results() self.swreact_results={r}".format(
@@ -2125,16 +2125,16 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
         self.is_answered = True  # We are now done
         if DEBUG:
             logger.info(
-                "SWREACTXBlock save_swpwr_final_results() self.is_answered={r}".format(
+                "SWREACTXBlock save_swreact_final_results() self.is_answered={r}".format(
                     r=self.is_answered
                 )
             )
         self.save_grade(data)  # Includes publishing our results to persist them
         if DEBUG:
-            logger.info("SWREACTXBlock save_swpwr_final_results() back from save_grade")
+            logger.info("SWREACTXBlock save_swreact_final_results() back from save_grade")
         self.emit_completion(1.0)   # Report that we are complete
         if DEBUG:
-            logger.info("SWREACTXBlock save_swpwr_final_results() back from emit_completion(1.0)")
+            logger.info("SWREACTXBlock save_swreact_final_results() back from emit_completion(1.0)")
         return {"result": "success"}
 
     # SWREACT PARTIAL RESULTS: Save the interim results of the SWREACT React app as a stringified structure.
@@ -2144,27 +2144,27 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
             logger.info(
                 "SWREACTXBlock save_swreact_partial_results() data={d}".format(d=data)
             )
-        # There seems to be a bug in swpwr 1.9.216+ where there is an immediate callback to save_swpwr_partial_results
+        # NOTE: There seemed to be a bug in swpwr 1.9.216+ app for POWER probems where there is an immediate callback to save_swpwr_partial_results
         # right after a call to save_swpwr_final_results, so we ignore any partial calls once we've seen a final call
         if self.is_answered == True:
             if DEBUG:
-                logger.info("SWREACTXBlock save_swpwr_partial_results() ignoring partial results for completed problem")
+                logger.info("SWREACTXBlock save_swreact_partial_results() ignoring partial results for completed problem")
             return {"result": "success"}
         else:
-            self.swpwr_results = json.dumps(data, separators=(",", ":"))
+            self.swreact_results = json.dumps(data, separators=(",", ":"))
             self.is_answered = False  # We are not done yet
             if DEBUG:
                 logger.info(
-                    "SWREACTXBlock save_swpwr_partial_results() self.swpwr_results={r}".format(
-                        r=self.swpwr_results
+                    "SWREACTXBlock save_swreact_partial_results() self.swreact_results={r}".format(
+                        r=self.swreact_results
                     )
                 )
             self.save_grade(data)  # Includes publishing our results to persist them
             if DEBUG:
-                logger.info("SWREACTXBlock save_swpwr_partial_results() back from save_grade")
+                logger.info("SWREACTXBlock save_swreact_partial_results() back from save_grade")
             self.emit_completion(0.0)   # Report that we are NOT complete
             if DEBUG:
-                logger.info("SWREACTXBlock save_swpwr_partial_results() back from emit_completion(0.0)")
+                logger.info("SWREACTXBlock save_swreact_partial_results() back from emit_completion(0.0)")
             return {"result": "success"}
 
     # Do necessary overrides from ScorableXBlockMixin
