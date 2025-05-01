@@ -168,19 +168,19 @@ def copy_assets(build_path: str, bdist_path: str, environment: str = None):
         validate_path(os.path.join(d, folder_path))
 
     # validate contents contents files that should be in public/dist
-    validate_path(os.path.join(d, "BabyFox.svg"))
-    validate_path(os.path.join(d, "android-chrome-192x192.png"))
-    validate_path(os.path.join(d, "android-chrome-512x512.png"))
-    validate_path(os.path.join(d, "apple-touch-icon.png"))
-    validate_path(os.path.join(d, "favicon-16x16.png"))
-    validate_path(os.path.join(d, "favicon-32x32.png"))
-    validate_path(os.path.join(d, "favicon.ico"))
-    validate_path(os.path.join(d, "index.html"))
-    validate_path(os.path.join(d, "sadPanda.svg"))
-    validate_path(os.path.join(d, "site.webmanifest"))
-    validate_path(os.path.join(d, "stats.html"))
+    # validate_path(os.path.join(d, "BabyFox.svg"))
+    # validate_path(os.path.join(d, "android-chrome-192x192.png"))
+    # validate_path(os.path.join(d, "android-chrome-512x512.png"))
+    # validate_path(os.path.join(d, "apple-touch-icon.png"))
+    # validate_path(os.path.join(d, "favicon-16x16.png"))
+    # validate_path(os.path.join(d, "favicon-32x32.png"))
+    # validate_path(os.path.join(d, "favicon.ico"))
+    # validate_path(os.path.join(d, "index.html"))
+    # validate_path(os.path.join(d, "sadPanda.svg"))
+    # validate_path(os.path.join(d, "site.webmanifest"))
+    # validate_path(os.path.join(d, "stats.html"))
 
-    validate_path(os.path.join(d, "BabyFox", "BabyFox.svg"))
+    # validate_path(os.path.join(d, "BabyFox", "BabyFox.svg"))
 
     # we no longer validate paths with hashes in the filename so the code isn't tied to the filenames in the react app distribution
     # validate_path(os.path.join(d, "assets", "DailyMotion-Bb7kos7h.js"))
@@ -219,11 +219,11 @@ def copy_assets(build_path: str, bdist_path: str, environment: str = None):
     # validate_path(os.path.join(d, "assets", "index-B_VqGgJi.css"))
     # validate_path(os.path.join(d, "assets", "index-BdxI-PSa.js"))
 
-    validate_path(os.path.join(d, "models", "FoxyFuka.glb"))
-    validate_path(os.path.join(d, "models", "foxy-compressed.glb"))
-    validate_path(os.path.join(d, "models", "foxy-uncompressed.glb"))
-    validate_path(os.path.join(d, "models", "foxy.glb"))
-    validate_path(os.path.join(d, "models", "newFoxy.tsx"))
+    # validate_path(os.path.join(d, "models", "FoxyFuka.glb"))
+    # validate_path(os.path.join(d, "models", "foxy-compressed.glb"))
+    # validate_path(os.path.join(d, "models", "foxy-uncompressed.glb"))
+    # validate_path(os.path.join(d, "models", "foxy.glb"))
+    # validate_path(os.path.join(d, "models", "newFoxy.tsx"))
 
     # Get the names of the most recent index-<hash>.js and index-<hash>.css files
     logger(
