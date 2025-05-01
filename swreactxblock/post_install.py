@@ -162,7 +162,7 @@ def copy_assets(build_path: str, bdist_path: str, environment: str = None):
     validate_path(d)
     for folder_path in [
         "assets",
-        "BabyFox",
+        # "BabyFox",
         "models",
     ]:
         validate_path(os.path.join(d, folder_path))
