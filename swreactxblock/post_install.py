@@ -55,7 +55,7 @@ def fix_css_url(css_filename: str, build_path: str):
         data = file.read()
 
     data = data.replace(
-        "url(/swreact/assets", "url(/static/xblock/resources/swreactxblock/public/assets"
+        "url(/swReact/assets", "url(/static/xblock/resources/swreactxblock/public/assets"
     )
 
     with open(css_file_path, "w", encoding="utf-8") as file:
