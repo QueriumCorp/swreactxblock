@@ -33,10 +33,6 @@ function SWREACTXStudio(runtime, element, question) {
       hint1: $("#hint1", element).val(),
       hint2: $("#hint2", element).val(),
       hint3: $("#hint3", element).val(),
-      swreact_problem: $("#swreact_problem", element).val(),
-      swreact_rank: $("#swreact_rank", element).val(),
-      swreact_invalid_schemas: $("#swreact_invalid_schemas", element).val(),
-      swreact_problem_hints: $("#swreact_problem_hints", element).val(),
     };
 
     runtime.notify("save", { state: "start" });

@@ -69,19 +69,10 @@ function SWREACTXStudent(runtime, element) {
       var weight = question.q_weight;
       var min_steps = question.q_grade_min_steps_count;
       var min_steps_ded = question.q_grade_min_steps_ded;
-      var swreact_problem = question.swreact_problem;
       var swreact_id = question.q_id;
-      var swreact_rank = question.q_swreact_rank;
-      var swreact_invalid_schemas = question.q_swreact_invalid_schemas;
-      var swreact_problem_hints = question.q_swreact_problem_hints;
 
       console.info("SWREACTXStudent question ID", swreact_id);
       console.info("SWREACTXStudent question", question);
-      console.info("SWREACTXStudent swreact_problem", swreact_problem);
-      // console.info("SWREACTXStudent enable_showme",enable_showme);
-      // console.info("SWREACTXStudent enable_hint",enable_hint);
-      // We no longer pass in solution
-      // console.info("SWREACTXStudent solution",solution);
       console.info("SWREACTXStudent count_attempts", count_attempts);
       console.info("SWREACTXStudent variants_counnt", variants_count);
       console.info("SWREACTXStudent max_attempts", max_attempts);
@@ -89,13 +80,6 @@ function SWREACTXStudent(runtime, element) {
       console.info("SWREACTXStudent min steps", min_steps);
       console.info("SWREACTXStudent min steps dec", min_steps_ded);
       console.info("SWREACTXStudent grade", grade);
-      // console.info("SWREACTXStudent swreact_id",swreact_id);
-      console.info("SWREACTXStudent swreact_rank ", swreact_rank);
-      console.info(
-        "SWREACTXStudent swreact_invalid_schemas ",
-        swreact_invalid_schemas,
-      );
-      console.info("SWREACTXStudent swreact_problem_hints ", swreact_problem_hints);
 
       /* PAGE LOAD EVENT */
       $(function ($) {});
