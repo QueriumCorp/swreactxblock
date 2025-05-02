@@ -163,7 +163,7 @@ def copy_assets(build_path: str, bdist_path: str, environment: str = None):
     for folder_path in [
         "assets",
         # "BabyFox",
-        "models",
+        # "models",
     ]:
         validate_path(os.path.join(d, folder_path))
 
