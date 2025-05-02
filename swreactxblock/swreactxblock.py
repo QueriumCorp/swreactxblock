@@ -35,25 +35,8 @@ not currently done. Thus, if you need to update the scoring logic here in Python
 source in js/src/swreactxstudent.js to make sure you don't also have to change the score display logic there.
 
 To support resuming work on a partially-completed StepWise React problem, we check to see whether there are previous results persisted
-in self.swreact_results when we initialize the window.swReact structure to pass to the StepWise React app.  If so, we
-unpack that swreact_results attribute and pass oldSession and oldLog back to the React app as two additional attributes in window.swReact.
-
-The swreact_problem_hints field is optional, and looks like this:
-swreact.problem.wpHints = [
-  {
-    "pageId": "newbWorkProblem",
-    "hints":[
-        "helpful hint",
-        "Even more helpful",
-        "Fricken enlightenment"
-    ]
-  },
-  { // another page
-  },
-  {
-    // yet another page
-  },
-]
+in self.swreact_results when we initialize the window.stepwise structure to pass to the StepWise React app.  If so, we
+unpack that swreact_results attribute and pass oldSession and oldLog back to the React app as two additional attributes in window.stepwise.
 
 The flow of saving results is:
    swreactxstudent.js sets the callback URLs for saving partial results (per step),
@@ -1342,13 +1325,13 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
                     )
                 )
 
-        # We use the window.swreact DOM element to communicate the  problem definition to the React app.
+        # We use the window.stepwise DOM element to communicate the  problem definition to the React app.
         # We construct that Javascript structure here.
 
         # FIXME: What is the name of the top-level DOM element we are looking for, e.g. is it swReact?
 
         swreact_string = (
-            "window.swReact = {"
+            "window.stepwise = {"
             )
         # If we have persisted previous results in self.swreact_results, pass those results back to the swReact React app
         # in the 'oldSession' and 'oldLog' attributes.
@@ -1414,24 +1397,11 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
 
         swreact_string = ( swreact_string
             + "    options: {"
-            + '        swapiUrl: "https://swapi2.onrender.com", '
-            + '        gltfUrl: "https://s3.amazonaws.com/stepwise-editorial.querium.com/swReact/dist/models/", '
-            + '        rank: "'
-            + self.q_swreact_rank
-            + '", '
-            + '        disabledSchemas: "'
-            + invalid_schemas_js
-            + '"'
+            + '        swapiUrl: "https://swapi2.onrender.com"'
             + "    }, "
             + "    student: { "
             + '        studentId: "'
             + self.xb_user_username
-            + '", '
-            + '        fullName: "'
-            + self.xb_user_fullname
-            + '", '
-            + '        familiarName: "'
-            + "NONE"
             + '"'
             + "    },"
             + "    problem: { "
@@ -1455,9 +1425,6 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
             + '", '
             + "        definition: '"
             + str(self.q_definition).replace("'", "&apos;")
-            + "', "
-            + "        wpHintsString: '"
-            + str(self.q_swreact_problem_hints).replace("'", "&apos;")
             + "', "
             + "        mathHints: ["
             + '                   "'
@@ -1519,9 +1486,9 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
             + "    }"
             + "};"
             + "try { "
-            + '    console.log( "before JSON.parse wpHintsString ",window.swReact.problem.wpHintsString);'
-            + "    window.swReact.problem.wpHints = JSON.parse(window.swReact.problem.wpHintsString);"
-            + '    console.log( "wpHints data is ",window.swReact.problem.wpHints );'
+            + '    console.log( "before JSON.parse wpHintsString ",window.stepwise.problem.wpHintsString);'
+            + "    window.stepwise.problem.wpHints = JSON.parse(window.stepwise.problem.wpHintsString);"
+            + '    console.log( "wpHints data is ",window.stepwise.problem.wpHints );'
             + "} catch(e) {"
             + '    console.log( "Could not decode wpHints string",e.message );'
             + "};"
