@@ -240,32 +240,6 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
     q_hint1 = String(help="SWREACT First Math Hint", default="", scope=Scope.content)
     q_hint2 = String(help="SWREACT Second Math Hint", default="", scope=Scope.content)
     q_hint3 = String(help="SWREACT Third Math Hint", default="", scope=Scope.content)
-    q_swreact_problem = String(
-        help="SWREACT SWREACT Problem", default="", scope=Scope.content
-    )
-    # Invalid schema choices should be a CSV list of one or more of these: "TOTAL", "DIFFERENCE", "CHANGEINCREASE", "CHANGEDECREASE", "EQUALGROUPS", and "COMPARE"
-    # Invalid schema choices can also be the official names: "additiveTotalSchema", "additiveDifferenceSchema", "additiveChangeSchema", "subtractiveChangeSchema", "multiplicativeEqualGroupsSchema", and "multiplicativeCompareSchema"
-    # This Xblock converts the upper-case names to the official names when constructing the launch code for the React app, so you can mix these names.
-    # Note that this code doesn't validate these schema names, so Caveat Utilitor.
-    q_swreact_invalid_schemas = String(
-        display_name="Comma-separated list of unallowed schema names",
-        help="SWREACT Comma-seprated list of unallowed schema names",
-        default="",
-        scope=Scope.content,
-    )
-    # Rank choices should be "newb" or "cadet" or "learner" or "ranger"
-    q_swreact_rank = String(
-        display_name="Student rank for this question",
-        help="SWREACT Student rank for this question",
-        default=DEFAULT_RANK,
-        scope=Scope.content,
-    )
-    q_swreact_problem_hints = String(
-        display_name="Problem-specific hints (JSON)",
-        help="SWREACT optional problem-specific hints (JSON)",
-        default="[]",
-        scope=Scope.content,
-    )
     # STUDENT'S QUESTION PERFORMANCE FIELDS
     swreact_results = String(
         help="SWREACT The student's SWREACT Solution structure",
@@ -1124,56 +1098,6 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
                 )
             )
 
-        # Fetch the new xblock-specific attributes if they exist, otherwise set them to a default
-        try:
-            temp_value = self.q_swreact_invalid_schemas
-        except (NameError, AttributeError) as e:
-            if DEBUG:
-                logger.info(
-                    "SWREACTXBlock student_view() self.q_swreact_invalid_schemas was not defined in this instance: {e}".format(
-                        e=e
-                    )
-                )
-            self.q_swreact_invalid_schemas = ""
-        if DEBUG:
-            logger.info(
-                "SWREACTXBlock student_view() self.q_swreact_invalid_schemas: {t}".format(
-                    t=self.q_swreact_invalid_schemas
-                )
-            )
-        try:
-            temp_value = self.q_swreact_rank
-        except (NameError, AttributeError) as e:
-            if DEBUG:
-                logger.info(
-                    "SWREACTXBlock student_view() self.q_swreact_rank was not defined in this instance: {e}".format(
-                        e=e
-                    )
-                )
-            self.q_swreact_rank = DEFAULT_RANK
-        if DEBUG:
-            logger.info(
-                "SWREACTXBlock student_view() self.q_swreact_rank: {t}".format(
-                    t=self.q_swreact_rank
-                )
-            )
-        try:
-            temp_value = self.q_swreact_problem_hints
-        except (NameError, AttributeError) as e:
-            if DEBUG:
-                logger.info(
-                    "SWREACTXBlock student_view() self.q_swreact_problem_hints was not defined in this instance: {e}".format(
-                        e=e
-                    )
-                )
-            self.q_swreact_problem_hints = "[]"
-        if DEBUG:
-            logger.info(
-                "SWREACTXBlock student_view() self.q_swreact_problem_hints: {t}".format(
-                    t=self.q_swreact_problem_hints
-                )
-            )
-
         # Save an identifier for the user and their full name
 
         user_service = self.runtime.service(self, "user")
@@ -1296,39 +1220,9 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
         )
         # Invalid schema choices should be a CSV list of one or more of these: "TOTAL", "DIFFERENCE", "CHANGEINCREASE", "CHANGEDECREASE", "EQUALGROUPS", and "COMPARE"
         # Invalid schema choices can also be the official names: "additiveTotalSchema", "additiveDifferenceSchema", "additiveChangeSchema", "subtractiveChangeSchema", "multiplicativeEqualGroupsSchema", and "multiplicativeCompareSchema"
-        # Convert the upper-case names to the 'official' names. NB: The order of
-        # .replace() calls might matter if one of these schema names is a
-        # substring of another name.
-        invalid_schemas_js = self.q_swreact_invalid_schemas
-        if DEBUG:
-            logger.info(
-                "SWREACTXBlock student_view() before mapping loop invalid_schemas_js={e}".format(
-                    e=invalid_schemas_js
-                )
-            )
-        mapping = {
-            "TOTAL": "additiveTotalSchema",
-            "DIFFERENCE": "additiveDifferenceSchema",
-            "CHANGEINCREASE": "additiveChangeSchema",
-            "CHANGEDECREASE": "subtractiveChangeSchema",
-            "EQUALGROUPS": "multiplicativeEqualGroupsSchema",
-            "COMPARE": "multiplicativeCompareSchema",
-        }
-        for schema_key, schema_value in mapping.items():
-            invalid_schemas_js = invalid_schemas_js.replace(
-                schema_key, schema_value
-            )
-            if DEBUG:
-                logger.info(
-                    "SWREACTXBlock student_view() in mapping loop schema_key={k} schema_value={v} invalid_schemas_js={e}".format(
-                        k=schema_key, v=schema_value, e=invalid_schemas_js
-                    )
-                )
 
         # We use the window.stepwise DOM element to communicate the  problem definition to the React app.
         # We construct that Javascript structure here.
-
-        # FIXME: What is the name of the top-level DOM element we are looking for, e.g. is it swReact?
 
         swreact_string = (
             "window.stepwise = {"
@@ -2064,10 +1958,6 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
         self.q_hint1 = data["hint1"]
         self.q_hint2 = data["hint2"]
         self.q_hint3 = data["hint3"]
-        self.q_swreact_problem = data["swreact_problem"]
-        self.q_swreact_rank = data["swreact_rank"]
-        self.q_swreact_invalid_schemas = data["swreact_invalid_schemas"]
-        self.q_swreact_problem_hints = data["swreact_problem_hints"]
 
         self.display_name = "Step-by-Step React"
 
@@ -2428,10 +2318,6 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
             "q_hint1": self.q_hint1,
             "q_hint2": self.q_hint2,
             "q_hint3": self.q_hint3,
-            "q_swreact_problem": self.q_swreact_problem,
-            "q_swreact_rank": self.q_swreact_rank,
-            "q_swreact_invalid_schemas": self.q_swreact_invalid_schemas,
-            "q_swreact_problem_hints": self.q_swreact_problem_hints,
             "q_weight": self.my_weight,
             "q_max_attempts": self.my_max_attempts,
             "q_option_hint": self.my_option_hint,
