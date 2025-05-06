@@ -1218,10 +1218,30 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
             "text/html",
             "head",
         )
-        # Invalid schema choices should be a CSV list of one or more of these: "TOTAL", "DIFFERENCE", "CHANGEINCREASE", "CHANGEDECREASE", "EQUALGROUPS", and "COMPARE"
-        # Invalid schema choices can also be the official names: "additiveTotalSchema", "additiveDifferenceSchema", "additiveChangeSchema", "subtractiveChangeSchema", "multiplicativeEqualGroupsSchema", and "multiplicativeCompareSchema"
 
-        # We use the window.stepwise DOM element to communicate the  problem definition to the React app.
+        # Disable the CSS style sheets that edX covertly loads into
+        # the xBlock's iframe outside of the swreactxblock code.
+        # The structure of the styleSheet is documented here:
+        # https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet
+
+        frag.add_resource(
+            "<script>"
+            + "let styleSheets = document.styleSheets;"
+            + "for (let i = 0; i < styleSheets.length; i++) {"
+            + "  styleSheet = styleSheets[i];"
+            + "  if ("
+            + "    styleSheet.href.includes(\"lms-style\") ||"
+            + "    styleSheet.href.includes(\"lms-course\")"
+            + "  ) {"
+            + "    styleSheet.disabled = true;"
+            + "  }"
+            + "}"
+            + "</script>",
+            "text/html",
+            "head",
+        )
+
+        # We use the window.stepwise DOM element to communicate the problem definition to the React app.
         # We construct that Javascript structure here.
 
         swreact_string = (
