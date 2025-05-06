@@ -1231,7 +1231,8 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
             + "  styleSheet = styleSheets[i];"
             + "  if ("
             + "    styleSheet.href.includes(\"lms-style\") ||"
-            + "    styleSheet.href.includes(\"lms-course\")"
+            + "    styleSheet.href.includes(\"lms-course\") ||"
+            + "    styleSheet.href.includes(\"lms-main\")"
             + "  ) {"
             + "    styleSheet.disabled = true;"
             + "  }"
@@ -1310,15 +1311,18 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
         # The 'handlers' attribute are for our callbacks: onComplete and onStep.
 
         swreact_string = ( swreact_string
-            + "    options: {"
-            + '        swapiUrl: "https://swapi2.onrender.com"'
-            + "    }, "
-            + "    student: { "
+            + '    options: {'
+            + '        swapiUrl: urlSWAPI || window.stepwise.options?.swapiUrl || "https://swapi2.onrender.com",'
+            + '        displaySubmitButton: true,'
+            + '        displayHintButton: true,'
+            + '        enableShowMe: true,'
+            + '    }, '
+            + '    student: { '
             + '        studentId: "'
             + self.xb_user_username
             + '"'
-            + "    },"
-            + "    problem: { "
+            + '    },'
+            + '    problem: { '
             + '        appKey: "'
             + self.q_grade_app_key
             + '", '
