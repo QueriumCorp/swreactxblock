@@ -1312,7 +1312,7 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
 
         swreact_string = ( swreact_string
             + '    options: {'
-            + '        swapiUrl: urlSWAPI || window.stepwise.options?.swapiUrl || "https://swapi2.onrender.com",'
+            + '        swapiUrl: "https://swapi2.onrender.com",'
             + '        displaySubmitButton: true,'
             + '        displayHintButton: true,'
             + '        enableShowMe: true,'
