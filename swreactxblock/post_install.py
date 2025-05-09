@@ -55,6 +55,10 @@ def fix_css_url(css_filename: str, build_path: str):
         data = file.read()
 
     data = data.replace(
+        "url(/swreact/assets", "url(/static/xblock/resources/swreactxblock/public/assets"
+    )
+    # Try again with camel case swReact
+    data = data.replace(
         "url(/swReact/assets", "url(/static/xblock/resources/swreactxblock/public/assets"
     )
 
