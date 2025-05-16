@@ -1230,9 +1230,9 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
             + "for (let i = 0; i < styleSheets.length; i++) {"
             + "  styleSheet = styleSheets[i];"
             + "  if ("
-            + "    styleSheet.href.includes(\"lms-style\") ||"
-            + "    styleSheet.href.includes(\"lms-course\") ||"
-            + "    styleSheet.href.includes(\"lms-main\")"
+            + "    styleSheet.href?.includes(\"lms-style\") ||"
+            + "    styleSheet.href?.includes(\"lms-course\") ||"
+            + "    styleSheet.href?.includes(\"lms-main\")"
             + "  ) {"
             + "    styleSheet.disabled = true;"
             + "  }"
@@ -1240,6 +1240,37 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
             + "</script>",
             "text/html",
             "head",
+        )
+
+        frag.add_resource(
+            "<script>"
+            + "window.onload = function () {"
+            + "  // Get the div containing the debug divs"
+            + "  const parent = document.querySelector(\".vert-0\");"
+            + "  // Find all .wrap-instructor-info elements inside the parent"
+            + "  const instructorInfos = parent.querySelectorAll(\".wrap-instructor-info\");"
+            + "  // In theory, there should be only one '.wrap-instructor-info div"
+            + "  // but if it doesnt find any we will get an empty list and nothing"
+            + "  // will happen."
+            + "  instructorInfos.forEach((infoDiv) => {"
+            + "    // Start with the next sibling after .wrap-instructor-info"
+            + "    let next = infoDiv.nextElementSibling;"
+            + "    while (next) {"
+            + "      // Check if the sibling has one of the modal classes"
+            + "      if ("
+            + "        next.classList.contains(\"xqa-modal\") ||"
+            + "        next.classList.contains(\"staff-modal\") ||"
+            + "        next.classList.contains(\"history-modal\")"
+            + "      ) {"
+            + "        next.style.display = \"none\";"
+            + "      }"
+            + "      next = next.nextElementSibling;"
+            + "    }"
+            + "  });"
+            + "};"
+            + "</script>",
+            "text/html",
+            "foot",
         )
 
         # We use the window.stepwise DOM element to communicate the problem definition to the React app.
