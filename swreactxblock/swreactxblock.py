@@ -1242,25 +1242,24 @@ class SWREACTXBlock(StudioEditableXBlockMixin, ScorableXBlockMixin, CompletableX
             "head",
         )
 
+	# Find all .wrap-instructor-info elements inside the parent.
+	# In theory, there should be only one '.wrap-instructor-info' div
+	# but if it doesn't find any we will get an empty list and nothing
+	# will happen.
+        # For each div, check if the sibling has one of the desired modal classes
+        # and hide any that match.
+
         frag.add_resource(
             "<script>"
             + "window.onload = function () {"
-            + "  // Get the div containing the debug divs"
             + "  const parent = document.querySelector(\".vert-0\");"
-            + "  // Find all .wrap-instructor-info elements inside the parent"
             + "  const instructorInfos = parent.querySelectorAll(\".wrap-instructor-info\");"
-            + "  // In theory, there should be only one '.wrap-instructor-info div"
-            + "  // but if it doesnt find any we will get an empty list and nothing"
-            + "  // will happen."
             + "  instructorInfos.forEach((infoDiv) => {"
-            + "    // Start with the next sibling after .wrap-instructor-info"
             + "    let next = infoDiv.nextElementSibling;"
             + "    while (next) {"
-            + "      // Check if the sibling has one of the modal classes"
-            + "      if ("
-            + "        next.classList.contains(\"xqa-modal\") ||"
-            + "        next.classList.contains(\"staff-modal\") ||"
-            + "        next.classList.contains(\"history-modal\")"
+            + "      if (next.classList.contains(\"xqa-modal\") ||"
+            + "          next.classList.contains(\"staff-modal\") ||"
+            + "          next.classList.contains(\"history-modal\")"
             + "      ) {"
             + "        next.style.display = \"none\";"
             + "      }"
